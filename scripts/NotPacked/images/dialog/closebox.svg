@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <metadata id="svg_19">image/svg+xml</metadata>
+  <metadata id="svg_26">image/svg+xml</metadata>
+  <metadata id="svg_36">image/svg+xml</metadata>
+  <g id="svg_50">
+   <rect id="svg_15" width="25.77856" height="25.77856" x="3.917989" y="1.381509" stroke-miterlimit="2" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none"/>
+   <path id="svg_25" d="m30.109779,15.970558a14.15234,14.15234 0 1 1-28.30469,0a14.15234,14.15234 0 1 128.30469,0z" stroke-miterlimit="4" stroke-linejoin="round" stroke-linecap="round" stroke-width="3" stroke="#bfbfbf" fill="#383838"/>
+   <g id="svg_45">
+    <path d="m10.953808,10.966948l10.007259,10.007212" id="svg_24" stroke-miterlimit="4" stroke-linecap="round" stroke-width="4" stroke="#bfbfbf" fill-rule="evenodd" fill-opacity="0.75" fill="none"/>
+    <path id="svg_23" d="m20.961067,10.966948l-10.007259,10.007212" stroke-miterlimit="4" stroke-linecap="round" stroke-width="4" stroke="#bfbfbf" fill-rule="evenodd" fill-opacity="0.75" fill="none"/>
+   </g>
+  </g>
+ </g>
+</svg>

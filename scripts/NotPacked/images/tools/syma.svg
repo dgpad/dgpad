@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="500" height="500" viewBox="0, 0, 500, 500">
+  <g id="syma">
+    <g>
+      <g opacity="0.5">
+        <path d="M219.871,123.094 C279.871,103.094 329.871,83.094 369.871,123.094 C398.094,151.317 404.222,173.457 400.492,199.815" fill-opacity="0" stroke="#CFCFCF" stroke-width="30"/>
+        <g>
+          <path d="M380.855,194.289 L385.756,252.181 L420.129,205.341 z" fill="#CFCFCF"/>
+          <path d="M380.855,194.289 L385.756,252.181 L420.129,205.341 z" fill-opacity="0" stroke="#CFCFCF" stroke-width="30"/>
+        </g>
+      </g>
+      <path d="M379.871,110 L115.871,380" fill-opacity="0" stroke="#CFCFCF" stroke-width="30"/>
+      <path d="M339.871,410 C306.734,410 279.871,383.137 279.871,350 C279.871,316.863 306.734,290 339.871,290 C373.008,290 399.871,316.863 399.871,350 C399.871,383.137 373.008,410 339.871,410 z" fill="#FFFFFF"/>
+      <path d="M140.319,209.998 C107.183,210.246 80.12,183.584 79.873,150.448 C79.625,117.312 106.287,90.249 139.423,90.002 C172.559,89.754 199.622,116.416 199.869,149.552 C200.117,182.688 173.455,209.751 140.319,209.998 z" fill="#CFCFCF"/>
+    </g>
+  </g>
+  <defs/>
+</svg>

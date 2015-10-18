@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="500" height="500" viewBox="0, 0, 500, 500">
+  <g id="perpbiss">
+    <g>
+      <path d="M390,110 L126,380" fill-opacity="0" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round"/>
+      <path d="M350,410 C316.863,410 290,383.137 290,350 C290,316.863 316.863,290 350,290 C383.137,290 410,316.863 410,350 C410,383.137 383.137,410 350,410 z" fill="#CFCFCF"/>
+      <path d="M150.448,209.998 C117.312,210.246 90.249,183.584 90.002,150.448 C89.754,117.312 116.416,90.249 149.552,90.002 C182.688,89.754 209.751,116.416 209.998,149.552 C210.246,182.688 183.584,209.751 150.448,209.998 z" fill="#CFCFCF"/>
+    </g>
+  </g>
+  <defs/>
+</svg>

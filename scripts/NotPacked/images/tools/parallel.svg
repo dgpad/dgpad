@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="500" height="500" viewBox="0, 0, 500, 500">
+  <g id="parallel">
+    <g>
+      <path d="M410,185 L160,435" fill-opacity="0" stroke="#CFCFCF" stroke-width="30" stroke-linecap="round"/>
+      <path d="M340,65 L90,315" fill-opacity="0" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round"/>
+      <path d="M200.448,264.998 C167.312,265.246 140.249,238.584 140.002,205.448 C139.754,172.312 166.416,145.249 199.552,145.002 C232.688,144.754 259.751,171.416 259.998,204.552 C260.246,237.688 233.584,264.751 200.448,264.998 z" fill="#CFCFCF"/>
+    </g>
+  </g>
+  <defs/>
+</svg>

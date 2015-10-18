@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<svg width="500.00000000000006" height="50" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <defs>
+  <linearGradient id="svg_3" x1="0.5" y1="0" x2="0.5" y2="1">
+   <stop offset="0" stop-color="#cfcfcf"/>
+   <stop offset="0.5" stop-color="#bdbdbd"/>
+   <stop offset="1" stop-color="#a8a8a8"/>
+  </linearGradient>
+ </defs>
+ <g>
+  <title>Calque 1</title>
+  <path stroke="#515151" fill="url(#svg_3)" d="m24,0.5l225.75,0l226.25,0c15.984009,0 23.25,7.84 23.25,23.520002l0,25.479998l-499,0l0,-25.479998c0,-15.680002 6.766001,-23.520002 23.75,-23.520002z" id="svg_8"/>
+ </g>
+</svg>

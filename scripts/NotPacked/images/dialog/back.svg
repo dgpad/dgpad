@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<svg width="500" height="400" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <rect ry="16" rx="16" fill-opacity="0.99" id="svg_1" height="75.999997" width="500" y="0" x="0" stroke="#333333" fill="url(#svg_49)"/>
+  <title>Layer 1</title>
+  <metadata id="svg_19">image/svg+xml</metadata>
+  <rect stroke="#333333" id="svg_4" height="356.000005" width="500" y="45.000006" x="0" fill="#b7b7b7"/>
+  <defs transform="translate(538, 134) translate(92, 107) translate(-0) scale(0.666667) translate(0) translate(88.002, 109.318) scale(0.309993) translate(-88.002, -109.318) translate(2887.17, 1001.05) scale(3.5404) translate(-2887.17, -1001.05)">
+   <linearGradient y2="0.5" x2="0.484375" y1="0.015625" x1="0.480469" id="svg_49">
+    <stop stop-color="#777777" offset="0"/>
+    <stop stop-color="#b7b7b7" offset="1"/>
+   </linearGradient>
+  </defs>
+  <metadata id="svg_26">image/svg+xml</metadata>
+  <metadata id="svg_36">image/svg+xml</metadata>
+  <g id="svg_50">
+   <rect fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="2" y="9" x="465.627024" height="25.778564" width="25.778564" id="svg_15"/>
+   <path fill="#383838" stroke="#bfbfbf" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" d="m491.818817,23.589054a14.152344,14.152344 0 1 1-28.304688,0a14.152344,14.152344 0 1 128.304688,0z" id="svg_25"/>
+   <g id="svg_45">
+    <path fill="none" fill-opacity="0.75" fill-rule="evenodd" stroke="#bfbfbf" stroke-width="4" stroke-linecap="round" stroke-miterlimit="4" id="svg_24" d="m472.662842,18.585442l10.007263,10.007212"/>
+    <path fill="none" fill-opacity="0.75" fill-rule="evenodd" stroke="#bfbfbf" stroke-width="4" stroke-linecap="round" stroke-miterlimit="4" d="m482.670105,18.585442l-10.007263,10.007212" id="svg_23"/>
+   </g>
+  </g>
+ </g>
+</svg>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="500" height="500" viewBox="0, 0, 500, 500">
+  <g id="vector" transform="translate(0, 0)">
+    <path d="M340,160 L160,340" fill-opacity="0" stroke="#FFFFFF" stroke-width="30"/>
+    <path d="M373,165 C353.67,165 338,149.33 338,130 C338,110.67 353.67,95 373,95 C392.33,95 408,110.67 408,130 C408,149.33 392.33,165 373,165 z" fill="#BEBEBE"/>
+    <path d="M160.448,399.998 C127.312,400.246 100.249,373.584 100.002,340.448 C99.754,307.312 126.416,280.249 159.552,280.002 C192.688,279.754 219.751,306.416 219.998,339.552 C220.246,372.688 193.584,399.751 160.448,399.998 z" fill="#BEBEBE"/>
+    <path d="M240,177.464 L316.481,253.944 L374.87,130 L240,177.464 z" fill="#FFFFFF"/>
+  </g>
+</svg>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="500" height="500" viewBox="0, 0, 500, 500">
+  <g id="ray">
+    <g>
+      <path d="M400,94 L152,348" fill-opacity="0" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round"/>
+      <path d="M304,250 C270.863,250 244,223.137 244,190 C244,156.863 270.863,130 304,130 C337.137,130 364,156.863 364,190 C364,223.137 337.137,250 304,250 z" fill="#CFCFCF"/>
+      <path d="M160.448,405.998 C127.312,406.246 100.249,379.584 100.002,346.448 C99.754,313.312 126.416,286.249 159.552,286.002 C192.688,285.754 219.751,312.416 219.998,345.552 C220.246,378.688 193.584,405.751 160.448,405.998 z" fill="#CFCFCF"/>
+    </g>
+  </g>
+  <defs/>
+</svg>

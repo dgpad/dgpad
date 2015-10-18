@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="500" height="500" viewBox="0, 0, 500, 500">
+  <g id="plumb">
+    <g>
+      <path d="M85,100 L335,350" fill-opacity="0" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round"/>
+      <path d="M275,230 L245,260" fill-opacity="0" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
+      <path d="M275,230 L305,260" fill-opacity="0" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
+      <path d="M175.448,249.998 C142.312,250.246 115.249,223.584 115.002,190.448 C114.754,157.312 141.416,130.249 174.552,130.002 C207.688,129.754 234.751,156.416 234.998,189.552 C235.246,222.688 208.584,249.751 175.448,249.998 z" fill="#CFCFCF"/>
+      <path d="M415,150 L165,400" fill-opacity="0" stroke="#CFCFCF" stroke-width="30" stroke-linecap="round"/>
+    </g>
+  </g>
+  <defs/>
+</svg>

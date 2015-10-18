@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="500" height="500" viewBox="0, 0, 500, 500">
+  <g id="anglebiss">
+    <g>
+      <path d="M230.636,290.09 C246.074,314.698 255,343.807 255,375 C255,376.679 254.974,378.352 254.923,380.019" fill-opacity="0" stroke="#CFCFCF" stroke-width="20"/>
+      <path d="M140.153,263.785 C163.55,273.294 183.269,289.971 196.584,311.09" fill-opacity="0" stroke="#CFCFCF" stroke-width="20"/>
+      <path d="M415,185 L105,371" fill-opacity="0" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round"/>
+      <path d="M185,205 C162.909,205 145,187.091 145,165 C145,142.909 162.909,125 185,125 C207.091,125 225,142.909 225,165 C225,187.091 207.091,205 185,205 z" fill="#CFCFCF"/>
+      <path d="M95.299,414.999 C73.208,415.164 55.166,397.389 55.001,375.299 C54.836,353.208 72.611,335.166 94.701,335.001 C116.792,334.836 134.834,352.611 134.999,374.701 C135.164,396.792 117.39,414.834 95.299,414.999 z" fill="#CFCFCF"/>
+      <path d="M385,425 C362.909,425 345,407.091 345,385 C345,362.909 362.909,345 385,345 C407.091,345 425,362.909 425,385 C425,407.091 407.091,425 385,425 z" fill="#CFCFCF"/>
+      <path d="M95,375 L225,75" fill-opacity="0" stroke="#CFCFCF" stroke-width="20" stroke-linecap="round"/>
+      <path d="M95,375 L445,385" fill-opacity="0" stroke="#CFCFCF" stroke-width="20" stroke-linecap="round"/>
+    </g>
+  </g>
+  <defs/>
+</svg>

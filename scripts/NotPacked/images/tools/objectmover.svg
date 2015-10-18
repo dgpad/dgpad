@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="500" height="500" viewBox="0, 0, 500, 500">
+  <g id="objectmover">
+    <g>
+      <path d="M179.457,320.543 L320.543,179.457" fill-opacity="0" stroke="#E5E5E5" stroke-width="30" stroke-miterlimit="8"/>
+      <path d="M179.457,320.543 L174.648,296.502 L150.607,349.393 L203.498,325.352 z" fill="#E5E5E5" fill-opacity="1" stroke="#E5E5E5" stroke-width="30" stroke-opacity="1"/>
+      <path d="M320.543,179.457 L325.352,203.498 L349.393,150.607 L296.502,174.648 z" fill="#E5E5E5" fill-opacity="1" stroke="#E5E5E5" stroke-width="30" stroke-opacity="1"/>
+    </g>
+  </g>
+  <defs/>
+</svg>

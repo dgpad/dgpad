@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="500" height="500" viewBox="0, 0, 500, 500">
+  <g id="midpoint">
+    <g>
+      <path d="M390,110 L110,390" fill-opacity="0" stroke="#CFCFCF" stroke-width="30"/>
+      <path d="M250,310 C216.863,310 190,283.137 190,250 C190,216.863 216.863,190 250,190 C283.137,190 310,216.863 310,250 C310,283.137 283.137,310 250,310 z" fill="#FFFFFF"/>
+      <path d="M350,70 L430,150" fill-opacity="0" stroke="#CFCFCF" stroke-width="30"/>
+      <path d="M70,350 L150,430" fill-opacity="0" stroke="#CFCFCF" stroke-width="30"/>
+      <path d="M290,150 L380,180" fill-opacity="0" stroke="#CFCFCF" stroke-width="15"/>
+      <path d="M120,320 L210,350" fill-opacity="0" stroke="#CFCFCF" stroke-width="15"/>
+    </g>
+  </g>
+  <defs/>
+</svg>

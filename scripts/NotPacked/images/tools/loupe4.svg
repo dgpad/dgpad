@@ -1,0 +1,38 @@
+<svg width="130" height="130" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <defs>
+  <radialGradient fy="0.070313" fx="0.917969" r="0.742857" cy="0.070313" cx="0.917969" id="svg_2">
+   <stop stop-color="#ffffff" offset="0"/>
+   <stop stop-color="#c7d9ee" offset="1"/>
+  </radialGradient>
+  <filter height="200%" width="200%" y="-50%" x="-50%" id="svg_3_blur">
+   <feGaussianBlur stdDeviation="5"/>
+  </filter>
+  <svg x="0" y="0" width="94.412" height="94.784" viewBox="0, 0, 94.412, 94.784" id="svg_4" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <g id="Calque_1">
+    <g id="svg_6">
+     <path id="svg_7" d="m47.256001,41.541l0,11.312" fill-opacity="0" stroke="#617686" stroke-width="3" stroke-linecap="round"/>
+     <path id="svg_8" d="m42.166,47.243999l10.18,0" fill-opacity="0" stroke="#617686" stroke-width="3" stroke-linecap="round"/>
+     <path id="svg_9" d="m31.837002,44.696999l0,5" fill-opacity="0" stroke="#617686" stroke-linecap="round"/>
+     <path id="svg_10" d="m16.419001,44.696999l0,5" fill-opacity="0" stroke="#617686" stroke-linecap="round"/>
+     <path id="svg_11" d="m1,44.696999l0,5" fill-opacity="0" stroke="#617686" stroke-linecap="round"/>
+     <path id="svg_12" d="m93.411995,44.696999l0,5" fill-opacity="0" stroke="#617686" stroke-linecap="round"/>
+     <path id="svg_13" d="m77.993996,44.696999l0,5" fill-opacity="0" stroke="#617686" stroke-linecap="round"/>
+     <path id="svg_14" d="m62.575001,44.696999l0,5" fill-opacity="0" stroke="#617686" stroke-linecap="round"/>
+     <path id="svg_15" d="m44.756001,1l5,0" fill-opacity="0" stroke="#617686" stroke-linecap="round"/>
+     <path id="svg_16" d="m44.756001,16.414999l5,0" fill-opacity="0" stroke="#617686" stroke-linecap="round"/>
+     <path id="svg_17" d="m44.756001,31.829998l5,0" fill-opacity="0" stroke="#617686" stroke-linecap="round"/>
+     <path id="svg_18" d="m44.756001,62.758003l5,0" fill-opacity="0" stroke="#617686" stroke-linecap="round"/>
+     <path id="svg_19" d="m44.756001,78.270996l5,0" fill-opacity="0" stroke="#617686" stroke-linecap="round"/>
+     <path id="svg_20" d="m44.756001,93.784996l5,0" fill-opacity="0" stroke="#617686" stroke-linecap="round"/>
+    </g>
+   </g>
+  </svg>
+ </defs>
+ <g>
+  <title>Calque 1</title>
+  <rect filter="url(#svg_3_blur)" id="svg_3" height="100" width="100" y="8" x="7" stroke-width="0" stroke="#000000" fill="#4f4f4f"/>
+  <rect ry="6" rx="6" id="svg_1" height="100" width="100" y="2" x="2" stroke-width="3" stroke="#3163a6" fill="url(#svg_2)"/>
+  <use xlink:href="#svg_4" id="svg_5" transform="matrix(0.9973653883724154,0,0,0.9973653883724154,0,1.2879026985001334e-7) " y="4.010566" x="5.013208"/>
+ </g>
+</svg>

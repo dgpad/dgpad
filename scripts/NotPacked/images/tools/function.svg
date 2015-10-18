@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="500" height="500" viewBox="0, 0, 500, 500">
+  <g id="Calque 34">
+    <path d="M120,60 L120,420" fill-opacity="0" stroke="#DDDDDD" stroke-width="30" stroke-linecap="round"/>
+    <path d="M70,370 L420,370" fill-opacity="0" stroke="#DDDDDD" stroke-width="30" stroke-linecap="round"/>
+    <path d="M70,319.111 C70,319.111 152.286,148.391 170.571,119.111 C188.857,89.832 243.714,59.111 280.286,99.111 C316.857,139.111 380.857,399.111 390,429.111" fill-opacity="0" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round"/>
+  </g>
+  <defs/>
+</svg>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="500" height="500" viewBox="0, 0, 500, 500">
+  <g id="report Copy">
+    <g>
+      <path d="M285,305 L385,195" fill-opacity="0" stroke="#CFCFCF" stroke-width="15"/>
+      <path d="M290,445 C209.919,445 145,380.081 145,300 C145,219.919 209.919,155 290,155 C370.081,155 435,219.919 435,300 C435,380.081 370.081,445 290,445 z" fill-opacity="0" stroke="#FFFFFF" stroke-width="30"/>
+      <path d="M292.389,339.223 C271.893,339.376 255.154,322.885 255.001,302.389 C254.848,281.893 271.339,265.154 291.835,265.001 C312.33,264.848 329.07,281.339 329.223,301.835 C329.376,322.33 312.885,339.07 292.389,339.223 z" fill="#CFCFCF"/>
+      <path d="M305,235 L375.711,249.142" fill-opacity="0" stroke="#CFCFCF" stroke-width="20"/>
+      <path d="M105,95 L265,95" fill-opacity="0" stroke="#CFCFCF" stroke-width="15"/>
+      <path d="M165,65 L205,125" fill-opacity="0" stroke="#CFCFCF" stroke-width="20"/>
+      <path d="M102.389,129.223 C81.893,129.376 65.154,112.885 65.001,92.389 C64.848,71.893 81.339,55.154 101.835,55.001 C122.33,54.848 139.07,71.339 139.223,91.835 C139.376,112.33 122.885,129.07 102.389,129.223 z" fill="#CFCFCF"/>
+      <path d="M272.389,129.223 C251.893,129.376 235.154,112.885 235.001,92.389 C234.848,71.893 251.339,55.154 271.835,55.001 C292.33,54.848 309.07,71.339 309.223,91.835 C309.376,112.33 292.885,129.07 272.389,129.223 z" fill="#CFCFCF"/>
+    </g>
+  </g>
+  <defs/>
+</svg>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="500" height="500" viewBox="0, 0, 500, 500">
+  <g id="Calque_2" display="none">
+    <path d="M-23,-31 L518,-31 L518,524 L-23,524 L-23,-31 z" fill="#252525"/>
+  </g>
+  <g id="Calque_6">
+    <g>
+      <path d="M67.024,32.5 L432.976,32.5 C452.043,32.5 467.5,47.957 467.5,67.024 L467.5,432.976 C467.5,452.043 452.043,467.5 432.976,467.5 L67.024,467.5 C47.957,467.5 32.5,452.043 32.5,432.976 L32.5,67.024 C32.5,47.957 47.957,32.5 67.024,32.5 z" fill="#C7C7C7"/>
+      <path d="M67.024,32.5 L432.976,32.5 C452.043,32.5 467.5,47.957 467.5,67.024 L467.5,432.976 C467.5,452.043 452.043,467.5 432.976,467.5 L67.024,467.5 C47.957,467.5 32.5,452.043 32.5,432.976 L32.5,67.024 C32.5,47.957 47.957,32.5 67.024,32.5 z" fill-opacity="0" stroke="#C7C7C7" stroke-width="60"/>
+    </g>
+  </g>
+  <g id="circle" display="none">
+    <path d="M250.758,351.497 C194.703,351.916 148.921,306.813 148.503,250.758 C148.084,194.703 193.187,148.921 249.242,148.503 C305.297,148.084 351.079,193.187 351.497,249.242 C351.916,305.297 306.813,351.079 250.758,351.497 z" fill-opacity="0" stroke="#7B7B7B" stroke-width="48"/>
+  </g>
+  <g id="Calque_3" display="none">
+    <g>
+      <path d="M162,338 L338,162" fill-opacity="0" stroke="#7B7B7B" stroke-width="48" stroke-linecap="round"/>
+      <path d="M162,162 L338,338" fill-opacity="0" stroke="#7B7B7B" stroke-width="48" stroke-linecap="round"/>
+    </g>
+  </g>
+  <g id="Calque_4" display="none">
+    <path d="M250,133.5 L366.5,250 L250,366.5 L133.5,250 z" fill-opacity="0" stroke="#7B7B7B" stroke-width="48"/>
+  </g>
+  <g id="Calque_5" display="none">
+    <path d="M160,160 L340,160 L340,340 L160,340 z" fill-opacity="0" stroke="#7B7B7B" stroke-width="48"/>
+  </g>
+</svg>

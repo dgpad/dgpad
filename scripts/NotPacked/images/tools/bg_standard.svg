@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<svg width="733.81738" height="713.57703" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="linearGradient4904">
+   <stop stop-color="#ffffff" offset="0" id="stop4906"/>
+   <stop stop-color="#ffffff" stop-opacity="0" offset="1" id="stop4908"/>
+  </linearGradient>
+  <linearGradient id="linearGradient4697">
+   <stop stop-color="#6789bd" offset="0" id="stop4699"/>
+   <stop stop-color="#6789bd" stop-opacity="0" offset="1" id="stop4701"/>
+  </linearGradient>
+  <radialGradient gradientTransform="matrix(1.2292203903198242,0.638841450214386,-0.4617449641227722,0.8801387548446655,392.0026550292969,-120.36634826660156)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient4697" id="radialGradient4990" fy="359.07941" fx="219.21179" r="341.93155" cy="359.07941" cx="219.21179"/>
+  <radialGradient gradientTransform="matrix(-0.10027548670768738,1.3655482530593872,-3.141205310821533,-0.21532005071640015,789.0559692382812,-278.6437683105469)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient4904" id="radialGradient5004" fy="167.85193" fx="209.36708" r="326.28125" cy="167.85193" cx="209.36708"/>
+ </defs>
+ <metadata id="metadata7">image/svg+xml</metadata>
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_2">
+   <rect opacity="0.90708" fill="#082b4f" stroke="#000000" id="rect4693" y="2.226854" x="2.978581" ry="94.95434" rx="94.95434" height="708.121251" width="727.863212" stroke-width="4"/>
+   <rect opacity="0.90708" fill="url(#radialGradient4990)" id="rect4695" y="17.293258" x="18.052671" ry="86.87312" rx="86.87312" height="677.9884" width="699.825195"/>
+   <path opacity="0.6" fill="url(#radialGradient5004)" id="rect4899" d="m629.952209,15.057457c-181.393066,1.271717 -362.835785,-1.534537 -544.200218,1.598034c-46.157623,8.066132 -77.61991,56.129139 -69.574627,100.11002c-0.104982,29.63076 -0.272146,59.26577 0.416803,88.891182c114.127893,54.512131 241.512369,76.008896 367.463358,86.326859c111.060608,9.21637 223.094879,6.00647 333.660492,-7.32431c-2.263794,-70.472244 4.610168,-141.325882 -4.065674,-211.506531c-11.264893,-33.916679 -46.578796,-59.052578 -83.700134,-58.095142l0,-0.000111l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0z"/>
+  </g>
+ </g>
+</svg>
