@@ -19,7 +19,7 @@ function Canvas(_id) {
     me.getDocObject = function () {
         return docObject;
     };
- 
+
     me.prefs = $P.clone();
 
     var width = 0;
@@ -976,7 +976,8 @@ function Canvas(_id) {
     me.paint = function (ev, coords) {
         context.globalAlpha = 1;
         me.clearBackground();
-        if (OC && (OC.getC(0))) OC.preview(ev, me);
+        if (OC && (OC.getC(0)))
+            OC.preview(ev, me);
         handPath.paint(context);
         Cn.paint(context, coords);
         me.trackManager.draw();
@@ -1013,25 +1014,46 @@ function Canvas(_id) {
         el.setAttribute('scrolling', 'no');
         // Trouver éventuellement un paramètre de langue dans le script du body :
         var lang = ($BODY_SCRIPT.hasAttribute("data-lang")) ? "?lang=" + $BODY_SCRIPT.getAttribute("data-lang").toUpperCase() : "";
+        
         el.setAttribute('src', $APP_PATH + 'NotPacked/Sandbox/sandbox.html' + lang);
         document.body.appendChild(el);
         el.onload = function () {
             interpreter = new window.frames[ID].Interpreter(window, me);
             interpreter.owner = el.contentWindow;
             interpreter.copyNameSpace();
-            // Chargement des plug-ins :
-            interpreter.LoadPlugins($U.loadFile($APP_PATH + "NotPacked/plug-ins.js"));
 
-            // Si le canvas a une figure attachée (base64) :
-            if (docObject.hasAttribute("data-source")) {
-                me.OpenFile("", $U.base64_decode(docObject.getAttribute("data-source")));
-            } else {
-                // Si une figure a été postée sur index.php, on l'ouvre :
-                try {
-                    me.OpenFile("", $U.base64_decode($DGPAD_FIGURE));
-                } catch (e) {
+
+            var request = new XMLHttpRequest();
+            request.open("GET", $APP_PATH + "NotPacked/plug-ins.js", true);
+            request.send();
+            request.onload = function (e) {
+                interpreter.LoadPlugins(request.responseText);
+                // Si le canvas a une figure attachée (base64) :
+                if (docObject.hasAttribute("data-source")) {
+                    me.OpenFile("", $U.base64_decode(docObject.getAttribute("data-source")));
+                } else {
+                    // Si une figure a été postée sur index.php, on l'ouvre :
+                    try {
+                        me.OpenFile("", $U.base64_decode($DGPAD_FIGURE));
+                    } catch (e) {
+                    }
                 }
             }
+
+
+//            // Chargement des plug-ins :
+//            interpreter.LoadPlugins($U.loadFile($APP_PATH + "NotPacked/plug-ins.js"));
+//
+//            // Si le canvas a une figure attachée (base64) :
+//            if (docObject.hasAttribute("data-source")) {
+//                me.OpenFile("", $U.base64_decode(docObject.getAttribute("data-source")));
+//            } else {
+//                // Si une figure a été postée sur index.php, on l'ouvre :
+//                try {
+//                    me.OpenFile("", $U.base64_decode($DGPAD_FIGURE));
+//                } catch (e) {
+//                }
+//            }
 
 
         };

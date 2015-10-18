@@ -504,6 +504,8 @@ $U.scolor = function (h) {
     return (c.r + ",," + c.g + ",," + c.b);
 };
 
+
+
 $U.loadFile = function (fileName) {
     var request = new XMLHttpRequest();
     try {
@@ -514,6 +516,8 @@ $U.loadFile = function (fileName) {
         return "";
     }
 };
+
+
 
 $U.leaveAccents = function (s) {
     var r = s.replace(new RegExp("\\s", 'g'), "");

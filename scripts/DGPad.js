@@ -9,11 +9,11 @@ $BODY_SCRIPT = $BODY_SCRIPT[$BODY_SCRIPT.length - 1];
 
 if (!$APP_PATH) {
     // Si le script est le premier script DGPad trouvé dans la page :
-    var $ECHO_SOURCE = false;
+    var $ECHO_SOURCE = true;
     // Désactive toutes les alertes sur cette fenêtre pour éviter que l'uiwebview
     // soit polluée par une alerte "popup" de filepicker :
     window.$ALERT = window.alert;
-    window.alert = function() {
+    window.alert = function () {
     }
     // Indique si DGPad s'ouvre dans l'application iOS/Android ou bien dans le navigateur :
     window.$APPLICATION = false;
@@ -22,7 +22,8 @@ if (!$APP_PATH) {
         window.$APPLICATION = (window.parent && window.parent.$APPLICATION);
         window.$iOS_APPLICATION = (window.parent && window.parent.$iOS_APPLICATION);
     } catch (er) {
-    };
+    }
+    ;
 
     // Seulement pour la plateforme Android, true dans ce cas :
     var $STOP_MOUSE_EVENTS = (navigator.userAgent.toLowerCase().indexOf("android") > -1);
@@ -38,53 +39,55 @@ if (!$APP_PATH) {
 
     var $INCLUDED_FILES = [];
 
-    var $HEADSCRIPT = function(_path) {
-        var head = document.getElementsByTagName('head')[0];
+    var $HEADSCRIPT = function (_path) {
         var script = document.createElement('script');
-        script.src = _path;
         script.type = 'text/javascript';
+        script.src = _path;
         script.async = false;
-        head.appendChild(script);
+        document.getElementsByTagName('head')[0].appendChild(script);
         return script;
     }
 
     // Uniquement utilisé en mode developpement :
-    var $INCLUDE = function(_fname, _external) {
+    var $INCLUDE = function (_fname, _external) {
         var purename = _fname;
         var files = "," + $INCLUDED_FILES.join(",") + ",";
         if (files.indexOf("," + _fname + ",") > -1) {
             // Le fichier a déjà été chargé précédemment :
             return;
         }
-        if (arguments.length === 1) {
-            // Il s'agit d'un fichier js local (propre à l'appli) :
-            _fname = $APP_PATH + _fname;
-
-            // On teste si le fichier local existe :
-            var request = new XMLHttpRequest();
-            try {
-                request.open("GET", _fname, false);
-                request.send();
-            } catch (e) {
-                return;
-            }
-        }
+//        if (arguments.length === 1) {
+//            // Il s'agit d'un fichier js local (propre à l'appli) :
+//            _fname = $APP_PATH + _fname;
+//
+//            // On teste si le fichier local existe :
+//            var request = new XMLHttpRequest();
+//            try {
+//                request.open("GET", _fname, false);
+//                request.send();
+//            } catch (e) {
+//                return;
+//            }
+//        }
+        _fname = $APP_PATH + _fname;
         $HEADSCRIPT(_fname);
         $INCLUDED_FILES.push(purename);
     };
 
 
-    var $LOADMAIN = function() {
+    var $LOADMAIN = function () {
         $HEADSCRIPT($APP_PATH + "Main.js");
     }
 
     // Le ou les fichiers de langues doivent être chargées en premier
     // le reste (Main.js) doit donc attendre que ces fichiers soient
     // interprétés. _proc est la fonction appelée lorsque ces scripts
-    // son chargés (onload) :
-    var $LOADLANGUAGE = function() {
+    // sont chargés (onload) :
+    var $LOADLANGUAGE = function () {
         // Charger le module de langue standard (anglais) :
-        $HEADSCRIPT($APP_PATH + "NotPacked/lang/LocalStrings.js");
+        var scp = $HEADSCRIPT($APP_PATH + "NotPacked/lang/LocalStrings.js");
+
+
 
         // Puis surcharger si la langue du navigateur est reconnue :
         var language_Code = navigator.language || navigator.userLanguage;
@@ -92,27 +95,19 @@ if (!$APP_PATH) {
         // Trouver éventuellement un paramètre de langue dans le script du body :
         if ($BODY_SCRIPT.hasAttribute("data-lang"))
             language_Code = $BODY_SCRIPT.getAttribute("data-lang").toUpperCase();
-        // Si le fichier existe, on l'interprète :
-        var fname = $APP_PATH + "NotPacked/lang/LocalStrings_" + language_Code + ".js";
-        var request = new XMLHttpRequest();
-        try {
-            request.open("GET", fname, false);
-            request.send();
-            $HEADSCRIPT($APP_PATH + "NotPacked/lang/LocalStrings_" + language_Code + ".js");
-        } catch (e) {
-            return;
-        }
+
+        $HEADSCRIPT($APP_PATH + "NotPacked/lang/LocalStrings_" + language_Code + ".js");
     };
 
-    var $LOADPICKER = function() {
+    var $LOADPICKER = function () {
 //        var script = $HEADSCRIPT($APP_PATH + "NotPacked/thirdParty/FilePicker.js");
         var script = $HEADSCRIPT("http://api.filepicker.io/v1/filepicker.js");
-        script.onload = function() {
+        script.onload = function () {
             filepicker.setKey('A11o-dWi-S-ePxgyeWpfyz');
         };
     };
 
-    var $MAIN_INIT = function() {
+    var $MAIN_INIT = function () {
         var tags = document.getElementsByTagName("canvas");
         var Elts = [];
         for (var i = 0, len = tags.length; i < len; i++) {
@@ -128,17 +123,27 @@ if (!$APP_PATH) {
         }
     };
 
-    var $GETSRC = function() {
-        var src = "";
+    var $ECHOSRC = function () {
+        var xhr = [];
+        var k=0;
         for (var i = 0, len = $INCLUDED_FILES.length; i < len; i++) {
-            src += "\n" + $U.loadFile($APP_PATH + $INCLUDED_FILES[i]);
+            xhr.push(new XMLHttpRequest());
+            xhr[i].open("GET", $APP_PATH + $INCLUDED_FILES[i], true);
+            xhr[i].send();
+            xhr[i].order=i;
+            xhr[i].onload = function (e) {
+                k++;
+                $INCLUDED_FILES[e.target.order]=e.target.responseText;
+                if (k===$INCLUDED_FILES.length) {
+                    $INCLUDED_FILES.push("var $MAIN_INIT = " + $MAIN_INIT.toString());
+                    $INCLUDED_FILES.push("window.onload = function() {\n$MAIN_INIT();\n};");
+                    console.log($INCLUDED_FILES.join("\n"));
+                }
+            }
         }
-        src += "\nvar $MAIN_INIT = " + $MAIN_INIT.toString() + "\n";
-        src += "window.onload = function() {\n$MAIN_INIT();\n};\n";
-        return src;
     };
 
-    var $GETCSS = function(ruleName, deleteFlag) {
+    var $GETCSS = function (ruleName, deleteFlag) {
         ruleName = ruleName.toLowerCase();
         if (document.styleSheets) {
             for (var i = 0; i < document.styleSheets.length; i++) {
@@ -172,7 +177,7 @@ if (!$APP_PATH) {
         return false;
     };
 
-    var $SCALECSS = function(_r, _p) {
+    var $SCALECSS = function (_r, _p) {
         var c = $GETCSS(_r);
         if (c) {
             var props = _p.split(",");
@@ -186,10 +191,10 @@ if (!$APP_PATH) {
 
 
 // Seulement pour l'application Androïd : le java doit gérer les mouse et touch events.
-    (function() {
+    (function () {
         if ($STOP_MOUSE_EVENTS) {
             var orig_addEventListener = Element.prototype.addEventListener;
-            Element.prototype.addEventListener = function(type, listener, useCapture) {
+            Element.prototype.addEventListener = function (type, listener, useCapture) {
                 switch (type) {
                     case "mousedown":
                         break;
@@ -204,7 +209,7 @@ if (!$APP_PATH) {
         }
     }());
 
-    (function() {
+    (function () {
         var head = document.getElementsByTagName('head')[0];
         var style = document.createElement('link');
         style.rel = "stylesheet";
@@ -243,7 +248,7 @@ if (!$APP_PATH) {
         var ios = /iphone|ipod|ipad/.test(userAgent);
         if (!standalone && !safari) {
             // DGPad s'ouvre dans l'iApp :
-            window.open = function(url) {
+            window.open = function (url) {
                 $FPICKERFRAME = new windowOpenIFrame(url);
             };
         }
@@ -260,15 +265,14 @@ if (!$APP_PATH) {
         Object.touchpad = true;
     }
 
-    String.prototype.startsWith = function(str) {
+    String.prototype.startsWith = function (str) {
         return (this.indexOf(str) === 0);
     };
 
-    window.onload = function() {
+    window.onload = function () {
         $MAIN_INIT();
         if ($ECHO_SOURCE) {
-            console.log($GETSRC());
-
+            $ECHOSRC();
         }
 //        for (var key in window) {
 //            if (!$NAMESPACE.hasOwnProperty(key)) {
@@ -279,7 +283,7 @@ if (!$APP_PATH) {
 }
 
 // Création du canvas associé :
-(function() {
+(function () {
     // On crée le canvas :
     var canvas = document.createElement("canvas");
     // Transfert sur le canvas de la largeur et hauteur éventuelle :

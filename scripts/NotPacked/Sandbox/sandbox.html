@@ -29,12 +29,10 @@ and open the template in the editor.
                 if ($PARAMS['lang']) language_Code = $PARAMS['lang'].toUpperCase();
                 var fname = "../lang/LocalStrings_" + language_Code + ".js";
                 var request = new XMLHttpRequest();
-                try {
-                    request.open("GET", fname, false);
-                    request.send();
+                request.open("GET", fname, true);
+                request.send();
+                request.onload=function(e) {
                     eval(request.responseText);
-                } catch (e) {
-                    return;
                 }
             }();
         </script>
