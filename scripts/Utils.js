@@ -624,12 +624,14 @@ $U.base64_decode = function (_data) {
 // For mouse wheel :
 $U.extractDelta = function (e)
 {
+    var n = null;
     if (e.wheelDelta)
-        return e.wheelDelta;
-    if (e.detail)
-        return e.detail * -40;
-    if (e.originalEvent && e.originalEvent.wheelDelta)
-        return e.originalEvent.wheelDelta;
+        n = e.wheelDelta;
+    else if (e.detail)
+        n = e.detail * -40;
+    else if (e.originalEvent && e.originalEvent.wheelDelta)
+        n = e.originalEvent.wheelDelta;
+    return isNaN(n) ? 0 : n;
 };
 
 $U.isFullLocalStorage = function () {
@@ -892,8 +894,9 @@ $U.initCanvas = function (_id) {
     };
 
     if (cTag.hasAttribute("data-presentation")) {
-        ZC.demoModeManager.setDemoMode(cTag.getAttribute("data-presentation").toLowerCase()==="true");
-    };
+        ZC.demoModeManager.setDemoMode(cTag.getAttribute("data-presentation").toLowerCase() === "true");
+    }
+    ;
 
     ZC.addTool(new PointConstructor());
     ZC.addTool(new SegmentConstructor());

@@ -13,7 +13,7 @@ function DeleteAll(_canvas) {
 
     var exe = function(ev) {
         canvas.selectArrowBtn();
-        canvas.quit();
+        canvas.saveToLocalStorage();
         canvas.undoManager.clear();
         canvas.undoManager.deleteObjs(canvas.getConstruction().elements());
         canvas.getConstruction().deleteAll();

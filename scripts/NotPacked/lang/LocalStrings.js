@@ -192,3 +192,6 @@ $L.props_text_console="Script console";
 // Dimanche 28 juin 2015
 $L.export_ibook="iBook widget for iBook Author :";
 $L.export_ibook2="Right-clic on this link to download the iBook zipped widget.";
+
+// Dimanche 18 octobre 2015
+$L.history_save="Save figure to history";

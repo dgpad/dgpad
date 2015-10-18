@@ -187,3 +187,6 @@ $L.props_text_console="Console de scripts";
 // Dimanche 28 juin 2015
 $L.export_ibook="Widget pour publication de la figure dans iBook Author :";
 $L.export_ibook2="Cliquer droit sur ce lien pour télécharger le widget zippé.";
+
+// Dimanche 18 octobre 2015
+$L.history_save="Enregistrer la figure actuelle dans l'historique";

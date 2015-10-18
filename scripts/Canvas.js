@@ -29,7 +29,7 @@ function Canvas(_id) {
         return (me.macrosManager.getSource() + Cn.getSource() + me.textManager.getSource())
     }
 
-    me.quit = function (is_iPad) {
+    me.saveToLocalStorage = function (is_iPad) {
         if (Cn.isEmpty())
             return;
 
@@ -41,7 +41,7 @@ function Canvas(_id) {
         t.lock = false;
         t.src = $U.base64_encode(me.getSource());
 
-        docObject.style.visibility = "hidden";
+//        docObject.style.visibility = "hidden";
         var buff = document.createElement("canvas");
         buff.setAttribute("width", $P.localstorage.iconwidth);
         buff.setAttribute("height", $P.localstorage.iconwidth);
@@ -174,7 +174,7 @@ function Canvas(_id) {
             if (!Object.touchpad) {
                 window.onresize = resizeWindow;
                 window.onbeforeunload = function () {
-                    me.quit();
+                    me.saveToLocalStorage();
                 };
             } else {
                 if ($U.isMobile.android()) {
@@ -195,7 +195,7 @@ function Canvas(_id) {
                 } else
                     window.onorientationchange = resizeWindow;
                 window.onunload = function () {
-                    me.quit();
+                    me.saveToLocalStorage();
                 };
                 // Seulement utilisée par l'application iPad (stockage de la figure dans
                 // l'historique à chaque fois que DGPad est désactivé (passe en background) :
@@ -874,7 +874,6 @@ function Canvas(_id) {
         Cn.computeAll();
         me.paint(ev);
     };
-
 
     var zoomGesture = null;
 

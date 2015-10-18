@@ -2,10 +2,8 @@ function HistoryPanel(_canvas, _closeProc) {
     var me = this;
     var canvas = _canvas;
     var width = canvas.getWidth() - 50;
-    var height = $P.localstorage.iconwidth + 100;
+    var height = $P.localstorage.iconwidth + 110;
     $U.extend(this, new CenterPanel(canvas, width, height));
-
-
 
     me.show();
     new CloseBox(me, _closeProc);
@@ -13,7 +11,7 @@ function HistoryPanel(_canvas, _closeProc) {
     var wout = new GUIElement(me, "div");
     wout.setAbsolute();
     wout.setColor("rgba(0,0,0,0)");
-    wout.setBounds(10, height - $P.localstorage.iconwidth - 70, width - 20, $P.localstorage.iconwidth + 50);
+    wout.setBounds(10, height - $P.localstorage.iconwidth - 90, width - 20, $P.localstorage.iconwidth + 50);
     wout.setStyle("overflow-x", "scroll");
     var d = wout.getDocObject();
     var mwheel = function(ev) {
@@ -44,6 +42,18 @@ function HistoryPanel(_canvas, _closeProc) {
     wout.addContent(win);
     me.addContent(wout);
     me.addContent(com);
+    
+    var exe=function(ev){
+        canvas.saveToLocalStorage();
+        canvas.paint();
+        _closeProc();
+    }
+    
+    var add=new Button(me);
+    add.setText("<span style='font-size:15px'>" +$L.history_save+ "</span>");
+    add.setBounds((width-400)/2, height-35, 400, 30);
+    add.addDownEvent(exe);
+    me.addContent(add);
 }
 
 function HistoryPanel_Elt(_owner, _canvas, _i, _closeProc) {
