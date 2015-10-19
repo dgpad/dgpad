@@ -23,7 +23,6 @@ if (!$APP_PATH) {
         window.$iOS_APPLICATION = (window.parent && window.parent.$iOS_APPLICATION);
     } catch (er) {
     }
-    ;
 
     // Seulement pour la plateforme Android, true dans ce cas :
     var $STOP_MOUSE_EVENTS = (navigator.userAgent.toLowerCase().indexOf("android") > -1);
