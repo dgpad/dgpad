@@ -5,6 +5,8 @@ function Canvas(_id) {
     var docObject = document.getElementById(_id);
     var bounds = null;
     var iPadDidFirstEnterBackground = true;
+    
+    
 
     me.nameDialog = null;
     me.refreshKeyboard = function () {
