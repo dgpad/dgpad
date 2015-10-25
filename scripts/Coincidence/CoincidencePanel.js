@@ -53,7 +53,7 @@ function CoincidencePanel(_canvas, _ev, _t) {
         window.addEventListener('mousedown', closeIfNeeded, false);
         window.addEventListener('touchstart', closeIfNeeded, false);
     };
-
+    
     me.init();
     me.show();
 

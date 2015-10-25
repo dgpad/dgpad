@@ -62,6 +62,7 @@ function CoincidenceManager(_canvas) {
             }
         }
 
+
         // Si on arrive jusqu'ici, c'est qu'il y a ambiguité :
         var cp = new CoincidencePanel(canvas, ev, t);
 

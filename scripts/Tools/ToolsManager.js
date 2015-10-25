@@ -20,6 +20,7 @@ function ToolsManager(_canvas) {
     var pxy = []; // Tableau simple représentant les modificateurs de propriété
     var tools = [];
     var visible = false;
+    var targets=[];
 
 
     me.isVisible = function() {
@@ -96,9 +97,10 @@ function ToolsManager(_canvas) {
     me.showTools = function(ev) {
         visible = true;
         canvas.setMovedFilter(me.mouseMoved);
-        var selectedObjs = canvas.getConstruction().getSelected();
-        if (selectedObjs.length > 0) {
-            var myTools = selectedObjs[0].getAssociatedTools().split(",");
+        targets=canvas.getConstruction().getSelected().slice();
+//        var selectedObjs = canvas.getConstruction().getSelected();
+        if (targets.length > 0) {
+            var myTools = targets[0].getAssociatedTools().split(",");
             var len = myTools.length;
 
             bxy = [];
@@ -117,7 +119,7 @@ function ToolsManager(_canvas) {
             }
             bxy.push(col);
             context.globalAlpha = 1;
-            setCoords(ev, selectedObjs[0]);
+            setCoords(ev, targets[0]);
         }
     };
 
@@ -147,10 +149,10 @@ function ToolsManager(_canvas) {
         me.hideTools();
         TOOL = _tool;
         OC = TOOL.getConstructor();
+        
         if (!canvas.isObjectConstructor(OC)) {
             canvas.setObjectConstructor(OC);
-            OC.setInitialObjects(canvas.getConstruction().getSelected());
-//            canvas.getConstruction().clearSelected();
+            OC.setInitialObjects(targets);
             if (OC.isInstantTool()) {
                 me.closeTools();
                 canvas.clearFilters();
