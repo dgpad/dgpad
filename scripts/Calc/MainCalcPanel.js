@@ -1,3 +1,5 @@
+
+
 function MainCalcPanel(_man, _canvas) {
     $U.extend(this, new Panel(_canvas.getDocObject()));
     var height = $P.CalcPanelHeight;
@@ -14,37 +16,37 @@ function MainCalcPanel(_man, _canvas) {
 //    me.setStyles("background: " + $U.browserCode() + "-linear-gradient(bottom, #9c9ba6, #57575f);box-shadow: inset 0 -1px 0 0 #bfbfbf;border-bottom: 1px solid #303236");
     me.transition("translate_y", 0.2, -height);
 
-    this.show = function() {
+    this.show = function () {
         canvas.getDocObject().parentNode.appendChild(me.getDocObject());
         me.applyTransitionIN();
     };
-    this.close = function() {
+    this.close = function () {
         me.cancel();
         E1.hide();
         E2.hide();
         MIN.hide();
         MAX.hide();
         me.applyTransitionOUT();
-        setTimeout(function() {
+        setTimeout(function () {
             canvas.getDocObject().parentNode.removeChild(me.getDocObject());
         }, 300);
         txtman.close();
     };
 
 
-    (function() {
+    (function () {
         var t = me.getOwnerBounds();
         me.setBounds(0, 0, t.width, height);
     })();
 
 
 
-    txtman.focus = function() {
+    txtman.focus = function () {
         man.activateBtns(true);
         showBtns();
     };
 
-    txtman.filterKB = function(_standardON) {
+    txtman.filterKB = function (_standardON) {
 //        console.log("filterKB");
         if (man.getCustomKB()) {
             if (_standardON)
@@ -56,7 +58,7 @@ function MainCalcPanel(_man, _canvas) {
 
     };
 
-    var initInputs = function() {
+    var initInputs = function () {
         E1 = txtman.add("E =", 10, 6, 740 * scl, 22);
         E2 = txtman.add($L.calc_text, 10, 39, 740 * scl, 22);
         MIN = txtman.add("min =", 780 * scl, 6, 230 * scl, 22);
@@ -74,21 +76,21 @@ function MainCalcPanel(_man, _canvas) {
 
     initInputs();
 
-    var clearChangeFilters = function() {
-        E1.setChangedFilter(function() {
+    var clearChangeFilters = function () {
+        E1.setChangedFilter(function () {
         });
-        E2.setChangedFilter(function() {
+        E2.setChangedFilter(function () {
         });
-        MIN.setChangedFilter(function() {
+        MIN.setChangedFilter(function () {
         });
-        MAX.setChangedFilter(function() {
+        MAX.setChangedFilter(function () {
         });
     }
 
-    var showKB = function() {
+    var showKB = function () {
         txtman.showKB();
     }
-    me.cancel = function() {
+    me.cancel = function () {
         txtman.deactiveAll();
         clearChangeFilters();
         if (OBJ) {
@@ -103,7 +105,7 @@ function MainCalcPanel(_man, _canvas) {
             me.valid();
         }
     };
-    me.valid = function() {
+    me.valid = function () {
         txtman.deactiveAll();
         clearChangeFilters();
         E1.setText("");
@@ -121,7 +123,7 @@ function MainCalcPanel(_man, _canvas) {
         hideBtns();
         man.activateBtns(false);
         txtman.setFirst(true);
-        setTimeout(function() {
+        setTimeout(function () {
             txtman.deactiveAll();
         }, 1);
 
@@ -135,7 +137,7 @@ function MainCalcPanel(_man, _canvas) {
         editObj = null;
     };
 
-    var transformToList = function(_segs) {
+    var transformToList = function (_segs) {
         if (OBJ === null)
             return;
         OBJ.compute();
@@ -155,36 +157,15 @@ function MainCalcPanel(_man, _canvas) {
         }
     };
 
-    var transformToPoints = function() {
+    var transformToPoints = function () {
         transformToList(0);
     };
 
-    var transformToSegments = function() {
+    var transformToSegments = function () {
         transformToList(1);
     };
 
-//    var transformToPoint = function() {
-//        if (OBJ === null)
-//            return;
-//        OBJ.compute();
-//        var list = OBJ.getE1().getPointList();
-//        if (list.length > 0) {
-//            for (var i = 0; i < list.length; i++) {
-//                var o = new PointObject(Cn, "_P", 0, 0);
-//                o.setEXY(list[i]);
-//                Cn.Quickadd(o);
-//            }
-//            me.valid();
-//            return;
-//        }
-//        var o = new PointObject(Cn, "_P", 0, 0);
-//        o.setEXY(OBJ.getE1().getSource());
-//        canvas.addObject(o);
-//        o.compute();
-//        me.cancel();
-//        editObj = null;
-//    };
-    var transformToFunc = function() {
+    var transformToFunc = function () {
         if (OBJ === null)
             return;
         var vs = (OBJ.getE1().isDxyztFunc()) ? OBJ.getE1().value().getVars() : OBJ.getE1().getVars();
@@ -195,7 +176,56 @@ function MainCalcPanel(_man, _canvas) {
         me.valid();
     };
 
-//    console.log(me.getBounds().width);
+    // All this messy global code because old android versions (<4.4) need 
+    // an "a href" link to open the virtual keyboard... Beside, there were
+    // a lot of focus problem to solve to unify behavior in various android
+    // version :
+
+    var set_href = function (_bool) {
+        if ($U.isOldAndroid()) {
+            if ($APPLICATION)
+                var lnk = (_bool) ? "http://keyboardshow" : "http://keyboardhide";
+//            var lnk = (_bool) ? "http://www.google.fr" : "javascript:void(0)";
+            else
+                var lnk = (_bool) ? "javascript:$STANDARD_KBD.show()" : "javascript:void(0)";
+            KBBtn.setAttr("href", lnk);
+        } else {
+            if (_bool) {
+                KBBtn_img.removeDownEvent($STANDARD_KBD.hide);
+                KBBtn_img.addDownEvent($STANDARD_KBD.show);
+            } else {
+                KBBtn_img.removeDownEvent($STANDARD_KBD.show);
+                KBBtn_img.addDownEvent($STANDARD_KBD.hide);
+            }
+        }
+    };
+
+    
+    $STANDARD_KBD.setbtn = function () {
+        set_href(true);
+    };
+    $STANDARD_KBD.show = function () {
+        var act = txtman.getActive();
+        if (act !== null) {
+            var inp = act.getInput();
+            if (inp.style.getPropertyValue('visibility') !== "visible") {
+                set_href(false);
+                inp.style.setProperty('visibility', 'visible');
+                txtman.filterKB(true);
+                txtman.setKeyEvents(true);
+                inp.value = act.getText();
+                inp.focus();
+                inp.setSelectionRange(act.getSel().getSelStart(), act.getSel().getSelEnd());
+            }
+        }
+    };
+    $STANDARD_KBD.hide = function () {
+        var act = txtman.getActive();
+        if (act !== null) {
+            act.getInput().blur();
+        }
+    };
+
     var bleft = me.getBounds().width - 250;
     var btop = 80;
     var bwidth = 40;
@@ -214,30 +244,38 @@ function MainCalcPanel(_man, _canvas) {
     bleft += bwidth + bgap;
     var cancelBtn = new ImageElt(me, "NotPacked/images/calc/cancel.svg", me.cancel, bleft, btop, bwidth, bwidth);
     bleft += bwidth + bgap;
-    var KBBtn = new ImageElt(me, "NotPacked/images/calc/keyboard.png", showKB, bleft, btop + (bwidth - 30) / 2, 48, 30);
 
-    var showBtns = function() {
+    var KBBtn = new GUIElement(me, "a");
+    KBBtn.setStyles("position:absolute;border:3px");
+    KBBtn.setBounds(bleft, btop + (bwidth - 30) / 2, 48, 30);
+    var KBBtn_img = new ImageElt(KBBtn, "NotPacked/images/calc/keyboard.png", null, 0, 0, 48, 30);
+    set_href(true);
+    var doc = ($APPLICATION) ? window.parent.document.body : window.document.body;
+    doc.appendChild(KBBtn.getDocObject());
+
+
+    var showBtns = function () {
         validBtn.show();
         cancelBtn.show();
-        KBBtn.show();
+        KBBtn_img.show();
     };
-    var hideBtns = function() {
+    var hideBtns = function () {
         segBtn.hide();
         pointBtn.hide();
         func1Btn.hide();
         validBtn.hide();
         cancelBtn.hide();
-        KBBtn.hide();
+        KBBtn_img.hide();
     };
     hideBtns();
     me.show();
 
 
-    me.insertText = function(_st) {
+    me.insertText = function (_st) {
         txtman.insertText(_st);
     };
 
-    var setPointBtn = function() {
+    var setPointBtn = function () {
         if ((OBJ === null) || (OBJ.getCode() !== "expression") || (!OBJ.getE1()))
             return;
         var oneValidValue = OBJ.getE1().getValidValue();
@@ -254,7 +292,7 @@ function MainCalcPanel(_man, _canvas) {
                 segBtn.show();
         }
     };
-    var setFuncBtn = function() {
+    var setFuncBtn = function () {
         if ((OBJ === null) || (OBJ.getCode() !== "expression") || (!OBJ.getE1()))
             return;
         var oneValidValue = OBJ.getE1().getValidValue();
@@ -268,7 +306,7 @@ function MainCalcPanel(_man, _canvas) {
             return;
         func1Btn.show();
     };
-    var mainFilter = function() {
+    var mainFilter = function () {
         pointBtn.hide();
         segBtn.hide();
         func1Btn.hide();
@@ -282,8 +320,8 @@ function MainCalcPanel(_man, _canvas) {
         return;
     };
 
-    var cFilter = function(_proc, _p1, _p2, _p3) {
-        return function(_t) {
+    var cFilter = function (_proc, _p1, _p2, _p3) {
+        return function (_t) {
             _proc(_t, _p1, _p2, _p3);
             mainFilter();
             if (OBJ) {
@@ -298,13 +336,13 @@ function MainCalcPanel(_man, _canvas) {
         }
     }
 
-    var editFilter = function(_proc, _p1, _p2, _p3) {
-        return function() {
+    var editFilter = function (_proc, _p1, _p2, _p3) {
+        return function () {
             _proc(_p1, _p2, _p3);
         }
     }
 
-    me.createObj = function() {
+    me.createObj = function () {
         OBJ = new ExpressionObject(Cn, "_E", "", "", "", "", 10, 120);
         OBJ.setT("");
         var r = Math.random() * 128;
@@ -328,7 +366,7 @@ function MainCalcPanel(_man, _canvas) {
     }
 
     var editObj = null;
-    me.edit = function(_obj) {
+    me.edit = function (_obj) {
         if (OBJ !== null) {
             txtman.insertText(_obj.getVarName());
             txtman.nextCar();

@@ -2,10 +2,16 @@ function CustomTexts(_owner) {
     var me = this;
     var owner = _owner;
     var txts = [];
-    var activeElt = null;
+    var active_elt = null;
     var firstActivation = true;
+    
+
 
     me.filterKB = function(_standardON) {
+    };
+    
+    me.getActive=function(){
+        return active_elt;
     };
 
     me.add = function(_lbl, _l, _t, _w, _h) {
@@ -30,7 +36,7 @@ function CustomTexts(_owner) {
         for (var i = 0; i < txts.length; i++) {
             txts[i].setActive(false);
         }
-        activeElt = null;
+        active_elt = null;
     };
 
     me.close = function() {
@@ -47,30 +53,30 @@ function CustomTexts(_owner) {
     };
 
     me.activate = function(txt) {
-        if (activeElt !== txt) {
+        if (active_elt !== txt) {
             if (firstActivation) {
                 owner.createObj();
                 firstActivation = false;
             }
             me.deactiveAll();
             txt.setActive(true);
-            activeElt = txt;
+            active_elt = txt;
             me.focus();
         }
     };
 
     me.insertText = function(_st) {
-        if (activeElt != null)
-            activeElt.insertText(_st);
+        if (active_elt != null)
+            active_elt.insertText(_st);
     };
 
     me.showKB = function() {
-        if (activeElt != null)
-            activeElt.showKB();
+        if (active_elt != null)
+            active_elt.showKB();
     };
     me.nextCar = function() {
-        if (activeElt != null)
-            activeElt.nextCar();
+        if (active_elt != null)
+            active_elt.nextCar();
     };
 
     var maybesimplequote = false;
@@ -93,7 +99,7 @@ function CustomTexts(_owner) {
         };
         if ((key === 8) || (key === 13) || (key === 27) || (key === 37) || (key === 39) || (key === 46))
             return;
-        if (activeElt === null)
+        if (active_elt === null)
             return false;
         me.insertText(String.fromCharCode(key));
         ev.preventDefault();
@@ -102,13 +108,13 @@ function CustomTexts(_owner) {
     var keydown = function(ev) {
 //        console.log("keydown");
         maybesimplequote = false;
-        if (activeElt === null)
+        if (active_elt === null)
             return false;
         var key = ev.keyCode || ev.charCode;
 //        console.log("keydown=" + key);
         switch (key) {
             case 8:  //DEL
-                activeElt.executeCommand("DEL");
+                active_elt.executeCommand("DEL");
                 break;
             case 13:  //ENTER
                 owner.valid();
@@ -117,13 +123,13 @@ function CustomTexts(_owner) {
                 owner.cancel();
                 break;
             case 37:  //LEFT
-                activeElt.executeCommand("LEFT");
+                active_elt.executeCommand("LEFT");
                 break;
             case 39:  //RIGHT
-                activeElt.executeCommand("RIGHT");
+                active_elt.executeCommand("RIGHT");
                 break;
             case 46:  //CLR
-                activeElt.executeCommand("CLR");
+                active_elt.executeCommand("CLR");
                 break;
             case 52:
             case 222:  //guillemet simple

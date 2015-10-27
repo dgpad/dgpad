@@ -846,6 +846,13 @@ $U.isMobile = {
     }
 };
 
+
+
+$U.isOldAndroid=function(){
+    var ua = navigator.userAgent;
+    return ((ua.indexOf("Android") >= 0) && (parseFloat(ua.slice(ua.indexOf("Android") + 8)) < 4.4));
+};
+
 $U.isBrowser = {
     firefox: function () {
         return (navigator.userAgent.toLowerCase().indexOf('firefox') !== -1);
