@@ -352,6 +352,7 @@ function props_namePanel(_owner) {
 
     this.focus = function() {
         input.focus();
+        input.selectAll();
     };
 
     this.setObj = function() {

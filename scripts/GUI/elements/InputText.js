@@ -51,6 +51,11 @@ function InputText(_owner) {
 
     form.addContent(name);
     me.addContent(form);
+    
+    me.selectAll=function(){
+        inp.setSelectionRange(0, 9999);
+    }
+    
 
 
     me.setBounds = function(l, t, w, h) {
