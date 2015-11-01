@@ -180,10 +180,16 @@ function GUIElement(_owner, _type) {
     };
 
     var exe = function (_p) {
-        _p.MouseEvent_Function = function (ev) {
-            ev.preventDefault();
-            _p(ev);
-        };
+        if (preventDefault) {
+            _p.MouseEvent_Function = function (ev) {
+                ev.preventDefault();
+                _p(ev);
+            };
+        } else {
+            _p.MouseEvent_Function = function (ev) {
+                _p(ev);
+            };
+        }
         return _p.MouseEvent_Function;
     };
 
@@ -192,13 +198,11 @@ function GUIElement(_owner, _type) {
             _p.TouchEvent_Function = function (tch) {
                 tch.preventDefault();
                 var touch = tch.touches[touchNumber] || tch.changedTouches[touchNumber];
-//                var touch = tch.touches[touchNumber];
                 _p(touch);
             };
         } else {
             _p.TouchEvent_Function = function (tch) {
                 var touch = tch.touches[touchNumber] || tch.changedTouches[touchNumber];
-//                var touch = tch.touches[touchNumber];
                 _p(touch);
             };
         }
@@ -235,7 +239,8 @@ function GUIElement(_owner, _type) {
             return;
         var obj = (arguments.length < 2) ? docObject : _to;
         obj.addEventListener('touchstart', exeTCH(_proc), false);
-        obj.addEventListener('mousedown', exe(_proc), false);
+        if (!$U.isMobile.android() && !$U.isMobile.ios())
+            obj.addEventListener('mousedown', exe(_proc), false);
     };
 
     me.addMoveEvent = function (_proc, _to) {
@@ -243,7 +248,8 @@ function GUIElement(_owner, _type) {
             return;
         var obj = (arguments.length < 2) ? docObject : _to;
         obj.addEventListener('touchmove', exeTCH(_proc), false);
-        obj.addEventListener('mousemove', exe(_proc), false);
+        if (!$U.isMobile.android() && !$U.isMobile.ios())
+            obj.addEventListener('mousemove', exe(_proc), false);
     };
 
     me.addUpEvent = function (_proc, _to) {
@@ -251,7 +257,9 @@ function GUIElement(_owner, _type) {
             return;
         var obj = (arguments.length < 2) ? docObject : _to;
         obj.addEventListener('touchend', exeTCH(_proc), false);
-        obj.addEventListener('mouseup', exe(_proc), false);
+        if (!$U.isMobile.android() && !$U.isMobile.ios())
+            obj.addEventListener('mouseup', exe(_proc), false);
+
     };
 
     me.removeDownEvent = function (_proc, _to) {

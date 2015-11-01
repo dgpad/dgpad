@@ -4,15 +4,14 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/erichake/Gdrive/dgpad/scripts/DGPad.js</file>
-            <file>file:/home/erichake/Gdrive/dgpad/scripts/Calc/CalcManager.js</file>
-            <file>file:/home/erichake/Gdrive/dgpad/scripts/History/HistoryPanel.js</file>
-            <file>file:/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js</file>
-            <file>file:/home/erichake/Gdrive/dgpad/scripts/Calc/MainCalcPanel.js</file>
-            <file>file:/home/erichake/Gdrive/dgpad/scripts/Calc/CustomTexts.js</file>
+            <file>file:/home/erichake/Gdrive/dgpad/scripts/Canvas.js</file>
+            <file>file:/home/erichake/Gdrive/dgpad/scripts/Properties/PropertiesPanel.js</file>
+            <file>file:/home/erichake/Gdrive/dgpad/scripts/GUI/elements/InputText.js</file>
             <file>file:/home/erichake/Gdrive/dgpad/scripts/NotPacked/styles.css</file>
-            <file>file:/home/erichake/Gdrive/dgpad/scripts/GUI/elements/ImageElt.js</file>
-            <file>file:/home/erichake/Gdrive/dgpad/scripts/GUI/elements/GUIElement.js</file>
-            <file>file:/home/erichake/Gdrive/dgpad/scripts/Calc/CustomTextInput.js</file>
+            <file>file:/home/erichake/Gdrive/dgpad/scripts/Utils.js</file>
+            <file>file:/home/erichake/Gdrive/dgpad/scripts/Magnifier/DemoModeManager.js</file>
+            <file>file:/home/erichake/Gdrive/dgpad/scripts/Magnifier/DemoModePanel.js</file>
+            <file>file:/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js</file>
         </group>
     </open-files>
 </project-private>

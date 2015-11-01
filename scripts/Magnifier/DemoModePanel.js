@@ -27,12 +27,13 @@ function DemoModePanel(_canvas, _touchNum) {
     var dragup = function(ev) {
         me.applyTransitionOUT();
     };
+    
     me.removeEvents = function() {
         me.removeMoveEvent(dragmove, window);
         me.removeUpEvent(dragup, window);
         me.removeDownEvent(dragdown, window);
     };
-
+    
     me.addDownEvent(dragdown, window);
     me.addMoveEvent(dragmove, window);
     me.addUpEvent(dragup, window);
