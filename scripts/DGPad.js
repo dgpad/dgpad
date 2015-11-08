@@ -9,7 +9,7 @@ $BODY_SCRIPT = $BODY_SCRIPT[$BODY_SCRIPT.length - 1];
 
 if (!$APP_PATH) {
     // Si le script est le premier script DGPad trouvé dans la page :
-    var $ECHO_SOURCE = false;
+    var $ECHO_SOURCE = true;
     // Désactive toutes les alertes sur cette fenêtre pour éviter que l'uiwebview
     // soit polluée par une alerte "popup" de filepicker :
     window.$ALERT = window.alert;
@@ -23,7 +23,7 @@ if (!$APP_PATH) {
         window.$iOS_APPLICATION = (window.parent && window.parent.$iOS_APPLICATION);
     } catch (er) {
     }
-    
+
     // Only for standard android keyboard :
     window.$STANDARD_KBD = {};
 
@@ -126,16 +126,16 @@ if (!$APP_PATH) {
     };
 
     var $ECHOSRC = function () {
-        var k=0;
+        var k = 0;
         for (var i = 0, len = $INCLUDED_FILES.length; i < len; i++) {
-            var xhr=new XMLHttpRequest();
+            var xhr = new XMLHttpRequest();
             xhr.open("GET", $APP_PATH + $INCLUDED_FILES[i], true);
             xhr.send();
-            xhr.order=i;
+            xhr.order = i;
             xhr.onload = function (e) {
                 k++;
-                $INCLUDED_FILES[e.target.order]=e.target.responseText;
-                if (k===$INCLUDED_FILES.length) {
+                $INCLUDED_FILES[e.target.order] = e.target.responseText;
+                if (k === $INCLUDED_FILES.length) {
                     $INCLUDED_FILES.push("var $MAIN_INIT = " + $MAIN_INIT.toString());
                     $INCLUDED_FILES.push("window.onload = function() {\n$MAIN_INIT();\n};");
                     console.log($INCLUDED_FILES.join("\n"));
@@ -258,7 +258,7 @@ if (!$APP_PATH) {
 
 // Est-ce une tablette tactile ? :
     Object.touchpad = false;
-    if ('ontouchstart' in window) {
+    if ((navigator.userAgent.match(/Android/i)) || (navigator.userAgent.match(/iPhone|iPad|iPod/i))) {
         //iOS & android
         Object.touchpad = true;
     } else if (window.navigator.msPointerEnabled) {
