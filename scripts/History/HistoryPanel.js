@@ -68,12 +68,7 @@ function HistoryPanel_Elt(_owner, _canvas, _i, _closeProc) {
     me.setColor("#FAFAFA");
 
     var load = function() {
-        canvas.getConstruction().deleteAll();
-        canvas.macrosManager.clearTools();
-        canvas.textManager.clear();
-        canvas.trackManager.clear();
-        canvas.Interpret($U.base64_decode(c.src));
-        canvas.forceArrowBtn();
+        canvas.load64(c.src);
         _closeProc();
     }
 

@@ -260,7 +260,7 @@ function GUIElement(_owner, _type) {
         if (!$U.isMobile.android() && !$U.isMobile.ios())
             obj.addEventListener('mouseup', exe(_proc), false);
 
-    };
+    }; 
 
     me.removeDownEvent = function (_proc, _to) {
         if (!_proc)

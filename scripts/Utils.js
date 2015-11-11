@@ -889,9 +889,18 @@ $U.initEvents = function (ZC, cTag) {
 
 }
 
+// This function is called each time something happend in construction.
+// (add, remove, drag, zoom, etc...). This is usefull for python wrapped
+// webview :
+$U.changed=function(){
+    window.status="changed"
+}
+$U.AllCanvas=[];
+
 
 $U.initCanvas = function (_id) {
     var ZC = new Canvas(_id);
+    $U.AllCanvas.push(ZC);
     var cTag = document.getElementById(_id);
 
     $U.initEvents(ZC, cTag);

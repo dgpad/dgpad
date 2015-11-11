@@ -319,6 +319,7 @@ function Construction(_canvas) {
     };
 
     me.add = function (_obj) {
+        $U.changed();
         AO[_obj.getName()] = _obj;
         AV[_obj.getName()] = me.getVarName(_obj.getName());
         V.push(_obj);
@@ -427,15 +428,18 @@ function Construction(_canvas) {
 
     // homothétie de centre (_x;_y) et de rapport _h :
     me.zoom = function (_x, _y, _h) {
+        $U.changed();
         me.coordsSystem.zoom(_x, _y, _h);
     };
 
     // translation de vecteur (_x;_y) :
     me.translate = function (_x, _y) {
+        $U.changed();
         me.coordsSystem.translate(_x, _y);
     };
 
     me.translateANDzoom = function (_xt, _yt, _xz, _yz, _h) {
+        $U.changed();
         me.coordsSystem.translateANDzoom(_xt, _yt, _xz, _yz, _h);
     };
 
@@ -611,6 +615,7 @@ function Construction(_canvas) {
     };
 
     me.remove = function (_o) {
+        $U.changed();
         var i = V.indexOf(_o);
         if (i !== -1) {
             V.splice(i, 1);

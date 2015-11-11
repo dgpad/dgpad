@@ -112,6 +112,7 @@ function ConstructionObject(_construction, _name) {
 
 
     this.startDrag = function (_x, _y) {
+        $U.changed();
         PtsChilds = [];
         dragCoords = [];
         this.dragTo = (Cn.is3D()) ? this.dragTo3D : this.dragTo2D;

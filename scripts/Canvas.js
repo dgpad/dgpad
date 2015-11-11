@@ -5,8 +5,8 @@ function Canvas(_id) {
     var docObject = document.getElementById(_id);
     var bounds = null;
     var iPadDidFirstEnterBackground = true;
-    
-    
+
+
 
     me.nameDialog = null;
     me.refreshKeyboard = function () {
@@ -30,7 +30,14 @@ function Canvas(_id) {
     me.getSource = function () {
         return (me.macrosManager.getSource() + Cn.getSource() + me.textManager.getSource())
     }
-
+    me.load64 = function (_str) {
+        me.getConstruction().deleteAll();
+        me.macrosManager.clearTools();
+        me.textManager.clear();
+        me.trackManager.clear();
+        me.Interpret($U.base64_decode(_str));
+        me.forceArrowBtn();
+    }
     me.saveToLocalStorage = function (is_iPad) {
         if (Cn.isEmpty())
             return;
@@ -1016,7 +1023,7 @@ function Canvas(_id) {
         el.setAttribute('scrolling', 'no');
         // Trouver éventuellement un paramètre de langue dans le script du body :
         var lang = ($BODY_SCRIPT.hasAttribute("data-lang")) ? "?lang=" + $BODY_SCRIPT.getAttribute("data-lang").toUpperCase() : "";
-        
+
         el.setAttribute('src', $APP_PATH + 'NotPacked/Sandbox/sandbox.html' + lang);
         document.body.appendChild(el);
         el.onload = function () {
