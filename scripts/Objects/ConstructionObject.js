@@ -47,13 +47,27 @@ function ConstructionObject(_construction, _name) {
     var dragPoints = null;
     var dragCoords, freeDragPts, PtsChilds;
 
-    // ************************* CHANTIER ****************************
-    // On remplace les dépendances pour le déplacement des objets
-    // construits, avec une expression du type P2.setDragPoints([A.me(),B.me()])
+    var timestamp = 0;
 
     this.me = function () {
         return this;
     }
+
+    this.newTimeStamp = function () {
+        var d = new Date()
+        timestamp = d.getTime();
+    }
+    this.setTimeStamp = function (_millis) {
+        timestamp = _millis;
+    }
+    this.getTimeStamp = function () {
+        return timestamp;
+    }
+
+
+    // ************************* CHANTIER ****************************
+    // On remplace les dépendances pour le déplacement des objets
+    // construits, avec une expression du type P2.setDragPoints([A.me(),B.me()])
 
     this.initDragPoints = function () {
         if (dragPoints === null)

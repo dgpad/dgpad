@@ -72,6 +72,7 @@ $P.fontmargin = 5;
 
 $P.precision = {};
 $P.precision.timeout = 2000;
+$P.precision.edit_timeout = 5000;
 $P.precision.caress = 5;
 // -1 pour ne pas afficher la longueur :
 $P.precision.point = -1;

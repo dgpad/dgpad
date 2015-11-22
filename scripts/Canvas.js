@@ -30,7 +30,7 @@ function Canvas(_id) {
     me.getSource = function () {
         return (me.macrosManager.getSource() + Cn.getSource() + me.textManager.getSource())
     }
-    
+
     me.getHTML = function (hide_ctrl_panel) {
         var _w = width;
         var _h = height;
@@ -1030,6 +1030,48 @@ function Canvas(_id) {
         reader.readAsText(f);
     };
 
+    // only for computers :
+    me.keydown = function (ev) {
+        // $ALERT("yes");
+        if (me.getMode() === 1) {
+            var key = ev.keyCode || ev.charCode;
+            var pt = Cn.getLastPoint();
+            var d = new Date();
+            var key = ev.keyCode || ev.charCode;
+            switch (key) {
+                case 8:  //DEL
+                    if ((pt) && (pt.getShowName()) && (d.getTime() - pt.getTimeStamp() < $P.precision.edit_timeout)) {
+                        pt.setName(pt.getName().slice(0, -1));
+                        pt.refreshChildsNames();
+                        me.paint();
+                    }
+                    break;
+                default:
+                    return true;
+            }
+            ev.preventDefault();
+            return false;
+        }
+    }
+
+    // only for computers :
+    me.keypress = function (ev) {
+        if (me.getMode() === 1) {
+            ev.preventDefault();
+            var key = ev.keyCode || ev.charCode;
+            var pt = Cn.getLastPoint();
+            var d = new Date();
+            if ((pt) && (d.getTime() - pt.getTimeStamp() < $P.precision.edit_timeout)) {
+                var car = String.fromCharCode(key);
+                var nme = (pt.getShowName()) ? pt.getName() + car : car;
+                pt.setName(nme);
+                pt.setShowName(true);
+                pt.refreshChildsNames();
+                me.paint();
+            }
+        }
+    };
+
 
 
     me.paint = function (ev, coords) {
@@ -1048,6 +1090,7 @@ function Canvas(_id) {
 
     me.addObject = function (o) {
         me.undoManager.record(o, true);
+        o.newTimeStamp();
         Cn.add(o);
     };
 

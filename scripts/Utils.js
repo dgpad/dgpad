@@ -848,7 +848,7 @@ $U.isMobile = {
 
 
 
-$U.isOldAndroid=function(){
+$U.isOldAndroid = function () {
     var ua = navigator.userAgent;
     return ((ua.indexOf("Android") >= 0) && (parseFloat(ua.slice(ua.indexOf("Android") + 8)) < 4.4));
 };
@@ -887,15 +887,19 @@ $U.initEvents = function (ZC, cTag) {
     cTag.addEventListener('dragover', ZC.dragOver, false);
     cTag.addEventListener('drop', ZC.drop, false);
 
+    if (!Object.touchpad) {
+        window.addEventListener("keypress", ZC.keypress, false);
+        window.addEventListener("keydown", ZC.keydown, false);
+    }
 }
 
 // This function is called each time something happend in construction.
 // (add, remove, drag, zoom, etc...). This is usefull for python wrapped
 // webview :
-$U.changed=function(){
-    window.status="changed"
+$U.changed = function () {
+    window.status = "changed"
 }
-$U.AllCanvas=[];
+$U.AllCanvas = [];
 
 
 $U.initCanvas = function (_id) {

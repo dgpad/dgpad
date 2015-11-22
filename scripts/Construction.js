@@ -481,7 +481,7 @@ function Construction(_canvas) {
     var uniqueName = function (_name, _o) {
         var name = _name;
         var basename = _name;
-        var num = 1;
+        var num = 0;
         while (slowfind(name, _o)) {
             name = basename + num;
             num++;
@@ -676,6 +676,25 @@ function Construction(_canvas) {
         }
         return null;
     };
+    var getLastPoint_sortFilter = function (a, b) {
+        if (b.getTimeStamp() > a.getTimeStamp())
+            return 1;
+        return -1;
+    };
+    me.getLastPoint = function () {
+        var len = V.length;
+        var pts = [];
+        for (var i = 0; i < len; i++) {
+            if ((V[i].isInstanceType("point")) && (V[i].getTimeStamp())) {
+                pts.push(V[i]);
+            }
+        }
+        if (pts.length > 0) {
+            pts.sort(getLastPoint_sortFilter);
+            return pts[0];
+        }
+        return null;
+    }
 
     /* Selected objects
      * Actualised by each validate call :
