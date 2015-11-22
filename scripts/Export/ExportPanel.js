@@ -98,9 +98,6 @@ function ExportPanel(_canvas, _closeProc) {
     var getiBookFiles = function () {
         var _w = canvas.getBounds().width;
         var _h = canvas.getBounds().height;
-        
-        
-        
         var d = new Date();
         var _id = "net.dgpad.fig" + d.getTime();
         var _src = canvas.getSource();
@@ -115,40 +112,11 @@ function ExportPanel(_canvas, _closeProc) {
 
 
     var getHTML = function () {
-        var _w = canvas.getBounds().width;
-        var _h = canvas.getBounds().height;
-        var _src = canvas.getSource();
-        _src = $U.base64_encode(_src);
-        var d = new Date();
-        var _frm = "dgpad_frame_" + d.getTime();
-        var s = '<form action="http://www.dgpad.net/index.php" target="' + _frm + '" method="post" width="' + _w + '" height="' + (_h + 40) + '">';
-        s += '<input type="hidden" name="file_content" value="' + _src + '">';
-        if (hidectrlpanel)
-            s += '<input type="hidden" name="hide_ctrlpanel" value="' + hidectrlpanel + '">';
-        s += '<div style="text-align:center;position:relative;width:' + _w + 'px;height:' + _h + 'px;background-color:rgba(200,200,200,1)">';
-        s += '<div style="height:40px;line-height:40px;vertical-align: baseline;">';
-        s += '<input type="submit" value="' + $L.export_button + '" style="display: inline-block;zoom: 1;*display: inline;vertical-align: baseline;margin: 0 2px;outline: none;cursor: pointer;text-align: center;text-decoration: none;font: 14px/100% Arial, Helvetica, sans-serif;padding: .5em 2em .55em;text-shadow: 0 1px 1px rgba(0,0,0,.3);-webkit-border-radius: .5em;-moz-border-radius: .5em;border-radius: .5em;-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);box-shadow: 0 1px 2px rgba(0,0,0,.2);color: #d7d7d7;border: solid 1px #333;background: #333;background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#000));background: -moz-linear-gradient(top,  #666,  #000);">';
-        s += '</div>';
-        s += '<iframe name="' + _frm + '" width="' + _w + '" height="' + _h + '" src="about:blank" scrolling="no" frameborder="no"></iframe>';
-        s += '</div>';
-        s += '</form>';
-        return s;
+        return canvas.getHTML(hidectrlpanel);
     };
 
     var getHTMLJS = function () {
-        var _w = canvas.getBounds().width;
-        var _h = canvas.getBounds().height;
-        var _src = canvas.getSource();
-        _src = $U.base64_encode(_src);
-        var d = new Date();
-        var _frm = "dgpad_frame_" + d.getTime();
-        var s = '<form action="http://www.dgpad.net/index.php" target="' + _frm + '" method="post" width="' + _w + '" height="' + _h + '">';
-        s += '<input type="hidden" name="file_content" value="' + _src + '">';
-        if (hidectrlpanel)
-            s += '<input type="hidden" name="hide_ctrlpanel" value="' + hidectrlpanel + '">';
-        s += '<iframe name="' + _frm + '" width="' + _w + '" height="' + _h + '" src="about:blank" scrolling="no" frameborder="no" oNlOAd="if (!this.parentNode.num) {this.parentNode.submit();this.parentNode.num=true}"></iframe>';
-        s += '</form>';
-        return s;
+        return canvas.getHTMLJS(hidectrlpanel);
     };
 
     var getSRC = function () {
