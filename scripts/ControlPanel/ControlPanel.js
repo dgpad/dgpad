@@ -207,7 +207,7 @@ function ControlPanel(_canvas) {
     };
 
     var downloadProc = function () {
-        filepicker.pick({extension: '.txt', openTo: $U.getFilePickerDefaultBox()},
+        filepicker.pick({extension: '.txt,.dgp', openTo: $U.getFilePickerDefaultBox()},
         function (FPFile) {
             filepicker.read(FPFile, function (data) {
                 canvas.OpenFile("", data);
@@ -229,7 +229,7 @@ function ControlPanel(_canvas) {
         filepicker.exportFile(
                 "http://dgpad.net/scripts/NotPacked/thirdParty/temp.txt",
                 {suggestedFilename: "",
-                    extension: ".txt",
+                    extension: ".dgp",
                     services: ['DROPBOX', 'GOOGLE_DRIVE', 'BOX', 'SKYDRIVE', 'EVERNOTE', 'FTP', 'WEBDAV'],
                     openTo: $U.getFilePickerDefaultBox()},
         function (InkBlob) {
