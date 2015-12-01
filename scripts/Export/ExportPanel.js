@@ -52,64 +52,20 @@ function ExportPanel(_canvas, _closeProc) {
                 setComment($L.export_svgimage + '<br><br><a download="DgpadSvgImage.svg" href="' + lnk + '" style="-webkit-touch-callout:default;font-size:13px;font-family:Helvetica, Arial, sans-serif;color:#252525;" target="_blank"><b>' + $L.export_svgimage2 + '</b></a>');
                 break;
             case 5:
-                if (JSZipReady)
-                    iBookStuff();
-                else {
-                    var parent = document.getElementsByTagName("head")[0];
-                    var script0 = document.createElement("script");
-                    script0.type = "text/javascript";
-                    script0.src = $APP_PATH + "NotPacked/thirdParty/jszip-utils.js";
-                    var script1 = document.createElement("script");
-                    script1.type = "text/javascript";
-                    script1.src = $APP_PATH + "NotPacked/thirdParty/jszip.min.js";
-                    script1.onload = function () {
-                        iBookStuff();
-                        JSZipReady = true;
-                    }
-                    parent.appendChild(script0);
-                    parent.appendChild(script1);
-                }
+                canvas.loadZipPackage(iBookStuff);
                 break;
         }
         if (!Object.touchpad)
             textarea.getDocObject().select();
     };
 
-
     var iBookStuff = function () {
         setText("");
-        var ibook = getiBookFiles();
-        JSZipUtils.getBinaryContent($APP_PATH + "NotPacked/scripts.zip", function (err, data) {
-            if (err) {
-                throw err; // or handle err
-            }
-            var zip = new JSZip();
-            var plugin = zip.folder("ibook.wdgt").load(data);
-            plugin.file("index.html", ibook.html);
-            plugin.file("Info.plist", ibook.plist);
-            plugin.file("Default.png", ibook.png.substr(ibook.png.indexOf(',') + 1), {base64: true});
-            var content = zip.generate({type: "blob"});
-            var url = window.URL.createObjectURL(content);
+        canvas.getiBookPlugin(hidectrlpanel, "", function (_c) {
+            var url = window.URL.createObjectURL(_c);
             setComment($L.export_ibook + '<br><br><a download="iBookPlugin.zip" href="' + url + '" style="-webkit-touch-callout:default;font-size:13px;font-family:Helvetica, Arial, sans-serif;color:#252525;" target="_blank"><b>' + $L.export_ibook2 + '</b></a>');
         });
     };
-
-
-    var getiBookFiles = function () {
-        var _w = canvas.getBounds().width;
-        var _h = canvas.getBounds().height;
-        var d = new Date();
-        var _id = "net.dgpad.fig" + d.getTime();
-        var _src = canvas.getSource();
-        _src = $U.base64_encode(_src);
-        var _hide = hidectrlpanel ? "true" : "false";
-        var html = "<!DOCTYPE html>\n<html>\n\t<head>\n\t\t<title></title>\n\t\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n\t\t<link rel=\"icon\" type=\"image/png\" href=\"favicon.png\" />\n\t\t<link rel=\"apple-touch-icon\" href=\"scripts/NotPacked/images/icon.png\"/>\n\t\t<meta name=\"apple-mobile-web-app-capable\" content=\"yes\">\n\t\t<meta   id=\"wholeViewport\" name=\"viewport\" content=\"width=device-width, maximum-scale=1.0, initial-scale=1 ,user-scalable=no\">\n\t\t<script>\n\t\t\tvar $MOBILE_PHONE;\n\t\t\tif (navigator.userAgent.match(/(android|iphone|ipad|blackberry|symbian|symbianos|symbos|netfront|model-orange|javaplatform|iemobile|windows phone|samsung|htc|opera mobile|opera mobi|opera mini|presto|huawei|blazer|bolt|doris|fennec|gobrowser|iris|maemo browser|mib|cldc|minimo|semc-browser|skyfire|teashark|teleca|uzard|uzardweb|meego|nokia|bb10|playbook)/gi)) {\n\t\t\t\tif (((screen.width >= 480) && (screen.height >= 800)) || ((screen.width >= 800) && (screen.height >= 480)) || navigator.userAgent.match(/ipad/gi)) {\n\t\t\t\t\t$MOBILE_PHONE = false;//tablette\n\t\t\t\t} else {\n\t\t\t\t\t$MOBILE_PHONE = true;//mobile\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\t$MOBILE_PHONE = false;//Desktop\n\t\t\t}\n\t\t\tif ($MOBILE_PHONE) {\n\t\t\t\tdocument.getElementById('wholeViewport').setAttribute(\"content\", \"width=device-width, maximum-scale=0.7, initial-scale=0.7 ,user-scalable=no\");\n\t\t\t}\n\t\t</script>\n\t</head>\n\t<body style=\"-ms-touch-action: none;\">\n\t\t<script src=\"scripts/DGPad.js\" data-source=\"" + _src + "\" data-hidectrlpanel=\""+_hide+"\"></script>\n\t</body> \n</html>\n";
-        var plist = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n\t<key>CFBundleDisplayName</key>\n\t<string>DGPad</string>\n\t<key>CFBundleIdentifier</key>\n\t<string>" + _id + "</string>\n\t<key>MainHTML</key>\n\t<string>index.html</string>\n\t<key>Width</key>\n\t<integer>" + _w + "</integer>\n\t<key>Height</key>\n\t<integer>" + _h + "</integer>\n</dict>\n</plist>\n";
-        var png = canvas.exportPNG();
-        return {"html": html, "plist": plist, "png": png};
-    }
-
-
 
     var getHTML = function () {
         return canvas.getHTML(hidectrlpanel);

@@ -380,6 +380,49 @@ function Canvas(_id) {
         return svg;
     };
 
+    me.loadZipPackage = function (_onload) {
+        if (typeof window.JSZipUtils == 'undefined') {
+            var parent = document.getElementsByTagName("head")[0];
+            var script0 = document.createElement("script");
+            script0.type = "text/javascript";
+            script0.src = $APP_PATH + "NotPacked/thirdParty/jszip-utils.js";
+            var script1 = document.createElement("script");
+            script1.type = "text/javascript";
+            script1.src = $APP_PATH + "NotPacked/thirdParty/jszip.min.js";
+            script1.onload = _onload;
+            parent.appendChild(script0);
+            parent.appendChild(script1);
+        } else
+            _onload();
+    };
+
+    me.getiBookPlugin = function (_hide_control_panel, _fname, _callback) {
+        var _w = width;
+        var _h = height;
+        var _f = (_fname == "") ? "ibook.wdgt" : _fname;
+        var d = new Date();
+        var _id = "net.dgpad.fig" + d.getTime();
+        var _src = me.getSource();
+        _src = $U.base64_encode(_src);
+        var _hide = _hide_control_panel;
+        var html = "<!DOCTYPE html>\n<html>\n\t<head>\n\t\t<title></title>\n\t\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n\t\t<link rel=\"icon\" type=\"image/png\" href=\"favicon.png\" />\n\t\t<link rel=\"apple-touch-icon\" href=\"scripts/NotPacked/images/icon.png\"/>\n\t\t<meta name=\"apple-mobile-web-app-capable\" content=\"yes\">\n\t\t<meta   id=\"wholeViewport\" name=\"viewport\" content=\"width=device-width, maximum-scale=1.0, initial-scale=1 ,user-scalable=no\">\n\t\t<script>\n\t\t\tvar $MOBILE_PHONE;\n\t\t\tif (navigator.userAgent.match(/(android|iphone|ipad|blackberry|symbian|symbianos|symbos|netfront|model-orange|javaplatform|iemobile|windows phone|samsung|htc|opera mobile|opera mobi|opera mini|presto|huawei|blazer|bolt|doris|fennec|gobrowser|iris|maemo browser|mib|cldc|minimo|semc-browser|skyfire|teashark|teleca|uzard|uzardweb|meego|nokia|bb10|playbook)/gi)) {\n\t\t\t\tif (((screen.width >= 480) && (screen.height >= 800)) || ((screen.width >= 800) && (screen.height >= 480)) || navigator.userAgent.match(/ipad/gi)) {\n\t\t\t\t\t$MOBILE_PHONE = false;//tablette\n\t\t\t\t} else {\n\t\t\t\t\t$MOBILE_PHONE = true;//mobile\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\t$MOBILE_PHONE = false;//Desktop\n\t\t\t}\n\t\t\tif ($MOBILE_PHONE) {\n\t\t\t\tdocument.getElementById('wholeViewport').setAttribute(\"content\", \"width=device-width, maximum-scale=0.7, initial-scale=0.7 ,user-scalable=no\");\n\t\t\t}\n\t\t</script>\n\t</head>\n\t<body style=\"-ms-touch-action: none;\">\n\t\t<script src=\"scripts/DGPad.js\" data-source=\"" + _src + "\" data-hidectrlpanel=\"" + _hide + "\"></script>\n\t</body> \n</html>\n";
+        var plist = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n\t<key>CFBundleDisplayName</key>\n\t<string>DGPad</string>\n\t<key>CFBundleIdentifier</key>\n\t<string>" + _id + "</string>\n\t<key>MainHTML</key>\n\t<string>index.html</string>\n\t<key>Width</key>\n\t<integer>" + _w + "</integer>\n\t<key>Height</key>\n\t<integer>" + _h + "</integer>\n</dict>\n</plist>\n";
+        var png = me.exportPNG();
+
+        JSZipUtils.getBinaryContent($APP_PATH + "NotPacked/scripts.zip", function (err, data) {
+            if (!err) {
+                var zip = new JSZip();
+                var plugin = zip.folder(_f).load(data);
+                plugin.file("index.html", html);
+                plugin.file("Info.plist", plist);
+                plugin.file("Default.png", png.substr(png.indexOf(',') + 1), {base64: true});
+                var content = zip.generate({type: "blob"});
+                _callback(content);
+            }
+        });
+    };
+
+
 
 //    var gDrive = new GoogleFiles(docObject);
 //    me.upload = function(fname, source) {
@@ -419,7 +462,7 @@ function Canvas(_id) {
         return Cn;
     };
 
-    // Managers :
+// Managers :
     me.undoManager = new UndoManager(me);
     me.undoManager.setBtns();
     me.propertiesManager = new PropertiesManager(me);
@@ -447,10 +490,10 @@ function Canvas(_id) {
     };
 
 
-    // mode 0 pour consultation, 1 pour pointeur, 2 pour gomme, 3 pour poubelle, 
-    // 4 pour construction de macros, 5 pour execution de macros
-    // 6 pour les propriétés, 7 pour le tracé, 8 pour la calculatrice,
-    // 9 pour le magnétisme, 10 pour le TeX, 11 pour les dépendances :
+// mode 0 pour consultation, 1 pour pointeur, 2 pour gomme, 3 pour poubelle, 
+// 4 pour construction de macros, 5 pour execution de macros
+// 6 pour les propriétés, 7 pour le tracé, 8 pour la calculatrice,
+// 9 pour le magnétisme, 10 pour le TeX, 11 pour les dépendances :
     me.setMode = function (_mode) {
         closeTools();
         me.magnifyManager.show();
@@ -668,8 +711,8 @@ function Canvas(_id) {
             return 1;
     };
 
-    // Trie les indicateds pour éviter la prédominance des
-    // polygone lorsqu'on clique :
+// Trie les indicateds pour éviter la prédominance des
+// polygone lorsqu'on clique :
     var cleanInds = function () {
         var inds = Cn.getIndicated();
         // On trie en laissant les polygones en fin de liste :
@@ -743,7 +786,7 @@ function Canvas(_id) {
         return ((pressedCoords) && ($U.getTime() - pressedCoords.t) < 800) && (((pressedCoords.x - x0) * (pressedCoords.x - x0) + (pressedCoords.y - y0) * (pressedCoords.y - y0)) < prec2);
     };
 
-    // Mouse Events :
+// Mouse Events :
     me.mousePressed = function (ev) {
         ev.preventDefault();
         if (pressedFilter) {
@@ -786,18 +829,19 @@ function Canvas(_id) {
         me.paint(ev);
     };
 
+    me.translate = function (x, y) {
+        Cn.translate(x, y);
+        Cn.computeAll();
+        me.paint();
+    }
+
     me.mouseMoved = function (ev) {
         ev.preventDefault();
         actualCoords.x = me.mouseX(ev);
         actualCoords.y = me.mouseY(ev);
         if (dragCoords) {
             // S'il s'agit d'un click droit glissé :
-            var vx = actualCoords.x - dragCoords.x;
-            var vy = actualCoords.y - dragCoords.y;
-            Cn.translate(vx, vy);
-//            Cn.validate(ev);
-            Cn.computeAll();
-            me.paint(ev);
+            me.translate(actualCoords.x - dragCoords.x, actualCoords.y - dragCoords.y);
             dragCoords.x = actualCoords.x;
             dragCoords.y = actualCoords.y;
             return;
@@ -936,7 +980,7 @@ function Canvas(_id) {
 
     var zoomGesture = null;
 
-    // Lorsque le navigateur mobile ne connaît pas les évenements "gesture"
+// Lorsque le navigateur mobile ne connaît pas les évenements "gesture"
     var touchToMouse = function (_tch, _proc) {
         _tch.preventDefault();
         if (_tch.touches.length < 2) {
@@ -974,7 +1018,7 @@ function Canvas(_id) {
         //        _tch.stopPropagation();
     };
 
-    // TouchEvents :
+// TouchEvents :
     me.touchStart = function (tch) {
 
         touchToMouse(tch, me.mousePressed);
@@ -1030,14 +1074,18 @@ function Canvas(_id) {
         reader.readAsText(f);
     };
 
-    // only for computers :
+// only for computers :
     me.keydown = function (ev) {
         // $ALERT("yes");
+
         if (me.getMode() === 1) {
+            if (ev.metaKey)
+                return;
             var key = ev.keyCode || ev.charCode;
             var pt = Cn.getLastPoint();
             var d = new Date();
             var key = ev.keyCode || ev.charCode;
+            console.log("keydown: " + key);
             switch (key) {
                 case 8:  //DEL
                     if ((pt) && (pt.getShowName()) && (d.getTime() - pt.getTimeStamp() < $P.precision.edit_timeout)) {
@@ -1046,6 +1094,8 @@ function Canvas(_id) {
                         me.paint();
                     }
                     break;
+                case 91:    //COMMAND (apple)
+                    return false;
                 default:
                     return true;
             }
@@ -1054,11 +1104,15 @@ function Canvas(_id) {
         }
     }
 
-    // only for computers :
+// only for computers :
     me.keypress = function (ev) {
+
         if (me.getMode() === 1) {
+            if (ev.metaKey)
+                return;
             ev.preventDefault();
             var key = ev.keyCode || ev.charCode;
+            console.log("keypress: " + key);
             var pt = Cn.getLastPoint();
             var d = new Date();
             if ((pt) && (d.getTime() - pt.getTimeStamp() < $P.precision.edit_timeout)) {
@@ -1203,7 +1257,7 @@ function Canvas(_id) {
 //        };
 ////        me.sandboxFrame=el;
 //    }();
-    // Intepréteur de scripts lancé par un bouton :
+// Intepréteur de scripts lancé par un bouton :
     me.InterpretScript = function (_o, s) {
         interpreter.setCaller(_o);
         interpreter.Interpret(s);
