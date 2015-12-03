@@ -155,6 +155,7 @@ function Interpreter(_win, _canvas) {
             }
             s += match[3];
             // Eval is evil ? :
+            // console.log(s);
             eval(s);
             for (var i = 0, len = $macroFinals.length; i < len; i++) {
                 me.f($macroFinals[i]).setHidden(false);
@@ -293,7 +294,7 @@ function Interpreter(_win, _canvas) {
         var o = me.f(_e);
         return (o ? JSON.parse(me.$U.parseArrayEnglish(o.getValue(_x, _y, _z, _t))) : NaN);
     };
-    
+
     var SetExpressionValue = function (_e, _m) {
         var o = me.f(_e);
         o.setExp(_m);
@@ -303,12 +304,12 @@ function Interpreter(_win, _canvas) {
         var o = me.f(_n);
         return (o ? o : parent.document.getElementById(_n));
     };
-    
-    var RefreshInputs=function(){
+
+    var RefreshInputs = function () {
         me.Z.textManager.refreshInputs();
     };
-    
-    var Timer=function(_dlay){
+
+    var Timer = function (_dlay) {
         return new me.$U.timers(_dlay)
     };
 
@@ -777,10 +778,19 @@ function Interpreter(_win, _canvas) {
                     o.setMagnets(t);
                     break;
                 case "dp": // Dépendance des objets
-                    var t = e[1].substring(1, e[1].length-1).split(",");
-//                    var t = eval(e[1]);
+                    var t = e[1].substring(1, e[1].length - 1).split(",");
                     for (var k = 0; k < t.length; k++) {
-                        t[k] = me.C.find(t[k]);
+                        try {
+                            t[k]=eval(t[k]);
+                            t[k] = me.C.find(t[k]);
+                        }catch(e){
+                            try {
+                                t[k]=eval("$locvar_"+t[k]);
+                                t[k] = me.C.find(t[k]);
+                            }catch(e){
+                                console.log("Polygon dependance error !")
+                            }
+                        }
                     }
                     o.setDragPoints(t);
                     break;
@@ -1206,7 +1216,7 @@ function Interpreter(_win, _canvas) {
         s2 = s2.replace(new RegExp(maskTxts + "(\\d+)", "g"), function (m, _d) {
             return txts[_d];
         });
-        
+
 
 
 //        if ((s2 !== "") && ((isValidParenthesis(s2)))) {
