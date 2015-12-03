@@ -92,6 +92,10 @@ function AngleBisectorObject(_construction, _name, _P1, _P2, _P3) {
         var k = b / (a + b);
         var x = P1.getX() + k * (P3.getX() - P1.getX());
         var y = P1.getY() + k * (P3.getY() - P1.getY());
+        if ($U.isNearToPoint(x,y,P2.getX(), P2.getY(),1e-13)) {
+            x=P2.getX()+(P1.getY()-P2.getY());
+            y=P2.getY()+(P2.getX()-P1.getX());
+        }
         M.setXY(x, y);
         this.setDXDY(P2.getX(), P2.getY(), x, y);
         superObject.compute();
