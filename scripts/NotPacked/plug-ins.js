@@ -419,6 +419,39 @@ $macros[$L.macros.translation] = {
             }};
 
 
+$macros[$L.macros.rotation5]={
+	name:$L.macros.rotation5,
+	parameters:["point","point","point","point","point"],
+	exec:
+	function (O, C, B, A, M) {
+P1=Point("P1","O+((M-O)*(top.$U.cpx=(A-B)/(C-B)))/mod(top.$U.cpx)","0");
+STL(P1,"c:#0000b2;s:6;f:30");
+return [P1];
+}};
+
+$macros[$L.macros.rotationD_deg]={
+	name:$L.macros.rotationD_deg,
+	parameters:["point","point"],
+	exec:
+	function (O, M) {
+var q=Input("Entrer l'angle en degr\u00e9s :");
+var a=parseFloat(q)*Math.PI/180;
+P1=Point("P1","O+((M-O)*(cos("+a+")+i*sin("+a+")))","0");
+STL(P1,"c:#0000b2;s:6;f:30");
+return [P1];
+}};
+
+$macros[$L.macros.rotationD_rad]={
+	name:$L.macros.rotationD_rad,
+	parameters:["point","point"],
+	exec:
+	function (O, M) {
+var a=Input("Entrer l'angle en degr\u00e9s :");
+P1=Point("P1","O+((M-O)*(cos("+a+")+i*sin("+a+")))","0");
+STL(P1,"c:#0000b2;s:6;f:30");
+return [P1];
+}};
+
 
 $macros[$L.macros.dilation] = {
     name: $L.macros.dilation,

@@ -195,3 +195,8 @@ $L.export_ibook2="Right-clic on this link to download the iBook zipped widget.";
 
 // Dimanche 18 octobre 2015
 $L.history_save="Save figure to history";
+
+// Samedi 5 décembre 2015
+$L.macros.rotation5="Transformations/Rotation/5 pts";
+$L.macros.rotationD_deg="Transformations/Rotation/With dialog (degres)";
+$L.macros.rotationD_rad="Transformations/Rotation/With dialog (radians)";
