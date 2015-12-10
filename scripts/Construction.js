@@ -424,6 +424,12 @@ function Construction(_canvas) {
                 V[i].setDash(_v);
         }
     };
+    me.setAll360 = function (_type, _is360) {
+        for (var i = 0, len = V.length; i < len; i++) {
+            if (V[i].getFamilyCode() === _type)
+                V[i].set360(_is360);
+        }
+    };
     me.setAllNoMouse = function (_type, _v) {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].getFamilyCode() === _type)

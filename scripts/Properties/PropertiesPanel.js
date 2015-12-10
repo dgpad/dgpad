@@ -85,7 +85,7 @@ function PropertiesPanel(_canvas) {
     };
 //
     me.compute = function () {
-        canvas.getConstruction().compute();
+        canvas.getConstruction().computeAll();
     };
     me.repaint = function () {
         canvas.paint();
@@ -118,6 +118,9 @@ function PropertiesPanel(_canvas) {
     };
     me.setAllDash = function (_type, _sze) {
         canvas.getConstruction().setAllDash(_type, _sze);
+    };
+    me.setAll360 = function (_type, _360) {
+        canvas.getConstruction().setAll360(_type, _360);
     };
     me.setAllNoMouse = function (_type, _sze) {
         canvas.getConstruction().setAllNoMouse(_type, _sze);
@@ -504,6 +507,15 @@ function props_colorPanel(_owner) {
             me.obj.setDash(_val);
         me.repaint();
     };
+    var m360callback = function (_val) {
+        if (setall)
+            _owner.setAll360(me.obj.getFamilyCode(), _val);
+        else
+            me.obj.set360(_val);
+        me.compute();
+        me.repaint();
+    };
+    
     var NOMOUSEcallback = function (_val) {
         if (setall)
             _owner.setAllNoMouse(me.obj.getFamilyCode(), _val);
@@ -637,18 +649,29 @@ function props_colorPanel(_owner) {
         }
 
         ch += sh;
-        sInc = new slider(me.getDocObject(), 10, ch, 200, sh, -4, 4, 0, INCCcallback);
-        sInc.setTabValues([[0, $L.props_inc_free], 0.001, 0.01, 0.1, 0.5, 1, 2, 5, 10, 100, 1000]);
-        sInc.setValue(me.obj.getIncrement());
-        sInc.setValueWidth(40);
-        sInc.setLabel($L.props_inc, 80);
-        sInc.setTextColor("#252525");
-        sInc.setValuePrecision(1);
-        sInc.setBackgroundColor("rgba(0,0,0,0)");
-        sInc.setValue(me.obj.getIncrement());
-
-        ch += sh;
         var cbh = 30;
+        if ((me.obj.getCode() === "angle") || (me.obj.getCode() === "fixedangle")) {
+            cbDash = new Checkbox(me.getDocObject(), 10, ch, 200, cbh, false, $L.props_360, m360callback);
+            cbDash.setTextColor("#252525");
+            cbDash.setValue(me.obj.isDash());
+            ch += cbh;
+        } else {
+            sInc = new slider(me.getDocObject(), 10, ch, 200, sh, -4, 4, 0, INCCcallback);
+            sInc.setTabValues([[0, $L.props_inc_free], 0.001, 0.01, 0.1, 0.5, 1, 2, 5, 10, 100, 1000]);
+            sInc.setValue(me.obj.getIncrement());
+            sInc.setValueWidth(40);
+            sInc.setLabel($L.props_inc, 80);
+            sInc.setTextColor("#252525");
+            sInc.setValuePrecision(1);
+            sInc.setBackgroundColor("rgba(0,0,0,0)");
+            sInc.setValue(me.obj.getIncrement());
+            ch += sh;
+        }
+
+
+
+        
+        
         cbDash = new Checkbox(me.getDocObject(), 10, ch, 200, cbh, false, $L.props_dash, DSHcallback);
         cbDash.setTextColor("#252525");
         cbDash.setValue(me.obj.isDash());

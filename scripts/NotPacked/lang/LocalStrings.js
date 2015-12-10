@@ -203,3 +203,4 @@ $L.macros.rotationD_rad="Transformations/Rotation/With dialog (radians)";
 
 // Mercredi 9 décembre 2015
 $L.props_general_degree="Angle in degrees";
+$L.props_360="360°"

@@ -17,6 +17,7 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
     var valid = true;
     var Cn = _construction;
     var deg_coef = 180 / Math.PI;
+    var mode360 = false;
 
 
 
@@ -34,9 +35,15 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
             C = _new;
         }
     };
-
+    this.is360 = function () {
+        return mode360;
+    };
+    this.set360 = function (_360) {
+        mode360 = _360;
+    };
     this.getValue = function () {
-        return (Cn.isDEG()) ? (AOC180 * deg_coef) : AOC;
+        var a= mode360 ? AOC : AOC180;
+        return (Cn.isDEG()) ? (a * deg_coef) : a;
     };
     this.getCode = function () {
         return "angle";
@@ -74,15 +81,18 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
             ctx.textAlign = "left";
 
 
+            var prec = this.getPrecision();
+            var display = (mode360) ? AOC : AOC180;
+            display = display * 180 / Math.PI;
+            display = Math.round(display * prec) / prec;
+            if (display > 180)
+                a += Math.PI;
+
             if ((a < -$U.halfPI) || (a > $U.halfPI)) {
                 a += Math.PI;
                 r = -r;
                 ctx.textAlign = "right";
             }
-
-            var prec = this.getPrecision();
-            var display = AOC180 * 180 / Math.PI;
-            display = Math.round(display * prec) / prec;
 
             ctx.fillStyle = ctx.strokeStyle;
             ctx.translate(O.getX(), O.getY());
@@ -129,7 +139,8 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
         var t = $U.computeAngleParams(A.getX(), A.getY(), O.getX(), O.getY(), C.getX(), C.getY());
         fromAngle = t.startAngle;
         toAngle = t.endAngle;
-        trigo = t.Trigo;
+//        trigo = t.Trigo;
+        trigo = mode360 ? true : t.Trigo;
         AOC = t.AOC;
         AOC180 = t.AOC180;
         valid = !isNaN(fromAngle);
