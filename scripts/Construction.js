@@ -1235,7 +1235,7 @@ function Construction(_canvas) {
             case 4:
                 // Initial possible qui devient initial choisi :
                 obj.setMacroMode(5);
-                canvas.macrosManager.addParam(obj.getName());
+                canvas.macrosManager.addParam(obj.getVarName());
                 break;
             case 5:
                 // Initial choisi qui redevient initial possible :
