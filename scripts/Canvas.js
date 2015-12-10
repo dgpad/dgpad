@@ -1085,7 +1085,6 @@ function Canvas(_id) {
             var pt = Cn.getLastPoint();
             var d = new Date();
             var key = ev.keyCode || ev.charCode;
-            console.log("keydown: " + key);
             switch (key) {
                 case 8:  //DEL
                     if ((pt) && (pt.getShowName()) && (d.getTime() - pt.getTimeStamp() < $P.precision.edit_timeout)) {
@@ -1112,7 +1111,6 @@ function Canvas(_id) {
                 return;
             ev.preventDefault();
             var key = ev.keyCode || ev.charCode;
-            console.log("keypress: " + key);
             var pt = Cn.getLastPoint();
             var d = new Date();
             if ((pt) && (d.getTime() - pt.getTimeStamp() < $P.precision.edit_timeout)) {
@@ -1314,6 +1312,7 @@ function Canvas(_id) {
     me.getStyle = function () {
         var t = "SetGeneralStyle(\"";
         t += "background-color:" + me.getBackground();
+        if (Cn.isDEG()) t += ";degree:true";
         t += "\");\n";
         return t;
     };

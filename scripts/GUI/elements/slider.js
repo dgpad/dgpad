@@ -10,11 +10,13 @@ function slider(_owner, _left, _top, _width, _height, _min, _max, _value, _callb
     var labelwidth = 0;
     var label = "";
     var valuewidth = 40;
+    var fontsize = 12;
     var valueprecision = Math.round(1 / 0.01);
     var sliderheight = 6;
     var indicatorwidth = 18;
     var min = _min, max = _max, value = _value, sw_width;
-    var createDiv = function() {
+    var discrete = false;
+    var createDiv = function () {
         return document.createElement("div");
     };
     var wrapper = createDiv();
@@ -25,86 +27,100 @@ function slider(_owner, _left, _top, _width, _height, _min, _max, _value, _callb
     var slider_back = createDiv();
     var slider_front = createDiv();
 
-    var wp = function(_p, _v) {
+    var wp = function (_p, _v) {
         wrapper.style.setProperty(_p, _v);
     };
-    var lwp = function(_p, _v) {
+    var lwp = function (_p, _v) {
         label_wrapper.style.setProperty(_p, _v);
     };
-    var swp = function(_p, _v) {
+    var swp = function (_p, _v) {
         slider_wrapper.style.setProperty(_p, _v);
     };
-    var vwp = function(_p, _v) {
+    var vwp = function (_p, _v) {
         value_wrapper.style.setProperty(_p, _v);
     };
-    var ip = function(_p, _v) {
+    var ip = function (_p, _v) {
         indicator.style.setProperty(_p, _v);
     };
-    var sbp = function(_p, _v) {
+    var sbp = function (_p, _v) {
         slider_back.style.setProperty(_p, _v);
     };
-    var sbf = function(_p, _v) {
+    var sbf = function (_p, _v) {
         slider_front.style.setProperty(_p, _v);
     };
+    var init = function () {
+        wp("background-color", "rgba(0,0,0,1)");
+        wp("position", "absolute");
+        vwp("background-color", "rgba(0,0,0,0)");
+        vwp("position", "absolute");
+        vwp("font-family", "Helvetica, Arial, sans-serif");
+        vwp("font-size", fontsize+"px");
+        vwp("text-align", "center");
+        vwp("line-height", _height + "px");
+        vwp("overflow", "hidden");
+        swp("background-color", "rgba(0,0,0,0)");
+        swp("position", "absolute");
+        swp("overflow", "visible");
 
-    wp("background-color", "rgba(0,0,0,1)");
-    wp("position", "absolute");
-    vwp("background-color", "rgba(0,0,0,0)");
-    vwp("position", "absolute");
-    vwp("font-family", "Helvetica, Arial, sans-serif");
-    vwp("font-size", "12px");
-    vwp("text-align", "center");
-    vwp("line-height", _height + "px");
-    vwp("overflow", "hidden");
-    swp("background-color", "rgba(0,0,0,0)");
-    swp("position", "absolute");
-    swp("overflow", "visible");
+        lwp("background-color", "rgba(0,255,0,0)");
+        lwp("position", "absolute");
+        lwp("font-family", "Helvetica, Arial, sans-serif");
+        lwp("font-size", fontsize+"px");
+        lwp("text-align", "center");
+        lwp("line-height", _height + "px");
 
-    lwp("background-color", "rgba(0,255,0,0)");
-    lwp("position", "absolute");
-    lwp("font-family", "Helvetica, Arial, sans-serif");
-    lwp("font-size", "12px");
-    lwp("text-align", "center");
-    lwp("line-height", _height + "px");
+        sbp("position", "absolute");
+        sbp("background-image", "linear-gradient(top, #A7A7A7 25%, #D0D0D0 50%,#E8E8E8 50%, #FFFFFF 100%)");
+        sbp("background-image", "-o-linear-gradient(top, #A7A7A7 25%, #D0D0D0 50%,#E8E8E8 50%, #FFFFFF 100%)");
+        sbp("background-image", "-moz-linear-gradient(top, #A7A7A7 25%, #D0D0D0 50%,#E8E8E8 50%, #FFFFFF 100%)");
+        sbp("background-image", "-webkit-linear-gradient(top, #A7A7A7 25%, #D0D0D0 50%,#E8E8E8 50%, #FFFFFF 100%)");
+        sbp("background-image", "-ms-linear-gradient(top, #A7A7A7 25%, #D0D0D0 50%,#E8E8E8 50%, #FFFFFF 100%)");
+        sbp("-moz-border-radius", "6px");
+        sbp("-o-border-radius", "6px");
+        sbp("-webkit-border-radius", "6px");
+        sbp("border-radius", "6px");
+        sbp("border", "1px solid #A7A7A7");
 
-    sbp("position", "absolute");
-    sbp("background-image", "linear-gradient(top, #A7A7A7 25%, #D0D0D0 50%,#E8E8E8 50%, #FFFFFF 100%)");
-    sbp("background-image", "-o-linear-gradient(top, #A7A7A7 25%, #D0D0D0 50%,#E8E8E8 50%, #FFFFFF 100%)");
-    sbp("background-image", "-moz-linear-gradient(top, #A7A7A7 25%, #D0D0D0 50%,#E8E8E8 50%, #FFFFFF 100%)");
-    sbp("background-image", "-webkit-linear-gradient(top, #A7A7A7 25%, #D0D0D0 50%,#E8E8E8 50%, #FFFFFF 100%)");
-    sbp("background-image", "-ms-linear-gradient(top, #A7A7A7 25%, #D0D0D0 50%,#E8E8E8 50%, #FFFFFF 100%)");
-    sbp("-moz-border-radius", "6px");
-    sbp("-o-border-radius", "6px");
-    sbp("-webkit-border-radius", "6px");
-    sbp("border-radius", "6px");
-    sbp("border", "1px solid #A7A7A7");
+        sbf("position", "absolute");
+        sbf("background-image", "linear-gradient(top, #92B2E3 25%, #7EA4DD 50%,#497CD3 50%, #1F5CB2 100%)");
+        sbf("background-image", "-o-linear-gradient(top, #92B2E3 25%, #7EA4DD 50%,#497CD3 50%, #1F5CB2 100%)");
+        sbf("background-image", "-moz-linear-gradient(top, #92B2E3 25%, #7EA4DD 50%,#497CD3 50%, #1F5CB2 100%)");
+        sbf("background-image", "-webkit-linear-gradient(top, #92B2E3 25%, #7EA4DD 50%,#497CD3 50%, #1F5CB2 100%)");
+        sbf("background-image", "-ms-linear-gradient(top, #92B2E3 25%, #7EA4DD 50%,#497CD3 50%, #1F5CB2 100%)");
+        sbf("-moz-border-radius", "6px");
+        sbf("-o-border-radius", "6px");
+        sbf("-webkit-border-radius", "6px");
+        sbf("border-radius", "6px");
+        sbf("border", "1px solid #789BBF");
 
-    sbf("position", "absolute");
-    sbf("background-image", "linear-gradient(top, #92B2E3 25%, #7EA4DD 50%,#497CD3 50%, #1F5CB2 100%)");
-    sbf("background-image", "-o-linear-gradient(top, #92B2E3 25%, #7EA4DD 50%,#497CD3 50%, #1F5CB2 100%)");
-    sbf("background-image", "-moz-linear-gradient(top, #92B2E3 25%, #7EA4DD 50%,#497CD3 50%, #1F5CB2 100%)");
-    sbf("background-image", "-webkit-linear-gradient(top, #92B2E3 25%, #7EA4DD 50%,#497CD3 50%, #1F5CB2 100%)");
-    sbf("background-image", "-ms-linear-gradient(top, #92B2E3 25%, #7EA4DD 50%,#497CD3 50%, #1F5CB2 100%)");
-    sbf("-moz-border-radius", "6px");
-    sbf("-o-border-radius", "6px");
-    sbf("-webkit-border-radius", "6px");
-    sbf("border-radius", "6px");
-    sbf("border", "1px solid #789BBF");
-
-    ip("position", "absolute");
-    ip("background-image", "linear-gradient(top, #C8C8C8 25%, #F1F1F1 100%)");
-    ip("background-image", "-o-linear-gradient(top, #C8C8C8 25%, #F1F1F1 100%)");
-    ip("background-image", "-moz-linear-gradient(top, #C8C8C8 25%, #F1F1F1 100%)");
-    ip("background-image", "-webkit-linear-gradient(top, #C8C8C8 25%, #F1F1F1 100%)");
-    ip("background-image", "-ms-linear-gradient(top, #C8C8C8 25%, #F1F1F1 100%)");
-    ip("-moz-border-radius", (indicatorwidth / 2) + "px");
-    ip("-o-border-radius", (indicatorwidth / 2) + "px");
-    ip("-webkit-border-radius", (indicatorwidth / 2) + "px");
-    ip("border-radius", (indicatorwidth / 2) + "px");
-    ip("border", "1px solid #BEBEBE");
+        ip("position", "absolute");
+        ip("background-image", "linear-gradient(top, #C8C8C8 25%, #F1F1F1 100%)");
+        ip("background-image", "-o-linear-gradient(top, #C8C8C8 25%, #F1F1F1 100%)");
+        ip("background-image", "-moz-linear-gradient(top, #C8C8C8 25%, #F1F1F1 100%)");
+        ip("background-image", "-webkit-linear-gradient(top, #C8C8C8 25%, #F1F1F1 100%)");
+        ip("background-image", "-ms-linear-gradient(top, #C8C8C8 25%, #F1F1F1 100%)");
+        ip("-moz-border-radius", (indicatorwidth / 2) + "px");
+        ip("-o-border-radius", (indicatorwidth / 2) + "px");
+        ip("-webkit-border-radius", (indicatorwidth / 2) + "px");
+        ip("border-radius", (indicatorwidth / 2) + "px");
+        ip("border", "1px solid #BEBEBE");
+    }
+    
+    init();
 
 
-    me.setLabel = function(_t, _w) {
+    me.setHeights = function (_h1, _h2) {
+        sliderheight = _h1;
+        indicatorwidth = _h2;
+        init();
+        setBounds(_left, _top, _width, _height);
+    };
+    
+    me.setDiscrete = function(_dis){
+        discrete = _dis;
+    };
+
+    me.setLabel = function (_t, _w) {
         label = _t;
         labelwidth = _w;
         lwp("left", "0px");
@@ -119,55 +135,65 @@ function slider(_owner, _left, _top, _width, _height, _min, _max, _value, _callb
         label_wrapper.innerHTML = _t;
     };
 
-    me.setValueWidth = function(_v) {
+    me.setValueWidth = function (_v) {
         valuewidth = _v;
         setBounds(_left, _top, _width, _height);
         me.setLabel(label, labelwidth);
     };
 
-    me.setTextColor = function(_col) {
+    me.setTextColor = function (_col) {
         lwp("color", _col);
         vwp("color", _col);
     };
+    
+    me.setFontSize = function(_sz) {
+        fontsize=_sz;
+        lwp("font-size", _sz+"px");
+        vwp("font-size", _sz+"px");
+    };
 
-    me.setValuePrecision = function(_prec) {
+    me.setValuePrecision = function (_prec) {
         valueprecision = Math.round(1 / _prec);
         refreshValue();
     };
-    
-    me.setMin=function(_m){
-        min=_m;
-        refreshValue();
-    };
-    
-    me.setMax=function(_m){
-        max=_m;
+
+    me.setMin = function (_m) {
+        min = _m;
         refreshValue();
     };
 
-    me.setBackgroundColor = function(_col) {
+    me.setMax = function (_m) {
+        max = _m;
+        refreshValue();
+    };
+
+    me.setBackgroundColor = function (_col) {
         wp("background-color", _col);
     };
 
-    var refreshValue = function() {
+    var refreshValue = function () {
         value_wrapper.innerHTML = (tabvalues) ? tablabels[Math.round(value)] : me.getValue();
     };
 
-    me.getValue = function() {
+    me.getValue = function () {
         if (tabvalues)
             return tabvalues[Math.round(value)];
         else
             return (Math.round(value * valueprecision) / valueprecision);
     };
+    
+    me.getDocObject = function(){
+        return wrapper;
+    }
 
-    me.setValue = function(_val) {
+    me.setValue = function (_val) {
         var v = (tabvalues) ? tabvalues.indexOf(_val) : _val;
         value = v;
         refreshValue();
         me.setValueWidth(valuewidth);
     };
 
-    me.setTabValues = function(_t) {
+    me.setTabValues = function (_t) {
         min = 0;
         max = _t.length - 1;
         valueprecision = 1;
@@ -185,11 +211,11 @@ function slider(_owner, _left, _top, _width, _height, _min, _max, _value, _callb
 //        tabvalues = _t;
     };
 
-    me.getTabValues = function() {
+    me.getTabValues = function () {
         return tabvalues;
     };
 
-    var setBounds = function(_l, _t, _w, _h) {
+    var setBounds = function (_l, _t, _w, _h) {
         wp("left", _l + "px");
         wp("top", _t + "px");
         wp("width", _w + "px");
@@ -219,7 +245,7 @@ function slider(_owner, _left, _top, _width, _height, _min, _max, _value, _callb
     };
 
 
-    var getOffset = function(obj) {
+    var getOffset = function (obj) {
         var obj2 = obj;
         var curtop = 0;
         var curleft = 0;
@@ -243,7 +269,7 @@ function slider(_owner, _left, _top, _width, _height, _min, _max, _value, _callb
         return {"left": curleft, "top": curtop};
     };
 
-    var mouseX = function(ev) {
+    var mouseX = function (ev) {
         return (ev.pageX - getOffset(slider_wrapper).left);
     };
 
@@ -251,12 +277,12 @@ function slider(_owner, _left, _top, _width, _height, _min, _max, _value, _callb
 
     var mousepressed = false;
 
-    var mousedown = function(ev) {
+    var mousedown = function (ev) {
         ev.preventDefault();
         mousepressed = true;
         mousemove(ev);
     };
-    var touchdown = function(tch) {
+    var touchdown = function (tch) {
         tch.preventDefault();
         if (tch.touches.length === 1) {
             var touch = tch.touches[0] || tch.changedTouches[0];
@@ -265,27 +291,32 @@ function slider(_owner, _left, _top, _width, _height, _min, _max, _value, _callb
     };
 
 
-    var mousemove = function(ev) {
+    var mousemove = function (ev) {
         ev.preventDefault();
         if (mousepressed) {
             ev = ev || window.event;
             var mouse = mouseX(ev);
+            var oldval=value;
 
             if (mouse < 0)
                 mouse = 0;
             else if (mouse > sw_width)
                 mouse = sw_width;
             value = min + (mouse * (max - min) / sw_width);
+            if (discrete) {
+                value = Math.round(value);
+                mouse = sw_width*(value-min)/(max-min);
+            }
             ip("left", (mouse - indicatorwidth / 2) + "px");
             sbf("width", mouse + "px");
             refreshValue();
-            if (_callback) {
+            if ((_callback)&&(oldval!==value)) {
                 var val = (tabvalues) ? tabvalues[Math.round(value)] : me.getValue();
                 _callback(val);
             }
         }
     };
-    var touchmove = function(tch) {
+    var touchmove = function (tch) {
         tch.preventDefault();
         if (tch.touches.length === 1) {
             var touch = tch.touches[0] || tch.changedTouches[0];
@@ -294,11 +325,11 @@ function slider(_owner, _left, _top, _width, _height, _min, _max, _value, _callb
     };
 
 
-    var mouseup = function(ev) {
+    var mouseup = function (ev) {
         ev.preventDefault();
         mousepressed = false;
     };
-    var touchup = function(tch) {
+    var touchup = function (tch) {
         tch.preventDefault();
         if (tch.touches.length === 1) {
             var touch = tch.touches[0] || tch.changedTouches[0];
@@ -306,7 +337,7 @@ function slider(_owner, _left, _top, _width, _height, _min, _max, _value, _callb
         }
     };
 
-    me.setWindowsEvents = function() {
+    me.setWindowsEvents = function () {
         slider_wrapper.removeEventListener('touchstart', touchdown, false);
         slider_wrapper.removeEventListener('touchmove', touchmove, false);
         slider_wrapper.removeEventListener('mousemove', mousemove, false);
@@ -318,7 +349,7 @@ function slider(_owner, _left, _top, _width, _height, _min, _max, _value, _callb
         window.addEventListener('mouseup', mouseup, false);
     };
 
-    me.removeWindowsEvents = function() {
+    me.removeWindowsEvents = function () {
         window.removeEventListener('mousemove', mousemove, false);
         window.removeEventListener('mouseup', mouseup, false);
     };

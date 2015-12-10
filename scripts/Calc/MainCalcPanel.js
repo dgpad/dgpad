@@ -200,7 +200,7 @@ function MainCalcPanel(_man, _canvas) {
         }
     };
 
-    
+
     $STANDARD_KBD.setbtn = function () {
         set_href(true);
     };
@@ -225,7 +225,8 @@ function MainCalcPanel(_man, _canvas) {
             act.getInput().blur();
         }
     };
-
+    var s_left = me.getBounds().width - 160;
+    var s_top = 130;
     var bleft = me.getBounds().width - 250;
     var btop = 80;
     var bwidth = 40;
@@ -252,12 +253,31 @@ function MainCalcPanel(_man, _canvas) {
     set_href(true);
     var doc = ($APPLICATION) ? window.parent.document.body : window.document.body;
     doc.appendChild(KBBtn.getDocObject());
+    var deg_slider = null;
+
+    var showDegSlider = function () {
+        deg_slider = new slider(me.getDocObject(), s_left, s_top, 150, 50, 0, 1, 0, function (_v) {
+            Cn.setDEG(_v === 1);
+            Cn.computeAll();
+            canvas.paint();
+        });
+        deg_slider.setDiscrete(true);
+        deg_slider.setValueWidth(65);
+        deg_slider.setFontSize(14);
+        deg_slider.setHeights(14, 20);
+        deg_slider.setBackgroundColor("rgba(0,0,0,0)");
+        deg_slider.setLabel("RAD", 60);
+        deg_slider.setTextColor("#252525");
+        deg_slider.setTabValues([[0, "DEG"], [1, "DEG"]]);
+        deg_slider.setValue(1 * Cn.isDEG());
+    };
 
 
     var showBtns = function () {
         validBtn.show();
         cancelBtn.show();
         KBBtn_img.show();
+        showDegSlider();
     };
     var hideBtns = function () {
         segBtn.hide();
@@ -266,6 +286,8 @@ function MainCalcPanel(_man, _canvas) {
         validBtn.hide();
         cancelBtn.hide();
         KBBtn_img.hide();
+        if (deg_slider) me.getDocObject().removeChild(deg_slider.getDocObject());
+        deg_slider=null;
     };
     hideBtns();
     me.show();

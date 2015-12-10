@@ -1,6 +1,6 @@
 function Expression(_obj, _s, _oneDX) {
     var me = this;
-
+ 
     var obj = _obj;
 //    var vname = (_vars === undefined) ? "" : _vars;  // var name, like "x" or "t" or "x,y" or nothing
     var Cn = obj.getCn();

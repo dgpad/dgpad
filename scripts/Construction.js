@@ -26,13 +26,25 @@ function Construction(_canvas) {
     // Tableau associatif collectant les noms de variables VARS[nom unique de variable JS]=nom :
     var VARS = {};
 
+    // Degree mode for angle calculus :
+    var DEGmode = false;
+
+    me.isDEG = function () {
+        return DEGmode;
+    };
+
+    me.setDEG = function (_d) {
+        DEGmode = _d;
+        canvas.getInterpreter().setDegreeMode(_d);
+    };
+
     me.getInterpreter = function () {
         return canvas.getInterpreter();
     };
 
     me.getTrackManager = function () {
         return canvas.trackManager;
-    }
+    };
 
     // Crée un nom de variable JS nouveau pour l'objet de nom s (et l'ajoute au catalogue VARS) :
     var getNewVarName = function (s) {

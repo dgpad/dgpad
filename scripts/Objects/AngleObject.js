@@ -15,12 +15,14 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
     var toAngle = 0; // Fin de l'arc (xOC sens trigo dans [0;2π[)
     var trigo = true; // sens de dessin de l'arc ( comment va-t-on de A à C)
     var valid = true;
+    var Cn = _construction;
+    var deg_coef = 180 / Math.PI;
 
 
 
     this.setParent(A, O, C);
-    
-    this.redefine = function(_old, _new) {
+
+    this.redefine = function (_old, _new) {
         if (_old === A) {
             this.addParent(_new);
             A = _new;
@@ -31,32 +33,32 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
             this.addParent(_new);
             C = _new;
         }
-    }; 
-
-    this.getValue = function() {
-        return (AOC);
     };
-    this.getCode = function() {
+
+    this.getValue = function () {
+        return (Cn.isDEG()) ? (AOC180 * deg_coef) : AOC;
+    };
+    this.getCode = function () {
         return "angle";
     };
-    this.getFamilyCode = function() {
+    this.getFamilyCode = function () {
         return "angle";
     };
     //Obsolete :
-    this.dragObject = function(_x, _y) {
+    this.dragObject = function (_x, _y) {
         var vx = _x - O.getX();
         var vy = _y - O.getY();
         R = Math.sqrt(vx * vx + vy * vy);
     };
-    this.compute_dragPoints = function(_x, _y) {
+    this.compute_dragPoints = function (_x, _y) {
         var vx = _x - O.getX();
         var vy = _y - O.getY();
         R = Math.sqrt(vx * vx + vy * vy);
     };
-    this.computeDrag = function() {
+    this.computeDrag = function () {
     };
 
-    this.paintLength = function(ctx) {
+    this.paintLength = function (ctx) {
         if (valid) {
             if ($U.approximatelyEqual(AOC180, $U.halfPI))
                 return;
@@ -93,7 +95,7 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
 //    this.setPrecision(1);
 
 
-    this.paintObject = function(ctx) {
+    this.paintObject = function (ctx) {
         if (valid) {
             ctx.beginPath();
             if ($U.approximatelyEqual(AOC180, $U.halfPI)) {
@@ -123,7 +125,7 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
 
     };
 
-    this.compute = function() {
+    this.compute = function () {
         var t = $U.computeAngleParams(A.getX(), A.getY(), O.getX(), O.getY(), C.getX(), C.getY());
         fromAngle = t.startAngle;
         toAngle = t.endAngle;
@@ -135,11 +137,11 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
     };
 
 
-    this.getSource = function(src) {
+    this.getSource = function (src) {
         src.geomWrite(false, this.getName(), "Angle", A.getVarName(), O.getVarName(), C.getVarName());
     };
 
-    this.mouseInside = function(ev) {
+    this.mouseInside = function (ev) {
         return $U.isNearToArc(O.getX(), O.getY(), AOC, fromAngle, toAngle, trigo, R, this.mouseX(ev), this.mouseY(ev), this.getOversize());
     };
 

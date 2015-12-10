@@ -195,3 +195,6 @@ $L.history_save="Enregistrer la figure actuelle dans l'historique";
 $L.macros.rotation5="Transformations/Rotation/5 pts";
 $L.macros.rotationD_deg="Transformations/Rotation/Avec dialogue (degr\u00e9s)";
 $L.macros.rotationD_rad="Transformations/Rotation/Avec dialogue (radians)";
+
+// Mercredi 9 décembre 2015
+$L.props_general_degree="Angles en degr\u00e9s";

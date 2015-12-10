@@ -781,13 +781,13 @@ function Interpreter(_win, _canvas) {
                     var t = e[1].substring(1, e[1].length - 1).split(",");
                     for (var k = 0; k < t.length; k++) {
                         try {
-                            t[k]=eval(t[k]);
+                            t[k] = eval(t[k]);
                             t[k] = me.C.find(t[k]);
-                        }catch(e){
+                        } catch (e) {
                             try {
-                                t[k]=eval("$locvar_"+t[k]);
+                                t[k] = eval("$locvar_" + t[k]);
                                 t[k] = me.C.find(t[k]);
-                            }catch(e){
+                            } catch (e) {
                                 console.log("Polygon dependance error !")
                             }
                         }
@@ -806,6 +806,8 @@ function Interpreter(_win, _canvas) {
                 case "background-color":
                     me.Z.setBackground(e[1]);
                     break;
+                case "degree":
+                    me.C.setDEG(e[1] === "true")
             }
         }
     };
@@ -1479,6 +1481,57 @@ function Interpreter(_win, _canvas) {
         }
         return NaN;
     };
+
+    Math.deg_coeff = Math.PI / 180;
+    Math.rcos = Math.cos;
+    Math.rsin = Math.sin;
+    Math.rtan = Math.tan;
+    Math.racos = Math.acos;
+    Math.rasin = Math.asin;
+    Math.ratan = Math.atan;
+
+    me.setDegreeMode = function (_d) {
+        if (_d) {
+            Math.cos = function (_a) {
+                return Math.rcos(_a * Math.deg_coeff);
+            };
+            Math.sin = function (_a) {
+                return Math.rsin(_a * Math.deg_coeff);
+            };
+            Math.tan = function (_a) {
+                return Math.rtan(_a * Math.deg_coeff);
+            };
+            Math.acos = function (_a) {
+                return (Math.racos(_a) / Math.deg_coeff);
+            };
+            Math.asin = function (_a) {
+                return (Math.rasin(_a) / Math.deg_coeff);
+            };
+            Math.atan = function (_a) {
+                return (Math.ratan(_a) / Math.deg_coeff);
+            };
+        } else {
+            Math.cos = Math.rcos;
+            Math.sin = Math.rsin;
+            Math.tan = Math.rtan;
+            Math.acos = Math.racos;
+            Math.asin = Math.rasin;
+            Math.atan = Math.ratan;
+        }
+    };
+
+    me.setDegreeMode(me.C.isDEG());
+
+
+
+//    Math.rcos=Math.cos;
+//
+//    Math.cos = function (_a) {
+//        if (me.$U.DEG)
+//            return Math.rcos(_a * me.$U.DEG_coef)
+//        else
+//            return Math.rcos(_a)
+//    }
 
     // Ici, attention aux noms des fonctions : après le underscore, le nom
     // de la fonction telle que le tape l'utilisateur (et tel qu'il est écrit
