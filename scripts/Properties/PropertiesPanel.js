@@ -653,7 +653,7 @@ function props_colorPanel(_owner) {
         if ((me.obj.getCode() === "angle") || (me.obj.getCode() === "fixedangle")) {
             cbDash = new Checkbox(me.getDocObject(), 10, ch, 200, cbh, false, $L.props_360, m360callback);
             cbDash.setTextColor("#252525");
-            cbDash.setValue(me.obj.isDash());
+            cbDash.setValue(me.obj.is360());
             ch += cbh;
         } else {
             sInc = new slider(me.getDocObject(), 10, ch, 200, sh, -4, 4, 0, INCCcallback);

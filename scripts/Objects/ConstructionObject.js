@@ -1076,13 +1076,16 @@ function ConstructionObject(_construction, _name) {
         if (this.getSegmentsSize)
             // S'il s'agit d'un objet de type liste :
             s += ";sg:" + this.getSegmentsSize();
-        if (magnets.length) {
-            var t = [];
-            for (var k = 0; k < magnets.length; k++) {
-                t.push([magnets[k][0].getVarName(), magnets[k][1]]);
+        if ((this.is360) && (this.is360()))
+            // Il s'agit d'un angle ou d'un angle fixe :
+            s+= ";am:" + this.is360();
+            if (magnets.length) {
+                var t = [];
+                for (var k = 0; k < magnets.length; k++) {
+                    t.push([magnets[k][0].getVarName(), magnets[k][1]]);
+                }
+                s += ";mg:[" + t.join("],[") + "]";
             }
-            s += ";mg:[" + t.join("],[") + "]";
-        }
         if (dragPoints !== null) {
             var t = [];
             for (var k = 0; k < dragPoints.length; k++) {

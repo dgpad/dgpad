@@ -744,6 +744,9 @@ function Interpreter(_win, _canvas) {
                 case "np":// Position du nom des objets
                     o.setNamePosition(e[1]);
                     break;
+                case "am":// Angle mode : 360° or not
+                    o.set360(parseBoolean(e[1]));
+                    break;
                 case "tk":// Trace de l'objet
                     if (e[1]) {
                         setTimeout(function () {
