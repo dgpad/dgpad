@@ -122,6 +122,9 @@ function PropertiesPanel(_canvas) {
     me.setAll360 = function (_type, _360) {
         canvas.getConstruction().setAll360(_type, _360);
     };
+    me.setAllTrigo = function (_type, _t) {
+        canvas.getConstruction().setAllTrigo(_type, _t);
+    };
     me.setAllNoMouse = function (_type, _sze) {
         canvas.getConstruction().setAllNoMouse(_type, _sze);
     };
@@ -515,7 +518,15 @@ function props_colorPanel(_owner) {
         me.compute();
         me.repaint();
     };
-    
+    var trigocallback = function (_val) {
+        if (setall)
+            _owner.setAllTrigo(me.obj.getFamilyCode(), _val);
+        else
+            me.obj.setTrigo(_val);
+        me.compute();
+        me.repaint();
+    };
+
     var NOMOUSEcallback = function (_val) {
         if (setall)
             _owner.setAllNoMouse(me.obj.getFamilyCode(), _val);
@@ -650,10 +661,15 @@ function props_colorPanel(_owner) {
 
         ch += sh;
         var cbh = 30;
-        if ((me.obj.getCode() === "angle") || (me.obj.getCode() === "fixedangle")) {
+        if (me.obj.getCode() === "angle") {
             cbDash = new Checkbox(me.getDocObject(), 10, ch, 200, cbh, false, $L.props_360, m360callback);
             cbDash.setTextColor("#252525");
             cbDash.setValue(me.obj.is360());
+            ch += cbh;
+        } else if (me.obj.getCode() === "fixedangle") {
+            cbDash = new Checkbox(me.getDocObject(), 10, ch, 200, cbh, false, $L.props_trigo, trigocallback);
+            cbDash.setTextColor("#252525");
+            cbDash.setValue(me.obj.isTrigo());
             ch += cbh;
         } else {
             sInc = new slider(me.getDocObject(), 10, ch, 200, sh, -4, 4, 0, INCCcallback);
@@ -670,8 +686,8 @@ function props_colorPanel(_owner) {
 
 
 
-        
-        
+
+
         cbDash = new Checkbox(me.getDocObject(), 10, ch, 200, cbh, false, $L.props_dash, DSHcallback);
         cbDash.setTextColor("#252525");
         cbDash.setValue(me.obj.isDash());

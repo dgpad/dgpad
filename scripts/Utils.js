@@ -941,6 +941,7 @@ $U.initCanvas = function (_id) {
     ZC.addTool(new AngleBisectorConstructor());
     ZC.addTool(new LocusConstructor());
     ZC.addTool(new AngleConstructor());
+    ZC.addTool(new FixedAngleConstructor());
     ZC.addTool(new NameMover());
     ZC.addTool(new CallProperty());
     ZC.addTool(new ObjectMover());

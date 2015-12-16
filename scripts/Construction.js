@@ -430,6 +430,12 @@ function Construction(_canvas) {
                 V[i].set360(_is360);
         }
     };
+    me.setAllTrigo = function (_type, _t) {
+        for (var i = 0, len = V.length; i < len; i++) {
+            if (V[i].getFamilyCode() === _type)
+                V[i].setTrigo(_t);
+        }
+    };
     me.setAllNoMouse = function (_type, _v) {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].getFamilyCode() === _type)

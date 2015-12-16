@@ -286,8 +286,9 @@ function MainCalcPanel(_man, _canvas) {
         validBtn.hide();
         cancelBtn.hide();
         KBBtn_img.hide();
-        if (deg_slider) me.getDocObject().removeChild(deg_slider.getDocObject());
-        deg_slider=null;
+        if (deg_slider)
+            me.getDocObject().removeChild(deg_slider.getDocObject());
+        deg_slider = null;
     };
     hideBtns();
     me.show();
@@ -445,6 +446,21 @@ function MainCalcPanel(_man, _canvas) {
                     E1.setLabel(OBJ.getName() + "(" + OBJ.getE1().getVars() + ") =");
                     txtman.activate(E1);
                     E1.setSelectionRange(OBJ.getE1().getSource().length, OBJ.getE1().getSource().length);
+                    break;
+                case "fixedangle":
+                    txtman.setFirst(false);
+                    var ex = OBJ.getExp();
+                    editObj = [editFilter(OBJ.setE1, ex)];
+                    E2.setPreferredKB(0);
+                    E1.show();
+                    E2.hide();
+                    MIN.hide();
+                    MAX.hide();
+                    E1.setText(ex);
+                    E1.setChangedFilter(cFilter(OBJ.setE1));
+                    E1.setLabel(OBJ.getName() + " =");
+                    txtman.activate(E1);
+                    E1.setSelectionRange(OBJ.getExp().length, OBJ.getExp().length);
                     break;
                 case "circle1":
                     txtman.setFirst(false);

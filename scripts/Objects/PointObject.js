@@ -112,7 +112,7 @@ function PointObject(_construction, _name, _x, _y) {
     };
 
     this.getAssociatedTools = function() {
-        var at = "@namemover,@callproperty,@calltrash,segment,line,ray,midpoint,symc,perpbis,anglebiss,vector,BR,circle,circle1,circle3,circle3pts,arc3pts,area,angle";
+        var at = "@namemover,@callproperty,@calltrash,segment,line,ray,midpoint,symc,perpbis,anglebiss,vector,BR,circle,circle1,circle3,circle3pts,arc3pts,area,angle,fixedangle";
         if (this.isMoveable())
             at += ",@objectmover";
         if (this.getParentLength() === 0) at += ",@anchor";

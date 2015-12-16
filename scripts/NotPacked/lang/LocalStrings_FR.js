@@ -193,8 +193,10 @@ $L.history_save="Enregistrer la figure actuelle dans l'historique";
 
 // Samedi 5 décembre 2015
 $L.macros.rotation5="Transformations/Rotation/5 pts";
-$L.macros.rotationD_deg="Transformations/Rotation/Avec dialogue (degr\u00e9s)";
-$L.macros.rotationD_rad="Transformations/Rotation/Avec dialogue (radians)";
+$L.macros.rotationD="Transformations/Rotation/Avec dialogue";
 
 // Mercredi 9 décembre 2015
 $L.props_general_degree="Angles en degr\u00e9s";
+
+// Mercredi 16 décembre 2015
+$L.props_trigo="Sens trigonométrique";

@@ -1283,6 +1283,11 @@ function Canvas(_id) {
 
 
     me.OpenFile = function (_fname, _src) {
+        // Pour assurer la compatibilité avec les anciennes figures
+        // on se met en radians (old style). Si une figure est en degrés
+        // elle s'ouvrira en mode degré.
+        if (_src==="") Cn.setDEG(true)
+        else Cn.setDEG(false);
         iPadDidFirstEnterBackground = true;
         Cn.deleteAll();
         me.macrosManager.clearTools();

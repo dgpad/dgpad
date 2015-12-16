@@ -14,8 +14,8 @@ function AngleBisectorObject(_construction, _name, _P1, _P2, _P3) {
     this.setParent(P1, P2, P3)
 
     this.setDefaults("ray");
-    
-    this.redefine = function(_old, _new) {
+
+    this.redefine = function (_old, _new) {
         if (_old === P1) {
             this.addParent(_new);
             P1 = _new;
@@ -26,20 +26,20 @@ function AngleBisectorObject(_construction, _name, _P1, _P2, _P3) {
             this.addParent(_new);
             P3 = _new;
         }
-    }; 
-    
-    this.getCode = function() {
+    };
+
+    this.getCode = function () {
         return "anglebiss";
     };
 
-    this.isMoveable = function() {
+    this.isMoveable = function () {
         // Si les extrémités sont des points libres :
         if ((P1.getParentLength() === 0) && (P2.getParentLength() === 0) && (P3.getParentLength() === 0))
             return true;
         return false;
     };
 
-    this.setAlpha = function(p) {
+    this.setAlpha = function (p) {
         superObject.setAlpha(p);
         var a = p.getAlpha();
         if (a < 0) {
@@ -48,17 +48,17 @@ function AngleBisectorObject(_construction, _name, _P1, _P2, _P3) {
     };
 
     // see if point inside ray
-    this.checkIfValid = function(_P) {
+    this.checkIfValid = function (_P) {
         var dx = this.getDX();
         var dy = this.getDY();
-        var xAP = M.getX() - P2.getX();
-        var yAP = M.getY() - P2.getY();
+        var xAP = _P.getX() - P2.getX();
+        var yAP = _P.getY() - P2.getY();
         if ((xAP * dx < 0) || (yAP * dy < 0)) {
             _P.setXY(NaN, NaN);
         }
     };
 
-    this.dragObject = function(_x, _y) {
+    this.dragObject = function (_x, _y) {
         var vx = _x - this.startDragX;
         var vy = _y - this.startDragY;
         M.setXY(M.getX() + vx, M.getY() + vy);
@@ -68,16 +68,15 @@ function AngleBisectorObject(_construction, _name, _P1, _P2, _P3) {
         this.startDragX = _x;
         this.startDragY = _y;
     };
-    
-    this.computeDrag=function(){
+
+    this.computeDrag = function () {
         this.compute();
         P1.computeChilds();
         P2.computeChilds();
         P3.computeChilds();
     };
 
-    this.paintObject = function(ctx) {
-        
+    this.paintObject = function (ctx) {
         ctx.beginPath();
         ctx.moveTo(this.P1.getX(), this.P1.getY());
         ctx.lineTo(this.getXmax(), this.getYmax());
@@ -86,25 +85,30 @@ function AngleBisectorObject(_construction, _name, _P1, _P2, _P3) {
 
 
 
-    this.compute = function() {
+    this.compute = function () {
         var b = $U.d(P2, P1);
         var a = $U.d(P2, P3);
         var k = b / (a + b);
         var x = P1.getX() + k * (P3.getX() - P1.getX());
         var y = P1.getY() + k * (P3.getY() - P1.getY());
-        if ($U.isNearToPoint(x,y,P2.getX(), P2.getY(),1e-13)) {
-            x=P2.getX()+(P1.getY()-P2.getY());
-            y=P2.getY()+(P2.getX()-P1.getX());
+        if ($U.isNearToPoint(x, y, P2.getX(), P2.getY(), 1e-13)) {
+            x = P2.getX() + (P1.getY() - P2.getY());
+            y = P2.getY() + (P2.getX() - P1.getX());
         }
         M.setXY(x, y);
         this.setDXDY(P2.getX(), P2.getY(), x, y);
         superObject.compute();
     };
 
+    this.mouseInside = function (ev) {
+        return $U.isNearToRay(P2.getX(), P2.getY(), M.getX(), M.getY(), this.mouseX(ev), this.mouseY(ev), this.getOversize());
+    };
 
-    this.getSource = function(src) {
+
+    this.getSource = function (src) {
         src.geomWrite(false, this.getName(), "AngleBisector", P1.getVarName(), P2.getVarName(), P3.getVarName());
     };
 
 
-};
+}
+;

@@ -184,6 +184,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
 
 
     me.compute = function() {
+        
         if (E1)
             E1.compute();
         if (min)
@@ -193,6 +194,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         if (anchor) {
             this.setXY(anchor.getX() + Alpha[0], anchor.getY() + Alpha[1]);
         }
+        
     };
 
     var agrandirCursor = false;

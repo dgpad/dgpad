@@ -438,6 +438,16 @@ function Interpreter(_win, _canvas) {
         return me.o("Circle1Object", _n, A, r);
     };
 
+    var FixedAngle = function (_n, _a, _b, _ex, _trig) {
+        if (me.t(5))
+            return me.a("C");
+        var A = me.f(_a);
+        var B = me.f(_b);
+        var o = me.f(me.o("FixedAngleObject", _n, A, B, _trig));
+        o.setExp(_ex);
+        return o.getName();
+    };
+
     var Circle3 = function (_n, _a, _b, _m) {
         if (me.t(4))
             return me.a("C");
@@ -503,6 +513,8 @@ function Interpreter(_win, _canvas) {
         var C = me.f(_c);
         return me.o("AngleObject", _n, A, B, C);
     };
+
+
 
     var X_axis = function (_n) {
         var n = me.o("OXObject", _n);
@@ -1363,7 +1375,7 @@ function Interpreter(_win, _canvas) {
                 var arg = Math.angleH(a[0], a[1]) * b;
                 // Determination du module générique :
                 var mod = Math.pow(Math.sqrt((a[0] * a[0]) + (a[1] * a[1])), b);
-                var inc = 2 * Math.PI * b;
+                var inc = Math.doublePI * b;
                 for (var k = 0; k < invb; k++) {
                     res.push([mod * Math.cos(arg + k * inc), mod * Math.sin(arg + k * inc)]);
                 }
@@ -1492,6 +1504,9 @@ function Interpreter(_win, _canvas) {
     Math.racos = Math.acos;
     Math.rasin = Math.asin;
     Math.ratan = Math.atan;
+    Math.rangleH = Math.angleH;
+    Math.doublePI = 2 * Math.PI;
+    Math.coef3D = 0.015;
 
     me.setDegreeMode = function (_d) {
         if (_d) {
@@ -1513,6 +1528,14 @@ function Interpreter(_win, _canvas) {
             Math.atan = function (_a) {
                 return (Math.ratan(_a) / Math.deg_coeff);
             };
+            Math.angleH = function (x, y) {
+                if (y < 0)
+                    return (2 * Math.PI - Math.atan2(-y, x)) * 180 / Math.PI;
+                else
+                    return (-Math.atan2(-y, x)) * 180 / Math.PI;
+            };
+            Math.doublePI = 360;
+            Math.coef3D = 0.859436693;
         } else {
             Math.cos = Math.rcos;
             Math.sin = Math.rsin;
@@ -1520,21 +1543,15 @@ function Interpreter(_win, _canvas) {
             Math.acos = Math.racos;
             Math.asin = Math.rasin;
             Math.atan = Math.ratan;
+            Math.angleH = Math.rangleH;
+            Math.doublePI = 2 * Math.PI;
+            Math.coef3D = 0.015;
         }
     };
 
     me.setDegreeMode(me.C.isDEG());
 
 
-
-//    Math.rcos=Math.cos;
-//
-//    Math.cos = function (_a) {
-//        if (me.$U.DEG)
-//            return Math.rcos(_a * me.$U.DEG_coef)
-//        else
-//            return Math.rcos(_a)
-//    }
 
     // Ici, attention aux noms des fonctions : après le underscore, le nom
     // de la fonction telle que le tape l'utilisateur (et tel qu'il est écrit
@@ -1585,10 +1602,10 @@ function Interpreter(_win, _canvas) {
     var COORDS_Y0 = me.C.coordsSystem.getY0;
 
     EX.EX_phi = function () {
-        return COORDS_X0() * 0.015;
+        return COORDS_X0() * Math.coef3D;
     };
     EX.EX_theta = function () {
-        return COORDS_Y0() * 0.015;
+        return COORDS_Y0() * Math.coef3D;
     };
 
     EX.EX_restrictPhi = function (_t) {

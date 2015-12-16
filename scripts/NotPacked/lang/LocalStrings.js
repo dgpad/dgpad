@@ -198,9 +198,11 @@ $L.history_save="Save figure to history";
 
 // Samedi 5 décembre 2015
 $L.macros.rotation5="Transformations/Rotation/5 pts";
-$L.macros.rotationD_deg="Transformations/Rotation/With dialog (degrees)";
-$L.macros.rotationD_rad="Transformations/Rotation/With dialog (radians)";
+$L.macros.rotationD="Transformations/Rotation/With dialog";
 
 // Mercredi 9 décembre 2015
 $L.props_general_degree="Angle in degrees";
 $L.props_360="360°"
+
+// Mercredi 16 décembre 2015
+$L.props_trigo="Counterclockwise";

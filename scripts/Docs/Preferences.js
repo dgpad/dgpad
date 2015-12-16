@@ -20,6 +20,7 @@ $P.color.circle = "#CC66CC";
 $P.color.area = "#006633";
 $P.color.ray = "#993300";
 $P.color.angle = "#006633";
+$P.color.fixedangle = "#006633";
 $P.color.quadric = "#00ADFF";
 $P.color.point_free = "rgba(255,255,255,1)";
 $P.color.point_on = "rgba(255,255,255,1)";
@@ -46,6 +47,7 @@ $P.size.list = 1 * $SCALE;
 $P.size.pointborder = 2 * $SCALE;
 $P.size.line = 1 * $SCALE;
 $P.size.angle = 4 * $SCALE;
+$P.size.fixedangle = 1 * $SCALE;
 $P.size.expression = 7 * $SCALE;
 $P.size.expression_cursor = 10 * $SCALE;
 $P.size.dash = [6, 10];
@@ -65,6 +67,7 @@ $P.fontsize = {};
 $P.fontsize.point = 30 * $SCALE;
 $P.fontsize.segment = 24 * $SCALE;
 $P.fontsize.angle = 24 * $SCALE;
+$P.fontsize.fixedangle = 24 * $SCALE;
 $P.fontsize.expression = 24 * $SCALE;
 
 $P.font = "Verdana";
@@ -80,6 +83,7 @@ $P.precision.segment = -1;
 $P.precision.vector = -1;
 $P.precision.area = -1;
 $P.precision.angle = 1;
+$P.precision.fixedangle = 1;
 $P.precision.expression = 4;
 
 

@@ -139,7 +139,6 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
         var t = $U.computeAngleParams(A.getX(), A.getY(), O.getX(), O.getY(), C.getX(), C.getY());
         fromAngle = t.startAngle;
         toAngle = t.endAngle;
-//        trigo = t.Trigo;
         trigo = mode360 ? true : t.Trigo;
         AOC = t.AOC;
         AOC180 = t.AOC180;
