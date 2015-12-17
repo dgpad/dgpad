@@ -66,43 +66,28 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
     };
 
     this.paintLength = function (ctx) {
-        if (valid) {
-            if ($U.approximatelyEqual(AOC180, $U.halfPI))
-                return;
+        if (valid){
             ctx.save();
-            var b = $U.d(O, A);
-            var a = $U.d(O, C);
-            var k = b / (a + b);
-            var x = A.getX() + k * (C.getX() - A.getX()) - O.getX();
-            var y = A.getY() + k * (C.getY() - A.getY()) - O.getY();
-
-            var a = Math.atan2(y, x);
-            var r = R + this.prefs.fontmargin + this.getRealsize() / 2;
-            ctx.textAlign = "left";
-
-
-            var prec = this.getPrecision();
-            var display = (mode360) ? AOC : AOC180;
-            display = display * 180 / Math.PI;
-            display = Math.round(display * prec) / prec;
-            if (display > 180)
-                a += Math.PI;
-
-            if ((a < -$U.halfPI) || (a > $U.halfPI)) {
-                a += Math.PI;
-                r = -r;
-                ctx.textAlign = "right";
-            }
-
-            ctx.fillStyle = ctx.strokeStyle;
-            ctx.translate(O.getX(), O.getY());
-            ctx.rotate(a);
-
-            ctx.fillText($L.number(display) + "°", r, this.getFontSize() / 2);
-            ctx.restore();
+        var r = R + this.prefs.fontmargin + this.getRealsize() / 2;
+        ctx.textAlign = "left";
+        var prec = this.getPrecision();
+        var display = (mode360) ? AOC : AOC180;
+        display = display * 180 / Math.PI;
+        display = Math.round(display * prec) / prec;
+        var a = trigo ? -toAngle + AOC / 2 : Math.PI - toAngle + AOC / 2;
+        a = a - Math.floor(a / $U.doublePI) * $U.doublePI; // retour dans [0;2π]
+        if ((a > $U.halfPI) && (a < 3 * $U.halfPI)) {
+            a += Math.PI;
+            r = -r;
+            ctx.textAlign = "right";
+        }
+        ctx.fillStyle = ctx.strokeStyle;
+        ctx.translate(O.getX(), O.getY());
+        ctx.rotate(a);
+        ctx.fillText($L.number(display) + "°", r, this.getFontSize() / 2);
+        ctx.restore();
         }
     };
-//    this.setPrecision(1);
 
 
     this.paintObject = function (ctx) {

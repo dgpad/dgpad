@@ -27,7 +27,7 @@ function Construction(_canvas) {
     var VARS = {};
 
     // Degree mode for angle calculus :
-    var DEGmode = false;
+    var DEGmode = true;
 
     me.isDEG = function () {
         return DEGmode;
