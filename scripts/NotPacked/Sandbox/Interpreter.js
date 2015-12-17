@@ -514,6 +514,23 @@ function Interpreter(_win, _canvas) {
         return me.o("AngleObject", _n, A, B, C);
     };
 
+//    var Angle180 = function (_a, _o, _c) {
+//
+//
+//    };
+//
+//    var Angle360 = function (_a, _o, _c) {
+//        console.log("Angle360");
+//        var A = me.f(_a);
+//        var O = me.f(_o);
+//        var C = me.f(_c);
+//        var xOA = A.getX() - O.getX(), yOA = A.getY() - O.getY();
+//        var xOC = C.getX() - O.getX(), yOC = C.getY() - O.getY();
+//        var start = Math.angleH(xOA, yOA);
+//        var end = Math.angleH(xOC, yOC);
+//        return (end - start)
+//    };
+
 
 
     var X_axis = function (_n) {
@@ -1054,12 +1071,17 @@ function Interpreter(_win, _canvas) {
 
     var addTimesSymbol = function (_s) {
         // PI a pour valeur unicode : \u03C0
+        _s = _s.replace(/Angle360/g, "Angle360_");  // avoid conflict with 3(x+2) rule
+        _s = _s.replace(/Angle180/g, "Angle180_");  // avoid conflict with 3(x+2) rule
+
         _s = _s.replace(/(^|[^A-Za-z])(\d+|\u03C0+)\s*([A-Za-z]+|\u03C0+)/g, "$1$2*$3");  // Du type 2x -> 2*x
         _s = _s.replace(/\)\s*\(/g, ")*(");                // Du type (x+1)(x+2) -> (x+1)*(x+2)
         _s = _s.replace(/(\d+|\u03C0)\s*\(/g, "$1*(");            // Du type 3(x+2) -> 3*(x+2)
         _s = _s.replace(/\)\s*([A-Za-z]+)/g, ")*$1");      // Du type (x+2)sin(a) -> (x+2)*sin(a)
         _s = _s.replace(/\b([xyzt]{1})([xyzt]{1})\b/g, "$1*$2"); // Du type xy -> x*y
 
+        _s = _s.replace(/Angle180_/g, "Angle180");
+        _s = _s.replace(/Angle360_/g, "Angle360");
         return _s;
     };
 
@@ -1497,6 +1519,21 @@ function Interpreter(_win, _canvas) {
         return NaN;
     };
 
+    Math.Angle360 = function (_a, _o, _c) {
+        var xOA = _a[0] - _o[0], yOA = _a[1] - _o[1];
+        var xOC = _c[0] - _o[0], yOC = _c[1] - _o[1];
+        var start = Math.angleH(xOA, yOA);
+        var end = Math.angleH(xOC, yOC);
+        var a = end - start;
+        a = a - Math.floor(a / Math.doublePI) * Math.doublePI;
+        return (a)
+    };
+
+    Math.Angle180 = function (_a, _o, _c) {
+        var a = Math.Angle360(_a, _o, _c);
+        return ((a < Math.simplePI)?a:Math.doublePI-a)
+    };
+
     Math.deg_coeff = Math.PI / 180;
     Math.rcos = Math.cos;
     Math.rsin = Math.sin;
@@ -1506,6 +1543,7 @@ function Interpreter(_win, _canvas) {
     Math.ratan = Math.atan;
     Math.rangleH = Math.angleH;
     Math.doublePI = 2 * Math.PI;
+    Math.simplePI = Math.PI;
     Math.coef3D = 0.015;
 
     me.setDegreeMode = function (_d) {
@@ -1535,6 +1573,7 @@ function Interpreter(_win, _canvas) {
                     return (-Math.atan2(-y, x)) * 180 / Math.PI;
             };
             Math.doublePI = 360;
+            Math.simplePI = 180;
             Math.coef3D = 0.859436693;
         } else {
             Math.cos = Math.rcos;
@@ -1545,6 +1584,7 @@ function Interpreter(_win, _canvas) {
             Math.atan = Math.ratan;
             Math.angleH = Math.rangleH;
             Math.doublePI = 2 * Math.PI;
+            Math.simplePI = Math.PI;
             Math.coef3D = 0.015;
         }
     };
@@ -1597,6 +1637,8 @@ function Interpreter(_win, _canvas) {
     EX.EX_pixel = function () {
         return me.C.coordsSystem.getUnit();
     };
+
+
 
     var COORDS_X0 = me.C.coordsSystem.getX0;
     var COORDS_Y0 = me.C.coordsSystem.getY0;
