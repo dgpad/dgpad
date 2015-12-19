@@ -2,7 +2,7 @@
 //************ PARALLELLINE OBJECT ***************
 //************************************************
 function ParallelLineObject(_construction, _name, _L, _P1) {
-    var superObject = $U.extend(this, new PrimitiveLineObject(_construction, _name, _P1));          // Héritage
+    var superObject = $U.extend(this, new PrimitiveLineObject(_construction, _name, _P1)); // Héritage
     var Cn = _construction;
 
     this.L = _L;
@@ -21,9 +21,9 @@ function ParallelLineObject(_construction, _name, _L, _P1) {
     };
 
     this.compute = function() {
-//        this.setDX(this.L.getDX());
-//        this.setDY(this.L.getDY());
-        this.setDXDY(0,0,this.L.getDX(),this.L.getDY());
+        //        this.setDX(this.L.getDX());
+        //        this.setDY(this.L.getDY());
+        this.setDXDY(0, 0, this.L.getDX(), this.L.getDY());
         superObject.compute();
     };
 
@@ -32,7 +32,4 @@ function ParallelLineObject(_construction, _name, _L, _P1) {
     };
 
 
-}
-;
-
-
+};

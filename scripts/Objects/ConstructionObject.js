@@ -9,7 +9,7 @@ function ConstructionObject(_construction, _name) {
     var showname = false;
     var indicated = false;
     var selected = false;
-    var hidden = 0;  // 0:normal ; 1:hidden ; 2:super hidden
+    var hidden = 0; // 0:normal ; 1:hidden ; 2:super hidden
     var color = new Color();
     var fillcolor = new Color();
     var selectedcolor = "";
@@ -28,39 +28,39 @@ function ConstructionObject(_construction, _name) {
     var precision = 1;
     var serial = Cn.getSerial(); // numéro d'ordre dans la construction
     var layer = 0; // niveau de calque
-    var paintorder = serial;// numéro d'ordre dans la construction (le plus grand recouvre le plus petit)
-//    var shouldComputeChilds = false;
+    var paintorder = serial; // numéro d'ordre dans la construction (le plus grand recouvre le plus petit)
+    //    var shouldComputeChilds = false;
     var floatObj = false; // Pour les points flottants
 
-    var magnets = [];           // Tableau multidimentionnel des objets magnétiques 
+    var magnets = []; // Tableau multidimentionnel des objets magnétiques 
     // a[i][0] : objet et a[i][1] : rayon
 
 
-    var parentList = [];      // Tableau des objets parents
-    var childList = [];       // Tableau des objets enfants
+    var parentList = []; // Tableau des objets parents
+    var childList = []; // Tableau des objets enfants
     var is_3D = false;
 
-    this.Flag = false;      // For various construction process
-    this.Flag2 = false;     // For various construction process
-    this.Scratch = 0;       // For various construction process
+    this.Flag = false; // For various construction process
+    this.Flag2 = false; // For various construction process
+    this.Scratch = 0; // For various construction process
 
     var dragPoints = null;
     var dragCoords, freeDragPts, PtsChilds;
 
     var timestamp = 0;
 
-    this.me = function () {
+    this.me = function() {
         return this;
     }
 
-    this.newTimeStamp = function () {
+    this.newTimeStamp = function() {
         var d = new Date()
         timestamp = d.getTime();
     }
-    this.setTimeStamp = function (_millis) {
+    this.setTimeStamp = function(_millis) {
         timestamp = _millis;
     }
-    this.getTimeStamp = function () {
+    this.getTimeStamp = function() {
         return timestamp;
     }
 
@@ -69,17 +69,17 @@ function ConstructionObject(_construction, _name) {
     // On remplace les dépendances pour le déplacement des objets
     // construits, avec une expression du type P2.setDragPoints([A.me(),B.me()])
 
-    this.initDragPoints = function () {
+    this.initDragPoints = function() {
         if (dragPoints === null)
             dragPoints = Cn.findFreePoints(this);
     }
 
-    this.getDragPoints = function () {
+    this.getDragPoints = function() {
         return dragPoints;
     }
 
 
-    this.add_removeDragPoint = function (_o) {
+    this.add_removeDragPoint = function(_o) {
         var i = dragPoints.indexOf(_o);
         if (i > -1)
             dragPoints.splice(i, 1);
@@ -87,45 +87,45 @@ function ConstructionObject(_construction, _name) {
             dragPoints.push(_o);
     }
 
-    this.setDragPoints = function (_d) {
+    this.setDragPoints = function(_d) {
         dragPoints = _d;
     };
 
 
 
-//    this.setDragPoints = function () {
-//        dragPoints = [];
-//
-//        for (var k = 0; k < arguments.length; k++) {
-//            var obj = Cn.find(arguments[k]);
-//            if (obj)
-//                dragPoints.push(obj);
-//        }
+    //    this.setDragPoints = function () {
+    //        dragPoints = [];
+    //
+    //        for (var k = 0; k < arguments.length; k++) {
+    //            var obj = Cn.find(arguments[k]);
+    //            if (obj)
+    //                dragPoints.push(obj);
+    //        }
 
 
-//        for (var k = 0, len = _t.length; k < len; k++) {
-//            console.log(_t[k]);
-//            var obj=Cn.find(_t[k]);
-//            if (obj) dragPoints.push(obj);
-//        }
+    //        for (var k = 0, len = _t.length; k < len; k++) {
+    //            console.log(_t[k]);
+    //            var obj=Cn.find(_t[k]);
+    //            if (obj) dragPoints.push(obj);
+    //        }
 
 
 
     //dragPoints = _t
-//    };
+    //    };
     // ********************* FIN DU CHANTIER *************************
 
 
 
 
 
-    var PtsChildSortFilter = function (a, b) {
+    var PtsChildSortFilter = function(a, b) {
         return (b.getChildLength() - a.getChildLength());
     };
 
 
 
-    this.startDrag = function (_x, _y) {
+    this.startDrag = function(_x, _y) {
         $U.changed();
         PtsChilds = [];
         dragCoords = [];
@@ -134,7 +134,10 @@ function ConstructionObject(_construction, _name) {
         if (freeDragPts.length > 0) {
             for (var k = 0, len = freeDragPts.length; k < len; k++) {
                 PtsChilds = PtsChilds.concat(freeDragPts[k].getChildList());
-                dragCoords.push({x: _x, y: _y});
+                dragCoords.push({
+                    x: _x,
+                    y: _y
+                });
             }
 
             var t;
@@ -147,11 +150,14 @@ function ConstructionObject(_construction, _name) {
             }
             PtsChilds.sort(PtsChildSortFilter);
         } else {
-            dragCoords.push({x: _x, y: _y});
+            dragCoords.push({
+                x: _x,
+                y: _y
+            });
         }
     };
 
-    this.compute_dragPoints = function (_x, _y) {
+    this.compute_dragPoints = function(_x, _y) {
         var oldX, oldY;
         if (freeDragPts.length > 0) {
             for (var i = 0, len = freeDragPts.length; i < len; i++) {
@@ -182,14 +188,14 @@ function ConstructionObject(_construction, _name) {
     };
 
 
-    this.dragTo2D = function (_x, _y) {
+    this.dragTo2D = function(_x, _y) {
         this.compute_dragPoints(_x, _y);
         for (var i = 0, len = PtsChilds.length; i < len; i++) {
             PtsChilds[i].compute();
         }
     };
 
-    this.dragTo3D = function (_x, _y) {
+    this.dragTo3D = function(_x, _y) {
         this.dragTo2D(_x, _y);
         Cn.computeMagnetObjects();
         this.checkMagnets();
@@ -200,15 +206,15 @@ function ConstructionObject(_construction, _name) {
     this.dragTo = (Cn.is3D()) ? this.dragTo3D : this.dragTo2D;
 
 
-    this.is3D = function () {
+    this.is3D = function() {
         return is_3D;
     };
 
-    this.set3D = function (_b) {
+    this.set3D = function(_b) {
         is_3D = _b;
     };
 
-    var addAsChild = function (_child, _parent) {
+    var addAsChild = function(_child, _parent) {
         if (!_parent.addChild || (_child.isChild(_parent)))
             return;
         _parent.addChild(_child);
@@ -222,51 +228,51 @@ function ConstructionObject(_construction, _name) {
         }
     };
 
-    this.isChild = function (_o) {
+    this.isChild = function(_o) {
         return (_o.getChildList().indexOf(this) !== -1);
     };
 
-    this.getChildList = function () {
+    this.getChildList = function() {
         return childList;
     };
 
-    this.getChildLength = function () {
+    this.getChildLength = function() {
         return childList.length;
     };
 
-    this.addChild = function (_o) {
-//        console.log("addChild : "+_o.getName());
+    this.addChild = function(_o) {
+        //        console.log("addChild : "+_o.getName());
         if (childList.indexOf(_o) === -1)
             childList.push(_o);
     };
-    this.getChildAt = function (_i) {
+    this.getChildAt = function(_i) {
         return childList[_i];
     };
 
-    this.clearChildList = function () {
+    this.clearChildList = function() {
         childList.length = 0;
     };
-//    this.addChild = function(_o) {
-//        childList.push(_o);
-//    };
+    //    this.addChild = function(_o) {
+    //        childList.push(_o);
+    //    };
 
-    this.deleteChild = function (_o) {
+    this.deleteChild = function(_o) {
         var i = childList.indexOf(_o);
         if (i !== -1) {
             childList.splice(i, 1);
         }
     };
 
-    this.computeChilds = function () {
-//        if (childList.length) console.log("****** "+childList.length);
+    this.computeChilds = function() {
+        //        if (childList.length) console.log("****** "+childList.length);
         for (var i = 0; i < childList.length; i++) {
-//            console.log(childList[i].getName());
+            //            console.log(childList[i].getName());
             childList[i].compute();
         }
     };
 
-    this.refreshChildsNames = function () {
-//        console.log("refreshChildsNames ="+childList.length);
+    this.refreshChildsNames = function() {
+        //        console.log("refreshChildsNames ="+childList.length);
         Cn.doOrder(childList);
         for (var i = 0; i < childList.length; i++) {
             childList[i].refreshNames();
@@ -275,10 +281,9 @@ function ConstructionObject(_construction, _name) {
 
     // Uniquement pour les objets contenant une expression
     // Il s'agit de rafraîchir les noms utilisés dans l'expression :
-    this.refreshNames = function () {
-    };
+    this.refreshNames = function() {};
 
-    this.setParentList = function (_p) {
+    this.setParentList = function(_p) {
         parentList = _p;
         for (var i = 0, len = parentList.length; i < len; i++) {
             addAsChild(this, parentList[i]);
@@ -289,47 +294,46 @@ function ConstructionObject(_construction, _name) {
     };
 
 
-    this.setParent = function () {
+    this.setParent = function() {
         parentList = Array.prototype.slice.call(arguments, 0);
-//        console.log(parentList.length+" nom:"+this.getName());
+        //        console.log(parentList.length+" nom:"+this.getName());
         for (var i = 0, len = parentList.length; i < len; i++) {
-//            console.log("me="+this.getName()+"  parent="+parentList[i].getName());
+            //            console.log("me="+this.getName()+"  parent="+parentList[i].getName());
             addAsChild(this, parentList[i]);
             is_3D = (is_3D) || (parentList[i].is3D());
         }
         if (parentList.length === 0 && this.getCode() === "point")
             is_3D = false;
     };
-    this.addParent = function (_o) {
-//        console.log("me=" + this.getName() + "  parent=" + _o.getName());
+    this.addParent = function(_o) {
+        //        console.log("me=" + this.getName() + "  parent=" + _o.getName());
         parentList.push(_o);
         addAsChild(this, _o);
         is_3D = (is_3D) || (_o.is3D());
     };
-    this.getParent = function () {
+    this.getParent = function() {
         return parentList;
     };
-    this.getParentLength = function () {
+    this.getParentLength = function() {
         return parentList.length;
     };
-    this.getParentAt = function (_i) {
+    this.getParentAt = function(_i) {
         return parentList[_i];
     };
-    this.deleteParent = function (_o) {
+    this.deleteParent = function(_o) {
         var i = parentList.indexOf(_o);
         if (i !== -1) {
             parentList.splice(i, 1);
         }
     };
 
-    this.redefine = function () {
-    };
+    this.redefine = function() {};
 
-    this.setMagnets = function (_tab) {
+    this.setMagnets = function(_tab) {
         magnets = _tab;
     };
 
-    this.getMagnet = function (_o) {
+    this.getMagnet = function(_o) {
         for (var i = 0; i < magnets.length; i++) {
             if (magnets[i][0] === _o)
                 return magnets[i];
@@ -337,7 +341,7 @@ function ConstructionObject(_construction, _name) {
         return null;
     };
 
-    this.addMagnet = function (_o, _n) {
+    this.addMagnet = function(_o, _n) {
         var m = this.getMagnet(_o);
         if (m === null) {
             m = [_o, _n];
@@ -346,36 +350,32 @@ function ConstructionObject(_construction, _name) {
         return m;
     };
 
-    this.removeMagnet = function (_o) {
+    this.removeMagnet = function(_o) {
         var m = this.getMagnet(_o);
         if (m !== null) {
             magnets.splice(magnets.indexOf(m), 1);
         }
     };
 
-    this.getMagnets = function () {
+    this.getMagnets = function() {
         return magnets;
     };
 
-    this.checkMagnets = function () {
-    };
+    this.checkMagnets = function() {};
 
-    this.computeMagnets = function () {
-    };
+    this.computeMagnets = function() {};
     // Pour les points sur polygones ;
-    this.setOnBoundary = function (_b) {
+    this.setOnBoundary = function(_b) {
         onbounds = _b;
     };
-    this.getOnBoundary = function () {
-        return onbounds;
-    }
-    // Pour les polygones ;
-    this.setBoundaryMode = function (P) {
-    };
+    this.getOnBoundary = function() {
+            return onbounds;
+        }
+        // Pour les polygones ;
+    this.setBoundaryMode = function(P) {};
 
     // Pour la 3D :
-    this.storeX = function () {
-    };
+    this.storeX = function() {};
 
 
 
@@ -384,57 +384,50 @@ function ConstructionObject(_construction, _name) {
     // Série de 5 méthodes à surcharger, pour les objets pouvant
     // être édité avec la "calculatrice" (point, cercle, expression, fonction, etc...) :
 
-    this.setE1 = function (_t) {
-    };
-    this.setE2 = function (_t) {
-    };
-    this.setT = function (_t) {
-    };
-    this.setMin = function (_t) {
-    };
-    this.setMax = function (_t) {
-    };
-    this.getValue = function () {
+    this.setE1 = function(_t) {};
+    this.setE2 = function(_t) {};
+    this.setT = function(_t) {};
+    this.setMin = function(_t) {};
+    this.setMax = function(_t) {};
+    this.getValue = function() {
         return NaN;
     };
 
-    this.setDeps = function () {
-    };
+    this.setDeps = function() {};
 
-    this.getCoordsSystem = function () {
+    this.getCoordsSystem = function() {
         return Cn.coordsSystem;
     };
 
-    this.isCoincident = function () {
+    this.isCoincident = function() {
         return false;
     };
 
-    this.getUnit = function () {
+    this.getUnit = function() {
         return Cn.coordsSystem.getUnit();
     };
-    this.setDash = function (_d) {
+    this.setDash = function(_d) {
         dash = (_d) ? Cn.prefs.size.dash : [];
     };
-    this.isDash = function () {
+    this.isDash = function() {
         return (dash.length !== 0);
     };
 
-    this.setIncrement = function () {
-    };
-    this.getIncrement = function () {
+    this.setIncrement = function() {};
+    this.getIncrement = function() {
         return 0;
     };
 
-    this.getSerial = function () {
+    this.getSerial = function() {
         return serial;
     };
 
-    this.getPaintOrder = function () {
+    this.getPaintOrder = function() {
         return paintorder;
     };
 
-// -1 pour pas d'affichage, 0,1,2,3,4,... pour indiquer le nombre de chiffres après la virgule
-    this.setPrecision = function (_prec) {
+    // -1 pour pas d'affichage, 0,1,2,3,4,... pour indiquer le nombre de chiffres après la virgule
+    this.setPrecision = function(_prec) {
         if (_prec > -1) {
             precision = Math.pow(10, _prec);
             this.paintLength_exe = this.paintLength;
@@ -443,121 +436,119 @@ function ConstructionObject(_construction, _name) {
             this.paintLength_exe = null_proc;
         }
     };
-    this.getPrecision = function () {
+    this.getPrecision = function() {
         return precision;
     };
 
-    this.getRealPrecision = function () {
+    this.getRealPrecision = function()  {
         return Math.round($U.log(precision));
     };
 
-    this.getLayer = function () {
+    this.getLayer = function() {
         return layer;
     };
-    this.setLayer = function (_l) {
+    this.setLayer = function(_l) {
         layer = _l;
         paintorder = serial + 100000 * layer;
     };
 
-    this.getFontSize = function () {
+    this.getFontSize = function() {
         return fontsize;
     };
-    this.setFontSize = function (_s) {
+    this.setFontSize = function(_s) {
         fontsize = _s;
     };
 
     // Getters et Setters :
-    this.getCn = function () {
+    this.getCn = function() {
         return Cn;
     };
-    this.setName = function (_n) {
+    this.setName = function(_n) {
         name = Cn.getUnusedName(_n, this);
         subname = Cn.getSubName(name);
     };
-    this.getName = function () {
+    this.getName = function() {
         return name;
     };
-    this.getSubName = function () {
+    this.getSubName = function() {
         return subname;
     };
-    this.getVarName = function () {
+    this.getVarName = function() {
         return Cn.getVarName(name);
     };
-    this.setShowName = function (_bool) {
+    this.setShowName = function(_bool) {
         showname = _bool;
         this.paintName_exe = (_bool) ? this.paintName : null_proc;
     };
-    this.getShowName = function () {
+    this.getShowName = function() {
         return showname;
     };
-    this.setNamePosition = function () {
-    };
-    this.getNamePosition = function () {
+    this.setNamePosition = function() {};
+    this.getNamePosition = function() {
         return null;
     };
-// Seulement pour les points :
-    this.setShape = function () {
-    };
-    this.getShape = function () {
+    // Seulement pour les points :
+    this.setShape = function() {};
+    this.getShape = function() {
         return -1;
     };
-    this.setIndicated = function (_ind) {
+    this.setIndicated = function(_ind) {
         indicated = _ind;
         objMode = objModeTab[1 * _ind];
         return _ind; // Optionnel : voir la methode validate de Construction.js
     };
-    this.isIndicated = function () {
+    this.isIndicated = function() {
         return indicated;
     };
-    this.setSelected = function (_sel) {
+    this.setSelected = function(_sel) {
         selected = _sel;
         objMode = objModeTab[2 * _sel];
     };
-    this.isSelected = function () {
+    this.isSelected = function() {
         return selected;
     };
-    this.setHidden = function (_sel) {
+    this.setHidden = function(_sel) {
         _sel = Math.abs(_sel * 1);
         hidden = (isNaN(_sel)) ? 1 : parseInt(_sel) % 3;
         this.paint = paintTab[hidden];
         this.validate = validTab[hidden];
     };
-    this.isHidden = function () {
+    this.isHidden = function() {
         return (hidden);
     };
-    this.isSuperHidden = function () {
+    this.isSuperHidden = function() {
         return (hidden === 2);
     };
-    this.setColor = function (_col) {
+    this.setColor = function(_col) {
         color.set(_col);
         fillcolor.setRGBA(color.getR(), color.getG(), color.getB(), fillcolor.getOpacity());
     };
-    this.getColor = function () {
+    this.getColor = function() {
         return color;
     };
-    this.setRGBColor = function (r, g, b) {
+    this.setRGBColor = function(r, g, b) {
         var c = "rgb(" + Math.round(r) + "," + Math.round(g) + "," + Math.round(b) + ")";
         this.setColor(c);
     };
-    this.isFilledObject = function () {
+    this.isFilledObject = function() {
         return false;
     };
-    this.getOpacity = function () {
+    this.getOpacity = function() {
         return fillcolor.getOpacity();
     };
-    this.setOpacity = function (_f) {
+    this.setOpacity = function(_f) {
         fillcolor.setOpacity(_f);
     };
-    this.getOversize = function () {
+    this.getOversize = function() {
         return oversize;
     };
-    this.getRealsize = function () {
+    this.getRealsize = function() {
         return realsize;
     };
-    this.getSize = function () {
+    this.getSize = function() {
         return size;
     };
-    this.setSize = function (_s) {
+    this.setSize = function(_s) {
         size = _s;
     };
 
@@ -566,7 +557,7 @@ function ConstructionObject(_construction, _name) {
     // mode 1 pour pointeur, 2 pour gomme, 3 pour poubelle, 
     // 4 pour construction de macros, 5 pour execution de macros
     // 6 pour les propriétés , 9 pour le magnétisme :
-    this.setMode = function (_mode) {
+    this.setMode = function(_mode) {
         mode = _mode;
         switch (mode) {
             case 0:
@@ -606,7 +597,7 @@ function ConstructionObject(_construction, _name) {
         this.validate = validTab[hidden];
     };
 
-    this.getMode = function () {
+    this.getMode = function() {
         return mode;
     }
 
@@ -615,7 +606,7 @@ function ConstructionObject(_construction, _name) {
     // Seulement pour les macros : 0 signifie neutre, 1 intermédiaire, 2 initial et 3 final
     // et pour le mode execution : 4 pour initial possible, 5 pour initial choisi
     var macroMode = 0;
-    this.setMacroMode = function (_mode) {
+    this.setMacroMode = function(_mode) {
         macroMode = _mode;
         switch (macroMode) {
             case 0:
@@ -639,31 +630,29 @@ function ConstructionObject(_construction, _name) {
         }
         objMode = objModeTab[0];
     };
-    this.getMacroMode = function () {
+    this.getMacroMode = function() {
         return macroMode;
     };
 
-// Seulement pour les macros : pour un cercle initial par exemple
-// va placer le centre parmi les intermédiaires, et provoquer
-// dans le source de la macro l'instruction P=Center au lieu de P=Point.
-// Pour un segment initial, P=First et P=Second au lieu de P=Point
-    this.setMacroAutoObject = function () {
-    };
-// Surchargé dans l'objet Point :
-    this.setMacroSource = function () {
-    };
+    // Seulement pour les macros : pour un cercle initial par exemple
+    // va placer le centre parmi les intermédiaires, et provoquer
+    // dans le source de la macro l'instruction P=Center au lieu de P=Point.
+    // Pour un segment initial, P=First et P=Second au lieu de P=Point
+    this.setMacroAutoObject = function() {};
+    // Surchargé dans l'objet Point :
+    this.setMacroSource = function() {};
 
-// For macro process only :
-    this.isAutoObjectFlags = function () {
+    // For macro process only :
+    this.isAutoObjectFlags = function() {
         return false;
     };
-//// Surchargé dans l'objet Cercle et Segment par exemple :
-//    this.getMacroSource = function() {
-//    };
+    //// Surchargé dans l'objet Cercle et Segment par exemple :
+    //    this.getMacroSource = function() {
+    //    };
 
-// Seulement pour le mode édition : 0 signifie neutre, 1 objet édité
+    // Seulement pour le mode édition : 0 signifie neutre, 1 objet édité
     var editMode = 0;
-    this.setEditMode = function (_mode) {
+    this.setEditMode = function(_mode) {
         editMode = _mode;
         switch (editMode) {
             case 0:
@@ -675,44 +664,43 @@ function ConstructionObject(_construction, _name) {
         }
         objMode = objModeTab[0];
     };
-    this.getEditMode = function () {
+    this.getEditMode = function() {
         return editMode;
     };
 
 
 
 
-    this.checkIfValid = function (_C) {
-    };
-    this.getCode = function () {
+    this.checkIfValid = function(_C) {};
+    this.getCode = function() {
         return "";
     };
-    this.getFamilyCode = function () {
+    this.getFamilyCode = function() {
         return "";
     };
 
-    this.isInstanceType = function (_c) {
+    this.isInstanceType = function(_c) {
         return false;
     };
-    this.isMoveable = function () {
+    this.isMoveable = function() {
         return false;
     };
-    this.free = function () {
+    this.free = function() {
         return (this.getParentLength() === 0);
     };
-    this.setFloat = function (_f) {
+    this.setFloat = function(_f) {
         floatObj = _f;
         if (_f)
             Cn.setOrigin3D(this);
     };
-    this.getFloat = function () {
+    this.getFloat = function() {
         return floatObj;
     };
-    this.isPointOn = function () {
+    this.isPointOn = function() {
         return false;
     };
 
-    this.getAssociatedTools = function () {
+    this.getAssociatedTools = function() {
         var at = "@callproperty";
         if (this.isMoveable())
             at += ",@objectmover";
@@ -722,39 +710,35 @@ function ConstructionObject(_construction, _name) {
 
     // Ne pas surcharger cette méthode, mais plutôt
     // la méthode compute :
-//    this.validate = function(ev) {
-//        if ((Cn.isHideMode() && mode === 2) || (!this.isHidden())) {
-//            // Si je suis en mode caché, ou que je suis apparent :
-//            if (this.mouseInside(ev)) {
-//                this.setIndicated(true);
-//                Cn.addIndicated(this);
-//            } else {
-//                this.setIndicated(drag);
-//            }
-//        }
-////        this.compute();
-//    };
+    //    this.validate = function(ev) {
+    //        if ((Cn.isHideMode() && mode === 2) || (!this.isHidden())) {
+    //            // Si je suis en mode caché, ou que je suis apparent :
+    //            if (this.mouseInside(ev)) {
+    //                this.setIndicated(true);
+    //                Cn.addIndicated(this);
+    //            } else {
+    //                this.setIndicated(drag);
+    //            }
+    //        }
+    ////        this.compute();
+    //    };
 
 
-    this.paintObject = function (ctx) {
-    };
+    this.paintObject = function(ctx) {};
 
-    var null_proc = function (ctx) {
-    };
+    var null_proc = function(ctx) {};
 
-    this.paintName = function (ctx) {
-    };
+    this.paintName = function(ctx) {};
     this.paintName_exe = null_proc;
 
-    this.paintLength = function (ctx) {
-    };
+    this.paintLength = function(ctx) {};
     this.paintLength_exe = null_proc;
 
 
-    var valid_show_normal = function (ev) {
+    var valid_show_normal = function(ev) {
         return this.mouseInside(ev);
     };
-    var valid_hidden_normal = function (ev) {
+    var valid_hidden_normal = function(ev) {
         return false;
     };
 
@@ -764,15 +748,14 @@ function ConstructionObject(_construction, _name) {
 
     this.validate = validTab[hidden];
 
-    var paint_show_normal = function (ctx) {
+    var paint_show_normal = function(ctx) {
         initContext(ctx);
         this.paintObject(ctx);
         this.paintName_exe(ctx);
         this.paintLength_exe(ctx);
     };
-    var paint_hidden_normal = function (ctx) {
-    };
-    var paint_hidden_gomme = function (ctx) {
+    var paint_hidden_normal = function(ctx) {};
+    var paint_hidden_gomme = function(ctx) {
         initContext(ctx);
         hiddenContext(ctx);
         this.paintObject(ctx);
@@ -787,75 +770,67 @@ function ConstructionObject(_construction, _name) {
 
 
     // Pour les traces, ne pas surcharger ces trois méthodes :
-    this.startTrack = function () {
+    this.startTrack = function() {
         track = true;
         this.beginTrack();
     };
-    this.clearTrack = function () {
+    this.clearTrack = function() {
         track = false;
     };
-    this.isTrack = function () {
+    this.isTrack = function() {
         return track;
     };
 
     // Mais surcharger celles-ci :
-    this.beginTrack = function () {
-    };
-    this.drawTrack = function (_ctx) {
-    };
+    this.beginTrack = function() {};
+    this.drawTrack = function(_ctx) {};
 
 
-    this.compute = function () {
-    };
-    this.mouseInside = function (ev) {
+    this.compute = function() {};
+    this.mouseInside = function(ev) {
         return false;
     };
 
 
     this.ORGMOUSEINSIDE = null;
-    this.MOUSEINSIDE = function (ev) {
+    this.MOUSEINSIDE = function(ev) {
         if (Cn.getMode() === 6 && this.ORGMOUSEINSIDE)
-            // Si on est en mode propriétés
+        // Si on est en mode propriétés
             return this.ORGMOUSEINSIDE(ev);
         else
             return false;
     };
-    this.noMouseInside = function () {
+    this.noMouseInside = function() {
         if (this.ORGMOUSEINSIDE === null) {
             this.ORGMOUSEINSIDE = this.mouseInside;
             this.mouseInside = this.MOUSEINSIDE;
         }
     };
-    this.doMouseInside = function () {
+    this.doMouseInside = function() {
         if (this.ORGMOUSEINSIDE !== null) {
             this.mouseInside = this.ORGMOUSEINSIDE;
             this.ORGMOUSEINSIDE = null;
         }
     };
-    this.setNoMouseInside = function (_mi) {
+    this.setNoMouseInside = function(_mi) {
         if (_mi) {
             this.noMouseInside();
         } else {
             this.doMouseInside();
         }
     };
-    this.isNoMouseInside = function () {
+    this.isNoMouseInside = function() {
         return (this.ORGMOUSEINSIDE !== null)
     };
-    this.intersect = function (_C, _P) {
-    };
-    this.projectXY = function (_x, _y) {
-    };
-    this.project = function (p) {
-    };
-    this.projectAlpha = function (p) {
-    };
-    this.setAlpha = function (p) {
-    };
-    this.projectMagnetAlpha = function (p) {
+    this.intersect = function(_C, _P) {};
+    this.projectXY = function(_x, _y) {};
+    this.project = function(p) {};
+    this.projectAlpha = function(p) {};
+    this.setAlpha = function(p) {};
+    this.projectMagnetAlpha = function(p) {
         this.projectAlpha(p);
     };
-    this.setMagnetAlpha = function (p) {
+    this.setMagnetAlpha = function(p) {
         this.setAlpha(p);
     };
 
@@ -868,7 +843,7 @@ function ConstructionObject(_construction, _name) {
     this.getHeight = Cn.getHeight;
 
 
-    this.setDefaults = function (_code) {
+    this.setDefaults = function(_code) {
         if (this.prefs.color.hasOwnProperty(_code))
             this.setColor(this.prefs.color[_code]);
         else
@@ -920,17 +895,17 @@ function ConstructionObject(_construction, _name) {
     };
 
 
-    var objMode_normal = function (ctx) {
+    var objMode_normal = function(ctx) {
         realsize = size;
         ctx.strokeStyle = color.getRGBA();
         ctx.fillStyle = fillcolor.getRGBA();
     };
-    var objMode_indicated = function (ctx) {
+    var objMode_indicated = function(ctx) {
         realsize = size * magnifyfactor;
         ctx.strokeStyle = indicatedcolor;
         ctx.fillStyle = fillcolor.getRGBA();
     };
-    var objMode_selected = function (ctx) {
+    var objMode_selected = function(ctx) {
         realsize = size * selectedfactor;
         ctx.strokeStyle = selectedcolor;
         ctx.fillStyle = fillcolor.getRGBA();
@@ -938,17 +913,17 @@ function ConstructionObject(_construction, _name) {
     var objModeTab_normal = [objMode_normal, objMode_indicated, objMode_selected];
 
 
-    var objMode_normal_final = function (ctx) {
+    var objMode_normal_final = function(ctx) {
         realsize = size;
         ctx.strokeStyle = "rgb(210,0,0)";
         ctx.fillStyle = "rgba(210,0,0," + fillcolor.getOpacity() + ")";
     };
-    var objMode_indicated_final = function (ctx) {
+    var objMode_indicated_final = function(ctx) {
         realsize = size * magnifyfactor;
         ctx.strokeStyle = indicatedcolor;
         ctx.fillStyle = "rgba(210,0,0," + fillcolor.getOpacity() + ")";
     };
-    var objMode_selected_final = function (ctx) {
+    var objMode_selected_final = function(ctx) {
         realsize = size * selectedfactor;
         ctx.strokeStyle = selectedcolor;
         ctx.fillStyle = "rgba(210,0,0," + fillcolor.getOpacity() + ")";
@@ -956,17 +931,17 @@ function ConstructionObject(_construction, _name) {
     var objModeTab_final = [objMode_normal_final, objMode_indicated_final, objMode_selected_final];
 
 
-    var objMode_normal_initial = function (ctx) {
+    var objMode_normal_initial = function(ctx) {
         realsize = size * 1.5;
         ctx.strokeStyle = "rgb(95,132,0)";
         ctx.fillStyle = "rgba(95,132,0," + fillcolor.getOpacity() + ")";
     };
-    var objMode_indicated_initial = function (ctx) {
+    var objMode_indicated_initial = function(ctx) {
         realsize = size * 1.5 * magnifyfactor;
         ctx.strokeStyle = indicatedcolor;
         ctx.fillStyle = "rgba(95,132,0," + fillcolor.getOpacity() + ")";
     };
-    var objMode_selected_initial = function (ctx) {
+    var objMode_selected_initial = function(ctx) {
         realsize = size * 1.5 * selectedfactor;
         ctx.strokeStyle = selectedcolor;
         ctx.fillStyle = "rgba(95,132,0," + fillcolor.getOpacity() + ")";
@@ -974,46 +949,46 @@ function ConstructionObject(_construction, _name) {
     var objModeTab_initial = [objMode_normal_initial, objMode_indicated_initial, objMode_selected_initial];
 
 
-    var objMode_normal_intermediate = function (ctx) {
+    var objMode_normal_intermediate = function(ctx) {
         realsize = size;
         ctx.strokeStyle = "#333333";
         ctx.fillStyle = "rgba(51,51,51," + fillcolor.getOpacity() + ")";
     };
-    var objMode_indicated_intermediate = function (ctx) {
+    var objMode_indicated_intermediate = function(ctx) {
         realsize = size * magnifyfactor;
         ctx.strokeStyle = indicatedcolor;
         ctx.fillStyle = "rgba(51,51,51," + fillcolor.getOpacity() + ")";
     };
-    var objMode_selected_intermediate = function (ctx) {
+    var objMode_selected_intermediate = function(ctx) {
         realsize = size * selectedfactor;
         ctx.strokeStyle = selectedcolor;
         ctx.fillStyle = "rgba(51,51,51," + fillcolor.getOpacity() + ")";
     };
     var objModeTab_intermediate = [objMode_normal_intermediate, objMode_indicated_intermediate, objMode_selected_intermediate];
 
-    var objMode_normal_edit = function (ctx) {
+    var objMode_normal_edit = function(ctx) {
         ctx.shadowColor = 'darkred';
         objMode_normal(ctx);
     };
-    var objMode_indicated_edit = function (ctx) {
+    var objMode_indicated_edit = function(ctx) {
         ctx.shadowColor = 'darkred';
         objMode_indicated(ctx);
     };
-    var objMode_selected_edit = function (ctx) {
+    var objMode_selected_edit = function(ctx) {
         ctx.shadowColor = 'darkred';
         objMode_selected(ctx);
     };
     var objModeTab_edit = [objMode_normal_edit, objMode_indicated_edit, objMode_selected_edit];
 
-    var objMode_normal_noedit = function (ctx) {
+    var objMode_normal_noedit = function(ctx) {
         ctx.shadowColor = 'gray';
         objMode_normal(ctx);
     };
-    var objMode_indicated_noedit = function (ctx) {
+    var objMode_indicated_noedit = function(ctx) {
         ctx.shadowColor = 'gray';
         objMode_indicated(ctx);
     };
-    var objMode_selected_noedit = function (ctx) {
+    var objMode_selected_noedit = function(ctx) {
         ctx.shadowColor = 'gray';
         objMode_selected(ctx);
     };
@@ -1024,7 +999,7 @@ function ConstructionObject(_construction, _name) {
     var objMode = objMode_normal;
 
 
-    var initContext = function (ctx) {
+    var initContext = function(ctx) {
         objMode(ctx);
         ctx.font = fontsize + "px " + Cn.prefs.font;
         ctx.globalAlpha = 1;
@@ -1032,18 +1007,17 @@ function ConstructionObject(_construction, _name) {
         ctx.setLineDash(dash);
     };
 
-    var hiddenContext = function (ctx) {
+    var hiddenContext = function(ctx) {
         ctx.globalAlpha = 0.7;
         ctx.strokeStyle = "#AAAAAA";
         ctx.setLineDash(dash);
     };
 
 
-    this.getSource = function (src) {
-    };
+    this.getSource = function(src) {};
 
 
-    this.getStyleString = function () {
+    this.getStyleString = function() {
         var s = "c:" + color.getHEX();
         if (hidden)
             s += ";h:" + hidden;
@@ -1074,18 +1048,18 @@ function ConstructionObject(_construction, _name) {
         if (this.getFloat())
             s += ";fl:" + this.getFloat();
         if (this.getSegmentsSize)
-            // S'il s'agit d'un objet de type liste :
+        // S'il s'agit d'un objet de type liste :
             s += ";sg:" + this.getSegmentsSize();
         if ((this.is360) && (this.is360()))
-            // Il s'agit d'un angle ou d'un angle fixe :
-            s+= ";am:" + this.is360();
-            if (magnets.length) {
-                var t = [];
-                for (var k = 0; k < magnets.length; k++) {
-                    t.push([magnets[k][0].getVarName(), magnets[k][1]]);
-                }
-                s += ";mg:[" + t.join("],[") + "]";
+        // Il s'agit d'un angle ou d'un angle fixe :
+            s += ";am:" + this.is360();
+        if (magnets.length) {
+            var t = [];
+            for (var k = 0; k < magnets.length; k++) {
+                t.push([magnets[k][0].getVarName(), magnets[k][1]]);
             }
+            s += ";mg:[" + t.join("],[") + "]";
+        }
         if (dragPoints !== null) {
             var t = [];
             for (var k = 0; k < dragPoints.length; k++) {
@@ -1096,13 +1070,9 @@ function ConstructionObject(_construction, _name) {
         return s;
     };
 
-    this.getStyle = function (src) {
+    this.getStyle = function(src) {
         src.styleWrite(true, name, "STL", this.getStyleString());
     };
 
 
-}
-;
-
-
-
+};

@@ -20,7 +20,7 @@ function ToolsManager(_canvas) {
     var pxy = []; // Tableau simple représentant les modificateurs de propriété
     var tools = [];
     var visible = false;
-    var targets=[];
+    var targets = [];
 
 
     me.isVisible = function() {
@@ -83,22 +83,22 @@ function ToolsManager(_canvas) {
         var w = pxy.length * ts + (pxy.length - 1) * toolgap;
         startx += (W - w) / 2;
         if ((cY - H - toolmarginV) > 0) {
-            starty=cY+toolmarginV;
-        }else{
-            starty=cY-toolmarginV-ts;
+            starty = cY + toolmarginV;
+        } else {
+            starty = cY - toolmarginV - ts;
         }
         for (var col = 0; col < pxy.length; col++) {
             pxy[col].tool.init(startx + col * (ts + toolgap), starty, ts);
-//            pxy[col].tool.init(cX + _o.getRealsize() + 3 * toolgap + col * (ts + toolgap), cY - ts / 2, ts);
+            //            pxy[col].tool.init(cX + _o.getRealsize() + 3 * toolgap + col * (ts + toolgap), cY - ts / 2, ts);
         }
-//    propBtn.init(100,100,toolsize,toolsize);
+        //    propBtn.init(100,100,toolsize,toolsize);
     };
 
     me.showTools = function(ev) {
         visible = true;
         canvas.setMovedFilter(me.mouseMoved);
-        targets=canvas.getConstruction().getSelected().slice();
-//        var selectedObjs = canvas.getConstruction().getSelected();
+        targets = canvas.getConstruction().getSelected().slice();
+        //        var selectedObjs = canvas.getConstruction().getSelected();
         if (targets.length > 0) {
             var myTools = targets[0].getAssociatedTools().split(",");
             var len = myTools.length;
@@ -109,12 +109,16 @@ function ToolsManager(_canvas) {
             for (var i = 0; i < len; i++) {
                 var t = myTools[i];
                 if (t.startsWith("@")) {
-                    pxy.push({tool: tools[t.split("@")[1]]});
+                    pxy.push({
+                        tool: tools[t.split("@")[1]]
+                    });
                 } else if (t === "BR") {
                     bxy.push(col);
                     col = [];
                 } else {
-                    col.push({tool: tools[t]});
+                    col.push({
+                        tool: tools[t]
+                    });
                 }
             }
             bxy.push(col);
@@ -149,7 +153,7 @@ function ToolsManager(_canvas) {
         me.hideTools();
         TOOL = _tool;
         OC = TOOL.getConstructor();
-        
+
         if (!canvas.isObjectConstructor(OC)) {
             canvas.setObjectConstructor(OC);
             OC.setInitialObjects(targets);
@@ -169,11 +173,10 @@ function ToolsManager(_canvas) {
         canvas.paint(ev);
     };
 
-    me.mouseMoved = function(ev) {
-    };
+    me.mouseMoved = function(ev) {};
 
     me.mouseReleased = function(ev) {
-        if ((!OC)||(OC.isInstantTool()))
+        if ((!OC) || (OC.isInstantTool()))
             return;
         canvas.clearFilters();
         canvas.getConstruction().validate(ev);
@@ -193,5 +196,4 @@ function ToolsManager(_canvas) {
     };
 
 
-}
-;
+};

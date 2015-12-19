@@ -2,8 +2,8 @@
 //************ TWOPOINTSLINE OBJECT **************
 //************************************************
 function TwoPointsLineObject(_construction, _name, _P1, _P2, _isExtended) {
-    var superObject = $U.extend(this, new PrimitiveLineObject(_construction, _name, _P1));  // Héritage
-    
+    var superObject = $U.extend(this, new PrimitiveLineObject(_construction, _name, _P1)); // Héritage
+
 
     this.P2 = _P2;
 
@@ -27,7 +27,7 @@ function TwoPointsLineObject(_construction, _name, _P1, _P2, _isExtended) {
         } else if (_old === this.P1) {
             this.addParent(_new);
             this.P1 = _new;
-            superObject.P1=_new;
+            superObject.P1 = _new;
         }
     };
 
@@ -42,7 +42,7 @@ function TwoPointsLineObject(_construction, _name, _P1, _P2, _isExtended) {
     };
 
     this.dragObject = function(_x, _y) {
-        
+
         var vx = _x - this.startDragX;
         var vy = _y - this.startDragY;
         this.P1.setXY(this.P1.getX() + vx, this.P1.getY() + vy);
@@ -52,7 +52,7 @@ function TwoPointsLineObject(_construction, _name, _P1, _P2, _isExtended) {
     };
 
     this.computeDrag = function() {
-        
+
         this.compute();
         this.P1.computeChilds();
         this.P2.computeChilds();
@@ -87,7 +87,8 @@ function TwoPointsLineObject(_construction, _name, _P1, _P2, _isExtended) {
     // Seulement pour les macros :
     this.setMacroAutoObject = function() {
         var vn = this.getVarName();
-        var p1 = this.getP1(), p2 = this.getP2();
+        var p1 = this.getP1(),
+            p2 = this.getP2();
         p1.setMacroMode(1);
         p1.setMacroSource(function(src) {
             src.geomWrite(false, p1.getVarName(), "DefinitionPoint", vn, 0);
@@ -129,5 +130,4 @@ function TwoPointsLineObject(_construction, _name, _P1, _P2, _isExtended) {
 
 
 
-}
-;
+};

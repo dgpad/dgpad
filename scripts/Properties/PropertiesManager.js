@@ -11,7 +11,7 @@ function PropertiesManager(_canvas) {
     var propsPanel = null;
 
 
-// On a cliqué sur l'icône Properties :
+    // On a cliqué sur l'icône Properties :
     me.showPanel = function() {
         if (!propsPanel) {
             propsPanel = new PropertiesPanel(canvas);
@@ -40,7 +40,7 @@ function PropertiesManager(_canvas) {
             _obj.setEditMode(1);
             propsPanel.showProperties(_obj);
         }
-    
+
     };
 
 

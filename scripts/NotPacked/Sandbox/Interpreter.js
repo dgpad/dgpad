@@ -16,7 +16,7 @@ function Interpreter(_win, _canvas) {
 
 
     var $progressBar = null;
-    var $initProgress = function (_src) {
+    var $initProgress = function(_src) {
         if (_src) {
             var i = _src.indexOf("// Geometry :");
             if (i !== -1) {
@@ -33,31 +33,43 @@ function Interpreter(_win, _canvas) {
                 // Si la partie géométrie du source contient moins de 300 lignes
                 // on ne coupe pas le source, et on le renvoie :
                 if (lines < 300)
-                    return {header: _src, lines: [], num: 0};
+                    return {
+                        header: _src,
+                        lines: [],
+                        num: 0
+                    };
                 // On découpe la partie géométrie par paquets de 10 instructions :
                 lines = geom.replace(/(([^\n]*\n){10})/g, "$1@@@@@@").split("@@@@@@");
                 // On ajoute les styles :
                 lines.push(stls);
                 $progressBar = new me.W.progressBar(me.Z);
-                return {header: mcrs, lines: lines, num: 0};
+                return {
+                    header: mcrs,
+                    lines: lines,
+                    num: 0
+                };
             }
         }
-        return {header: _src, lines: [], num: 0};
+        return {
+            header: _src,
+            lines: [],
+            num: 0
+        };
     };
 
 
-    me.setCaller = function (_o) {
+    me.setCaller = function(_o) {
         $caller = _o;
     };
 
-    me.removeMouseEvents = function () {
+    me.removeMouseEvents = function() {
         var cTag = me.Z.getDocObject();
         cTag.removeEventListener('mousemove', me.Z.mouseMoved, false);
         cTag.removeEventListener('mousedown', me.Z.mousePressed, false);
         cTag.removeEventListener('mouseup', me.Z.mouseReleased, false);
     }
 
-    me.addMouseEvents = function () {
+    me.addMouseEvents = function() {
         var cTag = me.Z.getDocObject();
         cTag.addEventListener('mousemove', me.Z.mouseMoved, false);
         cTag.addEventListener('mousedown', me.Z.mousePressed, false);
@@ -65,7 +77,7 @@ function Interpreter(_win, _canvas) {
     }
 
 
-    me.Interpret = function (_s) {
+    me.Interpret = function(_s) {
         clearNameSpace();
         var code = $initProgress(_s);
         $macros = null;
@@ -74,7 +86,7 @@ function Interpreter(_win, _canvas) {
             eval(code.header);
             if ($progressBar) {
                 me.removeMouseEvents();
-                var interval = setInterval(function () {
+                var interval = setInterval(function() {
                     if (code.num === code.lines.length) {
                         clearInterval(interval);
                         $progressBar.hide();
@@ -115,7 +127,7 @@ function Interpreter(_win, _canvas) {
     };
 
 
-    me.LoadPlugins = function (_plugins) {
+    me.LoadPlugins = function(_plugins) {
         clearNameSpace();
         $macros = null;
         // Eval is evil ? :
@@ -135,7 +147,7 @@ function Interpreter(_win, _canvas) {
         clearNameSpace();
     };
 
-    me.InterpretMacro = function (_s) {
+    me.InterpretMacro = function(_s) {
         clearNameSpace();
         $macromode = true;
         $macroFinals = [];
@@ -163,7 +175,7 @@ function Interpreter(_win, _canvas) {
         } catch (err) {
             alert(err.message);
         }
-//        me.C.setDeps();
+        //        me.C.setDeps();
         $macromode = false;
         $macroFinals = null;
         me.C.validate(me.E);
@@ -174,16 +186,16 @@ function Interpreter(_win, _canvas) {
 
 
     // Trouve et renvoie l'objet nommé _s :
-    me.f = function (_s) {
+    me.f = function(_s) {
         return me.C.find(_s);
     };
 
-    me.fv = function (_s) {
+    me.fv = function(_s) {
         return me.C.findVar(_s);
     };
 
 
-    me.construct = function (constructor, args) {
+    me.construct = function(constructor, args) {
         function F() {
             return constructor.apply(this, args);
         }
@@ -192,7 +204,7 @@ function Interpreter(_win, _canvas) {
     };
 
     // Crée un nouveau ConstructionObject, et renvoie son nom :
-    me.o = function () {
+    me.o = function() {
 
         var myobj = me.W[arguments[0]];
         var args = [me.C];
@@ -202,18 +214,18 @@ function Interpreter(_win, _canvas) {
         var o = me.construct(myobj, args);
         if ($macromode)
             o.setHidden(2);
-//        me.Z.addObject(o);
+        //        me.Z.addObject(o);
         me.C.add(o);
         return o.getName();
     };
 
     // Teste si les arguments d'une fonction sont en nombre inférieur à celui attendu :
-    me.t = function (expectedArgsNumber) {
+    me.t = function(expectedArgsNumber) {
         return (me.t.caller.arguments.length < expectedArgsNumber);
     };
 
     // Change les arguments d'une fonction en ajoutant un nom générique :
-    me.a = function (code) {
+    me.a = function(code) {
         // Fonction appelante :
         var myFunc = me.a.caller;
         var args = myFunc.arguments;
@@ -224,7 +236,7 @@ function Interpreter(_win, _canvas) {
     };
 
     // Ajoute les arguments passés à la fin des arguments d'une fonction appelante :
-    me.b = function () {
+    me.b = function() {
         // Fonction appelante :
         var myFunc = me.b.caller;
         var args = myFunc.arguments;
@@ -236,7 +248,7 @@ function Interpreter(_win, _canvas) {
     };
 
     // parseVariable :
-    me.p = function (s) {
+    me.p = function(s) {
         if (s.charAt(0) === "_") {
             var n = s.substring(1);
             if (window[n] === undefined) {
@@ -248,11 +260,11 @@ function Interpreter(_win, _canvas) {
         return s;
     };
 
-    var isStr = function (_x) {
+    var isStr = function(_x) {
         return (typeof _x === "string");
     };
 
-    var GetCanvas = function () {
+    var GetCanvas = function() {
         return me.Z;
     };
 
@@ -260,60 +272,60 @@ function Interpreter(_win, _canvas) {
     // Methode obsolete, maintenue pour la 
     // compatibilité des figures 3D d'avant
     // le 22 novembre 2013 :
-    var Set3DConstruction = function (_b) {
+    var Set3DConstruction = function(_b) {
         return me.C.set3DMode(_b);
     };
 
-    var Set3D = function (_b) {
+    var Set3D = function(_b) {
         me.C.set3D(_b);
     };
 
-    var Text = function (_m, _l, _t, _w, _h, _stl) {
+    var Text = function(_m, _l, _t, _w, _h, _stl) {
         me.Z.addText(_m, _l, _t, _w, _h, _stl);
     };
 
-    var Input = function (_q, _i) {
+    var Input = function(_q, _i) {
         if (!_i)
             _i = "";
         return prompt(_q, _i);
     };
 
-    var Print = function (_m) {
+    var Print = function(_m) {
         if ($caller)
             $caller.print(_m);
         return null;
     };
 
-    var Println = function (_m) {
+    var Println = function(_m) {
         if ($caller)
             $caller.print(_m + "\n");
         return null;
     };
 
-    var GetExpressionValue = function (_e, _x, _y, _z, _t) {
+    var GetExpressionValue = function(_e, _x, _y, _z, _t) {
         var o = me.f(_e);
         return (o ? JSON.parse(me.$U.parseArrayEnglish(o.getValue(_x, _y, _z, _t))) : NaN);
     };
 
-    var SetExpressionValue = function (_e, _m) {
+    var SetExpressionValue = function(_e, _m) {
         var o = me.f(_e);
         o.setExp(_m);
     };
 
-    var Find = function (_n) {
+    var Find = function(_n) {
         var o = me.f(_n);
         return (o ? o : parent.document.getElementById(_n));
     };
 
-    var RefreshInputs = function () {
+    var RefreshInputs = function() {
         me.Z.textManager.refreshInputs();
     };
 
-    var Timer = function (_dlay) {
+    var Timer = function(_dlay) {
         return new me.$U.timers(_dlay)
     };
 
-    var Coords = function (_n) {
+    var Coords = function(_n) {
         var o = me.f(_n);
         if (o.is3D()) {
             me.C.setcompute3D_filter(o.coords3D);
@@ -322,14 +334,13 @@ function Interpreter(_win, _canvas) {
             return o.getOldcoords();
         } else {
             return o.coords2D();
-        }
-        ;
+        };
     };
 
-    var Point = function (_n, _x, _y) {
+    var Point = function(_n, _x, _y) {
         if (me.t(3))
             return me.a("P");
-        if (isStr(_x)) {
+        if (isStr(_x))  {
             var o = me.f(me.o("PointObject", _n, 0, 0));
             o.setEXY(_x);
             return o.getName();
@@ -339,7 +350,7 @@ function Interpreter(_win, _canvas) {
         return me.o("PointObject", _n, px, py);
     };
 
-    var PointOn = function (_n, _a, _alpha) {
+    var PointOn = function(_n, _a, _alpha) {
         if (me.t(3))
             return me.a("P");
         var on = me.f(_a);
@@ -356,36 +367,35 @@ function Interpreter(_win, _canvas) {
     // Le nom interférait avec le scope et appeler des objets
     // X ou Y pouvait provoquer des bloquages...
 
-//    var X = function(_P) {
-//        return me.C.coordsSystem.x(me.f(_P).getX());
-//    };
-//
-//    var Y = function(_P) {
-//        return me.C.coordsSystem.y(me.f(_P).getY());
-//    };
+    //    var X = function(_P) {
+    //        return me.C.coordsSystem.x(me.f(_P).getX());
+    //    };
+    //
+    //    var Y = function(_P) {
+    //        return me.C.coordsSystem.y(me.f(_P).getY());
+    //    };
 
-    var Move = function (_P, _x, _y) {
+    var Move = function(_P, _x, _y) {
         var o = me.f(_P);
-        if (isStr(_x)) {
+        if (isStr(_x))  {
             o.setEXY(_x);
             return;
-        }
-        ;
+        };
         o.setXY(me.C.coordsSystem.px(_x), me.C.coordsSystem.py(_y));
-        setTimeout(function () {
+        setTimeout(function() {
             me.C.compute();
             me.Z.paint();
         }, 1);
 
     };
 
-    var InteractiveInput = function (_m, _type) {
+    var InteractiveInput = function(_m, _type) {
         throw {
             name: "System Error",
             level: "Show Stopper",
             message: "Error detected. Please contact the system administrator.",
             htmlMessage: "Error detected. Please contact the <a href=\"mailto:sysadmin@acme-widgets.com\">system administrator</a>.",
-            toString: function () {
+            toString: function() {
                 return this.name + ": " + this.message;
             }
         };
@@ -394,7 +404,7 @@ function Interpreter(_win, _canvas) {
 
 
 
-    var OrderedIntersection = function (_n, _a, _b, _order, _away) {
+    var OrderedIntersection = function(_n, _a, _b, _order, _away) {
         if (me.t(2))
             return me.a("P");
         if (me.t(3))
@@ -413,11 +423,11 @@ function Interpreter(_win, _canvas) {
         return o.getName();
     };
 
-    var SetCoords = function (_x0, _y0, _u, _md3D) {
+    var SetCoords = function(_x0, _y0, _u, _md3D) {
         me.C.coordsSystem.setCoords(_x0, _y0, _u, _md3D);
     };
 
-    var Circle = function (_n, _a, _b) {
+    var Circle = function(_n, _a, _b) {
         if (me.t(3))
             return me.a("C");
         var A = me.f(_a);
@@ -425,7 +435,7 @@ function Interpreter(_win, _canvas) {
         return me.o("CircleObject", _n, A, B);
     };
 
-    var Circle1 = function (_n, _a, _r) {
+    var Circle1 = function(_n, _a, _r) {
         if (me.t(3))
             return me.a("C");
         var A = me.f(_a);
@@ -438,7 +448,7 @@ function Interpreter(_win, _canvas) {
         return me.o("Circle1Object", _n, A, r);
     };
 
-    var FixedAngle = function (_n, _a, _b, _ex, _trig) {
+    var FixedAngle = function(_n, _a, _b, _ex, _trig) {
         if (me.t(5))
             return me.a("C");
         var A = me.f(_a);
@@ -448,7 +458,7 @@ function Interpreter(_win, _canvas) {
         return o.getName();
     };
 
-    var Circle3 = function (_n, _a, _b, _m) {
+    var Circle3 = function(_n, _a, _b, _m) {
         if (me.t(4))
             return me.a("C");
         var A = me.f(_a);
@@ -457,7 +467,7 @@ function Interpreter(_win, _canvas) {
         return me.o("Circle3Object", _n, A, B, M);
     };
 
-    var Circle3pts = function (_n, _a, _b, _c) {
+    var Circle3pts = function(_n, _a, _b, _c) {
         if (me.t(4))
             return me.a("C");
         var A = me.f(_a);
@@ -466,7 +476,7 @@ function Interpreter(_win, _canvas) {
         return me.o("Circle3ptsObject", _n, A, B, C);
     };
 
-    var Circle3pts3D = function (_n, _a, _b, _c) {
+    var Circle3pts3D = function(_n, _a, _b, _c) {
         if (me.t(4))
             return me.a("C");
         var A = me.f(_a);
@@ -475,7 +485,7 @@ function Interpreter(_win, _canvas) {
         return me.o("Circle3ptsObject_3D", _n, A, B, C);
     };
 
-    var Center = function (_n, _c) {
+    var Center = function(_n, _c) {
         if (me.t(2))
             return me.a("P");
         var C = me.f(_c);
@@ -485,7 +495,7 @@ function Interpreter(_win, _canvas) {
         return C.getP1().getName();
     };
 
-    var Arc3pts = function (_n, _a, _b, _c) {
+    var Arc3pts = function(_n, _a, _b, _c) {
         if (me.t(4))
             return me.a("C");
         var A = me.f(_a);
@@ -494,7 +504,7 @@ function Interpreter(_win, _canvas) {
         return me.o("Arc3ptsObject", _n, A, B, C);
     };
 
-    var Quadric = function (_n, _a, _b, _c, _d, _e) {
+    var Quadric = function(_n, _a, _b, _c, _d, _e) {
         if (me.t(6))
             return me.a("C");
         var A = me.f(_a);
@@ -505,7 +515,7 @@ function Interpreter(_win, _canvas) {
         return me.o("QuadricObject", _n, A, B, C, D, E);
     };
 
-    var Angle = function (_n, _a, _b, _c) {
+    var Angle = function(_n, _a, _b, _c) {
         if (me.t(4))
             return me.a("C");
         var A = me.f(_a);
@@ -514,38 +524,38 @@ function Interpreter(_win, _canvas) {
         return me.o("AngleObject", _n, A, B, C);
     };
 
-//    var Angle180 = function (_a, _o, _c) {
-//
-//
-//    };
-//
-//    var Angle360 = function (_a, _o, _c) {
-//        console.log("Angle360");
-//        var A = me.f(_a);
-//        var O = me.f(_o);
-//        var C = me.f(_c);
-//        var xOA = A.getX() - O.getX(), yOA = A.getY() - O.getY();
-//        var xOC = C.getX() - O.getX(), yOC = C.getY() - O.getY();
-//        var start = Math.angleH(xOA, yOA);
-//        var end = Math.angleH(xOC, yOC);
-//        return (end - start)
-//    };
+    //    var Angle180 = function (_a, _o, _c) {
+    //
+    //
+    //    };
+    //
+    //    var Angle360 = function (_a, _o, _c) {
+    //        console.log("Angle360");
+    //        var A = me.f(_a);
+    //        var O = me.f(_o);
+    //        var C = me.f(_c);
+    //        var xOA = A.getX() - O.getX(), yOA = A.getY() - O.getY();
+    //        var xOC = C.getX() - O.getX(), yOC = C.getY() - O.getY();
+    //        var start = Math.angleH(xOA, yOA);
+    //        var end = Math.angleH(xOC, yOC);
+    //        return (end - start)
+    //    };
 
 
 
-    var X_axis = function (_n) {
+    var X_axis = function(_n) {
         var n = me.o("OXObject", _n);
         me.C.coordsSystem.setOX(me.C.find(n));
         return n;
     };
 
-    var Y_axis = function (_n) {
+    var Y_axis = function(_n) {
         var n = me.o("OYObject", _n);
         me.C.coordsSystem.setOY(me.C.find(n));
         return n;
     };
 
-    var Line = function (_n, _a, _b) {
+    var Line = function(_n, _a, _b) {
         if (me.t(3))
             return me.a("L");
         var A = me.f(_a);
@@ -553,7 +563,7 @@ function Interpreter(_win, _canvas) {
         return me.o("TwoPointsLineObject", _n, A, B);
     };
 
-    var Ray = function (_n, _a, _b) {
+    var Ray = function(_n, _a, _b) {
         if (me.t(3))
             return me.a("R");
         var A = me.f(_a);
@@ -561,7 +571,7 @@ function Interpreter(_win, _canvas) {
         return me.o("RayObject", _n, A, B);
     };
 
-    var Segment = function (_n, _a, _b) {
+    var Segment = function(_n, _a, _b) {
         if (me.t(3))
             return me.a("S");
         var A = me.f(_a);
@@ -569,7 +579,7 @@ function Interpreter(_win, _canvas) {
         return me.o("SegmentObject", _n, A, B);
     };
 
-    var Vector = function (_n, _a, _b) {
+    var Vector = function(_n, _a, _b) {
         if (me.t(3))
             return me.a("V");
         var A = me.f(_a);
@@ -577,28 +587,28 @@ function Interpreter(_win, _canvas) {
         return me.o("VectorObject", _n, A, B);
     };
 
-    var First = function (_n, _s) {
+    var First = function(_n, _s) {
         if (me.t(2))
             return me.a("P");
         var S = me.f(_s);
         return S.getP1().getName();
     };
 
-    var Second = function (_n, _s) {
+    var Second = function(_n, _s) {
         if (me.t(2))
             return me.a("P");
         var S = me.f(_s);
         return S.getP2().getName();
     };
 
-    var DefinitionPoint = function (_n, _s, _i) {
+    var DefinitionPoint = function(_n, _s, _i) {
         if (me.t(3))
             return me.a("P");
         var S = me.f(_s);
         return S.getPt(_i).getName();
     };
 
-    var Parallel = function (_n, _l, _p) {
+    var Parallel = function(_n, _l, _p) {
         if (me.t(3))
             return me.a("Par");
         var L = me.f(_l);
@@ -606,7 +616,7 @@ function Interpreter(_win, _canvas) {
         return me.o("ParallelLineObject", _n, L, P);
     };
 
-    var Perpendicular = function (_n, _l, _p) {
+    var Perpendicular = function(_n, _l, _p) {
         if (me.t(3))
             return me.a("Perp");
         var L = me.f(_l);
@@ -614,7 +624,7 @@ function Interpreter(_win, _canvas) {
         return me.o("PlumbObject", _n, L, P);
     };
 
-    var MidPoint = function (_n, _a, _b) {
+    var MidPoint = function(_n, _a, _b) {
         if (me.t(3))
             return me.a("M");
         var A = me.f(_a);
@@ -622,7 +632,7 @@ function Interpreter(_win, _canvas) {
         return me.o("MidPointObject", _n, A, B);
     };
 
-    var Symmetry = function (_n, _a, _b) {
+    var Symmetry = function(_n, _a, _b) {
         if (me.t(3))
             return me.a("M");
         var A = me.f(_a);
@@ -630,7 +640,7 @@ function Interpreter(_win, _canvas) {
         return me.o("SymcObject", _n, A, B);
     };
 
-    var Reflection = function (_n, _l, _p) {
+    var Reflection = function(_n, _l, _p) {
         if (me.t(3))
             return me.a("M");
         var L = me.f(_l);
@@ -638,7 +648,7 @@ function Interpreter(_win, _canvas) {
         return me.o("SymaObject", _n, L, P);
     };
 
-    var PerpendicularBisector = function (_n, _a, _b) {
+    var PerpendicularBisector = function(_n, _a, _b) {
         if (me.t(3))
             return me.a("L");
         var A = me.f(_a);
@@ -646,7 +656,7 @@ function Interpreter(_win, _canvas) {
         return me.o("PerpBisectorObject", _n, A, B);
     };
 
-    var AngleBisector = function (_n, _a, _b, _c) {
+    var AngleBisector = function(_n, _a, _b, _c) {
         if (me.t(4))
             return me.a("L");
         var A = me.f(_a);
@@ -655,20 +665,20 @@ function Interpreter(_win, _canvas) {
         return me.o("AngleBisectorObject", _n, A, B, C);
     };
 
-    var Polygon = function (_n, _pts) {
+    var Polygon = function(_n, _pts) {
         if (me.t(2))
             return me.a("A");
-//        console.log(_pts);
+        //        console.log(_pts);
         var pts = _pts.split(",");
         for (var i = 0; i < pts.length; i++) {
-//            console.log((me.p(pts[i])));
+            //            console.log((me.p(pts[i])));
             pts[i] = me.f(me.p(pts[i]));
         }
         pts.push(pts[0]);
         return me.o("AreaObject", _n, pts);
     };
 
-    var Locus = function (_n, _a, _b) {
+    var Locus = function(_n, _a, _b) {
         if (me.t(3))
             return me.a("Locus");
         var A = me.f(_a);
@@ -676,25 +686,25 @@ function Interpreter(_win, _canvas) {
         return me.o("LocusObject", _n, A, B);
     };
 
-    var Curvus = function (_n, _a, _b, _t) {
+    var Curvus = function(_n, _a, _b, _t) {
         if (me.t(4))
             return me.a("f");
         return me.o("CurvusObject", _n, _a, _b, _t);
     };
 
-    var CartesianFunction = function (_n, _a, _b, _t) {
+    var CartesianFunction = function(_n, _a, _b, _t) {
         if (me.t(4))
             return me.a("f");
         return me.o("CurvusObject", _n, _a, _b, _t);
     };
 
-    var ParametricFunction = function (_n, _a, _b, _t1, _t2) {
+    var ParametricFunction = function(_n, _a, _b, _t1, _t2) {
         if (me.t(5))
             return me.a("f");
         return me.o("CurvusObject", _n, _a, _b, _t1, _t2);
     };
 
-    var Expression = function (_n, _t, _min, _max, _e, _x, _y) {
+    var Expression = function(_n, _t, _min, _max, _e, _x, _y) {
         if (me.t(5))
             return me.a("E");
         var px = me.C.coordsSystem.px(_x);
@@ -702,7 +712,7 @@ function Interpreter(_win, _canvas) {
         return me.o("ExpressionObject", _n, _t, _min, _max, _e, px, py);
     };
 
-    var ExpressionOn = function (_n, _t, _min, _max, _e, _a, _alpha) {
+    var ExpressionOn = function(_n, _t, _min, _max, _e, _a, _alpha) {
         if (me.t(5))
             return me.a("E");
         var on = me.f(_a);
@@ -713,72 +723,72 @@ function Interpreter(_win, _canvas) {
         return ex.getName();
     };
 
-    var List = function (_n, _exp) {
+    var List = function(_n, _exp) {
         if (me.t(2))
             return me.a("List");
         var _E = me.f(_exp);
         return me.o("ListObject", _n, _E);
     };
 
-    var parseBoolean = function (val) {
+    var parseBoolean = function(val) {
         return !!JSON.parse(String(val).toLowerCase());
     }
 
-    var STL = function (_n, _s) {
+    var STL = function(_n, _s) {
         var o = me.f(_n);
         _s = _s.split(";");
         for (var i = 0, len = _s.length; i < len; i++) {
             var e = _s[i].split(":");
             e[1] = me.p(e[1]);
             switch (e[0]) {
-                case "c":// Color
+                case "c": // Color
                     o.setColor(e[1]);
                     break;
-                case "h":// Hidden
+                case "h": // Hidden
                     o.setHidden(e[1]);
                     break;
-                case "o":// Opacity
+                case "o": // Opacity
                     o.setOpacity(parseFloat(e[1]));
                     break;
-                case "s":// Size
+                case "s": // Size
                     o.setSize(parseFloat(e[1]));
                     break;
-                case "sn":// Show name
+                case "sn": // Show name
                     o.setShowName(e[1]);
                     break;
-                case "f":// Font size
+                case "f": // Font size
                     o.setFontSize(parseInt(e[1]));
                     break;
-                case "l":// Layer
+                case "l": // Layer
                     o.setLayer(parseInt(e[1]));
                     break;
-                case "p":// Précision numérique
+                case "p": // Précision numérique
                     o.setPrecision(e[1]);
                     break;
-                case "sp":// Forme des points
+                case "sp": // Forme des points
                     o.setShape(parseInt(e[1]));
                     break;
-                case "i":// Incrément
+                case "i": // Incrément
                     o.setIncrement(parseFloat(e[1]));
                     break;
-                case "sb":// Sur le contour d'un polygone
+                case "sb": // Sur le contour d'un polygone
                     o.setOnBoundary(e[1]);
                     break;
-                case "dh":// Pointillés
+                case "dh": // Pointillés
                     o.setDash(parseBoolean(e[1]));
                     break;
-                case "nmi":// No Mouse Inside (Inerte)
+                case "nmi": // No Mouse Inside (Inerte)
                     o.setNoMouseInside(parseBoolean(e[1]));
                     break;
-                case "np":// Position du nom des objets
+                case "np": // Position du nom des objets
                     o.setNamePosition(e[1]);
                     break;
-                case "am":// Angle mode : 360° or not
+                case "am": // Angle mode : 360° or not
                     o.set360(parseBoolean(e[1]));
                     break;
-                case "tk":// Trace de l'objet
+                case "tk": // Trace de l'objet
                     if (e[1]) {
-                        setTimeout(function () {
+                        setTimeout(function() {
                             me.Z.trackManager.add(o, true);
                         }, 1);
                     }
@@ -786,7 +796,7 @@ function Interpreter(_win, _canvas) {
                 case "fl": // Objet flottant
                     if (e[1]) {
                         o.setFloat(true);
-                        o.free = function () {
+                        o.free = function() {
                             return false;
                         }
                     }
@@ -798,15 +808,14 @@ function Interpreter(_win, _canvas) {
                 case "cL": // Point d'un curseur d'expression
                     o.setCursorLength(parseInt(e[1]));
                     break;
-                case "sg":// With segments (for list objects)
+                case "sg": // With segments (for list objects)
                     o.setSegmentsSize(e[1]);
                     break;
                 case "mg": // Magnétisme des objets
                     var t = eval("[" + e[1] + "]");
                     for (var k = 0; k < t.length; k++) {
                         t[k][0] = me.C.find(t[k][0]);
-                    }
-                    ;
+                    };
                     o.setMagnets(t);
                     break;
                 case "dp": // Dépendance des objets
@@ -830,7 +839,7 @@ function Interpreter(_win, _canvas) {
         }
     };
 
-    var SetGeneralStyle = function (_s) {
+    var SetGeneralStyle = function(_s) {
         _s = _s.split(";");
         for (var i = 0, len = _s.length; i < len; i++) {
             var e = _s[i].split(":");
@@ -845,7 +854,7 @@ function Interpreter(_win, _canvas) {
     };
 
 
-    var SetCoordsStyle = function (_s) {
+    var SetCoordsStyle = function(_s) {
         _s = _s.split(";");
         var cs = me.C.coordsSystem;
         for (var i = 0, len = _s.length; i < len; i++) {
@@ -906,8 +915,8 @@ function Interpreter(_win, _canvas) {
     var EX = {}; // Expressions
     var EXPS = []; // Tableau de stockage des objets impliqués dans les expressions élémentaires
 
-    me.CreateFunctionFromExpression = function (_s, _v) {
-//        if (_s === "") _s = "NaN";
+    me.CreateFunctionFromExpression = function(_s, _v) {
+        //        if (_s === "") _s = "NaN";
         var t = _s.split(";");
         t[t.length - 1] = "return (" + t[t.length - 1] + ");";
         var s = t.join(";");
@@ -917,7 +926,7 @@ function Interpreter(_win, _canvas) {
         // figure. Dans tous les autres cas d'erreur, f renvoie NaN.
         try {
             f = eval('(function(' + _v + '){try{with(Math){with(EX){' + s + '}}}catch(e){return undefined;}})');
-//            f = eval('(function(' + _v + '){try{with(Math){with(EX){' + s + '}}}catch(e){return undefined;}})');
+            //            f = eval('(function(' + _v + '){try{with(Math){with(EX){' + s + '}}}catch(e){return undefined;}})');
         } catch (e) {
             f = eval('(function(){return NaN})');
         }
@@ -933,7 +942,7 @@ function Interpreter(_win, _canvas) {
 
 
 
-    var pushEXP = function (_o) {
+    var pushEXP = function(_o) {
         var i = EXPS.indexOf(_o);
         if (i === -1) {
             EXPS.push(_o);
@@ -942,15 +951,15 @@ function Interpreter(_win, _canvas) {
         return i;
     };
 
-    var getEXP = function (_i) {
+    var getEXP = function(_i) {
         return EXPS[_i];
     };
 
-    me.getEXPS = function () {
+    me.getEXPS = function() {
         return EXPS;
     }
 
-    var isValidParenthesis = function (_s) {
+    var isValidParenthesis = function(_s) {
         var parentheses = 0;
         var crochets = 0;
         var REGsequence = [];
@@ -978,13 +987,13 @@ function Interpreter(_win, _canvas) {
     };
 
 
-    var transformOpposite = function (_st) {
-//        if (!isValidParenthesis(_st)) return _st;
-//        var allExp = _st.split(";");
-//        var _s = allExp[allExp.length - 1];
+    var transformOpposite = function(_st) {
+        //        if (!isValidParenthesis(_st)) return _st;
+        //        var allExp = _st.split(";");
+        //        var _s = allExp[allExp.length - 1];
 
 
-        _st = _st.replace(/\-([\d\.]+)/g, function (m, _d1) {
+        _st = _st.replace(/\-([\d\.]+)/g, function(m, _d1) {
             return "+(-" + _d1 + ")";
         });
         return _st;
@@ -995,7 +1004,7 @@ function Interpreter(_win, _canvas) {
 
 
 
-    var operatorReplace = function (_st) {
+    var operatorReplace = function(_st) {
         var regs = isValidParenthesis(_st);
         if (regs) {
 
@@ -1012,7 +1021,7 @@ function Interpreter(_win, _canvas) {
             var mask = "___mainMask___";
 
             for (var i = 0; i < regs.length; i++) {
-                _st = _st.replace(regs[i], function (m, t) {
+                _st = _st.replace(regs[i], function(m, t) {
                     tab.push(t);
                     return (mask + (tab.length - 1));
                 });
@@ -1037,7 +1046,7 @@ function Interpreter(_win, _canvas) {
                 while (tab[i].indexOf(maskOp) > -1) {
                     // On remplace le joker par sa vraie valeur, et dans le
                     // même temps on remplace le caret par la fonction pow :
-                    tab[i] = tab[i].replace(new RegExp(maskOp + "(\\d+)", "g"), function (m, d) {
+                    tab[i] = tab[i].replace(new RegExp(maskOp + "(\\d+)", "g"), function(m, d) {
                         return tabOp[d];
                     });
                 }
@@ -1047,7 +1056,7 @@ function Interpreter(_win, _canvas) {
             while (_st.indexOf(mask) > -1) {
                 // On remplace le joker par sa vraie valeur, et dans le
                 // même temps on remplace l'opérateur par la fonction correspondante :
-                _st = _st.replace(new RegExp(mask + "(\\d+)", "g"), function (m, d) {
+                _st = _st.replace(new RegExp(mask + "(\\d+)", "g"), function(m, d) {
                     return tab[d];
                 });
             }
@@ -1055,13 +1064,19 @@ function Interpreter(_win, _canvas) {
         }
     };
 
-    var replaceOp = function (_s, _op, _atom, _mask) {
-        var ops = {"^": "power", "*": "times", "/": "quotient", "+": "plus", "-": "minus"};
+    var replaceOp = function(_s, _op, _atom, _mask) {
+        var ops = {
+            "^": "power",
+            "*": "times",
+            "/": "quotient",
+            "+": "plus",
+            "-": "minus"
+        };
         var s0 = "";
         var s1 = _s;
         while ((s0 !== s1)) {
             s0 = s1;
-            s1 = s1.replace(new RegExp("([a-zA-Z0-9_.]*)(" + _op + ")([a-zA-Z0-9_.]*)", ""), function (_m, _d1, _o, _d2) {
+            s1 = s1.replace(new RegExp("([a-zA-Z0-9_.]*)(" + _op + ")([a-zA-Z0-9_.]*)", ""), function(_m, _d1, _o, _d2) {
                 _atom.push(ops[_o] + "(" + _d1 + "," + _d2 + ")");
                 return (_mask + (_atom.length - 1));
             });
@@ -1069,15 +1084,15 @@ function Interpreter(_win, _canvas) {
         return s1;
     };
 
-    var addTimesSymbol = function (_s) {
+    var addTimesSymbol = function(_s) {
         // PI a pour valeur unicode : \u03C0
-        _s = _s.replace(/Angle360/g, "Angle360_");  // avoid conflict with 3(x+2) rule
-        _s = _s.replace(/Angle180/g, "Angle180_");  // avoid conflict with 3(x+2) rule
+        _s = _s.replace(/Angle360/g, "Angle360_"); // avoid conflict with 3(x+2) rule
+        _s = _s.replace(/Angle180/g, "Angle180_"); // avoid conflict with 3(x+2) rule
 
-        _s = _s.replace(/(^|[^A-Za-z])(\d+|\u03C0+)\s*([A-Za-z]+|\u03C0+)/g, "$1$2*$3");  // Du type 2x -> 2*x
-        _s = _s.replace(/\)\s*\(/g, ")*(");                // Du type (x+1)(x+2) -> (x+1)*(x+2)
-        _s = _s.replace(/(\d+|\u03C0)\s*\(/g, "$1*(");            // Du type 3(x+2) -> 3*(x+2)
-        _s = _s.replace(/\)\s*([A-Za-z]+)/g, ")*$1");      // Du type (x+2)sin(a) -> (x+2)*sin(a)
+        _s = _s.replace(/(^|[^A-Za-z])(\d+|\u03C0+)\s*([A-Za-z]+|\u03C0+)/g, "$1$2*$3"); // Du type 2x -> 2*x
+        _s = _s.replace(/\)\s*\(/g, ")*("); // Du type (x+1)(x+2) -> (x+1)*(x+2)
+        _s = _s.replace(/(\d+|\u03C0)\s*\(/g, "$1*("); // Du type 3(x+2) -> 3*(x+2)
+        _s = _s.replace(/\)\s*([A-Za-z]+)/g, ")*$1"); // Du type (x+2)sin(a) -> (x+2)*sin(a)
         _s = _s.replace(/\b([xyzt]{1})([xyzt]{1})\b/g, "$1*$2"); // Du type xy -> x*y
 
         _s = _s.replace(/Angle180_/g, "Angle180");
@@ -1085,21 +1100,21 @@ function Interpreter(_win, _canvas) {
         return _s;
     };
 
-    var functionReplace = function (_s) {
+    var functionReplace = function(_s) {
         var tabExpr = [];
         var maskExpr = "___EXPR___";
         if (!isValidParenthesis(_s))
             return _s;
         // Remplacement des expressions sans variable : E1 -> ___EXPR___n
         // et mise du contenu en mémoire tabExpr[n]="funcValue(E1)()"
-        _s = _s.replace(/\b(\w+)\b([^\(]|$)/g, function (m, _n, _e) {
+        _s = _s.replace(/\b(\w+)\b([^\(]|$)/g, function(m, _n, _e) {
             var o = (window[_n] === undefined) ? me.fv(window["$locvar_" + _n]) : me.fv(window[_n]);
             if (o === undefined)
                 o = me.fv(_n);
             if (o === undefined)
                 return (_n + _e);
-//            console.log("trouvé !!!");
-//            if ((o === undefined) || (o.getCode() !== "expression")) return (_n + _e);
+            //            console.log("trouvé !!!");
+            //            if ((o === undefined) || (o.getCode() !== "expression")) return (_n + _e);
             if ("." === _e.charAt(0))
                 tabExpr.push("getObj(" + _n + ")");
             else
@@ -1112,7 +1127,7 @@ function Interpreter(_win, _canvas) {
         var tabFunc = [];
         var maskFunc = "___FUNC___";
         while (_s.indexOf("(") > -1) {
-            _s = _s.replace(/(\([^\(\)]*\))/g, function (m, t) {
+            _s = _s.replace(/(\([^\(\)]*\))/g, function(m, t) {
                 tabFunc.push(t);
                 return (maskFunc + (tabFunc.length - 1));
             });
@@ -1120,35 +1135,35 @@ function Interpreter(_win, _canvas) {
         tabFunc.push(_s);
         _s = maskFunc + (tabFunc.length - 1);
         while (_s.indexOf(maskFunc) > -1) {
-            _s = _s.replace(new RegExp("(\\w+)" + maskFunc + "(\\d+)", "g"), function (m, _n, _d) {
+            _s = _s.replace(new RegExp("(\\w+)" + maskFunc + "(\\d+)", "g"), function(m, _n, _d) {
                 var o = (window[_n] === undefined) ? me.fv(window["$locvar_" + _n]) : me.fv(window[_n]);
                 if (o === undefined)
                     o = me.fv(_n);
                 if (o === undefined)
                     return _n + maskFunc + _d;
-//                if ((o === undefined) || ((o.getCode() !== "function") && (o.getCode() !== "expression"))) return _n + maskFunc + _d;
+                //                if ((o === undefined) || ((o.getCode() !== "function") && (o.getCode() !== "expression"))) return _n + maskFunc + _d;
                 return "funcValue(" + _n + ")__" + maskFunc + _d;
             });
-            _s = _s.replace(new RegExp(maskFunc + "(\\d+)", "g"), function (m, _d) {
+            _s = _s.replace(new RegExp(maskFunc + "(\\d+)", "g"), function(m, _d) {
                 return tabFunc[_d];
             });
         }
 
         // Rétablissement des expressions sans variable : ___EXPR___n -> funcValue(E1)()
-        _s = _s.replace(new RegExp(maskExpr + "(\\d+)", "g"), function (m, _d) {
+        _s = _s.replace(new RegExp(maskExpr + "(\\d+)", "g"), function(m, _d) {
             return tabExpr[_d];
         });
         return _s;
     };
 
     // parseExpression dans le contexte de cette window :
-    var pe = function (_o, _n) {
-//        console.log("name="+_o.getName()+"  n="+_n);
+    var pe = function(_o, _n) {
+        //        console.log("name="+_o.getName()+"  n="+_n);
         _n = _n.replace(/\s/g, "");
 
         if ((_o.getName) && (_o.getName() === _n)) {
-//            console.log("name=" + _o.getName() + "  n=" + _n);
-            return  pushEXP(_o);
+            //            console.log("name=" + _o.getName() + "  n=" + _n);
+            return pushEXP(_o);
         } else {
             var o = (window[_n] === undefined) ? me.fv(window["$locvar_" + _n]) : me.fv(window[_n]);
             if (o === undefined)
@@ -1157,11 +1172,11 @@ function Interpreter(_win, _canvas) {
                 return _n;
             if ((_o) && (_o.getParent) && (_o.getParent().indexOf(o) === -1))
                 _o.addParent(o);
-            return  pushEXP(o);
+            return pushEXP(o);
         }
     };
 
-    var EXinit = function (_c) {
+    var EXinit = function(_c) {
         var _n = EX[_c].length; // nombre de paramètres de la fonction
         var c = _c.split("_")[1];
         var r = "\\b" + c + "\\b\\(([^\\)]*)";
@@ -1170,8 +1185,8 @@ function Interpreter(_win, _canvas) {
         }
         r += "\\)";
         var rg = new RegExp(r, "g");
-        return function (_o, _s) {
-            return _s.replace(rg, function (m) {
+        return function(_o, _s) {
+            return _s.replace(rg, function(m) {
                 var res = _c + "(" + pe(_o, arguments[1]);
                 for (var i = 2; i < (_n + 1); i++) {
                     res += "," + pe(_o, arguments[i]);
@@ -1183,24 +1198,24 @@ function Interpreter(_win, _canvas) {
     };
 
 
-    me.ExpressionInit = function (_o, _s) {
+    me.ExpressionInit = function(_o, _s) {
 
         // ******* SPARADRAP : je ne comprends pas pourquoi des EX_funcValue(5)
         // traînent dans le source utilisateur de certaines expressions (de dérivées).
         // On nettoie donc tout ça pour remplacer par le nom actuel
-        _s = _s.replace(/(EX_funcValue\((\d+)\))/g, function (m, g1, g2) {
+        _s = _s.replace(/(EX_funcValue\((\d+)\))/g, function(m, g1, g2) {
             var ex = EXPS[parseInt(g2)];
             return ex.getName();
         });
 
 
         var s = _s;
-//        console.log("ExpressionInit !!! : "+s);
+        //        console.log("ExpressionInit !!! : "+s);
         // Sauvegarde des toutes les parties texte de l'expression :
         var txts = [];
         var maskTxts = "___TEXTES___";
         var stt = s;
-        var s2 = s.replace(/(\"[^\"]*\")/g, function (m, t) {
+        var s2 = s.replace(/(\"[^\"]*\")/g, function(m, t) {
             txts.push(t);
             return (maskTxts + (txts.length - 1));
         });
@@ -1218,7 +1233,7 @@ function Interpreter(_win, _canvas) {
         // "EX_y(EX_funcValue(0)__())+x^2" lorsque l'utilisateur a entré "y(P1)+x^2".
         // Cette chaine correspond au paramètre "pseudo" de l'objet renvoyé, qui sera
         // utilisé pour délivrer le source de l'expression :
-        var s3 = s2.replace(new RegExp(maskTxts + "(\\d+)", "g"), function (m, _d) {
+        var s3 = s2.replace(new RegExp(maskTxts + "(\\d+)", "g"), function(m, _d) {
             return txts[_d];
         });
 
@@ -1252,21 +1267,26 @@ function Interpreter(_win, _canvas) {
 
 
         // Restitution de tous les textes :
-        s2 = s2.replace(new RegExp(maskTxts + "(\\d+)", "g"), function (m, _d) {
+        s2 = s2.replace(new RegExp(maskTxts + "(\\d+)", "g"), function(m, _d) {
             return txts[_d];
         });
 
 
 
-//        if ((s2 !== "") && ((isValidParenthesis(s2)))) {
-//            console.log("***user result = " + s);
-//            console.log("pseudo result = " + s3);
-//            console.log("main result = " + s2);
-//            console.log("name : " + _o.getName());
-//        }
+        //        if ((s2 !== "") && ((isValidParenthesis(s2)))) {
+        //            console.log("***user result = " + s);
+        //            console.log("pseudo result = " + s3);
+        //            console.log("main result = " + s2);
+        //            console.log("name : " + _o.getName());
+        //        }
 
 
-        return {user: s, pseudo: s3, js: s2, jsbackup: s2};
+        return {
+            user: s,
+            pseudo: s3,
+            js: s2,
+            jsbackup: s2
+        };
     };
 
 
@@ -1274,10 +1294,10 @@ function Interpreter(_win, _canvas) {
     // Renvoie le source de l'expression. Principalement,
     // il s'agit de remplacer la représentation numérique 
     // interne par le nom actuel des objets.
-    me.ExpressionSrc = function (_s) {
+    me.ExpressionSrc = function(_s) {
         var s = _s;
         while (s.indexOf("EX_funcValue") !== -1) {
-            s = s.replace(/EX_funcValue\((\d+)\)__\(([^\)]*)\)/, function (_m, _d1, _d2) {
+            s = s.replace(/EX_funcValue\((\d+)\)__\(([^\)]*)\)/, function(_m, _d1, _d2) {
                 var _n = EXPS[_d1].getVarName();
                 if (_d2 !== "")
                     _n += "(" + _d2 + ")";
@@ -1285,7 +1305,7 @@ function Interpreter(_win, _canvas) {
             });
         }
         while (s.indexOf("EX_getObj") !== -1) {
-            s = s.replace(/EX_getObj\((\d+)\)./, function (_m, _d1) {
+            s = s.replace(/EX_getObj\((\d+)\)./, function(_m, _d1) {
                 var _n = EXPS[_d1].getVarName() + ".";
                 return _n;
             });
@@ -1295,19 +1315,19 @@ function Interpreter(_win, _canvas) {
         return s;
     };
 
-    var isArray = function (_a) {
+    var isArray = function(_a) {
         return (Object.prototype.toString.call(_a) === '[object Array]');
     };
 
 
-    Math.test = function (_test, _valtrue, _valfalse) {
+    Math.test = function(_test, _valtrue, _valfalse) {
         if (_test)
             return _valtrue;
         else
             return _valfalse;
     };
 
-    Math.IF = function (_test, _valtrue, _valfalse) {
+    Math.IF = function(_test, _valtrue, _valfalse) {
         if (_test)
             return _valtrue;
         else
@@ -1315,23 +1335,23 @@ function Interpreter(_win, _canvas) {
     };
 
 
-// Renvoie l'angle que forme un vecteur (x;y) avec l'horizontale
-// dans l'intervalle [0;2π[ orienté dans le sens trigo :
-    Math.angleH = function (x, y) {
+    // Renvoie l'angle que forme un vecteur (x;y) avec l'horizontale
+    // dans l'intervalle [0;2π[ orienté dans le sens trigo :
+    Math.angleH = function(x, y) {
         if (y < 0)
             return 2 * Math.PI - Math.atan2(-y, x);
         else
             return -Math.atan2(-y, x);
     };
 
-    Math.crossProduct = function (_a, _b) {
+    Math.crossProduct = function(_a, _b) {
         if ((isArray(_a)) && (_a.length === 3) && (isArray(_b)) && (_b.length === 3)) {
             return [_a[1] * _b[2] - _a[2] * _b[1], _a[2] * _b[0] - _a[0] * _b[2], _a[0] * _b[1] - _a[1] * _b[0]];
         }
         return NaN;
     };
 
-    Math.unitVector = function (_a) {
+    Math.unitVector = function(_a) {
         if (isArray(_a)) {
             var _n = 0;
             var res = [];
@@ -1347,7 +1367,7 @@ function Interpreter(_win, _canvas) {
         return NaN;
     };
 
-    Math.distance = function (_a, _b) {
+    Math.distance = function(_a, _b) {
         if ((isArray(_a)) && (isArray(_b)) && (_a.length === _b.length)) {
             var d = 0;
             for (var i = 0; i < _a.length; i++) {
@@ -1358,14 +1378,14 @@ function Interpreter(_win, _canvas) {
         return NaN;
     };
 
-    Math.gcd = function (a, b) {
+    Math.gcd = function(a, b) {
         if ((!isNaN(a)) && (!isNaN(b)))
             return ((b == 0) ? a : Math.gcd(b, a % b));
         return NaN;
     };
 
 
-    Math.csqrt = function (a) {
+    Math.csqrt = function(a) {
         if (!isNaN(a)) {
             if (a < 0)
                 return Math.csqrt([a, 0]);
@@ -1384,7 +1404,7 @@ function Interpreter(_win, _canvas) {
         return NaN;
     };
 
-    Math.power = function (a, b) {
+    Math.power = function(a, b) {
         if ((!isNaN(a)) && (!isNaN(b)))
             return Math.pow(a, b);
         // Si a est un complexe et b un nombre :
@@ -1414,7 +1434,7 @@ function Interpreter(_win, _canvas) {
         return NaN;
     };
 
-    Math.plus = function (_a, _b) {
+    Math.plus = function(_a, _b) {
         if ((!isNaN(_a)) && (!isNaN(_b)))
             return _a + _b;
         var a = (!isNaN(_a)) ? [_a, 0] : _a;
@@ -1432,7 +1452,7 @@ function Interpreter(_win, _canvas) {
     };
 
 
-    Math.minus = function (_a, _b) {
+    Math.minus = function(_a, _b) {
         if ((!isNaN(_a)) && (!isNaN(_b)))
             return _a - _b;
         var a = (!isNaN(_a)) ? [_a, 0] : _a;
@@ -1446,7 +1466,7 @@ function Interpreter(_win, _canvas) {
         }
         return NaN;
     };
-    Math.times = function (a, b) {
+    Math.times = function(a, b) {
         if ((!isNaN(a)) && (!isNaN(b)))
             return a * b;
         // Si les deux sont des complexes :
@@ -1469,13 +1489,12 @@ function Interpreter(_win, _canvas) {
         }
         return NaN;
     };
-    Math.quotient = function (a, b) {
+    Math.quotient = function(a, b) {
         if ((!isNaN(a)) && (!isNaN(b)))
             return a / b;
         // Si les deux sont des complexes :
         if ((isArray(a)) && (isArray(b)) && (a.length === b.length) && (a.length === 2)) {
-            return ([(a[0] * b[0] + a[1] * b[1]) / (b[0] * b[0] + b[1] * b[1]),
-                (a[1] * b[0] - a[0] * b[1]) / (b[0] * b[0] + b[1] * b[1])]);
+            return ([(a[0] * b[0] + a[1] * b[1]) / (b[0] * b[0] + b[1] * b[1]), (a[1] * b[0] - a[0] * b[1]) / (b[0] * b[0] + b[1] * b[1])]);
         }
         if ((!isNaN(b)) && (isArray(a))) {
             var t = [];
@@ -1492,7 +1511,7 @@ function Interpreter(_win, _canvas) {
         return NaN;
     };
 
-    Math.mod = function (_a) {
+    Math.mod = function(_a) {
         var a = (!isNaN(_a)) ? [_a, 0] : _a;
         // Si a est un complexe :
         if ((isArray(a)) && (a.length === 2)) {
@@ -1501,7 +1520,7 @@ function Interpreter(_win, _canvas) {
         return NaN;
     };
 
-    Math.conj = function (_a) {
+    Math.conj = function(_a) {
         var a = (!isNaN(_a)) ? [_a, 0] : _a;
         // Si a est un complexe :
         if ((isArray(a)) && (a.length === 2)) {
@@ -1510,7 +1529,7 @@ function Interpreter(_win, _canvas) {
         return NaN;
     };
 
-    Math.arg = function (_a) {
+    Math.arg = function(_a) {
         var a = (!isNaN(_a)) ? [_a, 0] : _a;
         // Si a est un complexe :
         if ((isArray(a)) && (a.length === 2)) {
@@ -1519,9 +1538,11 @@ function Interpreter(_win, _canvas) {
         return NaN;
     };
 
-    Math.Angle360 = function (_a, _o, _c) {
-        var xOA = _a[0] - _o[0], yOA = _a[1] - _o[1];
-        var xOC = _c[0] - _o[0], yOC = _c[1] - _o[1];
+    Math.Angle360 = function(_a, _o, _c) {
+        var xOA = _a[0] - _o[0],
+            yOA = _a[1] - _o[1];
+        var xOC = _c[0] - _o[0],
+            yOC = _c[1] - _o[1];
         var start = Math.angleH(xOA, yOA);
         var end = Math.angleH(xOC, yOC);
         var a = end - start;
@@ -1529,9 +1550,9 @@ function Interpreter(_win, _canvas) {
         return (a)
     };
 
-    Math.Angle180 = function (_a, _o, _c) {
+    Math.Angle180 = function(_a, _o, _c) {
         var a = Math.Angle360(_a, _o, _c);
-        return ((a < Math.simplePI)?a:Math.doublePI-a)
+        return ((a < Math.simplePI) ? a : Math.doublePI - a)
     };
 
     Math.deg_coeff = Math.PI / 180;
@@ -1546,27 +1567,27 @@ function Interpreter(_win, _canvas) {
     Math.simplePI = Math.PI;
     Math.coef3D = 0.015;
 
-    me.setDegreeMode = function (_d) {
+    me.setDegreeMode = function(_d) {
         if (_d) {
-            Math.cos = function (_a) {
+            Math.cos = function(_a) {
                 return Math.rcos(_a * Math.deg_coeff);
             };
-            Math.sin = function (_a) {
+            Math.sin = function(_a) {
                 return Math.rsin(_a * Math.deg_coeff);
             };
-            Math.tan = function (_a) {
+            Math.tan = function(_a) {
                 return Math.rtan(_a * Math.deg_coeff);
             };
-            Math.acos = function (_a) {
+            Math.acos = function(_a) {
                 return (Math.racos(_a) / Math.deg_coeff);
             };
-            Math.asin = function (_a) {
+            Math.asin = function(_a) {
                 return (Math.rasin(_a) / Math.deg_coeff);
             };
-            Math.atan = function (_a) {
+            Math.atan = function(_a) {
                 return (Math.ratan(_a) / Math.deg_coeff);
             };
-            Math.angleH = function (x, y) {
+            Math.angleH = function(x, y) {
                 if (y < 0)
                     return (2 * Math.PI - Math.atan2(-y, x)) * 180 / Math.PI;
                 else
@@ -1598,7 +1619,7 @@ function Interpreter(_win, _canvas) {
     // dans le source, et avant, c'est "EX".
 
     // Distance entre deux points :
-    EX.EX_d = function (_a, _b) {
+    EX.EX_d = function(_a, _b) {
         if ((isArray(_a)) && (isArray(_b))) {
             if ((_a.length === 2) && (_b.length === 2))
                 return Math.sqrt((_b[0] - _a[0]) * (_b[0] - _a[0]) + (_b[1] - _a[1]) * (_b[1] - _a[1]));
@@ -1609,32 +1630,32 @@ function Interpreter(_win, _canvas) {
     };
 
     // Abscisse d'un point :
-    EX.EX_x = function (_a) {
+    EX.EX_x = function(_a) {
         if ((isArray(_a)) && (_a.length > 0))
             return _a[0];
         return NaN;
     };
 
     // Ordonnée d'un point
-    EX.EX_y = function (_a) {
+    EX.EX_y = function(_a) {
         if ((isArray(_a)) && (_a.length > 1))
             return _a[1];
         return NaN;
     };
 
-    EX.EX_windoww = function () {
+    EX.EX_windoww = function() {
         return me.C.coordsSystem.l(me.C.getWidth());
     };
-    EX.EX_windowh = function () {
+    EX.EX_windowh = function() {
         return me.C.coordsSystem.l(me.C.getHeight());
     };
-    EX.EX_windowcx = function () {
+    EX.EX_windowcx = function() {
         return me.C.coordsSystem.x(me.C.getWidth() / 2);
     };
-    EX.EX_windowcy = function () {
+    EX.EX_windowcy = function() {
         return me.C.coordsSystem.y(me.C.getHeight() / 2);
     };
-    EX.EX_pixel = function () {
+    EX.EX_pixel = function() {
         return me.C.coordsSystem.getUnit();
     };
 
@@ -1643,66 +1664,68 @@ function Interpreter(_win, _canvas) {
     var COORDS_X0 = me.C.coordsSystem.getX0;
     var COORDS_Y0 = me.C.coordsSystem.getY0;
 
-    EX.EX_phi = function () {
+    EX.EX_phi = function() {
         return COORDS_X0() * Math.coef3D;
     };
-    EX.EX_theta = function () {
+    EX.EX_theta = function() {
         return COORDS_Y0() * Math.coef3D;
     };
 
-    EX.EX_restrictPhi = function (_t) {
+    EX.EX_restrictPhi = function(_t) {
         if (_t.length === 2)
             me.C.coordsSystem.restrictPhi([_t[0] / 0.015 + 0.000001, _t[1] / 0.015 - 0.000001]);
         else
             me.C.coordsSystem.restrictPhi([]);
         return _t;
     };
-    EX.EX_restrictTheta = function (_t) {
+    EX.EX_restrictTheta = function(_t) {
         if (_t.length === 2)
             me.C.coordsSystem.restrictTheta([_t[0] / 0.015 + 0.000001, _t[1] / 0.015 - 0.000001]);
         else
             me.C.coordsSystem.restrictTheta([]);
         return _t;
     };
-    EX.EX_point3D = function (_o, _v) {
+    EX.EX_point3D = function(_o, _v) {
         var fi = EX.EX_phi();
         var th = EX.EX_theta();
-        var cfi = Math.cos(fi), sfi = Math.sin(fi);
-        var cth = Math.cos(th), sth = Math.sin(th);
+        var cfi = Math.cos(fi),
+            sfi = Math.sin(fi);
+        var cth = Math.cos(th),
+            sth = Math.sin(th);
         return [_o[0] + _v[0] * (sfi) + _v[1] * (cfi), _o[1] + _v[0] * (-cfi * sth) + _v[1] * (sfi * sth) + _v[2] * (cth)];
     };
 
 
-//    EX.EX_windoww=9;
+    //    EX.EX_windoww=9;
 
     // Uniquement à usage interne. L'utilisateur écrit f3(2), et
     // l'interpréteur transforme en EX_funcValue(f3)(2) :
-    EX.EX_funcValue = function (_e) {
+    EX.EX_funcValue = function(_e) {
         return EXPS[_e].getValue;
     };
 
-    EX.EX_getObj = function (_e) {
+    EX.EX_getObj = function(_e) {
         return EXPS[_e];
     };
 
-    me.getEX = function () {
+    me.getEX = function() {
         return EX;
     };
 
-    me.getMath = function () {
+    me.getMath = function() {
         return Math;
     };
 
 
     // Copie le namespace de cette iframe onload (voir canvas) :
-    me.copyNameSpace = function () {
+    me.copyNameSpace = function() {
         for (var key in window) {
             namespace[key] = key;
         }
     };
 
 
-    var clearNameSpace = function () {
+    var clearNameSpace = function() {
         for (var key in window) {
             if (!namespace.hasOwnProperty(key)) {
                 delete window[key];
@@ -1712,5 +1735,3 @@ function Interpreter(_win, _canvas) {
 
 
 }
-
-

@@ -4,20 +4,19 @@ function CustomTexts(_owner) {
     var txts = [];
     var active_elt = null;
     var firstActivation = true;
-    
 
 
-    me.filterKB = function(_standardON) {
-    };
-    
-    me.getActive=function(){
+
+    me.filterKB = function(_standardON) {};
+
+    me.getActive = function() {
         return active_elt;
     };
 
     me.add = function(_lbl, _l, _t, _w, _h) {
         var txt = new CustomTextInput(me, owner, _lbl);
         txt.setBounds(_l, _t, _w, _h);
-//        owner.addContent(txt);
+        //        owner.addContent(txt);
         txts.push(txt);
         return txt;
     };
@@ -26,8 +25,7 @@ function CustomTexts(_owner) {
         for (var i = 0; i < txts.length; i++) {
             if (txts[i].getDocObject().parentNode !== null)
                 owner.removeContent(txts[i]);
-        }
-        ;
+        };
         owner.getDocObject().innerHTML = "";
         txts = [];
     };
@@ -46,8 +44,7 @@ function CustomTexts(_owner) {
         window.removeEventListener("keyup", keyup, false);
     };
 
-    me.focus = function() {
-    };
+    me.focus = function() {};
     me.setFirst = function(_b) {
         firstActivation = _b;
     };
@@ -82,9 +79,9 @@ function CustomTexts(_owner) {
     var maybesimplequote = false;
 
     var keypress = function(ev) {
-//        console.log("keypress");
+        //        console.log("keypress");
         var key = ev.keyCode || ev.charCode;
-//        console.log("keypress=" + key);
+        //        console.log("keypress=" + key);
         // Simple quote :
         if (maybesimplequote && (key === 39)) {
             me.insertText("'");
@@ -106,36 +103,36 @@ function CustomTexts(_owner) {
         return false;
     };
     var keydown = function(ev) {
-//        console.log("keydown");
+        //        console.log("keydown");
         maybesimplequote = false;
         if (active_elt === null)
             return false;
         var key = ev.keyCode || ev.charCode;
-//        console.log("keydown=" + key);
+        //        console.log("keydown=" + key);
         switch (key) {
-            case 8:  //DEL
+            case 8: //DEL
                 active_elt.executeCommand("DEL");
                 break;
-            case 13:  //ENTER
+            case 13: //ENTER
                 owner.valid();
                 break;
-            case 27:  //ESC
+            case 27: //ESC
                 owner.cancel();
                 break;
-            case 37:  //LEFT
+            case 37: //LEFT
                 active_elt.executeCommand("LEFT");
                 break;
-            case 39:  //RIGHT
+            case 39: //RIGHT
                 active_elt.executeCommand("RIGHT");
                 break;
-            case 46:  //CLR
+            case 46: //CLR
                 active_elt.executeCommand("CLR");
                 break;
             case 52:
-            case 222:  //guillemet simple
+            case 222: //guillemet simple
                 maybesimplequote = true;
                 return true;
-//                me.insertText(String.fromCharCode(39));
+                //                me.insertText(String.fromCharCode(39));
                 break;
             default:
                 return true;
@@ -162,8 +159,8 @@ function CustomTexts(_owner) {
             window.addEventListener("keydown", keydown, false);
             window.addEventListener("keyup", keyup, false);
             window.addEventListener("paste", function(ev) {
-//                console.log(ev.clipboardData.getData('text/plain'));
-//                alert(ev.clipboardData.getData('text/plain'));
+                //                console.log(ev.clipboardData.getData('text/plain'));
+                //                alert(ev.clipboardData.getData('text/plain'));
             }, false);
         }
     }

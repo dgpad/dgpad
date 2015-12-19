@@ -14,27 +14,27 @@ function TextPanel(_canvas) {
 
     props.show();
 
-    me.addTeXObject = function () {
+    me.addTeXObject = function() {
         var r = Math.round(Math.random() * 128);
         var g = Math.round(Math.random() * 128);
         var b = Math.round(Math.random() * 128);
         var op = Math.round((0.1 + Math.random() / 3) * 100) / 100;
-//        var stl = "c:rgba(" + r + "," + g + "," + b + "," + op + ")";
-//        console.log(stl);
+        //        var stl = "c:rgba(" + r + "," + g + "," + b + "," + op + ")";
+        //        console.log(stl);
         var stl = "c:" + props.getRGBAColor();
-//        stl += ";s:6";
-//        stl += ";r:50";
+        //        stl += ";s:6";
+        //        stl += ";r:50";
         stl += ";s:" + props.getBorderSize();
         stl += ";r:" + props.getBorderRadius();
         stl += ";p:" + props.getPrecision();
         canvas.textManager.addText($L.props_text_example, 70, 10, 500, 65, stl);
     };
 
-    me.edit = function (myObj) {
+    me.edit = function(myObj) {
         props.edit(myObj)
     };
 
-    me.addName = function (_n) {
+    me.addName = function(_n) {
         props.addName(_n);
     };
 
@@ -57,11 +57,11 @@ function props_textPanel(_canvas, _owner) {
     me.addContent(t1);
     ch += 50;
 
-    me.addName = function (_n) {
+    me.addName = function(_n) {
         if (currentObj)
             currentObj.addName(_n);
     };
-    me.edit = function (myObj) {
+    me.edit = function(myObj) {
         var n = myObj && (currentObj !== myObj);
         currentObj = myObj;
         cp.setHEX(myObj.getColor());
@@ -75,52 +75,52 @@ function props_textPanel(_canvas, _owner) {
     };
 
 
-    var COLORcallback = function (val) {
+    var COLORcallback = function(val) {
         if (currentObj)
             currentObj.setColor(val);
     };
 
-    var OPcallback = function (val) {
+    var OPcallback = function(val) {
         if (currentObj)
             currentObj.setOpacity(val);
     };
 
-    var SZcallback = function (val) {
+    var SZcallback = function(val) {
         if (currentObj)
             currentObj.setBorderSize(val);
     };
 
-    var RDcallback = function (val) {
+    var RDcallback = function(val) {
         if (currentObj)
             currentObj.setBorderRadius(val);
     };
 
-    var PRcallback = function (val) {
+    var PRcallback = function(val) {
         if (currentObj)
             currentObj.setNumPrec(val);
     };
 
-    var addBtnCallBack = function () {
+    var addBtnCallBack = function() {
         _owner.addTeXObject();
     };
 
-    me.getRGBAColor = function () {
+    me.getRGBAColor = function() {
         var col = new Color();
         col.set(cp.getHEX());
         col.setOpacity(op.getValue());
         return col.getRGBA();
     };
-    me.getBorderSize = function () {
+    me.getBorderSize = function() {
         return (sz.getValue());
     };
-    me.getBorderRadius = function () {
+    me.getBorderRadius = function() {
         return (rd.getValue());
     };
-    me.getPrecision = function () {
+    me.getPrecision = function() {
         return (pr.getValue());
     };
 
-    var setSlider = function (_sl, _t, _p) {
+    var setSlider = function(_sl, _t, _p) {
         _sl.setValueWidth(40);
         _sl.setTextColor("#252525");
         _sl.setBackgroundColor("rgba(0,0,0,0)");
@@ -159,4 +159,3 @@ function props_textPanel(_canvas, _owner) {
     add.setCallBack(addBtnCallBack);
     me.addContent(add);
 }
-

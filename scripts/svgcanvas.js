@@ -12,20 +12,20 @@
 
 (function(window, document, undefined) {
 
-// current path template
+    // current path template
     var currentPath = {
         type: "path",
         points: new Array(),
         style: {}
     }
 
-// canvas DOM element
+    // canvas DOM element
     var canvas = null;
 
-// canvas context
+    // canvas context
     var ctx = null;
 
-// elements drawn to the canvas
+    // elements drawn to the canvas
     var elements = [];
 
     var SVGCanvas = (function() {
@@ -37,9 +37,9 @@
             /* Settings */
             ctx.TRANSFORM = [];
             ctx.lineDash = [];
-//            ctx.setLineDash = function(_tab) {
-//                ctx.lineDash = _tab;
-//            };
+            //            ctx.setLineDash = function(_tab) {
+            //                ctx.lineDash = _tab;
+            //            };
             this.lineDash = [];
             this.strokeStyle = "black";
             this.lineWidth = 1;
@@ -78,7 +78,7 @@
 <!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n\
 <svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" width=\"" + canvas.width + "\" height=\"" + canvas.height + "\" viewBox=\"0, 0, " + canvas.width + ", " + canvas.height + "\">\n\n";
                     for (var i = 0; i < elements.length; i++) {
-//                        console.log(i);
+                        //                        console.log(i);
                         var elem = elements[i];
                         var style = "";
                         for (var attr in elem.style) {
@@ -93,8 +93,7 @@
                                     var nn = Number(0x1000000 + parseInt(match[1]) * 0x10000 + parseInt(match[2]) * 0x100 + parseInt(match[3])).toString(16).substring(1);
                                     elem.style[attr] = "#" + Number(0x1000000 + parseInt(match[1]) * 0x10000 + parseInt(match[2]) * 0x100 + parseInt(match[3])).toString(16).substring(1);
                                 }
-                            } catch (e) {
-                            }
+                            } catch (e) {}
                             // séparation de l'attribut font en deux attributs : font-size et font-family :
                             if (attr === "font") {
                                 var stl = elem.style[attr].split(" ");
@@ -116,8 +115,7 @@
                             xml += '\n<text x="' + elem.x + '" y="' + elem.y + '" style="' + style + '" ';
                             if (elem.hasOwnProperty("TRANSFORM")) {
                                 xml += 'transform="' + elem.TRANSFORM + '" ';
-                            }
-                            ;
+                            };
                             xml += '>' + elem.text + '</text>';
                         } else if (elem.type == "path") {
                             var points = "";
@@ -133,13 +131,10 @@
                                     points += "C" + point.x2 + " " + point.y2 + " " + point.x1 + " " + point.y1 + " " + point.x + " " + point.y + " ";
                                 } else if (point.action == "arc") {
                                     points += "M" + point.x1 + " " + point.y1 + " A " + point.r +
-                                            " " + point.r + " 0 " + point.wa + " " + point.acw + " " + point.x2 + " " + point.y2 + " ";
+                                        " " + point.r + " 0 " + point.wa + " " + point.acw + " " + point.x2 + " " + point.y2 + " ";
                                 } else if (point.action == "circle") {
-                                    points += "M " + point.x + ", " + point.y
-                                            + " m " + (-point.r) + ", 0"
-                                            + " a " + point.r + "," + point.r + " 0 1,0" + " " + (2 * point.r) + ",0"
-                                            + " a " + point.r + "," + point.r + " 0 1,0" + " " + (-2 * point.r) + ",0";
-//                                                                console.log(points);
+                                    points += "M " + point.x + ", " + point.y + " m " + (-point.r) + ", 0" + " a " + point.r + "," + point.r + " 0 1,0" + " " + (2 * point.r) + ",0" + " a " + point.r + "," + point.r + " 0 1,0" + " " + (-2 * point.r) + ",0";
+                                    //                                                                console.log(points);
                                 }
 
 
@@ -169,7 +164,10 @@
             polarToCartesian: function(centerX, centerY, radius, angleInRadians) {
                 var x = centerX + radius * Math.cos(angleInRadians);
                 var y = centerY + radius * Math.sin(angleInRadians);
-                return {"x": x, "y": y};
+                return {
+                    "x": x,
+                    "y": y
+                };
             },
             beginPath: function() {
                 this.util.pushToStack();
@@ -180,75 +178,178 @@
                 ctx.closePath();
             },
             moveTo: function(x, y) {
-                currentPath.points.push({"action": "move", "x": x, "y": y});
+                currentPath.points.push({
+                    "action": "move",
+                    "x": x,
+                    "y": y
+                });
                 ctx.moveTo(x, y);
             },
             lineTo: function(x, y) {
-                currentPath.points.push({"action": "line", "x": x, "y": y});
+                currentPath.points.push({
+                    "action": "line",
+                    "x": x,
+                    "y": y
+                });
                 ctx.lineTo(x, y);
             },
             quadraticCurveTo: function(cpx, cpy, x, y) {
-                currentPath.points.push({"action": "quadratic", "x": x, "y": y, "x1": cpx, "y1": cpy});
+                currentPath.points.push({
+                    "action": "quadratic",
+                    "x": x,
+                    "y": y,
+                    "x1": cpx,
+                    "y1": cpy
+                });
                 ctx.quadraticCurveTo(cpx, cpy, x, y);
             },
             bezierCurveTo: function(cp1x, cp1y, cp2x, cp2y, x, y) {
-                currentPath.points.push({"action": "bezier", "x": x, "y": y, "x1": cp1x, "y1": cp1y, "x2": cp2x, "y2": cp2y});
+                currentPath.points.push({
+                    "action": "bezier",
+                    "x": x,
+                    "y": y,
+                    "x1": cp1x,
+                    "y1": cp1y,
+                    "x2": cp2x,
+                    "y2": cp2y
+                });
                 ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y);
             },
             arcTo: function(x1, y1, x2, y2, radius) {
-                currentPath.points.push({"action": "move", "x": x1, "y": y1});
+                currentPath.points.push({
+                    "action": "move",
+                    "x": x1,
+                    "y": y1
+                });
                 this.bezierCurveTo(x1, (y1 + radius), x2, (y2 + radius));
                 ctx.arcTo(x1, y1, x2, y2, radius);
             },
             arc: function(cx, cy, radius, startAngle, endAngle, anticlockwise) {
-//                console.log(Math.abs(Math.abs(startAngle - endAngle) - Math.PI * 2));
+                //                console.log(Math.abs(Math.abs(startAngle - endAngle) - Math.PI * 2));
 
                 if (Math.abs(Math.abs(startAngle - endAngle) - Math.PI * 2) < 1e-9) {
-                    currentPath.points.push({"action": "circle", "r": radius, "x": cx, "y": cy});
+                    currentPath.points.push({
+                        "action": "circle",
+                        "r": radius,
+                        "x": cx,
+                        "y": cy
+                    });
                     this.util.pushToStack();
                 } else {
-//                    console.log("**************");
-//                    console.log("x=" + cx + " y=" + cy + " r=" + radius);
-//                    console.log(" startAngle=" + startAngle + " endAngle=" + endAngle);
-//                    console.log("dA>Math.PI="+(dA>Math.PI));
-//                    console.log(" anticlockwise=" + anticlockwise);
-//                    console.log("TEST="+((dA>Math.PI && !anticlockwise)||(dA<Math.PI && anticlockwise)));
-                    //	
+                    //                    console.log("**************");
+                    //                    console.log("x=" + cx + " y=" + cy + " r=" + radius);
+                    //                    console.log(" startAngle=" + startAngle + " endAngle=" + endAngle);
+                    //                    console.log("dA>Math.PI="+(dA>Math.PI));
+                    //                    console.log(" anticlockwise=" + anticlockwise);
+                    //                    console.log("TEST="+((dA>Math.PI && !anticlockwise)||(dA<Math.PI && anticlockwise)));
+                    //  
                     var dA = endAngle - startAngle;
                     while (dA < 0)
                         dA += 2 * Math.PI;
                     var start = this.polarToCartesian(cx, cy, radius, startAngle);
                     var end = this.polarToCartesian(cx, cy, radius, endAngle);
                     var largeArc = 1 * (((dA > Math.PI && !anticlockwise) || (dA < Math.PI && anticlockwise)));
-                    currentPath.points.push({"action": "arc", "r": radius, "x1": start.x, "y1": start.y, "x2": end.x, "y2": end.y, "acw": 1 - 1 * anticlockwise, "wa": largeArc});
+                    currentPath.points.push({
+                        "action": "arc",
+                        "r": radius,
+                        "x1": start.x,
+                        "y1": start.y,
+                        "x2": end.x,
+                        "y2": end.y,
+                        "acw": 1 - 1 * anticlockwise,
+                        "wa": largeArc
+                    });
                     this.util.pushToStack();
                 }
             },
             rect: function(x, y, width, height) {
-                currentPath.points.push({"action": "move", "x": x, "y": y});
-                currentPath.points.push({"action": "line", "x": x + width, "y": y});
-                currentPath.points.push({"action": "line", "x": x + width, "y": y + height});
-                currentPath.points.push({"action": "line", "x": x, "y": y + height});
-                currentPath.points.push({"action": "line", "x": x, "y": y});
+                currentPath.points.push({
+                    "action": "move",
+                    "x": x,
+                    "y": y
+                });
+                currentPath.points.push({
+                    "action": "line",
+                    "x": x + width,
+                    "y": y
+                });
+                currentPath.points.push({
+                    "action": "line",
+                    "x": x + width,
+                    "y": y + height
+                });
+                currentPath.points.push({
+                    "action": "line",
+                    "x": x,
+                    "y": y + height
+                });
+                currentPath.points.push({
+                    "action": "line",
+                    "x": x,
+                    "y": y
+                });
                 ctx.rect(x, y, width, height);
             },
             clearRect: function(x, y, width, height) {
-                currentPath.points.push({"action": "move", "x": x, "y": y});
-                currentPath.points.push({"action": "line", "x": x + width, "y": y});
-                currentPath.points.push({"action": "line", "x": x + width, "y": y + height});
-                currentPath.points.push({"action": "line", "x": x, "y": y + height});
-                currentPath.points.push({"action": "line", "x": x, "y": y});
+                currentPath.points.push({
+                    "action": "move",
+                    "x": x,
+                    "y": y
+                });
+                currentPath.points.push({
+                    "action": "line",
+                    "x": x + width,
+                    "y": y
+                });
+                currentPath.points.push({
+                    "action": "line",
+                    "x": x + width,
+                    "y": y + height
+                });
+                currentPath.points.push({
+                    "action": "line",
+                    "x": x,
+                    "y": y + height
+                });
+                currentPath.points.push({
+                    "action": "line",
+                    "x": x,
+                    "y": y
+                });
                 ctx.clearRect(x, y, width, height);
             },
             fillRect: function(x, y, width, height) {
                 this.util.pushToStack();
-                var rect = {type: "path", style: {}};
+                var rect = {
+                    type: "path",
+                    style: {}
+                };
                 rect.points = new Array();
-                rect.points.push({"action": "move", "x": x, "y": y});
-                rect.points.push({"action": "line", "x": x + width, "y": y});
-                rect.points.push({"action": "line", "x": x + width, "y": y + height});
-                rect.points.push({"action": "line", "x": x, "y": y + height});
-                rect.points.push({"action": "line", "x": x, "y": y});
+                rect.points.push({
+                    "action": "move",
+                    "x": x,
+                    "y": y
+                });
+                rect.points.push({
+                    "action": "line",
+                    "x": x + width,
+                    "y": y
+                });
+                rect.points.push({
+                    "action": "line",
+                    "x": x + width,
+                    "y": y + height
+                });
+                rect.points.push({
+                    "action": "line",
+                    "x": x,
+                    "y": y + height
+                });
+                rect.points.push({
+                    "action": "line",
+                    "x": x,
+                    "y": y
+                });
                 rect.style["fill"] = ctx.fillStyle = this.fillStyle;
                 elements.push(rect);
                 this.util.updateCanvasSettings();
@@ -256,13 +357,36 @@
             },
             strokeRect: function(x, y, width, height) {
                 this.util.pushToStack();
-                var rect = {type: "path", style: {}};
+                var rect = {
+                    type: "path",
+                    style: {}
+                };
                 rect.points = new Array();
-                rect.points.push({"action": "move", "x": x, "y": y});
-                rect.points.push({"action": "line", "x": x + width, "y": y});
-                rect.points.push({"action": "line", "x": x + width, "y": y + height});
-                rect.points.push({"action": "line", "x": x, "y": y + height});
-                rect.points.push({"action": "line", "x": x, "y": y});
+                rect.points.push({
+                    "action": "move",
+                    "x": x,
+                    "y": y
+                });
+                rect.points.push({
+                    "action": "line",
+                    "x": x + width,
+                    "y": y
+                });
+                rect.points.push({
+                    "action": "line",
+                    "x": x + width,
+                    "y": y + height
+                });
+                rect.points.push({
+                    "action": "line",
+                    "x": x,
+                    "y": y + height
+                });
+                rect.points.push({
+                    "action": "line",
+                    "x": x,
+                    "y": y
+                });
                 rect.style["stroke"] = ctx.strokeStyle = this.strokeStyle;
                 rect.style["stroke-width"] = ctx.lineWidth = this.lineWidth;
                 rect.style["stroke-linecap"] = ctx.lineCap = this.lineCap;
@@ -313,13 +437,35 @@
             },
             strokeText: function(text, x, y) {
                 ctx.font = this.font;
-                elements.push({"type": "text", "text": text, "x": x, "y": y, style: {"font": this.font, "text-align": this.textAlign, "alignment-baseline": this.textBaseline, "fill": this.strokeStyle}});
+                elements.push({
+                    "type": "text",
+                    "text": text,
+                    "x": x,
+                    "y": y,
+                    style: {
+                        "font": this.font,
+                        "text-align": this.textAlign,
+                        "alignment-baseline": this.textBaseline,
+                        "fill": this.strokeStyle
+                    }
+                });
                 this.util.updateCanvasSettings();
                 ctx.strokeText(text, x, y);
             },
             fillText: function(text, x, y) {
                 ctx.font = this.font;
-                var items = {"type": "text", "text": text, "x": x, "y": y, style: {"font": this.font, "text-align": this.textAlign, "alignment-baseline": this.textBaseline, "fill": this.fillStyle}};
+                var items = {
+                    "type": "text",
+                    "text": text,
+                    "x": x,
+                    "y": y,
+                    style: {
+                        "font": this.font,
+                        "text-align": this.textAlign,
+                        "alignment-baseline": this.textBaseline,
+                        "fill": this.fillStyle
+                    }
+                };
                 if (ctx.TRANSFORM.length > 0) {
                     items["TRANSFORM"] = ctx.TRANSFORM.join(" ");
                 }
@@ -354,19 +500,19 @@
             createImageData: function(sw, sh) {
                 return (arguments.length == 1 ? ctx.createImageData(imageData) : ctx.createImageData(sw, sh));
             },
-            createImageData : function(imageData) {
+            createImageData: function(imageData) {
                 return ctx.createImageData(imageData);
             },
-                    getImageData: function(sx, sy, sw, sh) {
-                        return ctx.getImageData(sx, sy, sw, sh);
-                    },
+            getImageData: function(sx, sy, sw, sh) {
+                return ctx.getImageData(sx, sy, sw, sh);
+            },
             putImageData: function(imagedata, dx, dy, dirtyX, dirtyY, dirtyWidth, dirtyHeight) {
                 return ctx.putImageData(imagedata, dx, dy, dirtyX, dirtyY, dirtyWidth, dirtyHeight);
             },
             drawImage: function() {
                 return (arguments.length > 5) ?
-                        ctx.drawImage(arguments[0].value, arguments[1].value, arguments[2].value, arguments[3].value, arguments[4].value) :
-                        ctx.drawImage(arguments[0].value, arguments[1].value, arguments[2].value, arguments[3].value, arguments[4].value, arguments[5].value, arguments[6].value, arguments[7].value, arguments[8].value);
+                    ctx.drawImage(arguments[0].value, arguments[1].value, arguments[2].value, arguments[3].value, arguments[4].value) :
+                    ctx.drawImage(arguments[0].value, arguments[1].value, arguments[2].value, arguments[3].value, arguments[4].value, arguments[5].value, arguments[6].value, arguments[7].value, arguments[8].value);
             },
             scale: function(x, y) {
                 ctx.scale(x, y);

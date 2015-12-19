@@ -1,14 +1,13 @@
-
 //************************************************
 //**************** AREA CONSTRUCTOR **************
 //************************************************
 function Circle3ptsConstructor() {
     $U.extend(this, new ObjectConstructor()); //Héritage
-    
+
     this.getCode = function() {
         return "circle3pts";
     };
-    
+
     this.getInitials = function() {
         return ["point"];
     };
@@ -20,13 +19,13 @@ function Circle3ptsConstructor() {
 
     this.newObj = function(_zc, _C) {
         var no;
-        if (_C[0].is3D()){
-            no=new Circle3ptsObject_3D(_zc.getConstruction(), "_C", _C[0], _C[1], _C[2]);
-        }else{
-            no=new Circle3ptsObject(_zc.getConstruction(), "_C", _C[0], _C[1], _C[2]);
+        if (_C[0].is3D()) {
+            no = new Circle3ptsObject_3D(_zc.getConstruction(), "_C", _C[0], _C[1], _C[2]);
+        } else {
+            no = new Circle3ptsObject(_zc.getConstruction(), "_C", _C[0], _C[1], _C[2]);
             no.getM().setHidden(true);
         }
-        
+
         return no;
     };
 
@@ -48,7 +47,7 @@ function Circle3ptsConstructor() {
                     xM = (c[0].getX() + c[1].getX()) / 2;
                     yM = (c[0].getY() + c[1].getY()) / 2;
                     r = $U.computeRay(xM, yM, c[0].getX(), c[0].getY());
-                    this.isSelectCreatePoint=false;
+                    this.isSelectCreatePoint = false;
                 } else {
                     var t = $U.computeCenter(c[0].getX(), c[0].getY(), c[1].getX(), c[1].getY(), zc.mouseX(ev), zc.mouseY(ev));
                     xM = t[0];

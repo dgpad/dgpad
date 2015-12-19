@@ -13,7 +13,8 @@ function Construction(_canvas) {
     var mode3D = false;
     var ORG3D = null;
 
-//    var mode3D=false;
+
+    //    var mode3D=false;
     var mode = 1;
     // All construction objects :
     var V = [];
@@ -29,26 +30,26 @@ function Construction(_canvas) {
     // Degree mode for angle calculus :
     var DEGmode = true;
 
-    me.isDEG = function () {
+    me.isDEG = function() {
         return DEGmode;
     };
 
-    me.setDEG = function (_d) {
+    me.setDEG = function(_d) {
         DEGmode = _d;
         canvas.getInterpreter().setDegreeMode(_d);
     };
 
-    me.getInterpreter = function () {
+    me.getInterpreter = function() {
         return canvas.getInterpreter();
     };
 
-    me.getTrackManager = function () {
+    me.getTrackManager = function() {
         return canvas.trackManager;
     };
 
     // Crée un nom de variable JS nouveau pour l'objet de nom s (et l'ajoute au catalogue VARS) :
-    var getNewVarName = function (s) {
-//        console.log("getNewVarName");
+    var getNewVarName = function(s) {
+        //        console.log("getNewVarName");
         var v = $U.leaveAccents(s);
         if (VARS.hasOwnProperty(v)) {
             var b = 1;
@@ -62,22 +63,22 @@ function Construction(_canvas) {
     };
 
 
-    me.getVarName = function (_n) {
+    me.getVarName = function(_n) {
         if (AV.hasOwnProperty(_n))
             return AV[_n];
         else
             return getNewVarName(_n);
     };
 
-    me.isVarName = function (_n) {
+    me.isVarName = function(_n) {
         return (AV.hasOwnProperty(_n));
     };
 
 
-    me.getCanvas = function () {
+    me.getCanvas = function() {
         return canvas;
     };
-    me.getSerial = function () {
+    me.getSerial = function() {
         return (serial++);
     };
 
@@ -86,18 +87,18 @@ function Construction(_canvas) {
 
 
 
-    me.getBounds = function () {
+    me.getBounds = function() {
         return canvas.getBounds();
     };
-    me.getHeight = function () {
+    me.getHeight = function() {
         return (canvas.getBounds().height - canvas.prefs.controlpanel.size);
     };
-    me.getWidth = function () {
+    me.getWidth = function() {
         return (canvas.getBounds().width);
     };
     me.coordsSystem = new CoordsSystem(me);
 
-    me.reconstructChilds = function () {
+    me.reconstructChilds = function() {
         for (var i = 0, len = V.length; i < len; i++) {
             V[i].clearChildList();
         }
@@ -108,7 +109,7 @@ function Construction(_canvas) {
 
 
 
-    var paintSortFilter = function (a, b) {
+    var paintSortFilter = function(a, b) {
         if (a.getLayer() !== b.getLayer())
             return (a.getLayer() - b.getLayer());
         var ap = a.isInstanceType("point");
@@ -124,24 +125,24 @@ function Construction(_canvas) {
     };
 
 
-//    var standardPaint = function(ctx) {
-//////        console.log("standardPaint");
-////        me.coordsSystem.paint(ctx);
-////        // Réalise une copie de l'array V :
-////        var Objs = V.slice(0);
-////        // Les points doivent être dessinés en dernier :
-////        Objs.sort(paintSortFilter);
-//        ctx.shadowColor = '';
-//        ctx.shadowBlur = 0;
-//        ctx.shadowOffsetX = 0;
-//        ctx.shadowOffsetY = 0;
-//        for (var i = 0, len = V.length; i < len; i++) {
-//            V[i].paint(ctx);
-//        }
-//    };
+    //    var standardPaint = function(ctx) {
+    //////        console.log("standardPaint");
+    ////        me.coordsSystem.paint(ctx);
+    ////        // Réalise une copie de l'array V :
+    ////        var Objs = V.slice(0);
+    ////        // Les points doivent être dessinés en dernier :
+    ////        Objs.sort(paintSortFilter);
+    //        ctx.shadowColor = '';
+    //        ctx.shadowBlur = 0;
+    //        ctx.shadowOffsetX = 0;
+    //        ctx.shadowOffsetY = 0;
+    //        for (var i = 0, len = V.length; i < len; i++) {
+    //            V[i].paint(ctx);
+    //        }
+    //    };
 
-    var standardPaint = function (ctx, coords) {
-//        ctx.beginPath();
+    var standardPaint = function(ctx, coords) {
+        //        ctx.beginPath();
         me.coordsSystem.paint(ctx);
         // Réalise une copie de l'array V :
         var Objs = V.slice(0);
@@ -157,8 +158,8 @@ function Construction(_canvas) {
         _canvas.magnifyManager.magnifierPaint(coords);
     };
 
-    var macroPaint = function (ctx, coords) {
-//        console.log("macropaint");
+    var macroPaint = function(ctx, coords) {
+        //        console.log("macropaint");
         standardPaint(ctx, coords);
         ctx.globalAlpha = 1;
         ctx.shadowColor = '';
@@ -192,15 +193,15 @@ function Construction(_canvas) {
         }
     };
 
-    var magnetPaint = function (ctx, coords) {
-//        canvas.magnetManager.paint(ctx);
+    var magnetPaint = function(ctx, coords) {
+        //        canvas.magnetManager.paint(ctx);
         macroPaint(ctx, coords);
         canvas.magnetManager.paint(ctx);
-//        canvas.magnetManager.paintIcon(ctx);
+        //        canvas.magnetManager.paintIcon(ctx);
 
     };
 
-    var macroEXEPaint = function (ctx, coords) {
+    var macroEXEPaint = function(ctx, coords) {
         standardPaint(ctx, coords);
         ctx.globalAlpha = 1;
         ctx.shadowColor = '';
@@ -230,7 +231,7 @@ function Construction(_canvas) {
         }
     };
 
-    var deletePaint = function (ctx, coords) {
+    var deletePaint = function(ctx, coords) {
         standardPaint(ctx, coords);
         ctx.globalAlpha = 1;
         ctx.shadowColor = '';
@@ -244,7 +245,7 @@ function Construction(_canvas) {
 
     me.paint = standardPaint;
 
-    var setObjectsMode = function (_mode) {
+    var setObjectsMode = function(_mode) {
         for (var i = 0, len = V.length; i < len; i++) {
             V[i].setMode(_mode);
         }
@@ -254,7 +255,7 @@ function Construction(_canvas) {
     // 4 pour construction de macros, 5 pour execution de macros
     // 6 pour les propriétés, 7 pour le tracé, 9 pour le magnetisme,
     // 11 pour la dépendance :
-    me.setMode = function (_mode) {
+    me.setMode = function(_mode) {
         mode = _mode;
         setObjectsMode(mode);
         me.clearMacroMode();
@@ -295,42 +296,42 @@ function Construction(_canvas) {
         }
     };
 
-    me.getMode = function () {
+    me.getMode = function() {
         return mode;
     };
-    me.isMode = function () {
+    me.isMode = function() {
         var res = false;
         for (var i = 0; i < arguments.length; i++) {
             res = res || (mode === arguments[i]);
         }
         return res;
     };
-    me.isConsultOrArrowMode = function () {
+    me.isConsultOrArrowMode = function() {
         return (mode === 0 || mode === 1);
     };
-    me.isConsultMode = function () {
+    me.isConsultMode = function() {
         return (mode === 0);
     };
-    me.isArrowMode = function () {
+    me.isArrowMode = function() {
         return (mode === 1);
     };
-    me.isHideMode = function () {
+    me.isHideMode = function() {
         return (mode === 2);
     };
-    me.isDeleteMode = function () {
+    me.isDeleteMode = function() {
         return (mode === 3);
     };
-    me.isMacroMode = function () {
+    me.isMacroMode = function() {
         return (mode === 4);
     };
-    me.isMacroEXEMode = function () {
+    me.isMacroEXEMode = function() {
         return (mode === 5);
     };
-    me.isPropertiesMode = function () {
+    me.isPropertiesMode = function() {
         return (mode === 6);
     };
 
-    me.add = function (_obj) {
+    me.add = function(_obj) {
         $U.changed();
         AO[_obj.getName()] = _obj;
         AV[_obj.getName()] = me.getVarName(_obj.getName());
@@ -339,7 +340,7 @@ function Construction(_canvas) {
 
 
     // Quand on est sûr que le nom correspond au nom de variable :
-    me.Quickadd = function (_obj) {
+    me.Quickadd = function(_obj) {
         var n = _obj.getName();
         AO[n] = _obj;
         AV[n] = n;
@@ -347,7 +348,7 @@ function Construction(_canvas) {
         V[V.length] = _obj;
     };
 
-    me.deleteAll = function () {
+    me.deleteAll = function() {
         mode3D = false;
         ORG3D = null;
         mode = 1;
@@ -364,111 +365,111 @@ function Construction(_canvas) {
         varnames = [];
     };
 
-    me.setAllSize = function (_type, _sze) {
+    me.setAllSize = function(_type, _sze) {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].getFamilyCode() === _type)
                 V[i].setSize(_sze);
         }
     };
-    me.setAllColor = function (_type, _col) {
+    me.setAllColor = function(_type, _col) {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].getFamilyCode() === _type)
                 V[i].setColor(_col);
         }
     };
-    me.setAllOpacity = function (_type, _alpha) {
+    me.setAllOpacity = function(_type, _alpha) {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].getFamilyCode() === _type)
                 V[i].setOpacity(_alpha);
         }
     };
-    me.setAllLayer = function (_type, _lay) {
+    me.setAllLayer = function(_type, _lay) {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].getFamilyCode() === _type)
                 V[i].setLayer(_lay);
         }
     };
-    me.setAllPtShape = function (_shape) {
+    me.setAllPtShape = function(_shape) {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].getFamilyCode() === "point")
                 V[i].setShape(_shape);
         }
     };
-    me.setAllFontSize = function (_type, _v) {
+    me.setAllFontSize = function(_type, _v) {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].getFamilyCode() === _type)
                 V[i].setFontSize(_v);
         }
     };
-    me.setAllPrecision = function (_type, _v) {
+    me.setAllPrecision = function(_type, _v) {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].getFamilyCode() === _type) {
                 V[i].setPrecision(_v);
                 if ((_type === "locus") || (_type === "quadric")) {
                     V[i].compute();
-//                    V[i].computeChilds();
+                    //                    V[i].computeChilds();
                 }
             }
 
         }
     };
-    me.setAllIncrement = function (_type, _v) {
+    me.setAllIncrement = function(_type, _v) {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].getFamilyCode() === _type)
                 V[i].setIncrement(_v);
         }
     };
-    me.setAllDash = function (_type, _v) {
+    me.setAllDash = function(_type, _v) {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].getFamilyCode() === _type)
                 V[i].setDash(_v);
         }
     };
-    me.setAll360 = function (_type, _is360) {
+    me.setAll360 = function(_type, _is360) {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].getFamilyCode() === _type)
                 V[i].set360(_is360);
         }
     };
-    me.setAllTrigo = function (_type, _t) {
+    me.setAllTrigo = function(_type, _t) {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].getFamilyCode() === _type)
                 V[i].setTrigo(_t);
         }
     };
-    me.setAllNoMouse = function (_type, _v) {
+    me.setAllNoMouse = function(_type, _v) {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].getFamilyCode() === _type)
                 V[i].setNoMouseInside(_v);
         }
     };
 
-    me.elements = function () {
+    me.elements = function() {
         return (V);
     };
-    me.isEmpty = function () {
+    me.isEmpty = function() {
         return (V.length === 0);
     };
 
     // homothétie de centre (_x;_y) et de rapport _h :
-    me.zoom = function (_x, _y, _h) {
+    me.zoom = function(_x, _y, _h) {
         $U.changed();
         me.coordsSystem.zoom(_x, _y, _h);
     };
 
     // translation de vecteur (_x;_y) :
-    me.translate = function (_x, _y) {
+    me.translate = function(_x, _y) {
         $U.changed();
         me.coordsSystem.translate(_x, _y);
     };
 
-    me.translateANDzoom = function (_xt, _yt, _xz, _yz, _h) {
+    me.translateANDzoom = function(_xt, _yt, _xz, _yz, _h) {
         $U.changed();
         me.coordsSystem.translateANDzoom(_xt, _yt, _xz, _yz, _h);
     };
 
 
-    me.findCoincidents = function (_t) {
+    me.findCoincidents = function(_t) {
         if (_t.length < 2)
             return null;
         var c = [_t[0]];
@@ -482,15 +483,15 @@ function Construction(_canvas) {
             return c;
     };
 
-    me.find = function (_oName) {
+    me.find = function(_oName) {
         return AO[_oName];
     };
 
-    me.findVar = function (_vName) {
+    me.findVar = function(_vName) {
         return AO[VARS[_vName]];
     };
 
-    var slowfind = function (_oName, _o) {
+    var slowfind = function(_oName, _o) {
         var len = V.length;
         for (var i = 0; i < len; i++) {
             if (V[i] === _o)
@@ -502,7 +503,7 @@ function Construction(_canvas) {
     };
 
 
-    var uniqueName = function (_name, _o) {
+    var uniqueName = function(_name, _o) {
         var name = _name;
         var basename = _name;
         var num = 0;
@@ -517,7 +518,7 @@ function Construction(_canvas) {
 
 
 
-    var genericName = function (_base, _o) {
+    var genericName = function(_base, _o) {
         var baseName = "";
         if (_base) {
             baseName = _base;
@@ -532,7 +533,7 @@ function Construction(_canvas) {
     };
 
     // Pour l'affichage des indices des noms d'objets :
-    me.getSubName = function (_n) {
+    me.getSubName = function(_n) {
         var t = _n.toString().split("");
         var n = [];
         var i = t.length - 1;
@@ -545,7 +546,7 @@ function Construction(_canvas) {
         return (s);
     };
 
-    me.getUnusedName = function (_n, _o) {
+    me.getUnusedName = function(_n, _o) {
         switch (_n) {
             case "":
                 _n = "_O";
@@ -573,7 +574,7 @@ function Construction(_canvas) {
     };
 
 
-    var findFreePointsRecursive = function (_o) {
+    var findFreePointsRecursive = function(_o) {
         if (_o.Flag)
             return;
         _o.Flag = true;
@@ -586,7 +587,7 @@ function Construction(_canvas) {
 
     // Cherche les points libres parmi tous les parents
     // d'un objet donné, et renvoie ces parents dans un tableau :
-    me.findFreePoints = function (_o) {
+    me.findFreePoints = function(_o) {
         if ((_o.getCode() === "point") && (_o.isMoveable()) && (_o.getParentLength() === 1))
             return [_o];
         var len = V.length;
@@ -606,13 +607,13 @@ function Construction(_canvas) {
 
 
 
-//    me.printAV = function() {
-//        for (var nom_indice in AV) {
-//            console.log(nom_indice + ":" + AV[nom_indice].getName());
-//        }
-//    }
+    //    me.printAV = function() {
+    //        for (var nom_indice in AV) {
+    //            console.log(nom_indice + ":" + AV[nom_indice].getName());
+    //        }
+    //    }
 
-    var dependsOnRecursive = function (o, on) {
+    var dependsOnRecursive = function(o, on) {
         o.Flag = true;
         if (o === on)
             return true;
@@ -630,7 +631,7 @@ function Construction(_canvas) {
         return false;
     };
 
-    var dependsOn = function (o, on) {
+    var dependsOn = function(o, on) {
         var len = V.length;
         for (var i = 0; i < len; i++) {
             V[i].Flag = false;
@@ -638,7 +639,7 @@ function Construction(_canvas) {
         return dependsOnRecursive(o, on);
     };
 
-    me.remove = function (_o) {
+    me.remove = function(_o) {
         $U.changed();
         var i = V.indexOf(_o);
         if (i !== -1) {
@@ -654,7 +655,7 @@ function Construction(_canvas) {
         }
     };
 
-    me.safelyDelete = function (_o) {
+    me.safelyDelete = function(_o) {
         _o = (_o.objToDelete) ? _o.objToDelete() : _o;
         var deleteObjs = [];
         var len = V.length;
@@ -676,20 +677,20 @@ function Construction(_canvas) {
      * Actualised by each validate call :
      */
     var indicatedObjs = [];
-    me.addIndicated = function (obj) {
+    me.addIndicated = function(obj) {
         indicatedObjs.push(obj);
     };
-    me.clearIndicated = function () {
+    me.clearIndicated = function() {
         var len = indicatedObjs.length;
         for (var i = 0; i < len; i++) {
             indicatedObjs[i].setIndicated(false);
         }
         indicatedObjs = [];
     };
-    me.getIndicated = function () {
+    me.getIndicated = function() {
         return indicatedObjs;
     };
-    me.getFirstIndicatedPoint = function () {
+    me.getFirstIndicatedPoint = function() {
         var len = indicatedObjs.length;
         var P1 = null;
         for (var i = 0; i < len; i++) {
@@ -700,12 +701,12 @@ function Construction(_canvas) {
         }
         return null;
     };
-    var getLastPoint_sortFilter = function (a, b) {
+    var getLastPoint_sortFilter = function(a, b) {
         if (b.getTimeStamp() > a.getTimeStamp())
             return 1;
         return -1;
     };
-    me.getLastPoint = function () {
+    me.getLastPoint = function() {
         var len = V.length;
         var pts = [];
         for (var i = 0; i < len; i++) {
@@ -724,16 +725,16 @@ function Construction(_canvas) {
      * Actualised by each validate call :
      */
     var selectedObjs = [];
-    me.getSelected = function () {
+    me.getSelected = function() {
         return selectedObjs;
     };
 
-    me.addSelected = function (obj) {
+    me.addSelected = function(obj) {
         obj.setSelected(true);
         selectedObjs.push(obj);
     };
 
-    me.clearSelected = function () {
+    me.clearSelected = function() {
         var len = selectedObjs.length;
         for (var i = 0; i < len; i++) {
             selectedObjs[i].setSelected(false);
@@ -741,7 +742,7 @@ function Construction(_canvas) {
         selectedObjs = [];
     };
 
-    me.getObjectsUnderMouse = function (ev) {
+    me.getObjectsUnderMouse = function(ev) {
         var t = [];
         var hmode = me.isHideMode();
         for (var i = 0, len = V.length; i < len; i++) {
@@ -757,13 +758,13 @@ function Construction(_canvas) {
 
 
 
-    var doOrderSortFilter = function (a, b) {
+    var doOrderSortFilter = function(a, b) {
         return a.Scratch - b.Scratch;
     };
 
 
 
-    me.doOrder = function (_tab) {
+    me.doOrder = function(_tab) {
         var n = _tab.length;
         if (n === 0) {
             return;
@@ -779,7 +780,7 @@ function Construction(_canvas) {
         _tab.sort(doOrderSortFilter);
     };
 
-    var countTail = function (o) {
+    var countTail = function(o) {
         if (o.Flag) {
             return o.Scratch;
         }
@@ -804,15 +805,15 @@ function Construction(_canvas) {
         return o.Scratch;
     };
 
-//    var rawValidate = function(ev) {
-//        indicatedObjs = [];
-//        selectedObjs = [];
-//        for (var i = 0, len = V.length; i < len; i++) {
-//            V[i].validate(ev);
-//        }
-//    };
+    //    var rawValidate = function(ev) {
+    //        indicatedObjs = [];
+    //        selectedObjs = [];
+    //        for (var i = 0, len = V.length; i < len; i++) {
+    //            V[i].validate(ev);
+    //        }
+    //    };
 
-    var rawValidate = function (ev) {
+    var rawValidate = function(ev) {
 
         indicatedObjs = [];
         selectedObjs = [];
@@ -823,7 +824,7 @@ function Construction(_canvas) {
         }
     };
 
-    var applyValidateFilters = function (ev) {
+    var applyValidateFilters = function(ev) {
         var len = indicatedObjs.length;
         if (len > 1) {
             for (var i = len - 1; i >= 0; i--) {
@@ -847,47 +848,46 @@ function Construction(_canvas) {
                 }
             }
         }
-//        if (ev.type === "mouseup") {
-//            len = indicatedObjs.length;
-//            for (i = 0; i < len; i++) {
-//                me.addSelected(indicatedObjs[i]);
-//            }
-//        }
+        //        if (ev.type === "mouseup") {
+        //            len = indicatedObjs.length;
+        //            for (i = 0; i < len; i++) {
+        //                me.addSelected(indicatedObjs[i]);
+        //            }
+        //        }
     };
 
-    me.validate = function (ev) {
+    me.validate = function(ev) {
         rawValidate(ev);
         applyValidateFilters(ev);
     };
 
-//    var clearAllIndicated = function() {
-//        for (var i = 0, len = V.length; i < len; i++) {
-//            V[i].setIndicated(false);
-//        }
-//    };
-//
-//    me.validate = function(ev) {
-//        indicatedObjs = [];
-//        selectedObjs = [];
-//        for (var i = 0, len = V.length; i < len; i++) {
-//            if (V[i].setIndicated(V[i].validate(ev))) {
-//                if ((V[i].isInstanceType("point"))) {
-//                    clearAllIndicated();
-//                    indicatedObjs = [V[i]];
-//                    V[i].setIndicated(true);
-//                    return;
-//                } else indicatedObjs.push(V[i]);
-//            }
-//        }
-//    };
+    //    var clearAllIndicated = function() {
+    //        for (var i = 0, len = V.length; i < len; i++) {
+    //            V[i].setIndicated(false);
+    //        }
+    //    };
+    //
+    //    me.validate = function(ev) {
+    //        indicatedObjs = [];
+    //        selectedObjs = [];
+    //        for (var i = 0, len = V.length; i < len; i++) {
+    //            if (V[i].setIndicated(V[i].validate(ev))) {
+    //                if ((V[i].isInstanceType("point"))) {
+    //                    clearAllIndicated();
+    //                    indicatedObjs = [V[i]];
+    //                    V[i].setIndicated(true);
+    //                    return;
+    //                } else indicatedObjs.push(V[i]);
+    //            }
+    //        }
+    //    };
 
 
-    me.compute = function () {
-    };
+    me.compute = function() {};
 
     // Recherche l'origine du repère 3D parmi les 
     // parents du point _P :
-    var get3DOriginInParents = function (_P) {
+    var get3DOriginInParents = function(_P) {
         if (_P.getFloat())
             return _P;
         var par = _P.getParent();
@@ -899,7 +899,7 @@ function Construction(_canvas) {
 
     // Retourne l'origine du repère 3D auquel
     // l'objet _P est lié :
-    me.get3DOrigin = function (_P) {
+    me.get3DOrigin = function(_P) {
         if (ORG3D)
             return ORG3D;
         var Org3D = (_P === null) ? null : get3DOriginInParents(_P);
@@ -916,10 +916,10 @@ function Construction(_canvas) {
         return Org3D;
     };
 
-    me.isOrigin3D = function (_P) {
+    me.isOrigin3D = function(_P) {
         return (_P === ORG3D);
     };
-    me.setOrigin3D = function (_P) {
+    me.setOrigin3D = function(_P) {
         if ((mode3D) && (ORG3D === null))
             ORG3D = _P;
     };
@@ -927,7 +927,7 @@ function Construction(_canvas) {
     // Methode obsolete, maintenue pour la 
     // compatibilité des figures 3D d'avant
     // le 22 novembre 2013 :
-    me.set3DMode = function (_b) {
+    me.set3DMode = function(_b) {
         if (_b) {
             me.computeAll = computeAll3D;
         } else {
@@ -935,17 +935,17 @@ function Construction(_canvas) {
         }
     };
     // idem :
-    me.is3DMode = function () {
+    me.is3DMode = function() {
         return (me.computeAll === computeAll3D);
     };
 
 
-    me.set3D = function (_b) {
+    me.set3D = function(_b) {
         me.computeAll = (_b) ? computeAll3D : computeAll2D;
         mode3D = _b;
     };
 
-    me.is3D = function () {
+    me.is3D = function() {
         return (mode3D);
     };
 
@@ -954,28 +954,26 @@ function Construction(_canvas) {
     var PHI = [0, 0];
     var OLD_PHI = 0;
 
-    me.getPhi = function () {
+    me.getPhi = function() {
         return PHI;
     };
-    me.getTheta = function () {
+    me.getTheta = function() {
         return canvas.getInterpreter().getEX().EX_theta();
     };
 
-    var compute3D_filter = function () {
-    };
-    me.setcompute3D_filter = function (_proc) {
+    var compute3D_filter = function() {};
+    me.setcompute3D_filter = function(_proc) {
         compute3D_filter = _proc;
     };
-    me.clearcompute3D_filter = function () {
-        compute3D_filter = function () {
-        };
+    me.clearcompute3D_filter = function() {
+        compute3D_filter = function() {};
     };
 
-    var computeAll3D = function () {
+    var computeAll3D = function() {
         var realPhiFunc = canvas.getInterpreter().getEX().EX_phi;
         var realphi = realPhiFunc();
         var myphi = realphi + DELTA_PHI;
-        var myPhiFunc = function () {
+        var myPhiFunc = function() {
             return myphi;
         };
         var len = V.length;
@@ -1006,7 +1004,7 @@ function Construction(_canvas) {
         OLD_PHI = realphi;
     };
 
-    var computeAll2D = function () {
+    var computeAll2D = function() {
         for (var i = 0, len = V.length; i < len; i++) {
             V[i].compute();
         }
@@ -1014,7 +1012,7 @@ function Construction(_canvas) {
 
     me.computeAll = computeAll2D;
 
-    me.computeChilds = function (t) {
+    me.computeChilds = function(t) {
         for (var i = 0, leni = t.length; i < leni; i++) {
             var chlds = t[i].getChildList();
             for (var k = 0, lenk = chlds.length; k < lenk; k++) {
@@ -1032,13 +1030,13 @@ function Construction(_canvas) {
         }
     };
 
-    me.computeMagnetObjects = function () {
+    me.computeMagnetObjects = function() {
         for (var i = 0, len = V.length; i < len; i++) {
             V[i].computeMagnets();
         }
     };
 
-    me.isAxisUsed = function () {
+    me.isAxisUsed = function() {
         for (var i = 0, len = V.length; i < len; i++) {
             for (var j = 0, dlen = V[i].getParentLength(); j < dlen; j++) {
                 if (V[i].getParentAt(j).getCode().startsWith("axis"))
@@ -1048,7 +1046,7 @@ function Construction(_canvas) {
         return false;
     };
 
-    me.getSource = function () {
+    me.getSource = function() {
         var len = V.length;
         if (len > 0) {
             me.doOrder(V);
@@ -1076,7 +1074,7 @@ function Construction(_canvas) {
             txt += src.getStyle();
             txt += me.coordsSystem.getStyle();
             txt += canvas.getStyle();
-//            if (me.isAxisUsed()) txt+=me.coordsSystem.getStyle();
+            //            if (me.isAxisUsed()) txt+=me.coordsSystem.getStyle();
             return txt;
         }
         return "";
@@ -1094,7 +1092,7 @@ function Construction(_canvas) {
 
 
 
-    var tagDepsChain = function (o, on) {
+    var tagDepsChain = function(o, on) {
         if (o === on)
             return true;
         var bool = false;
@@ -1109,10 +1107,10 @@ function Construction(_canvas) {
     };
 
 
-// Trouve la chaine de dépendence depuis un objet enfant
-// jusqu'à un parent donné, et renvoie les objets trouvés
-// dans un tableau :
-    me.findDeps = function (_obj, _untilObj) {
+    // Trouve la chaine de dépendence depuis un objet enfant
+    // jusqu'à un parent donné, et renvoie les objets trouvés
+    // dans un tableau :
+    me.findDeps = function(_obj, _untilObj) {
         // Préparation : tous les objets sont taggés false
         for (var i = 0, len = V.length; i < len; i++) {
             V[i].Flag = false;
@@ -1131,7 +1129,7 @@ function Construction(_canvas) {
         return t;
     };
 
-    var findPtOn_recursive = function (_o) {
+    var findPtOn_recursive = function(_o) {
         if (!_o.Flag2) {
             _o.Flag2 = true;
             _o.Flag = (_o.isPointOn());
@@ -1141,10 +1139,10 @@ function Construction(_canvas) {
         }
     };
 
-// Renvoie le premier point sur objet trouvé dans la chaine
-// de dépendance de l'objet obj (le plus proche de obj).
-// Si non trouvé, renvoie null :
-    me.findPtOn = function (_obj) {
+    // Renvoie le premier point sur objet trouvé dans la chaine
+    // de dépendance de l'objet obj (le plus proche de obj).
+    // Si non trouvé, renvoie null :
+    me.findPtOn = function(_obj) {
         // Préparation : tous les objets sont taggés false
         for (var i = 0, len = V.length; i < len; i++) {
             V[i].Flag = false;
@@ -1175,17 +1173,17 @@ function Construction(_canvas) {
      **************************************************/
 
     var params = [];
-    var addParameter = function (_n) {
+    var addParameter = function(_n) {
         params.push(_n);
     };
-    var removeParameter = function (_n) {
+    var removeParameter = function(_n) {
         params.splice(params.indexOf(_n), 1);
     };
     var targets = [];
-    var addTarget = function (_n) {
+    var addTarget = function(_n) {
         targets.push(_n);
     };
-    var removeTarget = function (_n) {
+    var removeTarget = function(_n) {
         targets.splice(targets.indexOf(_n), 1);
     };
     var exec = null;
@@ -1193,7 +1191,7 @@ function Construction(_canvas) {
 
 
 
-    me.clearMacroMode = function () {
+    me.clearMacroMode = function() {
         for (var i = 0, len = V.length; i < len; i++) {
             V[i].setMacroMode(0);
             V[i].setMacroSource(null);
@@ -1202,7 +1200,7 @@ function Construction(_canvas) {
         targets = [];
     };
 
-    me.macroConstructionTag = function (obj) {
+    me.macroConstructionTag = function(obj) {
 
         // Si il s'agit du mode construction de macro :
         switch (obj.getMacroMode()) {
@@ -1210,8 +1208,8 @@ function Construction(_canvas) {
                 // Objet neutre qui devient initial :
                 obj.setMacroMode(2);
                 // Rafraîchissement des intermédiaires :
-//                checkIntermediates();
-//                canvas.macrosManager.addConstructionParam(obj.getName());
+                //                checkIntermediates();
+                //                canvas.macrosManager.addConstructionParam(obj.getName());
                 addParameter(obj);
                 targets = [];
                 checkIntermediates();
@@ -1238,7 +1236,7 @@ function Construction(_canvas) {
 
     };
 
-    me.macroExecutionTag = function (obj) {
+    me.macroExecutionTag = function(obj) {
         // Si il s'agit du mode execution de macro :
         switch (obj.getMacroMode()) {
             case 0:
@@ -1257,21 +1255,21 @@ function Construction(_canvas) {
     };
 
 
-    var checkIntermediate = function (obj) {
+    var checkIntermediate = function(obj) {
         if (!obj.Flag) {
             obj.Flag = true;
 
             // setMacroAutoObject peut déclarer intermédiaire (getMacroMode()===1) des objets,
             // il faut donc en tenir compte :
             if ((obj.getMacroMode() === 2) || (obj.getMacroMode() === 1)) {
-                obj.Flag2 = true;       // Est un initial, donc à classer dans les intermédiaires
-                return;                 // possibles pour amorcer la recursivité.
+                obj.Flag2 = true; // Est un initial, donc à classer dans les intermédiaires
+                return; // possibles pour amorcer la recursivité.
             }
 
             var len = obj.getParentLength();
             if (len === 0) {
-                obj.Flag2 = false;      // Objet non initial sans dépendence :
-                return;                 // n'est pas un intermédiaire possible.
+                obj.Flag2 = false; // Objet non initial sans dépendence :
+                return; // n'est pas un intermédiaire possible.
             }
 
             obj.Flag2 = true;
@@ -1285,7 +1283,7 @@ function Construction(_canvas) {
         }
     };
 
-    var checkIntermediates = function () {
+    var checkIntermediates = function() {
         var len = V.length;
         for (var i = 0; i < len; i++) {
             V[i].Flag = false;
@@ -1305,7 +1303,7 @@ function Construction(_canvas) {
     };
 
 
-    var tagDependencyChain = function (obj) {
+    var tagDependencyChain = function(obj) {
         if (!obj.Flag) {
             obj.Flag = true;
             if (obj.getMacroMode() !== 2) {
@@ -1318,18 +1316,18 @@ function Construction(_canvas) {
 
     var varnames = [];
 
-    var createVarNames = function () {
+    var createVarNames = function() {
         varnames = [];
         for (var i = 0, len = params.length; i < len; i++) {
             varnames.push(params[i].getVarName());
         }
     }
 
-    var paramsSortFilter = function (a, b) {
+    var paramsSortFilter = function(a, b) {
         return (varnames.indexOf(a) - varnames.indexOf(b));
     };
 
-    var computeMacro = function () {
+    var computeMacro = function() {
         var txt = "";
         var src = new SourceWriter(me);
         var p = []; // params
@@ -1356,7 +1354,7 @@ function Construction(_canvas) {
 
                 if (V[i].Flag) {
                     if (V[i].getMacroMode() === 2) {
-//                    S'il s'agit d'un initial :
+                        //                    S'il s'agit d'un initial :
                         p.push(V[i].getVarName());
                     } else {
                         // AU MOINDRE PROBLEME DE MACRO DEPUIS 2/11/2013
@@ -1366,7 +1364,7 @@ function Construction(_canvas) {
                         // AVANT LE 2/11, SANS TEST :
                         // V[i].getStyle(src);
                         if (V[i].getMacroMode() === 3) {
-//                        S'il s'agit d'un final :
+                            //                        S'il s'agit d'un final :
                             // AJOUTE LE 2/11
                             V[i].getSource(src);
                             V[i].getStyle(src);
@@ -1390,12 +1388,12 @@ function Construction(_canvas) {
             for (var i = 0, len = V.length; i < len; i++) {
 
                 if (V[i].getMacroMode() === 2) {
-//                    S'il s'agit d'un initial :
+                    //                    S'il s'agit d'un initial :
                     p.push(V[i].getVarName());
                 } else if (V[i].getMacroMode() === 1) {
                     // S'il s'agit d'un intermédiaire :
                     V[i].getSource(src);
-//                    V[i].getStyle(src);
+                    //                    V[i].getStyle(src);
                     if (!V[i].isHidden()) {
                         V[i].getStyle(src);
                         t.push(V[i].getVarName());
@@ -1410,9 +1408,9 @@ function Construction(_canvas) {
         txt = "(function(" + p.join(",") + "){\n";
         txt += src.getGeom();
         txt += src.getStyle();
-//        if (targets.length === 0) {
-//            txt += src.getStyle();
-//        }
+        //        if (targets.length === 0) {
+        //            txt += src.getStyle();
+        //        }
         txt += "return [" + t.join(",") + "];\n";
         txt += "})";
 
@@ -1421,7 +1419,7 @@ function Construction(_canvas) {
         // Retransforme les initiaux et les cibles : on rétablit les
         // vrais noms d'objets à la place des noms de variable :
         for (var i = 0, len = p.length; i < len; i++) {
-//            console.log(p[i]);
+            //            console.log(p[i]);
             p[i] = VARS[p[i]];
         }
         for (var i = 0, len = t.length; i < len; i++) {
@@ -1429,8 +1427,8 @@ function Construction(_canvas) {
         }
         canvas.macrosManager.refreshConstructionPanel(p, t, f);
 
-//        console.log("*****************");
-//        console.log(src.getGeom());
+        //        console.log("*****************");
+        //        console.log(src.getGeom());
 
     };
 }

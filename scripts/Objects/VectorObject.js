@@ -2,7 +2,7 @@
 //*************** VECTOR OBJECT ******************
 //************************************************
 function VectorObject(_construction, _name, _P1, _P2) {
-    var superObject = $U.extend(this, new TwoPointsLineObject(_construction, _name, _P1, _P2, true));      // Héritage
+    var superObject = $U.extend(this, new TwoPointsLineObject(_construction, _name, _P1, _P2, true)); // Héritage
     var me = this;
     this.setParent(this.P1, this.P2);
     var Cn = _construction;
@@ -14,24 +14,24 @@ function VectorObject(_construction, _name, _P1, _P2) {
     this.getAssociatedTools = function() {
         return superObject.getAssociatedTools() + ",midpoint,perpbis";
     };
-    
+
     // Pour l'interpréteur de DG_scripts :
-    this.coords2D=function(){
-        var vx = me.getCn().coordsSystem.x(me.P2.getX())-me.getCn().coordsSystem.x(me.P1.getX());
-        var vy = me.getCn().coordsSystem.y(me.P2.getY())-me.getCn().coordsSystem.y(me.P1.getY());
-        return [vx,vy];
+    this.coords2D = function() {
+        var vx = me.getCn().coordsSystem.x(me.P2.getX()) - me.getCn().coordsSystem.x(me.P1.getX());
+        var vy = me.getCn().coordsSystem.y(me.P2.getY()) - me.getCn().coordsSystem.y(me.P1.getY());
+        return [vx, vy];
     };
-    
+
     // Pour l'interpréteur de DG_scripts :
-    this.coords3D=function(){
+    this.coords3D = function() {
         me.P1.coords3D();
         me.P2.coords3D();
     };
-    
+
     // Pour l'interpréteur de DG_scripts :
-    this.getOldcoords=function(){
-        var p1=me.P1.getOldcoords();
-        var p2=me.P2.getOldcoords();
+    this.getOldcoords = function() {
+        var p1 = me.P1.getOldcoords();
+        var p2 = me.P2.getOldcoords();
         return [p2[0] - p1[0], p2[1] - p1[1], p2[2] - p1[2]];
     };
 
@@ -42,14 +42,14 @@ function VectorObject(_construction, _name, _P1, _P2) {
             var p2 = me.P2.coords3D();
             return [p2[0] - p1[0], p2[1] - p1[1], p2[2] - p1[2]];
         }
-        var vx = me.getCn().coordsSystem.x(me.P2.getX())-me.getCn().coordsSystem.x(me.P1.getX());
-        var vy = me.getCn().coordsSystem.y(me.P2.getY())-me.getCn().coordsSystem.y(me.P1.getY());
-        return [vx,vy];
+        var vx = me.getCn().coordsSystem.x(me.P2.getX()) - me.getCn().coordsSystem.x(me.P1.getX());
+        var vy = me.getCn().coordsSystem.y(me.P2.getY()) - me.getCn().coordsSystem.y(me.P1.getY());
+        return [vx, vy];
     };
 
-//        this.getValue = function() {
-//        return (me.getCn().coordsSystem.l(me.R));
-//    };
+    //        this.getValue = function() {
+    //        return (me.getCn().coordsSystem.l(me.R));
+    //    };
 
     this.setAlpha = function(p) {
         superObject.setAlpha(p);
@@ -62,15 +62,23 @@ function VectorObject(_construction, _name, _P1, _P2) {
         }
     };
 
-// Pour les objets "locus". Initialise le polygone à partir de la donnée
-// du nombre _nb de sommets voulus :
+    // Pour les objets "locus". Initialise le polygone à partir de la donnée
+    // du nombre _nb de sommets voulus :
     this.initLocusArray = function(_nb) {
-        var aMin = 0, aMax = 1;
+        var aMin = 0,
+            aMax = 1;
         var step = (aMax - aMin) / (_nb - 1);
         var Ptab = []; // Liste des sommets du polygone représentant le lieu
         // Initialisation de Ptab :
         for (var i = 0; i < _nb; i++) {
-            Ptab.push({"alpha": aMin + step * i, "x": 0, "y": 0, "x1": 0, "y1": 0, "r": 0});
+            Ptab.push({
+                "alpha": aMin + step * i,
+                "x": 0,
+                "y": 0,
+                "x1": 0,
+                "y1": 0,
+                "r": 0
+            });
         }
         return Ptab;
     };
@@ -142,8 +150,10 @@ function VectorObject(_construction, _name, _P1, _P2) {
     };
 
     this.paintObject = function(ctx) {
-        var x1 = this.P1.getX(), y1 = this.P1.getY();
-        var x2 = this.P2.getX(), y2 = this.P2.getY();
+        var x1 = this.P1.getX(),
+            y1 = this.P1.getY();
+        var x2 = this.P2.getX(),
+            y2 = this.P2.getY();
         ctx.lineCap = 'round';
         ctx.beginPath();
         ctx.moveTo(x1, y1);
@@ -173,4 +183,3 @@ function VectorObject(_construction, _name, _P1, _P2) {
     this.setDefaults("vector");
 
 }
-

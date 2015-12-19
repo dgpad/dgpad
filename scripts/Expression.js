@@ -1,8 +1,8 @@
 function Expression(_obj, _s, _oneDX) {
     var me = this;
- 
+
     var obj = _obj;
-//    var vname = (_vars === undefined) ? "" : _vars;  // var name, like "x" or "t" or "x,y" or nothing
+    //    var vname = (_vars === undefined) ? "" : _vars;  // var name, like "x" or "t" or "x,y" or nothing
     var Cn = obj.getCn();
     var interpreter = Cn.getInterpreter();
     var symbolic = new SymbolicCompute(Cn);
@@ -21,7 +21,7 @@ function Expression(_obj, _s, _oneDX) {
 
     var parseInit = function() {
 
-//        console.log(init.js);
+        //        console.log(init.js);
 
         // Remplacement dans le init.js de toute partie d'expression contenant des dx par la dérivée :
         init.js = init.jsbackup.replace(/(EX_getObj\(\d+\))((\.d[xyzt]{1}\(\))*)((\.d[xyzt]{1})\(([xyzt]{1}(,[xyzt]{1})*)\))+/g, function(_m, _e1, _e2, _e3, _e4, _e5, _e6) {
@@ -72,7 +72,7 @@ function Expression(_obj, _s, _oneDX) {
         });
 
 
-//        console.log("init.js="+init.js+"  init.pseudo="+init.pseudo);
+        //        console.log("init.js="+init.js+"  init.pseudo="+init.pseudo);
         lastInstruction = (function() {
             var t = init.js.split(";");
             return t[t.length - 1];
@@ -96,10 +96,10 @@ function Expression(_obj, _s, _oneDX) {
 
 
     me.setText = function(_src) {
-//        console.log("avant : "+obj.getName());
+        //        console.log("avant : "+obj.getName());
         init = interpreter.ExpressionInit(obj, _src + "");
         parseInit();
-//        console.log("après : "+obj.getName());
+        //        console.log("après : "+obj.getName());
     };
 
     me.setText(_s);
@@ -224,7 +224,7 @@ function Expression(_obj, _s, _oneDX) {
     };
 
     me.isNum = function() {
-//        if (!VALUE) return false;
+        //        if (!VALUE) return false;
         return ((vnames === "") && (!isNaN(f())));
     };
 
@@ -277,8 +277,8 @@ function Expression(_obj, _s, _oneDX) {
     me.fix = function() {
         if (f(1, 2, 3, 4) === undefined) {
             me.setText(_s);
-//            init = interpreter.ExpressionInit(obj, _s + "");
-//            f = interpreter.CreateFunctionFromExpression(init.js, vnames);
+            //            init = interpreter.ExpressionInit(obj, _s + "");
+            //            f = interpreter.CreateFunctionFromExpression(init.js, vnames);
         }
     };
 
@@ -314,4 +314,3 @@ Expression.fixAll = function() {
         Expression.ALL[i].fix();
     }
 }
-

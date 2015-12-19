@@ -67,11 +67,11 @@ function CoincidenceManager(_canvas) {
         var cp = new CoincidencePanel(canvas, ev, t);
 
 
-//        for (var i = 0, len = t.length; i < t.length; i++) {
-//            console.log(t[i].getName() + " " + t[i].Scratch);
-//        }
+        //        for (var i = 0, len = t.length; i < t.length; i++) {
+        //            console.log(t[i].getName() + " " + t[i].Scratch);
+        //        }
         return true;
-//        console.log(t);
+        //        console.log(t);
     }
 
 

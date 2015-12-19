@@ -1,4 +1,3 @@
-
 //$NAMESPACE = {};
 //for (var key in window) {
 //    $NAMESPACE[key] = key;
@@ -13,23 +12,21 @@ if (!$APP_PATH) {
     // Désactive toutes les alertes sur cette fenêtre pour éviter que l'uiwebview
     // soit polluée par une alerte "popup" de filepicker :
     window.$ALERT = window.alert;
-    window.alert = function () {
-    }
-    // Indique si DGPad s'ouvre dans l'application iOS/Android ou bien dans le navigateur :
+    window.alert = function() {}
+        // Indique si DGPad s'ouvre dans l'application iOS/Android ou bien dans le navigateur :
     window.$APPLICATION = false;
     window.$iOS_APPLICATION = false;
     try {
         window.$APPLICATION = (window.parent && window.parent.$APPLICATION);
         window.$iOS_APPLICATION = (window.parent && window.parent.$iOS_APPLICATION);
-    } catch (er) {
-    }
+    } catch (er) {}
 
     // Only for standard android keyboard :
     window.$STANDARD_KBD = {};
 
     // Seulement pour la plateforme Android, true dans ce cas :
     var $STOP_MOUSE_EVENTS = (navigator.userAgent.toLowerCase().indexOf("android") > -1);
-//    var $STOP_MOUSE_EVENTS = false;
+    //    var $STOP_MOUSE_EVENTS = false;
     var $SCALE = 1;
     var $FPICKERFRAME = null;
     // Détermination sans autre globale du chemin 
@@ -41,7 +38,7 @@ if (!$APP_PATH) {
 
     var $INCLUDED_FILES = [];
 
-    var $HEADSCRIPT = function (_path) {
+    var $HEADSCRIPT = function(_path) {
         var script = document.createElement('script');
         script.type = 'text/javascript';
         script.src = _path;
@@ -51,33 +48,33 @@ if (!$APP_PATH) {
     }
 
     // Uniquement utilisé en mode developpement :
-    var $INCLUDE = function (_fname, _external) {
+    var $INCLUDE = function(_fname, _external) {
         var purename = _fname;
         var files = "," + $INCLUDED_FILES.join(",") + ",";
         if (files.indexOf("," + _fname + ",") > -1) {
             // Le fichier a déjà été chargé précédemment :
             return;
         }
-//        if (arguments.length === 1) {
-//            // Il s'agit d'un fichier js local (propre à l'appli) :
-//            _fname = $APP_PATH + _fname;
-//
-//            // On teste si le fichier local existe :
-//            var request = new XMLHttpRequest();
-//            try {
-//                request.open("GET", _fname, false);
-//                request.send();
-//            } catch (e) {
-//                return;
-//            }
-//        }
+        //        if (arguments.length === 1) {
+        //            // Il s'agit d'un fichier js local (propre à l'appli) :
+        //            _fname = $APP_PATH + _fname;
+        //
+        //            // On teste si le fichier local existe :
+        //            var request = new XMLHttpRequest();
+        //            try {
+        //                request.open("GET", _fname, false);
+        //                request.send();
+        //            } catch (e) {
+        //                return;
+        //            }
+        //        }
         _fname = $APP_PATH + _fname;
         $HEADSCRIPT(_fname);
         $INCLUDED_FILES.push(purename);
     };
 
 
-    var $LOADMAIN = function () {
+    var $LOADMAIN = function() {
         $HEADSCRIPT($APP_PATH + "Main.js");
     }
 
@@ -85,7 +82,7 @@ if (!$APP_PATH) {
     // le reste (Main.js) doit donc attendre que ces fichiers soient
     // interprétés. _proc est la fonction appelée lorsque ces scripts
     // sont chargés (onload) :
-    var $LOADLANGUAGE = function () {
+    var $LOADLANGUAGE = function() {
         // Charger le module de langue standard (anglais) :
         var scp = $HEADSCRIPT($APP_PATH + "NotPacked/lang/LocalStrings.js");
 
@@ -101,15 +98,15 @@ if (!$APP_PATH) {
         $HEADSCRIPT($APP_PATH + "NotPacked/lang/LocalStrings_" + language_Code + ".js");
     };
 
-    var $LOADPICKER = function () {
-//        var script = $HEADSCRIPT($APP_PATH + "NotPacked/thirdParty/FilePicker.js");
+    var $LOADPICKER = function() {
+        //        var script = $HEADSCRIPT($APP_PATH + "NotPacked/thirdParty/FilePicker.js");
         var script = $HEADSCRIPT("http://api.filepicker.io/v1/filepicker.js");
-        script.onload = function () {
+        script.onload = function() {
             filepicker.setKey('A11o-dWi-S-ePxgyeWpfyz');
         };
     };
 
-    var $MAIN_INIT = function () {
+    var $MAIN_INIT = function() {
         var tags = document.getElementsByTagName("canvas");
         var Elts = [];
         for (var i = 0, len = tags.length; i < len; i++) {
@@ -125,14 +122,14 @@ if (!$APP_PATH) {
         }
     };
 
-    var $ECHOSRC = function () {
+    var $ECHOSRC = function() {
         var k = 0;
         for (var i = 0, len = $INCLUDED_FILES.length; i < len; i++) {
             var xhr = new XMLHttpRequest();
             xhr.open("GET", $APP_PATH + $INCLUDED_FILES[i], true);
             xhr.send();
             xhr.order = i;
-            xhr.onload = function (e) {
+            xhr.onload = function(e) {
                 k++;
                 $INCLUDED_FILES[e.target.order] = e.target.responseText;
                 if (k === $INCLUDED_FILES.length) {
@@ -144,7 +141,7 @@ if (!$APP_PATH) {
         }
     };
 
-    var $GETCSS = function (ruleName, deleteFlag) {
+    var $GETCSS = function(ruleName, deleteFlag) {
         ruleName = ruleName.toLowerCase();
         if (document.styleSheets) {
             for (var i = 0; i < document.styleSheets.length; i++) {
@@ -178,24 +175,23 @@ if (!$APP_PATH) {
         return false;
     };
 
-    var $SCALECSS = function (_r, _p) {
+    var $SCALECSS = function(_r, _p) {
         var c = $GETCSS(_r);
         if (c) {
             var props = _p.split(",");
             for (var i = 0, len = props.length; i < len; i++) {
                 var n = parseInt(c.style.getPropertyValue(props[i])) * $SCALE;
                 c.style.setProperty(props[i], n + "px");
-            }
-            ;
+            };
         }
     };
 
 
-// Seulement pour l'application Androïd : le java doit gérer les mouse et touch events.
-    (function () {
+    // Seulement pour l'application Androïd : le java doit gérer les mouse et touch events.
+    (function() {
         if ($STOP_MOUSE_EVENTS) {
             var orig_addEventListener = Element.prototype.addEventListener;
-            Element.prototype.addEventListener = function (type, listener, useCapture) {
+            Element.prototype.addEventListener = function(type, listener, useCapture) {
                 switch (type) {
                     case "mousedown":
                         break;
@@ -203,43 +199,43 @@ if (!$APP_PATH) {
                         break;
                     case "mousemove":
                         break;
-                    default :
+                    default:
                         return orig_addEventListener.call(this, type, listener, useCapture);
                 }
             };
         }
     }());
 
-    (function () {
+    (function() {
         var head = document.getElementsByTagName('head')[0];
         var style = document.createElement('link');
         style.rel = "stylesheet";
         style.type = "text/css";
         style.href = $APP_PATH + "NotPacked/styles.css";
         head.appendChild(style);
-// ******** Décommenter le jour où on met en place un "scale" : *********
-//        var img=document.createElement('img');
-//        img.onerror = function() {
-//            $SCALECSS(".pluginsListDIV", "width,height,left,top,border-radius");
-//            $SCALECSS(".toolsListDIV", "width,height,left,top,border-radius");
-//            $SCALECSS(".macroLIclass", "padding,font-size");
-//            $SCALECSS(".macroLIclassComment", "margin-top,margin-left,font-size");
-//            $SCALECSS(".macroPropsDIV", "width,left,height,border-radius");
-//            $SCALECSS(".macroLabelDiv", "padding");
-//            $SCALECSS(".macroLabelImage", "width,height");
-//            $SCALECSS(".macroLabelSpan", "margin-left,font-size");
-//            $SCALECSS(".macroExecInput", "width,height,font-size");
-//            $SCALECSS(".macroAddImage", "width,top,right");
-//            $SCALECSS(".macroPropsNameDIV", "left,top,right,height,border-radius");
-//            $SCALECSS(".macroPropsNameINPUT", "width,top,left,height,border-radius,font-size");
-//            $SCALECSS(".macroPropsViewport", "width,top,left,bottom");
-//            $SCALECSS(".macroPropsInnerDIV", "width,top,left,bottom");
-//            $SCALECSS(".macroListViewport", "width,top,left,bottom");
-//            $SCALECSS(".macroLIclassComment", "margin-top,margin-bottom,margin-left,font-size");
-//            $SCALECSS(".macroLIclass", "padding,font-size");
-//            $SCALECSS(".macroLIclassSel", "padding,font-size");
-//        };
-//        img.src=style.href;
+        // ******** Décommenter le jour où on met en place un "scale" : *********
+        //        var img=document.createElement('img');
+        //        img.onerror = function() {
+        //            $SCALECSS(".pluginsListDIV", "width,height,left,top,border-radius");
+        //            $SCALECSS(".toolsListDIV", "width,height,left,top,border-radius");
+        //            $SCALECSS(".macroLIclass", "padding,font-size");
+        //            $SCALECSS(".macroLIclassComment", "margin-top,margin-left,font-size");
+        //            $SCALECSS(".macroPropsDIV", "width,left,height,border-radius");
+        //            $SCALECSS(".macroLabelDiv", "padding");
+        //            $SCALECSS(".macroLabelImage", "width,height");
+        //            $SCALECSS(".macroLabelSpan", "margin-left,font-size");
+        //            $SCALECSS(".macroExecInput", "width,height,font-size");
+        //            $SCALECSS(".macroAddImage", "width,top,right");
+        //            $SCALECSS(".macroPropsNameDIV", "left,top,right,height,border-radius");
+        //            $SCALECSS(".macroPropsNameINPUT", "width,top,left,height,border-radius,font-size");
+        //            $SCALECSS(".macroPropsViewport", "width,top,left,bottom");
+        //            $SCALECSS(".macroPropsInnerDIV", "width,top,left,bottom");
+        //            $SCALECSS(".macroListViewport", "width,top,left,bottom");
+        //            $SCALECSS(".macroLIclassComment", "margin-top,margin-bottom,margin-left,font-size");
+        //            $SCALECSS(".macroLIclass", "padding,font-size");
+        //            $SCALECSS(".macroLIclassSel", "padding,font-size");
+        //        };
+        //        img.src=style.href;
         $LOADLANGUAGE();
         $LOADMAIN();
         $LOADPICKER();
@@ -249,14 +245,14 @@ if (!$APP_PATH) {
         var ios = /iphone|ipod|ipad/.test(userAgent);
         if (!standalone && !safari) {
             // DGPad s'ouvre dans l'iApp :
-            window.open = function (url) {
+            window.open = function(url) {
                 $FPICKERFRAME = new windowOpenIFrame(url);
             };
         }
     })();
 
 
-// Est-ce une tablette tactile ? :
+    // Est-ce une tablette tactile ? :
     Object.touchpad = false;
     if ((navigator.userAgent.match(/Android/i)) || (navigator.userAgent.match(/iPhone|iPad|iPod/i))) {
         //iOS & android
@@ -266,25 +262,25 @@ if (!$APP_PATH) {
         Object.touchpad = true;
     }
 
-    String.prototype.startsWith = function (str) {
+    String.prototype.startsWith = function(str) {
         return (this.indexOf(str) === 0);
     };
 
-    window.onload = function () {
+    window.onload = function() {
         $MAIN_INIT();
         if ($ECHO_SOURCE) {
             $ECHOSRC();
         }
-//        for (var key in window) {
-//            if (!$NAMESPACE.hasOwnProperty(key)) {
-//                console.log(key);
-//            }
-//        }
+        //        for (var key in window) {
+        //            if (!$NAMESPACE.hasOwnProperty(key)) {
+        //                console.log(key);
+        //            }
+        //        }
     };
 }
 
 // Création du canvas associé :
-(function () {
+(function() {
     // On crée le canvas :
     var canvas = document.createElement("canvas");
     // Transfert sur le canvas de la largeur et hauteur éventuelle :

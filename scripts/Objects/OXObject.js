@@ -14,10 +14,8 @@ function OXObject(_construction, _name) {
         return "axis-x";
     };
 
-    this.setColor = function() {
-    };
-    this.setSize = function() {
-    };
+    this.setColor = function() {};
+    this.setSize = function() {};
 
     this.isMoveable = function() {
         return false;
@@ -30,20 +28,16 @@ function OXObject(_construction, _name) {
     };
 
     this.mouseInside = function(ev) {
-        if (CS.isCS()){
+        if (CS.isCS()) {
             return $U.isNearToLine(this.P1.getX(), this.P1.getY(), this.getDX(), this.getDY(), this.mouseX(ev), this.mouseY(ev), this.getOversize());
-        }
-        else return false;
+        } else return false;
     };
-    
+
 
     this.getSource = function(src) {
         if (this.getCn().isAxisUsed())
             src.geomWrite(false, this.getName(), "X_axis");
     };
 
-    this.getStyle = function(src) {
-    };
+    this.getStyle = function(src) {};
 }
-
-

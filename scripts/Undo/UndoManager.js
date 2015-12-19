@@ -1,4 +1,3 @@
-
 function UndoManager(_canvas) {
     var canvas = _canvas;
     var Cn = canvas.getConstruction();
@@ -8,29 +7,28 @@ function UndoManager(_canvas) {
     var Cmarker = null; // Marqueur pour les objets de la construction
     var Tmarker = null; // Marqueur pour les textes
 
-    var ADD = true, REMOVE = false;
+    var ADD = true,
+        REMOVE = false;
 
-    var isLeft = function () {
+    var isLeft = function() {
         return (cursor === 0);
     };
 
-    var isRight = function () {
+    var isRight = function() {
         return (cursor === actions.length);
     };
 
-    var refreshCanvas = function () {
+    var refreshCanvas = function() {
         var simulatedEvent = document.createEvent("MouseEvent");
-        simulatedEvent.initMouseEvent("mouseup", true, true, window, 1,
-                -100, -100,
-                -100, -100, false,
-                false, false, false, 0, null);
+        simulatedEvent.initMouseEvent("mouseup", true, true, window, 1, -100, -100, -100, -100, false,
+            false, false, false, 0, null);
         Cn.validate(simulatedEvent);
         Cn.computeAll();
         canvas.paint(simulatedEvent);
         me.setBtns();
     };
 
-    var add = function (_o) {
+    var add = function(_o) {
         var _el = _o;
         if (_o instanceof TextObject) {
             _el = canvas.textManager.add(_o)
@@ -41,7 +39,7 @@ function UndoManager(_canvas) {
         return _el;
     };
 
-    var remove = function (_o) {
+    var remove = function(_o) {
         if (_o instanceof TextObject) {
             canvas.textManager.deleteTeX(_o);
         } else {
@@ -50,7 +48,7 @@ function UndoManager(_canvas) {
     };
 
 
-    var undo_redo = function (k) {
+    var undo_redo = function(k) {
         var t = actions[k];
         t.add = !t.add;
         var tab = ($U.isArray(t.target)) ? t.target : [t.target];
@@ -58,33 +56,36 @@ function UndoManager(_canvas) {
         for (var i = 0; i < len; i++) {
             if (t.add)
                 tab[i] = add(tab[i]);
-//                Cn.add(tab[i]);
+            //                Cn.add(tab[i]);
             else
                 remove(tab[i]);
-//                Cn.remove(tab[i]);
-//            if (t.add)
-//                tab[i].setParentList(tab[i].getParent());
+            //                Cn.remove(tab[i]);
+            //            if (t.add)
+            //                tab[i].setParentList(tab[i].getParent());
         }
 
     };
 
-    me.clear = function () {
+    me.clear = function() {
         actions = [];
         cursor = 0;
         refreshCanvas();
     };
 
 
-    this.record = function (_t, _add) {
+    this.record = function(_t, _add) {
         if (cursor < actions.length) {
             me.clear();
         }
         cursor++;
-        actions.push({add: _add, target: _t});
+        actions.push({
+            add: _add,
+            target: _t
+        });
         this.setBtns();
     };
 
-    this.undo = function () {
+    this.undo = function() {
         if (cursor > 0) {
             undo_redo(cursor - 1);
             cursor--;
@@ -92,7 +93,7 @@ function UndoManager(_canvas) {
         refreshCanvas();
     };
 
-    this.redo = function () {
+    this.redo = function() {
         if (cursor < actions.length) {
             undo_redo(cursor);
             cursor++;
@@ -101,12 +102,12 @@ function UndoManager(_canvas) {
     };
 
 
-    this.beginAdd = function () {
+    this.beginAdd = function() {
         Cmarker = Cn.elements().length;
         Tmarker = canvas.textManager.elements().length;
     };
 
-    this.endAdd = function () {
+    this.endAdd = function() {
         if ((Cmarker === null) && (Tmarker === null))
             return;
         var v = Cn.elements();
@@ -128,12 +129,12 @@ function UndoManager(_canvas) {
         Tmarker = null;
     };
 
-    this.deleteObjs = function (_t) {
+    this.deleteObjs = function(_t) {
         if (_t.length > 0)
             this.record(_t, false);
     };
 
-    this.swap = function (_o) {
+    this.swap = function(_o) {
         for (var i = 0; i < actions.length; i++) {
             var tab = ($U.isArray(actions[i].target)) ? actions[i].target : [actions[i].target];
             if ((tab.length === 1) && (tab[0] === _o))
@@ -141,7 +142,7 @@ function UndoManager(_canvas) {
         }
     };
 
-    this.setBtns = function () {
+    this.setBtns = function() {
         canvas.setUndoBtn(!isLeft());
         canvas.setRedoBtn(!isRight());
     };

@@ -2,8 +2,8 @@
 //************ PRIMITIVELINE OBJECT **************
 //************************************************
 function PrimitiveLineObject(_construction, _name, _P1) {
-    $U.extend(this, new ConstructionObject(_construction, _name));                           // Héritage
-    $U.extend(this, new MoveableObject(_construction));                                                     // Héritage
+    $U.extend(this, new ConstructionObject(_construction, _name)); // Héritage
+    $U.extend(this, new MoveableObject(_construction)); // Héritage
     var Cn = _construction;
 
     this.P1 = _P1;
@@ -11,9 +11,11 @@ function PrimitiveLineObject(_construction, _name, _P1) {
     this.setDefaults("line");
 
     // Vecteur directeur normé (en 2D) :
-    var DX = 0, DY = 0;
+    var DX = 0,
+        DY = 0;
     // Vecteur directeur normé (en 2D et 3D) :
-    var NDX = 0, NDY = 0;
+    var NDX = 0,
+        NDY = 0;
 
 
 
@@ -64,24 +66,24 @@ function PrimitiveLineObject(_construction, _name, _P1) {
         return "line";
     };
 
-//    // setDXDY en "directive de compilation" selon que
-//    // l'on est en mode 3D ou 2D :
-//    if (Cn.is3D()) {
-//        this.setDXDY = function(_x0, _y0, _x1, _y1) {
-//            // En 3D, on garde le report barycentrique :
-//            DX = _x1 - _x0;
-//            DY = _y1 - _y0;
-//        };
-//    } else {
-//        this.setDXDY = function(_x0, _y0, _x1, _y1) {
-//            // En 2D, on normalise :
-//            DX = _x1 - _x0;
-//            DY = _y1 - _y0;
-//            var n = Math.sqrt(DX * DX + DY * DY);
-//            DX /= n;
-//            DY /= n;
-//        };
-//    }
+    //    // setDXDY en "directive de compilation" selon que
+    //    // l'on est en mode 3D ou 2D :
+    //    if (Cn.is3D()) {
+    //        this.setDXDY = function(_x0, _y0, _x1, _y1) {
+    //            // En 3D, on garde le report barycentrique :
+    //            DX = _x1 - _x0;
+    //            DY = _y1 - _y0;
+    //        };
+    //    } else {
+    //        this.setDXDY = function(_x0, _y0, _x1, _y1) {
+    //            // En 2D, on normalise :
+    //            DX = _x1 - _x0;
+    //            DY = _y1 - _y0;
+    //            var n = Math.sqrt(DX * DX + DY * DY);
+    //            DX /= n;
+    //            DY /= n;
+    //        };
+    //    }
 
     // setDXDY en "directive de compilation" selon que
     // l'on est en mode 3D ou 2D :
@@ -152,7 +154,8 @@ function PrimitiveLineObject(_construction, _name, _P1) {
 
 
     this.intersectLineCircle = function(_C, _P) {
-        var x = _C.getP1().getX(), y = _C.getP1().getY();
+        var x = _C.getP1().getX(),
+            y = _C.getP1().getY();
         var r = _C.getR();
         var d = (x - this.getP1().getX()) * NDY - (y - this.getP1().getY()) * NDX;
 
@@ -171,7 +174,8 @@ function PrimitiveLineObject(_construction, _name, _P1) {
 
         if (h >= 0) {
             h = Math.sqrt(h);
-            var hDX = h * NDX, hDY = h * NDY;
+            var hDX = h * NDX,
+                hDY = h * NDY;
 
             if (_P.getAway()) {
                 if (_P.getAway().near(x + hDX, y + hDY)) {
@@ -186,17 +190,20 @@ function PrimitiveLineObject(_construction, _name, _P1) {
                     _P.setXY(x - hDX, y - hDY);
                 }
             }
-        }
-        else {
+        } else {
             _P.setXY(NaN, NaN);
         }
     };
 
     this.intersectLineLine = function(_D, _P) {
-        var dxA = NDX, dyA = NDY, dxB = _D.getNDX(), dyB = _D.getNDY();
+        var dxA = NDX,
+            dyA = NDY,
+            dxB = _D.getNDX(),
+            dyB = _D.getNDY();
         var det = dxB * dyA - dxA * dyB;
         if (det !== 0) {
-            var A = this.P1, B = _D.P1;
+            var A = this.P1,
+                B = _D.P1;
             var num1 = dyA * A.getX() - dxA * A.getY();
             var num2 = dxB * B.getY() - dyB * B.getX();
             _P.setXY((dxB * num1 + dxA * num2) / det, (dyB * num1 + dyA * num2) / det);
@@ -207,17 +214,22 @@ function PrimitiveLineObject(_construction, _name, _P1) {
         // compute the intersection coordinates of a line with a quadric
         // done with XCAS :
         var X = _Q.getCoeffs();
-        var M = -NDY, N2 = NDX, P = -(M * _P1.getX() + N2 * _P1.getY());
-        var A = X[0], B = X[1], C = X[2], D = X[3], E = X[4], F = X[5];
-        var x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+        var M = -NDY,
+            N2 = NDX,
+            P = -(M * _P1.getX() + N2 * _P1.getY());
+        var A = X[0],
+            B = X[1],
+            C = X[2],
+            D = X[3],
+            E = X[4],
+            F = X[5];
+        var x1 = 0,
+            x2 = 0,
+            y1 = 0,
+            y2 = 0;
         if (N2 != 0) {
             var part1 = -2 * B * M * P - C * N2 * N2 + D * M * N2 + E * N2 * P;
-            var part2 = Math.abs(N2)
-                    * Math.sqrt(-2 * M * D * N2 * C + 4 * P * D * A * N2 + 4
-                            * P * M * B * C + 4 * E * M * N2 * F - 2 * E * P
-                            * N2 * C - 2 * E * P * M * D - 4 * M * M * B * F
-                            - 4 * P * P * A * B - 4 * A * N2 * N2 * F + N2 * N2
-                            * C * C + M * M * D * D + E * E * P * P);
+            var part2 = Math.abs(N2) * Math.sqrt(-2 * M * D * N2 * C + 4 * P * D * A * N2 + 4 * P * M * B * C + 4 * E * M * N2 * F - 2 * E * P * N2 * C - 2 * E * P * M * D - 4 * M * M * B * F - 4 * P * P * A * B - 4 * A * N2 * N2 * F + N2 * N2 * C * C + M * M * D * D + E * E * P * P);
 
             var part3 = 2 * A * N2 * N2 + 2 * B * M * M + (-2 * E) * M * N2;
             x1 = (part1 + part2) / part3;
@@ -234,10 +246,7 @@ function PrimitiveLineObject(_construction, _name, _P1) {
             x1 = -P / M;
             x2 = x1;
             var part1 = -D * M * M + E * M * P;
-            var part2 = Math.abs(M)
-                    * Math.sqrt(4 * P * M * B * C - 2 * E * P * M * D - 4 * M
-                            * M * B * F - 4 * P * P * A * B + M * M * D * D + E
-                            * E * P * P);
+            var part2 = Math.abs(M) * Math.sqrt(4 * P * M * B * C - 2 * E * P * M * D - 4 * M * M * B * F - 4 * P * P * A * B + M * M * D * D + E * E * P * P);
             var part3 = 2 * M * M * B;
             y1 = (part1 + part2) / part3;
             if (isNaN(y1)) {
@@ -291,7 +300,8 @@ function PrimitiveLineObject(_construction, _name, _P1) {
 
     this.initIntersect2 = function(_C, _P) {
         if (_C.isInstanceType("circle")) {
-            var x = _C.getP1().getX(), y = _C.getP1().getY();
+            var x = _C.getP1().getX(),
+                y = _C.getP1().getY();
             var r = _C.getR();
             var d = (x - this.getP1().getX()) * NDY - (y - this.getP1().getY()) * NDX;
             x -= d * NDY;
@@ -299,7 +309,10 @@ function PrimitiveLineObject(_construction, _name, _P1) {
             var h = r * r - d * d;
             if (h > 0) {
                 h = Math.sqrt(h);
-                var x0 = x + h * NDX, y0 = y + h * NDY, x1 = x - h * NDX, y1 = y - h * NDY;
+                var x0 = x + h * NDX,
+                    y0 = y + h * NDY,
+                    x1 = x - h * NDX,
+                    y1 = y - h * NDY;
                 var d0 = (_P.getX() - x0) * (_P.getX() - x0) + (_P.getY() - y0) * (_P.getY() - y0);
                 var d1 = (_P.getX() - x1) * (_P.getX() - x1) + (_P.getY() - y1) * (_P.getY() - y1);
                 if (d0 < d1) {
@@ -317,8 +330,7 @@ function PrimitiveLineObject(_construction, _name, _P1) {
                         _P.setAway(_C.P1);
                     else if ((_C.getCode() === "circle") && _C.P2.near(x1, y1))
                         _P.setAway(_C.P2);
-                }
-                else {
+                } else {
                     _P.setOrder(1);
                     _P.setXY(x1, y1);
                     // Si l'un des points constituant de la droite est sur l'autre
@@ -336,7 +348,7 @@ function PrimitiveLineObject(_construction, _name, _P1) {
                 }
             }
         } else if (_C.isInstanceType("quadric")) {
-//            console.log("yes !!");
+            //            console.log("yes !!");
             var c = intersectLineQuadricXY(_C);
             var d0 = (_P.getX() - c[0]) * (_P.getX() - c[0]) + (_P.getY() - c[1]) * (_P.getY() - c[1]);
             var d1 = (_P.getX() - c[2]) * (_P.getX() - c[2]) + (_P.getY() - c[3]) * (_P.getY() - c[3]);
@@ -378,7 +390,8 @@ function PrimitiveLineObject(_construction, _name, _P1) {
 
     this.intersectXY = function(_C, _x, _y) {
         if (_C.isInstanceType("circle")) {
-            var x = _C.getP1().getX(), y = _C.getP1().getY();
+            var x = _C.getP1().getX(),
+                y = _C.getP1().getY();
             var r = _C.getR();
             var d = (x - this.getP1().getX()) * NDY - (y - this.getP1().getY()) * NDX;
             x -= d * NDY;
@@ -386,21 +399,27 @@ function PrimitiveLineObject(_construction, _name, _P1) {
             var h = r * r - d * d;
             if (h > 0) {
                 h = Math.sqrt(h);
-                var x0 = x + h * NDX, y0 = y + h * NDY, x1 = x - h * NDX, y1 = y - h * NDY;
+                var x0 = x + h * NDX,
+                    y0 = y + h * NDY,
+                    x1 = x - h * NDX,
+                    y1 = y - h * NDY;
                 var d0 = (_x - x0) * (_x - x0) + (_y - y0) * (_y - y0);
                 var d1 = (_x - x1) * (_x - x1) + (_y - y1) * (_y - y1);
                 if (d0 < d1) {
                     return [x0, y0];
-                }
-                else {
+                } else {
                     return [x1, y1];
                 }
             }
         } else if (_C.isInstanceType("line")) {
-            var dxA = NDX, dyA = NDY, dxB = _C.getNDX(), dyB = _C.getNDY();
+            var dxA = NDX,
+                dyA = NDY,
+                dxB = _C.getNDX(),
+                dyB = _C.getNDY();
             var det = dxB * dyA - dxA * dyB;
             if (det !== 0) {
-                var A = this.P1, B = _C.P1;
+                var A = this.P1,
+                    B = _C.P1;
                 var num1 = dyA * A.getX() - dxA * A.getY();
                 var num2 = dxB * B.getY() - dyB * B.getX();
                 return [(dxB * num1 + dxA * num2) / det, (dyB * num1 + dyA * num2) / det];
@@ -467,8 +486,8 @@ function PrimitiveLineObject(_construction, _name, _P1) {
             return 1;
     };
 
-// Pour les objets "locus". Initialise le polygone à partir de la donnée
-// du nombre _nb de sommets voulus :
+    // Pour les objets "locus". Initialise le polygone à partir de la donnée
+    // du nombre _nb de sommets voulus :
     this.initLocusArray = function(_nb, _linear) {
         var f = null;
         if (_linear) {
@@ -478,13 +497,21 @@ function PrimitiveLineObject(_construction, _name, _P1) {
         } else {
             f = f1;
         }
-        var aMax = Math.floor(_nb / 2), aMin = -aMax;
+        var aMax = Math.floor(_nb / 2),
+            aMin = -aMax;
         var fmax = f(aMax);
         var Ptab = []; // Liste des sommets du polygone représentant le lieu
         // Initialisation de Ptab :
         for (var i = aMin; i < aMax; i++) {
             var a = sign(i) * Math.abs(f(i) / fmax) * 1000;
-            Ptab.push({"alpha": a, "x": 0, "y": 0, "x1": 0, "y1": 0, "r": 0});
+            Ptab.push({
+                "alpha": a,
+                "x": 0,
+                "y": 0,
+                "x1": 0,
+                "y1": 0,
+                "r": 0
+            });
         }
         return Ptab;
     };
@@ -568,5 +595,4 @@ function PrimitiveLineObject(_construction, _name, _P1) {
     };
 
 
-}
-;
+};

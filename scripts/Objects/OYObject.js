@@ -4,7 +4,7 @@
 function OYObject(_construction, _name) {
     var O = new VirtualPointObject(0, 0);
     var J = new VirtualPointObject(0, 1);
-    var superObject = $U.extend(this, new TwoPointsLineObject(_construction, _name, O, J,true));
+    var superObject = $U.extend(this, new TwoPointsLineObject(_construction, _name, O, J, true));
     var CS = this.getCoordsSystem();
 
     this.setParent()
@@ -14,10 +14,8 @@ function OYObject(_construction, _name) {
         return "axis-y";
     };
 
-    this.setColor = function() {
-    };
-    this.setSize = function() {
-    };
+    this.setColor = function() {};
+    this.setSize = function() {};
 
     this.isMoveable = function() {
         return false;
@@ -41,8 +39,5 @@ function OYObject(_construction, _name) {
             src.geomWrite(false, this.getName(), "Y_axis");
     };
 
-    this.getStyle = function(src) {
-    };
+    this.getStyle = function(src) {};
 }
-
-

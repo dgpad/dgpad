@@ -2,7 +2,7 @@
 //*************** SEGMENT OBJECT *******************
 //************************************************
 function SegmentObject(_construction, _name, _P1, _P2) {
-    var superObject = $U.extend(this, new TwoPointsLineObject(_construction, _name, _P1, _P2, true));      // Héritage
+    var superObject = $U.extend(this, new TwoPointsLineObject(_construction, _name, _P1, _P2, true)); // Héritage
     var me = this;
     this.setParent(this.P1, this.P2);
 
@@ -33,15 +33,23 @@ function SegmentObject(_construction, _name, _P1, _P2) {
         }
     };
 
-// Pour les objets "locus". Initialise le polygone à partir de la donnée
-// du nombre _nb de sommets voulus :
+    // Pour les objets "locus". Initialise le polygone à partir de la donnée
+    // du nombre _nb de sommets voulus :
     this.initLocusArray = function(_nb) {
-        var aMin = 0, aMax = 1;
+        var aMin = 0,
+            aMax = 1;
         var step = (aMax - aMin) / (_nb - 1);
         var Ptab = []; // Liste des sommets du polygone représentant le lieu
         // Initialisation de Ptab :
         for (var i = 0; i < _nb; i++) {
-            Ptab.push({"alpha": aMin + step * i, "x": 0, "y": 0, "x1": 0, "y1": 0, "r": 0});
+            Ptab.push({
+                "alpha": aMin + step * i,
+                "x": 0,
+                "y": 0,
+                "x1": 0,
+                "y1": 0,
+                "r": 0
+            });
         }
         return Ptab;
     };
@@ -67,57 +75,57 @@ function SegmentObject(_construction, _name, _P1, _P2) {
         return this.P2.getY();
     };
 
-//    this.redefine = function(_old,_new) {
-////        superObject.redefine(_old,_new);
-//        console.log("redefine fonction");
-//        if (_old === this.P2) {
-//            console.log("redefine P2 !");
-//            this.deleteParent(_old);
-//            this.addParent(_new);
-//            _old.deleteChild(this);
-//            _new.addChild(this);
-////            childs[i].deleteParent(_o);
-////            _o.deleteChild(childs[i]);
-////            childs[i].addParent(this);
-////            this.addChild(childs[i]);
-//            
-//            
-//            this.P2=_new;
-//        }
-//    };
+    //    this.redefine = function(_old,_new) {
+    ////        superObject.redefine(_old,_new);
+    //        console.log("redefine fonction");
+    //        if (_old === this.P2) {
+    //            console.log("redefine P2 !");
+    //            this.deleteParent(_old);
+    //            this.addParent(_new);
+    //            _old.deleteChild(this);
+    //            _new.addChild(this);
+    ////            childs[i].deleteParent(_o);
+    ////            _o.deleteChild(childs[i]);
+    ////            childs[i].addParent(this);
+    ////            this.addChild(childs[i]);
+    //            
+    //            
+    //            this.P2=_new;
+    //        }
+    //    };
 
-//// Seulement pour les macros. Permet de désigner un segment comme initial,
-//// avec les extrémités comme intermédiaires automatiques :
-//    this.getMacroSource = function(src) {
-//        src.geomWrite(false, this.getP1().getName(), "First", this.getName());
-//        src.geomWrite(false, this.getP2().getName(), "Second", this.getName());
-//    };
+    //// Seulement pour les macros. Permet de désigner un segment comme initial,
+    //// avec les extrémités comme intermédiaires automatiques :
+    //    this.getMacroSource = function(src) {
+    //        src.geomWrite(false, this.getP1().getName(), "First", this.getName());
+    //        src.geomWrite(false, this.getP2().getName(), "Second", this.getName());
+    //    };
 
-//    this.setMacroAutoObject = function() {
-//
-//        var p1 = this.getP1();
-//        var p2 = this.getP2();
-//        var s = this;
-//        var proc1 = function(src) {
-//            src.geomWrite(false, p1.getName(), "First", s.getVarName());
-//        };
-//        var proc2 = function(src) {
-//            src.geomWrite(false, p2.getName(), "Second", s.getVarName());
-//        };
-//
-//        // Défini les extrémités comme intermédiaire :
-//        p1.setMacroMode(1);
-//        p2.setMacroMode(1);
-//
-//        // Attache les getSources aux extrémités :
-//        p1.setMacroSource(proc1);
-//        p2.setMacroSource(proc2);
-//    };
-//
-//// For macro process only :
-//    this.isAutoObjectFlags = function() {
-//        return (this.getP1().Flag || this.getP2().Flag);
-//    };
+    //    this.setMacroAutoObject = function() {
+    //
+    //        var p1 = this.getP1();
+    //        var p2 = this.getP2();
+    //        var s = this;
+    //        var proc1 = function(src) {
+    //            src.geomWrite(false, p1.getName(), "First", s.getVarName());
+    //        };
+    //        var proc2 = function(src) {
+    //            src.geomWrite(false, p2.getName(), "Second", s.getVarName());
+    //        };
+    //
+    //        // Défini les extrémités comme intermédiaire :
+    //        p1.setMacroMode(1);
+    //        p2.setMacroMode(1);
+    //
+    //        // Attache les getSources aux extrémités :
+    //        p1.setMacroSource(proc1);
+    //        p2.setMacroSource(proc2);
+    //    };
+    //
+    //// For macro process only :
+    //    this.isAutoObjectFlags = function() {
+    //        return (this.getP1().Flag || this.getP2().Flag);
+    //    };
 
     this.isInstanceType = function(_c) {
         return ((_c === "line") || (_c === "segment"));
@@ -134,7 +142,7 @@ function SegmentObject(_construction, _name, _P1, _P2) {
         var tst = (xB - xA < 1e-13) ? ((yB - yA < 1e-13) ? true : ((yp < yA) || (yp > yB))) : ((xp < xA) || (xp > xB) || (yp < yA) || (yp > yB));
 
         if (tst) {
-//        if ((xp < xA) || (xp > xB) || (yp < yA) || (yp > yB)) {
+            //        if ((xp < xA) || (xp > xB) || (yp < yA) || (yp > yB)) {
             _P.setXY(NaN, NaN);
         }
     };
@@ -185,4 +193,3 @@ function SegmentObject(_construction, _name, _P1, _P2) {
     this.setDefaults("segment");
 
 }
-

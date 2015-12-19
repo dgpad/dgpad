@@ -13,11 +13,11 @@ function GUIElement(_owner, _type) {
     me.parentNode = docObject.parentNode;
     me.appendChild = docObject.appendChild;
 
-    me.getDocObject = function () {
+    me.getDocObject = function() {
         return docObject;
     };
 
-    me.setBounds = function (l, t, w, h) {
+    me.setBounds = function(l, t, w, h) {
         left = l;
         top = t;
         width = w;
@@ -28,7 +28,7 @@ function GUIElement(_owner, _type) {
         docObject.style.height = h + "px";
     };
 
-    me.getBounds = function () {
+    me.getBounds = function() {
         return {
             "left": left,
             "top": top,
@@ -37,7 +37,7 @@ function GUIElement(_owner, _type) {
         };
     };
 
-    me.getOwnerBounds = function () {
+    me.getOwnerBounds = function() {
         var t = me.owner.offsetTop || 0;
         var l = me.owner.offsetLeft || 0;
         var w = me.owner.offsetWidth || 0;
@@ -52,15 +52,15 @@ function GUIElement(_owner, _type) {
 
 
 
-    me.getStyle = function (_attr) {
+    me.getStyle = function(_attr) {
         return docObject.style.getPropertyValue(_attr);
     };
 
-    me.setStyle = function (_attr, _param) {
+    me.setStyle = function(_attr, _param) {
         docObject.style.setProperty(_attr, _param);
     };
 
-    me.setStyles = function (_st) {
+    me.setStyles = function(_st) {
         var t = _st.split(";");
         for (var i = 0, len = t.length; i < len; i++) {
             var a = t[i].split(":");
@@ -68,47 +68,47 @@ function GUIElement(_owner, _type) {
         }
     }
 
-    me.getAttr = function (_attr) {
+    me.getAttr = function(_attr) {
         return docObject[_attr];
     };
 
-    me.setAttr = function (_attr, _param) {
+    me.setAttr = function(_attr, _param) {
         docObject[_attr] = _param;
     };
 
 
-    me.hide = function () {
+    me.hide = function() {
         me.setStyle("visibility", "hidden");
     };
 
-    me.show = function () {
+    me.show = function() {
         me.setStyle("visibility", "visible");
     };
 
-    me.isVisible = function () {
+    me.isVisible = function() {
         return (me.getStyle("visibility") === "visible");
     };
 
-    me.setLayer = function (_l) {
+    me.setLayer = function(_l) {
         me.setStyle("z-index", _l);
     };
 
-    me.clearContent = function () {
+    me.clearContent = function() {
         while (docObject.childNodes.length !== 0) {
             docObject.removeChild(docObject.childNodes[0]);
         }
     };
 
-    me.hasContent = function (elt) {
-//        console.log(elt.getDocObject().parentNode===docObject);
+    me.hasContent = function(elt) {
+        //        console.log(elt.getDocObject().parentNode===docObject);
         return ((elt) && (elt.getDocObject) && (elt.getDocObject().parentNode === docObject));
     };
 
-    me.addContent = function (elt) {
+    me.addContent = function(elt) {
         docObject.appendChild(elt.getDocObject());
     };
 
-    me.removeContent = function (elt) {
+    me.removeContent = function(elt) {
         try {
             docObject.removeChild(elt.getDocObject());
         } catch (e) {
@@ -116,23 +116,23 @@ function GUIElement(_owner, _type) {
         }
     };
 
-    me.setAbsolute = function () {
+    me.setAbsolute = function() {
         docObject.style.position = "absolute";
         docObject.style.margin = "0px";
         docObject.style.padding = "0px";
     };
 
 
-    me.setPosition = function (_mode) {
+    me.setPosition = function(_mode) {
         docObject.style.position = _mode;
     };
 
-    me.setColor = function (_col) {
+    me.setColor = function(_col) {
         docObject.style.backgroundColor = _col;
     };
 
-    me.addImage = function (_src) {
-//        var img = document.createElement("img");
+    me.addImage = function(_src) {
+        //        var img = document.createElement("img");
         var img = new Image();
         img.style.position = "absolute";
         img.src = _src;
@@ -143,65 +143,65 @@ function GUIElement(_owner, _type) {
         docObject.appendChild(img);
     };
 
-    me.setBackgroundImage = function (_src) {
+    me.setBackgroundImage = function(_src) {
         me.setStyle("background-image", _src);
         me.setStyle("background-size", "100%");
         me.setStyle("background-repeat", "no-repeat");
     };
 
-//    me.addImage = function(_src, l, t, w, h) {
-//        var imgObject = document.createElement("img");
-////        imgObject.src = _src + "?nocache=" + Date.now();
-//        imgObject.src = _src;
-//        imgObject.style.left = l + "px";
-//        imgObject.style.top = t + "px";
-//        imgObject.style.width = w + "px";
-//        imgObject.style.height = h + "px";
-//        docObject.appendChild(imgObject);
-//    };
+    //    me.addImage = function(_src, l, t, w, h) {
+    //        var imgObject = document.createElement("img");
+    ////        imgObject.src = _src + "?nocache=" + Date.now();
+    //        imgObject.src = _src;
+    //        imgObject.style.left = l + "px";
+    //        imgObject.style.top = t + "px";
+    //        imgObject.style.width = w + "px";
+    //        imgObject.style.height = h + "px";
+    //        docObject.appendChild(imgObject);
+    //    };
 
 
     var touchNumber = 0;
-    me.setTouchNumber = function (_i) {
+    me.setTouchNumber = function(_i) {
         touchNumber = _i;
     };
     var preventDefault = true;
-    me.setPreventDefault = function (_bool) {
+    me.setPreventDefault = function(_bool) {
         preventDefault = _bool;
     };
 
-    var PadToMouseEvent = function (_touch) {
+    var PadToMouseEvent = function(_touch) {
         var ev = document.createEvent("MouseEvent");
         ev.initMouseEvent("mouseup", true, true, window, 1,
-                _touch.screenX, _touch.screenY,
-                _touch.clientX, _touch.clientY, false,
-                false, false, false, 0, null);
+            _touch.screenX, _touch.screenY,
+            _touch.clientX, _touch.clientY, false,
+            false, false, false, 0, null);
         return ev;
     };
 
-    var exe = function (_p) {
+    var exe = function(_p) {
         if (preventDefault) {
-            _p.MouseEvent_Function = function (ev) {
+            _p.MouseEvent_Function = function(ev) {
                 ev.preventDefault();
                 _p(ev);
             };
         } else {
-            _p.MouseEvent_Function = function (ev) {
+            _p.MouseEvent_Function = function(ev) {
                 _p(ev);
             };
         }
         return _p.MouseEvent_Function;
     };
 
-    var exeTCH = function (_p) {
+    var exeTCH = function(_p) {
         if (preventDefault) {
-            _p.TouchEvent_Function = function (tch) {
+            _p.TouchEvent_Function = function(tch) {
                 tch.preventDefault();
                 var touch = tch.touches[touchNumber] || tch.changedTouches[touchNumber];
                 _p(touch);
             };
         } else {
-            _p.TouchEvent_Function = function (tch) {
+            _p.TouchEvent_Function = function(tch) {
                 var touch = tch.touches[touchNumber] || tch.changedTouches[touchNumber];
                 _p(touch);
             };
@@ -213,20 +213,20 @@ function GUIElement(_owner, _type) {
 
 
 
-    me.touch = function (tch, _procMouse) {
+    me.touch = function(tch, _procMouse) {
         tch.preventDefault();
         var touch = tch.touches[0] || tch.changedTouches[0];
         _procMouse(PadToMouseEvent(touch));
     };
 
-    me.addDblClickEvent = function (_proc, _to) {
+    me.addDblClickEvent = function(_proc, _to) {
         if (!_proc)
             return;
         var obj = (arguments.length < 2) ? docObject : _to;
         obj.addEventListener('dblclick', exe(_proc), false);
     };
 
-    me.addClickEvent = function (_proc, _to) {
+    me.addClickEvent = function(_proc, _to) {
         if (!_proc)
             return;
         var obj = (arguments.length < 2) ? docObject : _to;
@@ -234,7 +234,7 @@ function GUIElement(_owner, _type) {
         obj.addEventListener('click', exe(_proc), false);
     };
 
-    me.addDownEvent = function (_proc, _to) {
+    me.addDownEvent = function(_proc, _to) {
         if (!_proc)
             return;
         var obj = (arguments.length < 2) ? docObject : _to;
@@ -243,7 +243,7 @@ function GUIElement(_owner, _type) {
             obj.addEventListener('mousedown', exe(_proc), false);
     };
 
-    me.addMoveEvent = function (_proc, _to) {
+    me.addMoveEvent = function(_proc, _to) {
         if (!_proc)
             return;
         var obj = (arguments.length < 2) ? docObject : _to;
@@ -252,7 +252,7 @@ function GUIElement(_owner, _type) {
             obj.addEventListener('mousemove', exe(_proc), false);
     };
 
-    me.addUpEvent = function (_proc, _to) {
+    me.addUpEvent = function(_proc, _to) {
         if (!_proc)
             return;
         var obj = (arguments.length < 2) ? docObject : _to;
@@ -260,9 +260,9 @@ function GUIElement(_owner, _type) {
         if (!$U.isMobile.android() && !$U.isMobile.ios())
             obj.addEventListener('mouseup', exe(_proc), false);
 
-    }; 
+    };
 
-    me.removeDownEvent = function (_proc, _to) {
+    me.removeDownEvent = function(_proc, _to) {
         if (!_proc)
             return;
         var obj = (arguments.length < 2) ? docObject : _to;
@@ -270,7 +270,7 @@ function GUIElement(_owner, _type) {
         obj.removeEventListener('mousedown', _proc.MouseEvent_Function, false);
     };
 
-    me.removeMoveEvent = function (_proc, _to) {
+    me.removeMoveEvent = function(_proc, _to) {
         if (!_proc)
             return;
         var obj = (arguments.length < 2) ? docObject : _to;
@@ -278,7 +278,7 @@ function GUIElement(_owner, _type) {
         obj.removeEventListener('mousemove', _proc.MouseEvent_Function, false);
     };
 
-    me.removeUpEvent = function (_proc, _to) {
+    me.removeUpEvent = function(_proc, _to) {
         if (!_proc)
             return;
         var obj = (arguments.length < 2) ? docObject : _to;
@@ -288,7 +288,4 @@ function GUIElement(_owner, _type) {
 
 
 
-}
-;
-
-
+};

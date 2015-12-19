@@ -20,8 +20,10 @@ function VectorConstructor() {
         var ctx = zc.getContext();
         ctx.strokeStyle = zc.prefs.color.hilite;
         ctx.lineWidth = zc.prefs.size.line;
-        var x1 = this.getC(0).getX(), y1 = this.getC(0).getY();
-        var x2 = zc.mouseX(ev), y2 = zc.mouseY(ev);
+        var x1 = this.getC(0).getX(),
+            y1 = this.getC(0).getY();
+        var x2 = zc.mouseX(ev),
+            y2 = zc.mouseY(ev);
         ctx.lineCap = 'round';
         ctx.beginPath();
         ctx.moveTo(x1, y1);

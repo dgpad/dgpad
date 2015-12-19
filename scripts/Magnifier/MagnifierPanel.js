@@ -1,8 +1,10 @@
 function MagnifierPanel(_canvas) {
     $U.extend(this, new Panel(_canvas.getDocObject()));
     var me = this;
-    var _l = $P.MagnifierBounds.l, _t = $P.MagnifierBounds.t,
-            _w = $P.MagnifierBounds.w, _h = $P.MagnifierBounds.h;
+    var _l = $P.MagnifierBounds.l,
+        _t = $P.MagnifierBounds.t,
+        _w = $P.MagnifierBounds.w,
+        _h = $P.MagnifierBounds.h;
     me.setStyles("position:absolute;overflow:hidden;z-index:8");
     me.setStyle("background-image", "url('" + $APP_PATH + "NotPacked/images/tools/loupe5.svg')");
     me.transition("scale", 0.2);
@@ -14,7 +16,8 @@ function MagnifierPanel(_canvas) {
     me.addContent(cnvs);
     var ctx = cnvs.getDocObject().getContext('2d');
 
-    var xx = 0, yy = 0;
+    var xx = 0,
+        yy = 0;
 
     var dragmove = function(ev) {
         _l += (ev.pageX - xx);
@@ -28,13 +31,13 @@ function MagnifierPanel(_canvas) {
     var dragdown = function(ev) {
         xx = ev.pageX;
         yy = ev.pageY;
-        me.addMoveEvent(dragmove,window);
-        me.addUpEvent(dragup,window);
+        me.addMoveEvent(dragmove, window);
+        me.addUpEvent(dragup, window);
     };
 
     var dragup = function(ev) {
-        me.removeMoveEvent(dragmove,window);
-        me.removeUpEvent(dragup,window);
+        me.removeMoveEvent(dragmove, window);
+        me.removeUpEvent(dragup, window);
     };
 
     me.addDownEvent(dragdown);
@@ -60,13 +63,12 @@ function MagnifierPanel(_canvas) {
         ctx.beginPath();
         ctx.clearRect(0, 0, 200, 200);
         if ((coords) && (!isNaN(coords.x)) && (!isNaN(coords.y)))
-        if ((coords) && (!isNaN(coords.x)) && (!isNaN(coords.y)))
-            ctx.drawImage(_canvas.getDocObject(),
+            if ((coords) && (!isNaN(coords.x)) && (!isNaN(coords.y)))
+                ctx.drawImage(_canvas.getDocObject(),
                     coords.x - 50, coords.y - 50, 98, 98, 3, 3, 98, 98);
     };
-    
-    
+
+
     me.init();
 
 }
-

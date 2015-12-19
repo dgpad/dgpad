@@ -4,392 +4,614 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>DGPad</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <link rel='stylesheet' href='accueil/homecss.css' type='text/css' media='all' />
-        <link rel="icon" type="image/png" href="favicon.png" />
-        <script src="accueil/scripts/LocalStrings.js"></script>
-        <script>
-//            document.body.style.setProperty("-webkit-overflow-scrolling","touch");
-//            document.ontouchmove = function(event) {
-//                event.preventDefault();
-//            }
+<head>
+    <title>DGPad</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel='stylesheet' href='accueil/homecss.css' type='text/css' media='all' />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <script src="accueil/scripts/LocalStrings.js"></script>
+    <script>
+    //            document.body.style.setProperty("-webkit-overflow-scrolling","touch");
+    //            document.ontouchmove = function(event) {
+    //                event.preventDefault();
+    //            }
 
 
 
-            window.panels = [];
+    window.panels = [];
 
-            (function(win) {
-                var t = location.search.substring(1).split('&');
-                var f = {};
-                for (var i = 0; i < t.length; i++) {
-                    var x = t[ i ].split('=');
-                    f[x[0]] = x[1];
+    (function(win) {
+        var t = location.search.substring(1).split('&');
+        var f = {};
+        for (var i = 0; i < t.length; i++) {
+            var x = t[i].split('=');
+            f[x[0]] = x[1];
+        };
+        win.$PARAMS = f;
+    })(window);
+
+    function setPanel(_d, _open, _type, _speed, _x) {
+        var d = document.getElementById("page" + _d);
+
+        panels.push(d);
+        d.num = _d;
+        d.effect = _type;
+        d.speed = _speed;
+        d.effect_var1 = 0;
+        d.isOpen = false;
+        d.link = document.getElementById("link" + _d);
+
+        d.linkOn = function() {
+            setTimeout(function() {
+                d.link.style.setProperty("padding", "0 2px 1px 30px");
+                d.link.style.setProperty("background", "url('accueil/images/bullet.png') left no-repeat");
+                d.link.style.setProperty("font-weight", "bold");
+            }, 1);
+
+        }
+        d.linkOff = function() {
+            d.link.style.removeProperty("padding");
+            d.link.style.removeProperty("background");
+            d.link.style.removeProperty("font-weight");
+        }
+
+        if (_open) d.linkOn();
+
+        var ST = function(key, val) {
+            d.style.setProperty(key, val);
+        }
+
+        if (_open) ST("visibility", "visible");
+        setTimeout(function() {
+            ST("visibility", "visible");
+        }, _speed * 2000);
+
+        switch (d.effect) {
+            case "translate_x":
+                ST("transition", "transform " + d.speed + "s linear");
+                ST("-webkit-transition", "-webkit-transform " + d.speed + "s linear");
+                ST("-moz-transition", "-moz-transform " + d.speed + "s linear");
+                ST("-o-transition", "-o-transform " + d.speed + "s linear");
+                d.effect_var1 = _x;
+                if (!_open) {
+                    ST("transform", "translate3d(" + d.effect_var1 + "px,0, 0)");
+                    ST("-webkit-transform", "translate3d(" + d.effect_var1 + "px,0, 0)");
+                    ST("-moz-transform", "translate3d(" + d.effect_var1 + "px,0, 0)");
+                    ST("-o-transform", "translate(" + d.effect_var1 + "px,0)");
                 }
-                ;
-                win.$PARAMS = f;
-            })(window);
+                break;
+            case "translate_y":
+                ST("transition", "transform " + d.speed + "s linear");
+                ST("-webkit-transition", "-webkit-transform " + d.speed + "s linear");
+                ST("-moz-transition", "-moz-transform " + d.speed + "s linear");
+                ST("-o-transition", "-o-transform " + d.speed + "s linear");
+                d.effect_var1 = _x;
+                if (!_open) {
+                    ST("transform", "translate3d(0," + d.effect_var1 + "px, 0)");
+                    ST("-webkit-transform", "translate3d(0," + d.effect_var1 + "px, 0)");
+                    ST("-moz-transform", "translate3d(0," + d.effect_var1 + "px, 0)");
+                    ST("-o-transform", "translate(0," + d.effect_var1 + "px)");
+                }
+                break;
+            case "scale":
+                ST("transition", "transform " + d.speed + "s linear");
+                ST("-webkit-transition", "-webkit-transform " + d.speed + "s linear");
+                ST("-moz-transition", "-moz-transform " + d.speed + "s linear");
+                ST("-o-transition", "-o-transform " + d.speed + "s linear");
+                if (!_open) {
+                    ST("transform", "scale(0)");
+                    ST("-webkit-transform", "scale(0)");
+                    ST("-moz-transform", "scale(0)");
+                    ST("-o-transform", "scale(0)");
+                }
+                break;
+        }
 
-            function setPanel(_d, _open, _type, _speed, _x) {
-                var d = document.getElementById("page" + _d);
-
-                panels.push(d);
-                d.num = _d;
-                d.effect = _type;
-                d.speed = _speed;
-                d.effect_var1 = 0;
-                d.isOpen = false;
-                d.link = document.getElementById("link" + _d);
-
-                d.linkOn = function() {
+        d.openPanel = function() {
+            d.linkOn();
+            if (d.num === 2) d.style.setProperty("-webkit-overflow-scrolling", "touch");
+            switch (d.effect) {
+                case "translate_x":
+                    ST("transform", "translateX(" + d.effect_var1 + "px)");
+                    ST("-webkit-transform", "translateX(" + d.effect_var1 + "px)");
+                    ST("-moz-transform", "translateX(" + d.effect_var1 + "px)");
+                    ST("-o-transform", "translateX(" + d.effect_var1 + "px)");
                     setTimeout(function() {
-                        d.link.style.setProperty("padding", "0 2px 1px 30px");
-                        d.link.style.setProperty("background", "url('accueil/images/bullet.png') left no-repeat");
-                        d.link.style.setProperty("font-weight", "bold");
+                        ST("transform", "translate3d(0,0,0)");
+                        ST("-webkit-transform", "translate3d(0,0,0)");
+                        ST("-moz-transform", "translate3d(0,0,0)");
+                        ST("-o-transform", "translate(0,0)");
                     }, 1);
-
-                }
-                d.linkOff = function() {
-                    d.link.style.removeProperty("padding");
-                    d.link.style.removeProperty("background");
-                    d.link.style.removeProperty("font-weight");
-                }
-
-                if (_open) d.linkOn();
-
-                var ST = function(key, val) {
-                    d.style.setProperty(key, val);
-                }
-
-                if (_open) ST("visibility", "visible");
-                setTimeout(function() {
-                    ST("visibility", "visible");
-                }, _speed * 2000);
-
-                switch (d.effect) {
-                    case "translate_x":
-                        ST("transition", "transform " + d.speed + "s linear");
-                        ST("-webkit-transition", "-webkit-transform " + d.speed + "s linear");
-                        ST("-moz-transition", "-moz-transform " + d.speed + "s linear");
-                        ST("-o-transition", "-o-transform " + d.speed + "s linear");
-                        d.effect_var1 = _x;
-                        if (!_open) {
-                            ST("transform", "translate3d(" + d.effect_var1 + "px,0, 0)");
-                            ST("-webkit-transform", "translate3d(" + d.effect_var1 + "px,0, 0)");
-                            ST("-moz-transform", "translate3d(" + d.effect_var1 + "px,0, 0)");
-                            ST("-o-transform", "translate(" + d.effect_var1 + "px,0)");
-                        }
-                        break;
-                    case "translate_y":
-                        ST("transition", "transform " + d.speed + "s linear");
-                        ST("-webkit-transition", "-webkit-transform " + d.speed + "s linear");
-                        ST("-moz-transition", "-moz-transform " + d.speed + "s linear");
-                        ST("-o-transition", "-o-transform " + d.speed + "s linear");
-                        d.effect_var1 = _x;
-                        if (!_open) {
-                            ST("transform", "translate3d(0," + d.effect_var1 + "px, 0)");
-                            ST("-webkit-transform", "translate3d(0," + d.effect_var1 + "px, 0)");
-                            ST("-moz-transform", "translate3d(0," + d.effect_var1 + "px, 0)");
-                            ST("-o-transform", "translate(0," + d.effect_var1 + "px)");
-                        }
-                        break;
-                    case "scale":
-                        ST("transition", "transform " + d.speed + "s linear");
-                        ST("-webkit-transition", "-webkit-transform " + d.speed + "s linear");
-                        ST("-moz-transition", "-moz-transform " + d.speed + "s linear");
-                        ST("-o-transition", "-o-transform " + d.speed + "s linear");
-                        if (!_open) {
-                            ST("transform", "scale(0)");
-                            ST("-webkit-transform", "scale(0)");
-                            ST("-moz-transform", "scale(0)");
-                            ST("-o-transform", "scale(0)");
-                        }
-                        break;
-                }
-
-                d.openPanel = function() {
-                    d.linkOn();
-                    if (d.num === 2) d.style.setProperty("-webkit-overflow-scrolling", "touch");
-                    switch (d.effect) {
-                        case "translate_x":
-                            ST("transform", "translateX(" + d.effect_var1 + "px)");
-                            ST("-webkit-transform", "translateX(" + d.effect_var1 + "px)");
-                            ST("-moz-transform", "translateX(" + d.effect_var1 + "px)");
-                            ST("-o-transform", "translateX(" + d.effect_var1 + "px)");
-                            setTimeout(function() {
-                                ST("transform", "translate3d(0,0,0)");
-                                ST("-webkit-transform", "translate3d(0,0,0)");
-                                ST("-moz-transform", "translate3d(0,0,0)");
-                                ST("-o-transform", "translate(0,0)");
-                            }, 1);
-                            break;
-                        case "translate_y":
-                            ST("transform", "translateY(" + d.effect_var1 + "px)");
-                            ST("-webkit-transform", "translateY(" + d.effect_var1 + "px)");
-                            ST("-moz-transform", "translateY(" + d.effect_var1 + "px)");
-                            ST("-o-transform", "translateY(" + d.effect_var1 + "px)");
-                            setTimeout(function() {
-                                ST("transform", "translate3d(0,0,0)");
-                                ST("-webkit-transform", "translate3d(0,0,0)");
-                                ST("-moz-transform", "translate3d(0,0,0)");
-                                ST("-o-transform", "translate(0,0)");
-                            }, 1);
-                            break;
-                        case "scale":
-                            ST("transform", "scale(0)");
-                            ST("-webkit-transform", "scale(0)");
-                            ST("-moz-transform", "scale(0)");
-                            ST("-o-transform", "scale(0)");
-                            setTimeout(function() {
-                                ST("transform", "scale(1)");
-                                ST("-webkit-transform", "scale(1)");
-                                ST("-moz-transform", "scale(1)");
-                                ST("-o-transform", "scale(1)");
-                            }, 1);
-                            break;
-                    }
-                    d.isOpen = true;
-                }
-
-                d.closePanel = function() {
-                    OpenVid('');
-                    d.linkOff();
-                    switch (d.effect) {
-                        case "translate_x":
-                            setTimeout(function() {
-                                ST("transform", "translate3d(" + d.effect_var1 + "px,0, 0)");
-                                ST("-webkit-transform", "translate3d(" + d.effect_var1 + "px,0, 0)");
-                                ST("-moz-transform", "translate3d(" + d.effect_var1 + "px,0, 0)");
-                                ST("-o-transform", "translate(" + d.effect_var1 + "px,0)");
-                            }, 1);
-                            break;
-                        case "translate_y":
-                            setTimeout(function() {
-                                ST("transform", "translate3d(0," + d.effect_var1 + "px, 0)");
-                                ST("-webkit-transform", "translate3d(0," + d.effect_var1 + "px, 0)");
-                                ST("-moz-transform", "translate3d(0," + d.effect_var1 + "px, 0)");
-                                ST("-o-transform", "translate(0," + d.effect_var1 + "px)");
-                            }, 1);
-                            break;
-                        case "scale":
-                            setTimeout(function() {
-                                ST("transform", "scale(0)");
-                                ST("-webkit-transform", "scale(0)");
-                                ST("-moz-transform", "scale(0)");
-                                ST("-o-transform", "scale(0)");
-                            }, 1);
-                            break;
-                    }
-                    d.isOpen = false;
-                }
+                    break;
+                case "translate_y":
+                    ST("transform", "translateY(" + d.effect_var1 + "px)");
+                    ST("-webkit-transform", "translateY(" + d.effect_var1 + "px)");
+                    ST("-moz-transform", "translateY(" + d.effect_var1 + "px)");
+                    ST("-o-transform", "translateY(" + d.effect_var1 + "px)");
+                    setTimeout(function() {
+                        ST("transform", "translate3d(0,0,0)");
+                        ST("-webkit-transform", "translate3d(0,0,0)");
+                        ST("-moz-transform", "translate3d(0,0,0)");
+                        ST("-o-transform", "translate(0,0)");
+                    }, 1);
+                    break;
+                case "scale":
+                    ST("transform", "scale(0)");
+                    ST("-webkit-transform", "scale(0)");
+                    ST("-moz-transform", "scale(0)");
+                    ST("-o-transform", "scale(0)");
+                    setTimeout(function() {
+                        ST("transform", "scale(1)");
+                        ST("-webkit-transform", "scale(1)");
+                        ST("-moz-transform", "scale(1)");
+                        ST("-o-transform", "scale(1)");
+                    }, 1);
+                    break;
             }
+            d.isOpen = true;
+        }
 
-            window.onload = function() {
-                setPanel(0, true, "scale", 0.3);
-                setPanel(1, false, "translate_x", 0.3, 700);
-                setPanel(2, false, "translate_y", 0.3, 450);
-                setPanel(3, false, "scale", 0.3);
-                setPanel(4, false, "translate_x", 0.3, 700);
-                setPanel(5, false, "translate_y", 0.3, 450);
+        d.closePanel = function() {
+            OpenVid('');
+            d.linkOff();
+            switch (d.effect) {
+                case "translate_x":
+                    setTimeout(function() {
+                        ST("transform", "translate3d(" + d.effect_var1 + "px,0, 0)");
+                        ST("-webkit-transform", "translate3d(" + d.effect_var1 + "px,0, 0)");
+                        ST("-moz-transform", "translate3d(" + d.effect_var1 + "px,0, 0)");
+                        ST("-o-transform", "translate(" + d.effect_var1 + "px,0)");
+                    }, 1);
+                    break;
+                case "translate_y":
+                    setTimeout(function() {
+                        ST("transform", "translate3d(0," + d.effect_var1 + "px, 0)");
+                        ST("-webkit-transform", "translate3d(0," + d.effect_var1 + "px, 0)");
+                        ST("-moz-transform", "translate3d(0," + d.effect_var1 + "px, 0)");
+                        ST("-o-transform", "translate(0," + d.effect_var1 + "px)");
+                    }, 1);
+                    break;
+                case "scale":
+                    setTimeout(function() {
+                        ST("transform", "scale(0)");
+                        ST("-webkit-transform", "scale(0)");
+                        ST("-moz-transform", "scale(0)");
+                        ST("-o-transform", "scale(0)");
+                    }, 1);
+                    break;
             }
+            d.isOpen = false;
+        }
+    }
 
-            OpenPanel = function(k) {
-                for (var i = 0, len = panels.length; i < len; i++) {
-                    if (i !== k) panels[i].closePanel();
-                }
-                panels[k].openPanel();
+    window.onload = function() {
+        setPanel(0, true, "scale", 0.3);
+        setPanel(1, false, "translate_x", 0.3, 700);
+        setPanel(2, false, "translate_y", 0.3, 450);
+        setPanel(3, false, "scale", 0.3);
+        setPanel(4, false, "translate_x", 0.3, 700);
+        setPanel(5, false, "translate_y", 0.3, 450);
+    }
+
+    OpenPanel = function(k) {
+        for (var i = 0, len = panels.length; i < len; i++) {
+            if (i !== k) panels[i].closePanel();
+        }
+        panels[k].openPanel();
+    }
+
+    var $LOADLANGUAGE = function() {
+        var language_Code = navigator.language || navigator.userLanguage;
+        language_Code = language_Code.toUpperCase().split("-")[0];
+        if ($PARAMS['lang']) language_Code = $PARAMS['lang'].toUpperCase();
+        var fname = "accueil/scripts/LocalStrings_" + language_Code + ".js";
+        var request = new XMLHttpRequest();
+        try {
+            request.open("GET", fname, false);
+            request.send();
+            eval(request.responseText);
+        } catch (e) {
+            return;
+        }
+    }();
+
+
+
+    var $LastLink = null;
+    var OpenVid = function(_s) {
+        (($LastLink) && ($LastLink.style.setProperty("font-weight", "normal")));
+        var v = document.getElementById("vidframe");
+        var c = document.getElementById("videocomment");
+        var a = document.getElementById("videolink");
+        if (_s === "") {
+            v.src = "";
+            v.style.setProperty("left", "-500px");
+            v.style.setProperty("top", "-500px");
+            $LastLink = null;
+        } else {
+            v.src = "http://www.youtube.com/embed/" + _s;
+            v.style.setProperty("left", "245px");
+            v.style.setProperty("top", "200px");
+            if (typeof Touch === "object") {
+                a.setAttribute("href", "http://m.youtube.com/#/watch?v=" + _s);
+                c.style.setProperty("left", "245px");
+                c.style.setProperty("top", "570px");
             }
+            $LastLink = document.getElementById(_s);
+            $LastLink.style.setProperty("font-weight", "bold");
+        }
+    }
 
-            var $LOADLANGUAGE = function() {
-                var language_Code = navigator.language || navigator.userLanguage;
-                language_Code = language_Code.toUpperCase().split("-")[0];
-                if ($PARAMS['lang']) language_Code = $PARAMS['lang'].toUpperCase();
-                var fname = "accueil/scripts/LocalStrings_" + language_Code + ".js";
-                var request = new XMLHttpRequest();
-                try {
-                    request.open("GET", fname, false);
-                    request.send();
-                    eval(request.responseText);
-                } catch (e) {
-                    return;
-                }
-            }();
+    var $W = function(_k) {
+        document.write($L[_k].replace("\n", "<br>"));
+    }
 
-
-
-            var $LastLink = null;
-            var OpenVid = function(_s) {
-                (($LastLink) && ($LastLink.style.setProperty("font-weight", "normal")));
-                var v = document.getElementById("vidframe");
-                var c = document.getElementById("videocomment");
-                var a = document.getElementById("videolink");
-                if (_s === "") {
-                    v.src = "";
-                    v.style.setProperty("left", "-500px");
-                    v.style.setProperty("top", "-500px");
-                    $LastLink = null;
-                } else {
-                    v.src = "http://www.youtube.com/embed/" + _s;
-                    v.style.setProperty("left", "245px");
-                    v.style.setProperty("top", "200px");
-                    if (typeof Touch === "object") {
-                        a.setAttribute("href", "http://m.youtube.com/#/watch?v=" + _s);
-                        c.style.setProperty("left", "245px");
-                        c.style.setProperty("top", "570px");
-                    }
-                    $LastLink = document.getElementById(_s);
-                    $LastLink.style.setProperty("font-weight", "bold");
-                }
+    var $WN = function() {
+        var i = 0;
+        var n = [];
+        while ($L["news_content_" + i]) {
+            var o = {};
+            o.date = "<br><br><h2>" + $L["news_date_" + i] + "</h2>";
+            var c = $L["news_content_" + i].split("\n");
+            var t = "<ul>";
+            for (var k = 0, len = c.length; k < len; k++) {
+                t += "<li>" + c[k] + "</li>";
             }
+            t += "</ul>";
+            o.content = t;
+            n.push(o);
+            i++;
+        }
+        for (var k = n.length - 1; k >= 0; k--) {
+            document.write(n[k].date);
+            document.write(n[k].content);
+        }
+    }
 
-            var $W = function(_k) {
-                document.write($L[_k].replace("\n", "<br>"));
-            }
+    var launchDGPad = function() {
+        var language_Code = "";
+        if ($PARAMS['lang']) language_Code = "?lang=" + $PARAMS['lang'].toUpperCase();
+        location.href = "http://www.dgpad.net/index.php" + language_Code;
+    }
+    </script>
+</head>
 
-            var $WN = function() {
-                var i = 0;
-                var n = [];
-                while ($L["news_content_" + i]) {
-                    var o = {};
-                    o.date = "<br><br><h2>" + $L["news_date_" + i] + "</h2>";
-                    var c = $L["news_content_" + i].split("\n");
-                    var t = "<ul>";
-                    for (var k = 0, len = c.length; k < len; k++) {
-                        t += "<li>" + c[k] + "</li>";
-                    }
-                    t += "</ul>";
-                    o.content = t;
-                    n.push(o);
-                    i++;
-                }
-                for (var k = n.length - 1; k >= 0; k--) {
-                    document.write(n[k].date);
-                    document.write(n[k].content);
-                }
-            }
-
-            var launchDGPad = function() {
-                var language_Code = "";
-                if ($PARAMS['lang']) language_Code = "?lang=" + $PARAMS['lang'].toUpperCase();
-                location.href = "http://www.dgpad.net/index.php" + language_Code;
-            }
-
-        </script>
-
-    </head>
-    <body>
-        <div class="masterContentDIV">
-
-            <div id="content" class="contentWrapperDIV">
-                <div id="page0" class="contentDIV">
-                    <h1><script>$W("home_welcome")</script></h1>
-                    <p><script>$W("home_par1")</script></p>
-                    <div class="exportDIV">
-                        <script>$W("home_filepicker")</script>
-                        <p style="text-align:center;"><a href="https://www.filepicker.io/partner/link/" target="_blank"><img width="85px" height="27px" src="https://www.inkfilepicker.com/partner/badge/white/" alt="Powered By Filepicker.io" /></a></p>
+<body>
+    <div class="masterContentDIV">
+        <div id="content" class="contentWrapperDIV">
+            <div id="page0" class="contentDIV">
+                <h1><script>$W("home_welcome")</script></h1>
+                <p>
+                    <script>
+                    $W("home_par1")
+                    </script>
+                </p>
+                <div class="exportDIV">
+                    <script>
+                    $W("home_filepicker")
+                    </script>
+                    <p style="text-align:center;">
+                        <a href="https://www.filepicker.io/partner/link/" target="_blank"><img width="85px" height="27px" src="https://www.inkfilepicker.com/partner/badge/white/" alt="Powered By Filepicker.io" /></a>
+                    </p>
+                </div>
+                <p>
+                    <script>
+                    $W("home_par2")
+                    </script>
+                </p>
+                <p>
+                    <script>
+                    $W("home_par3")
+                    </script>
+                </p>
+                <p style="text-align: center">
+                    <a href="javascript:launchDGPad();" class="button play">
+                        <script>
+                        $W("home_start")
+                        </script>
+                    </a>
+                </p>
+            </div>
+            <div id="page1" class="contentVidDIV">
+                <div class="vidWrapper">
+                    <p>
+                        <script>
+                        $W("tutocomment")
+                        </script>
+                    </p>
+                </div>
+                <div class="vidNavigWrapper">
+                    <div class="vidNavig">
+                        <p>
+                            <a href="javascript:OpenVid('a0y-F6X_mlM')" id="a0y-F6X_mlM">
+                                <script>
+                                $W("tuto1")
+                                </script>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="javascript:OpenVid('qyu3TuDNT1A')" id="qyu3TuDNT1A">
+                                <script>
+                                $W("tuto2")
+                                </script>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="javascript:OpenVid('Z5Fdf5tyEVw')" id="Z5Fdf5tyEVw">
+                                <script>
+                                $W("tuto3")
+                                </script>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="javascript:OpenVid('clnnmJ_72xY')" id="clnnmJ_72xY">
+                                <script>
+                                $W("tuto4")
+                                </script>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="javascript:OpenVid('zwIzpQu0KVE')" id="zwIzpQu0KVE">
+                                <script>
+                                $W("tuto4bis")
+                                </script>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="javascript:OpenVid('T7SqsffTU-E')" id="T7SqsffTU-E">
+                                <script>
+                                $W("tuto5")
+                                </script>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="javascript:OpenVid('CmrtouNltao')" id="CmrtouNltao">
+                                <script>
+                                $W("tuto6")
+                                </script>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="javascript:OpenVid('iD_x-vU-tcY')" id="iD_x-vU-tcY">
+                                <script>
+                                $W("tuto7")
+                                </script>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="javascript:OpenVid('DzIK4EZVLLM')" id="DzIK4EZVLLM">
+                                <script>
+                                $W("tuto8")
+                                </script>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="javascript:OpenVid('v3ePJpXzhso')" id="v3ePJpXzhso">
+                                <script>
+                                $W("tuto9")
+                                </script>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="javascript:OpenVid('rElxiTikM0Y')" id="rElxiTikM0Y">
+                                <script>
+                                $W("tuto10")
+                                </script>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="javascript:OpenVid('drAUxugbYVU')" id="drAUxugbYVU">
+                                <script>
+                                $W("tuto11")
+                                </script>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="javascript:OpenVid('mjgDAVmbeRU')" id="mjgDAVmbeRU">
+                                <script>
+                                $W("tuto12")
+                                </script>
+                            </a>
+                        </p>
+                        <p>
+                            <a href="javascript:OpenVid('M7aloYcCEmM')" id="M7aloYcCEmM">
+                                <script>
+                                $W("tuto13")
+                                </script>
+                            </a>
+                        </p>
                     </div>
-                    <p><script>$W("home_par2")</script></p>
-                    <p><script>$W("home_par3")</script></p>
-                    <p style="text-align: center"><a href="javascript:launchDGPad();" class="button play"><script>$W("home_start")</script></a></p>
-                </div>
-                <div id="page1" class="contentVidDIV">
-                    <div class="vidWrapper">
-                        <p><script>$W("tutocomment")</script></p>
-                    </div>
-                    <div class="vidNavigWrapper">
-                        <div class="vidNavig">
-                            <p><a href="javascript:OpenVid('a0y-F6X_mlM')" id="a0y-F6X_mlM"><script>$W("tuto1")</script></a></p>
-                            <p><a href="javascript:OpenVid('qyu3TuDNT1A')" id="qyu3TuDNT1A"><script>$W("tuto2")</script></a></p>
-                            <p><a href="javascript:OpenVid('Z5Fdf5tyEVw')" id="Z5Fdf5tyEVw"><script>$W("tuto3")</script></a></p>
-                            <p><a href="javascript:OpenVid('clnnmJ_72xY')" id="clnnmJ_72xY"><script>$W("tuto4")</script></a></p>
-                            <p><a href="javascript:OpenVid('zwIzpQu0KVE')" id="zwIzpQu0KVE"><script>$W("tuto4bis")</script></a></p>
-                            <p><a href="javascript:OpenVid('T7SqsffTU-E')" id="T7SqsffTU-E"><script>$W("tuto5")</script></a></p>
-                            <p><a href="javascript:OpenVid('CmrtouNltao')" id="CmrtouNltao"><script>$W("tuto6")</script></a></p>
-                            <p><a href="javascript:OpenVid('iD_x-vU-tcY')" id="iD_x-vU-tcY"><script>$W("tuto7")</script></a></p>
-                            <p><a href="javascript:OpenVid('DzIK4EZVLLM')" id="DzIK4EZVLLM"><script>$W("tuto8")</script></a></p>
-                            <p><a href="javascript:OpenVid('v3ePJpXzhso')" id="v3ePJpXzhso"><script>$W("tuto9")</script></a></p>
-                            <p><a href="javascript:OpenVid('rElxiTikM0Y')" id="rElxiTikM0Y"><script>$W("tuto10")</script></a></p>
-                            <p><a href="javascript:OpenVid('drAUxugbYVU')" id="drAUxugbYVU"><script>$W("tuto11")</script></a></p>
-                            <p><a href="javascript:OpenVid('mjgDAVmbeRU')" id="mjgDAVmbeRU"><script>$W("tuto12")</script></a></p>
-                            <p><a href="javascript:OpenVid('M7aloYcCEmM')" id="M7aloYcCEmM"><script>$W("tuto13")</script></a></p>
-                        </div>
-                    </div>
-                </div>
-                <div id="page2" class="contentNewsDIV">
-                    <h1><script>$W("news")</script></h1>
-                    <script>$WN()</script>
-                </div>
-                <div id="page3" class="contentAboutDIV">
-                    <h1><script>$W("about")</script></h1>
-                    <p><script>$W("about_par1")</script></p>
-                    <blockquote><script>$W("about_comment1")</script></blockquote>
-                    <blockquote><script>$W("about_comment2")</script></blockquote>
-                </div>
-                <div id="page4" class="contentDIV">
-                    <h1><script>$W("local")</script></h1>
-                    <p><script>$W("local_par1")</script></p>
-
-                    <div class="langimgDIV"><img src="accueil/images/txtlocale.png"></div>
-                    <p><script>$W("local_par2")</script></p>
-                    <p><script>$W("local_par3")</script></p>
-                    <div class="langimgDIV">
-                        <ul>
-                            <li><a href="accueil/scripts/LocalStrings.js"><script>$W("local_link1")</script></a></li>
-                            <li><a href="http://www.dgpad.net/scripts/NotPacked/lang/LocalStrings.js"><script>$W("local_link2")</script></a></li>
-                            <li><a href="accueil/scripts/LocalStrings_FR.js"><script>$W("local_link3")</script></a></li>
-                            <li><a href="http://www.dgpad.net/scripts/NotPacked/lang/LocalStrings_FR.js"><script>$W("local_link4")</script></a></li>
-                        </ul>
-                    </div>
-                    <p><script>$W("local_par4")</script></p>
-                </div>
-                <div id="page5" class="contentDIV">
-                    <h1><script>$W("licence")</script></h1>
-                    <p><script>$W("licence_par1")</script></p>
-                    <p><script>$W("licence_par2")</script></p>
                 </div>
             </div>
-
-            <div class="navigWrapperDIV">
-                <div class="navigDIV">
-                    <p><a id="link0" href="javascript:OpenPanel(0)"><script>$W("menu_home")</script></a></p>
-                    <p><a id="link1" href="javascript:OpenPanel(1)"><script>$W("menu_tutorials")</script></a></p>
-                    <p><a id="link6" href="http://carmetal.org/forum/" target="_blank"><script>$W("menu_forum")</script></a></p>
-                    <p><a id="link2" href="javascript:OpenPanel(2)"><script>$W("menu_news")</script></a></p>
-                    <p><a id="link4" href="javascript:OpenPanel(4)"><script>$W("menu_local")</script></a></p>
-                    <p><a id="link5" href="javascript:OpenPanel(5)"><script>$W("menu_licence")</script></a></p>
-                    <p><a id="link3" href="javascript:OpenPanel(3)"><script>$W("menu_about")</script></a></p>
-                    
-                </div>
-
+            <div id="page2" class="contentNewsDIV">
+                <h1><script>$W("news")</script></h1>
+                <script>
+                $WN()
+                </script>
             </div>
-
-
+            <div id="page3" class="contentAboutDIV">
+                <h1><script>$W("about")</script></h1>
+                <p>
+                    <script>
+                    $W("about_par1")
+                    </script>
+                </p>
+                <blockquote>
+                    <script>
+                    $W("about_comment1")
+                    </script>
+                </blockquote>
+                <blockquote>
+                    <script>
+                    $W("about_comment2")
+                    </script>
+                </blockquote>
+            </div>
+            <div id="page4" class="contentDIV">
+                <h1><script>$W("local")</script></h1>
+                <p>
+                    <script>
+                    $W("local_par1")
+                    </script>
+                </p>
+                <div class="langimgDIV"><img src="accueil/images/txtlocale.png"></div>
+                <p>
+                    <script>
+                    $W("local_par2")
+                    </script>
+                </p>
+                <p>
+                    <script>
+                    $W("local_par3")
+                    </script>
+                </p>
+                <div class="langimgDIV">
+                    <ul>
+                        <li>
+                            <a href="accueil/scripts/LocalStrings.js">
+                                <script>
+                                $W("local_link1")
+                                </script>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://www.dgpad.net/scripts/NotPacked/lang/LocalStrings.js">
+                                <script>
+                                $W("local_link2")
+                                </script>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="accueil/scripts/LocalStrings_FR.js">
+                                <script>
+                                $W("local_link3")
+                                </script>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://www.dgpad.net/scripts/NotPacked/lang/LocalStrings_FR.js">
+                                <script>
+                                $W("local_link4")
+                                </script>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <p>
+                    <script>
+                    $W("local_par4")
+                    </script>
+                </p>
+            </div>
+            <div id="page5" class="contentDIV">
+                <h1><script>$W("licence")</script></h1>
+                <p>
+                    <script>
+                    $W("licence_par1")
+                    </script>
+                </p>
+                <p>
+                    <script>
+                    $W("licence_par2")
+                    </script>
+                </p>
+            </div>
         </div>
-        <div class="titleDIV">
-            <div class="appIcon"></div>
-            <div class="appTitle">DGPad</div>
-            <div class="appTitleComment"><script>$W("comment")</script></div>
+        <div class="navigWrapperDIV">
+            <div class="navigDIV">
+                <p>
+                    <a id="link0" href="javascript:OpenPanel(0)">
+                        <script>
+                        $W("menu_home")
+                        </script>
+                    </a>
+                </p>
+                <p>
+                    <a id="link1" href="javascript:OpenPanel(1)">
+                        <script>
+                        $W("menu_tutorials")
+                        </script>
+                    </a>
+                </p>
+                <p>
+                    <a id="link6" href="http://carmetal.org/forum/" target="_blank">
+                        <script>
+                        $W("menu_forum")
+                        </script>
+                    </a>
+                </p>
+                <p>
+                    <a id="link2" href="javascript:OpenPanel(2)">
+                        <script>
+                        $W("menu_news")
+                        </script>
+                    </a>
+                </p>
+                <p>
+                    <a id="link4" href="javascript:OpenPanel(4)">
+                        <script>
+                        $W("menu_local")
+                        </script>
+                    </a>
+                </p>
+                <p>
+                    <a id="link5" href="javascript:OpenPanel(5)">
+                        <script>
+                        $W("menu_licence")
+                        </script>
+                    </a>
+                </p>
+                <p>
+                    <a id="link3" href="javascript:OpenPanel(3)">
+                        <script>
+                        $W("menu_about")
+                        </script>
+                    </a>
+                </p>
+            </div>
         </div>
-        <div class="langDIV">
-            <div><a href="index.html?lang=EN"><img src="accueil/images/lg_en.png"></a></div>
-            <div><a href="index.html?lang=ES"><img src="accueil/images/lg_es.png"></a></div>
-            <div><a href="index.html?lang=FR"><img src="accueil/images/lg_fr.png"></a></div>
+    </div>
+    <div class="titleDIV">
+        <div class="appIcon"></div>
+        <div class="appTitle">DGPad</div>
+        <div class="appTitleComment">
+            <script>
+            $W("comment")
+            </script>
         </div>
-        <div class="donate">
-            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                <input type="hidden" name="cmd" value="_s-xclick">
-                <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+    </div>
+    <div class="langDIV">
+        <div>
+            <a href="index.html?lang=EN"><img src="accueil/images/lg_en.png"></a>
+        </div>
+        <div>
+            <a href="index.html?lang=ES"><img src="accueil/images/lg_es.png"></a>
+        </div>
+        <div>
+            <a href="index.html?lang=FR"><img src="accueil/images/lg_fr.png"></a>
+        </div>
+    </div>
+    <div class="donate">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
                        ">
-                <input type="image" src="http://www.dgpad.net/accueil/images/donate.png" border="0" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !">
-                <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
-            </form>
+            <input type="image" src="http://www.dgpad.net/accueil/images/donate.png" border="0" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !">
+            <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
+        </form>
+    </div>
+    <iframe id="vidframe" src="" frameborder="0" scrolling="no" allowfullscreen style="position:absolute;left: -500px;top: -500px;width:480px;height:360px;"></iframe>
+    <div id="videocomment" class="youtubecomment">
+        <script>
+        $W("youtubecomment1")
+        </script>
+        <a id="videolink" href="#" class="youtubelink" target="_blank">
+            <script>
+            $W("youtubecomment2")
+            </script>
+        </a>
+    </div>
+</body>
 
-        </div>
-        <iframe id="vidframe" src="" frameborder="0"  scrolling="no" allowfullscreen  style="position:absolute;left: -500px;top: -500px;width:480px;height:360px;"></iframe>
-        <div id="videocomment" class="youtubecomment">
-            <script>$W("youtubecomment1")</script><a id="videolink" href="#" class="youtubelink" target="_blank"><script>$W("youtubecomment2")</script></a>
-        </div>
-    </body>
 </html>

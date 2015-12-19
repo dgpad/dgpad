@@ -3,11 +3,11 @@
 //************************************************
 function Circle3Constructor() {
     $U.extend(this, new ObjectConstructor()); //Héritage
-    
+
     this.getCode = function() {
         return "circle3";
     };
-    
+
     this.getInitials = function() {
         return ["point"];
     };

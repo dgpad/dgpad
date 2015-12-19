@@ -1,8 +1,8 @@
-function EraserPanel(_canvas,_man) {
+function EraserPanel(_canvas, _man) {
     var me = this;
     $U.extend(this, new Panel(_canvas));
-    var canvas=_canvas;
-    var man=_man;
+    var canvas = _canvas;
+    var man = _man;
     me.setAttr("className", "erase_messageDIV");
     me.transition("scale", 0.2);
 
@@ -19,7 +19,7 @@ function EraserPanel(_canvas,_man) {
     };
 
     var ShowHiddensCallback = function(val) {
-        man.filters.global=val;
+        man.filters.global = val;
         man.refreshDisplay();
     }
 

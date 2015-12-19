@@ -36,22 +36,22 @@ function HistoryPanel(_canvas, _closeProc) {
     win.setBounds(0, (wout.getBounds().height - $P.localstorage.iconwidth) / 2, winW, $P.localstorage.iconwidth);
 
     var com = new Label(me);
-    com.setBounds(20, 0, width-40, 30);
+    com.setBounds(20, 0, width - 40, 30);
     com.setText("<p style='line-height:100%'>" + $L.history_title + "</p>");
     com.setStyles("font-size:18px;color:#222222");
     wout.addContent(win);
     me.addContent(wout);
     me.addContent(com);
-    
-    var exe=function(ev){
+
+    var exe = function(ev) {
         canvas.saveToLocalStorage();
         canvas.paint();
         _closeProc();
     }
-    
-    var add=new Button(me);
-    add.setText("<span style='font-size:15px'>" +$L.history_save+ "</span>");
-    add.setBounds((width-400)/2, height-35, 400, 30);
+
+    var add = new Button(me);
+    add.setText("<span style='font-size:15px'>" + $L.history_save + "</span>");
+    add.setBounds((width - 400) / 2, height - 35, 400, 30);
     add.addDownEvent(exe);
     me.addContent(add);
 }
@@ -59,10 +59,10 @@ function HistoryPanel(_canvas, _closeProc) {
 function HistoryPanel_Elt(_owner, _canvas, _i, _closeProc) {
     $U.extend(this, new GUIElement(_owner, "div"));
     var me = this;
-    var canvas = _canvas; 
+    var canvas = _canvas;
     var c = JSON.parse(localStorage.getItem($P.localstorage.base + _i));
     me.setStyles("position:absolute;border-radius:10px;border: 1px solid #b4b4b4");
-    me.setStyle("left", ((_i-1)*($P.localstorage.iconwidth+ $P.localstorage.iconmargin)) + "px");
+    me.setStyle("left", ((_i - 1) * ($P.localstorage.iconwidth + $P.localstorage.iconmargin)) + "px");
     me.setStyle("width", $P.localstorage.iconwidth + "px");
     me.setStyle("height", $P.localstorage.iconwidth + "px");
     me.setColor("#FAFAFA");
@@ -80,8 +80,8 @@ function HistoryPanel_Elt(_owner, _canvas, _i, _closeProc) {
     me.addContent(img);
 
     var cloneBtn = new Button(me);
-   cloneBtn.setStyles("line-height:27px;vertical-align: middle;padding: 2px;text-align: center;font: 14px Arial, Helvetica, sans-serif;border-radius: 5px;color: #252525;border: 1px solid #b4b4b4;background-color: #EEEEEE");
-   //    cloneBtn.setStyles("display: inline-block;zoom: 1;*display: inline;vertical-align: baseline;margin: 0 2px;outline: none;cursor: pointer;text-align: center;text-decoration: none;font: 12px/100% Arial, Helvetica, sans-serif;padding: .5em 2em .55em;text-shadow: 0 1px 1px rgba(0,0,0,.3);-webkit-border-radius: .5em;-moz-border-radius: .5em;border-radius: .5em;-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);box-shadow: 0 1px 2px rgba(0,0,0,.2);color: #d7d7d7;border: solid 1px #333;background: #333;background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#000));background: -moz-linear-gradient(top,  #666,  #000)");
+    cloneBtn.setStyles("line-height:27px;vertical-align: middle;padding: 2px;text-align: center;font: 14px Arial, Helvetica, sans-serif;border-radius: 5px;color: #252525;border: 1px solid #b4b4b4;background-color: #EEEEEE");
+    //    cloneBtn.setStyles("display: inline-block;zoom: 1;*display: inline;vertical-align: baseline;margin: 0 2px;outline: none;cursor: pointer;text-align: center;text-decoration: none;font: 12px/100% Arial, Helvetica, sans-serif;padding: .5em 2em .55em;text-shadow: 0 1px 1px rgba(0,0,0,.3);-webkit-border-radius: .5em;-moz-border-radius: .5em;border-radius: .5em;-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);box-shadow: 0 1px 2px rgba(0,0,0,.2);color: #d7d7d7;border: solid 1px #333;background: #333;background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#000));background: -moz-linear-gradient(top,  #666,  #000)");
     cloneBtn.setText($L.history_open);
     cloneBtn.setBounds(($P.localstorage.iconwidth - 100) / 2, $P.localstorage.iconwidth - 35, 100, 27);
     cloneBtn.addUpEvent(load);

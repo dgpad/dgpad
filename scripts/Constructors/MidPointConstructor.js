@@ -3,22 +3,22 @@
 //************************************************
 function MidPointConstructor() {
     $U.extend(this, new ObjectConstructor()); //Héritage
-    
-    this.getCode = function () {
+
+    this.getCode = function() {
         return "midpoint";
     };
-    
-    this.getInitials = function () {
+
+    this.getInitials = function() {
         return ["point,segment"];
     };
-    
+
     // Si le premier constituant est un segment, alors
     // il s'agit d'une construction instantannée
-    this.isInstantTool = function () {
+    this.isInstantTool = function() {
         return (this.getC(0).isInstanceType("segment"));
     };
-    
-    this.createCallBack=function(zc,o){
+
+    this.createCallBack = function(zc, o) {
         if (zc.nameDialog) {
             o.setName(zc.nameDialog.getName());
             o.setShowName(true);
@@ -26,7 +26,7 @@ function MidPointConstructor() {
         }
     };
 
-    this.newObj = function (_zc, _C) {
+    this.newObj = function(_zc, _C) {
         var first = this.getC(0);
         if (first.isInstanceType("segment")) {
             _C = [first.P1, first.P2];
@@ -34,7 +34,7 @@ function MidPointConstructor() {
         return new MidPointObject(_zc.getConstruction(), "_M", _C[0], _C[1]);
     };
 
-    this.preview = function (ev, zc) {
+    this.preview = function(ev, zc) {
         if (this.isInstantTool()) return;
         var size = zc.prefs.size.point;
         if (Object.touchpad) {

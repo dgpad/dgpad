@@ -11,11 +11,11 @@ function VerticalBorderPanel(_canvas, _w, _isLeft) {
     var isLeft = _isLeft;
     me.setAttr("className", "verticalPanel");
     me.transition("translate_x", 0.2, (isLeft) ? -width : width);
-//    me.transition("translate_y", 0.2, (isLeft) ? -width : width);
+    //    me.transition("translate_y", 0.2, (isLeft) ? -width : width);
 
 
     this.show = function() {
-//        document.body.parentNode.appendChild(me.getDocObject());
+        //        document.body.parentNode.appendChild(me.getDocObject());
         canvas.getDocObject().parentNode.appendChild(me.getDocObject());
         me.applyTransitionIN();
     };
@@ -23,7 +23,7 @@ function VerticalBorderPanel(_canvas, _w, _isLeft) {
     this.close = function() {
         me.applyTransitionOUT();
         setTimeout(function() {
-//            document.body.parentNode.removeChild(me.getDocObject());
+            //            document.body.parentNode.removeChild(me.getDocObject());
             canvas.getDocObject().parentNode.removeChild(me.getDocObject());
         }, 300);
     };
@@ -32,12 +32,10 @@ function VerticalBorderPanel(_canvas, _w, _isLeft) {
         var t = me.getOwnerBounds();
         if (isLeft) {
             me.setBounds(t.left + 10, t.top + 10, width, t.height - 20 - canvas.prefs.controlpanel.size);
-        }
-        else {
+        } else {
             me.setBounds(t.left + t.width - width - 10, t.top + 10, width, t.height - 20 - canvas.prefs.controlpanel.size);
         }
     };
 
     me.init();
 }
-

@@ -3,16 +3,16 @@
 //************************************************
 function SymcConstructor() {
     $U.extend(this, new ObjectConstructor()); //Héritage
-    
-    this.getCode = function () {
+
+    this.getCode = function() {
         return "symc";
     };
-    
-    this.getInitials = function () {
+
+    this.getInitials = function() {
         return ["point"];
     };
 
-    this.createCallBack=function(zc,o){
+    this.createCallBack = function(zc, o) {
         if (zc.nameDialog) {
             o.setName(zc.nameDialog.getName());
             o.setShowName(true);
@@ -20,17 +20,17 @@ function SymcConstructor() {
         }
     };
 
-    this.newObj = function (_zc, _C) {
+    this.newObj = function(_zc, _C) {
         return new SymcObject(_zc.getConstruction(), "_Symc", _C[0], _C[1]);
     };
 
-    this.preview = function (ev, zc) {
+    this.preview = function(ev, zc) {
         var size = zc.prefs.size.point;
         if (Object.touchpad) {
             size *= zc.prefs.size.touchfactor;
         }
-        var x = 2*this.getC(0).getX() - zc.mouseX(ev);
-        var y = 2*this.getC(0).getY() - zc.mouseY(ev);
+        var x = 2 * this.getC(0).getX() - zc.mouseX(ev);
+        var y = 2 * this.getC(0).getY() - zc.mouseY(ev);
         var ctx = zc.getContext();
         ctx.strokeStyle = zc.prefs.color.hilite;
         ctx.lineWidth = zc.prefs.size.pointborder;

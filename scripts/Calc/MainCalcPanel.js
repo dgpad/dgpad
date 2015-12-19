@@ -1,5 +1,3 @@
-
-
 function MainCalcPanel(_man, _canvas) {
     $U.extend(this, new Panel(_canvas.getDocObject()));
     var height = $P.CalcPanelHeight;
@@ -13,41 +11,41 @@ function MainCalcPanel(_man, _canvas) {
     var E1, E2, MIN, MAX;
 
     me.setAttr("className", "mainCalcPanel");
-//    me.setStyles("background: " + $U.browserCode() + "-linear-gradient(bottom, #9c9ba6, #57575f);box-shadow: inset 0 -1px 0 0 #bfbfbf;border-bottom: 1px solid #303236");
+    //    me.setStyles("background: " + $U.browserCode() + "-linear-gradient(bottom, #9c9ba6, #57575f);box-shadow: inset 0 -1px 0 0 #bfbfbf;border-bottom: 1px solid #303236");
     me.transition("translate_y", 0.2, -height);
 
-    this.show = function () {
+    this.show = function() {
         canvas.getDocObject().parentNode.appendChild(me.getDocObject());
         me.applyTransitionIN();
     };
-    this.close = function () {
+    this.close = function() {
         me.cancel();
         E1.hide();
         E2.hide();
         MIN.hide();
         MAX.hide();
         me.applyTransitionOUT();
-        setTimeout(function () {
+        setTimeout(function() {
             canvas.getDocObject().parentNode.removeChild(me.getDocObject());
         }, 300);
         txtman.close();
     };
 
 
-    (function () {
+    (function() {
         var t = me.getOwnerBounds();
         me.setBounds(0, 0, t.width, height);
     })();
 
 
 
-    txtman.focus = function () {
+    txtman.focus = function() {
         man.activateBtns(true);
         showBtns();
     };
 
-    txtman.filterKB = function (_standardON) {
-//        console.log("filterKB");
+    txtman.filterKB = function(_standardON) {
+        //        console.log("filterKB");
         if (man.getCustomKB()) {
             if (_standardON)
                 man.getCustomKB().close();
@@ -58,7 +56,7 @@ function MainCalcPanel(_man, _canvas) {
 
     };
 
-    var initInputs = function () {
+    var initInputs = function() {
         E1 = txtman.add("E =", 10, 6, 740 * scl, 22);
         E2 = txtman.add($L.calc_text, 10, 39, 740 * scl, 22);
         MIN = txtman.add("min =", 780 * scl, 6, 230 * scl, 22);
@@ -76,21 +74,17 @@ function MainCalcPanel(_man, _canvas) {
 
     initInputs();
 
-    var clearChangeFilters = function () {
-        E1.setChangedFilter(function () {
-        });
-        E2.setChangedFilter(function () {
-        });
-        MIN.setChangedFilter(function () {
-        });
-        MAX.setChangedFilter(function () {
-        });
+    var clearChangeFilters = function() {
+        E1.setChangedFilter(function() {});
+        E2.setChangedFilter(function() {});
+        MIN.setChangedFilter(function() {});
+        MAX.setChangedFilter(function() {});
     }
 
-    var showKB = function () {
+    var showKB = function() {
         txtman.showKB();
     }
-    me.cancel = function () {
+    me.cancel = function() {
         txtman.deactiveAll();
         clearChangeFilters();
         if (OBJ) {
@@ -105,7 +99,7 @@ function MainCalcPanel(_man, _canvas) {
             me.valid();
         }
     };
-    me.valid = function () {
+    me.valid = function() {
         txtman.deactiveAll();
         clearChangeFilters();
         E1.setText("");
@@ -123,7 +117,7 @@ function MainCalcPanel(_man, _canvas) {
         hideBtns();
         man.activateBtns(false);
         txtman.setFirst(true);
-        setTimeout(function () {
+        setTimeout(function() {
             txtman.deactiveAll();
         }, 1);
 
@@ -137,7 +131,7 @@ function MainCalcPanel(_man, _canvas) {
         editObj = null;
     };
 
-    var transformToList = function (_segs) {
+    var transformToList = function(_segs) {
         if (OBJ === null)
             return;
         OBJ.compute();
@@ -157,15 +151,15 @@ function MainCalcPanel(_man, _canvas) {
         }
     };
 
-    var transformToPoints = function () {
+    var transformToPoints = function() {
         transformToList(0);
     };
 
-    var transformToSegments = function () {
+    var transformToSegments = function() {
         transformToList(1);
     };
 
-    var transformToFunc = function () {
+    var transformToFunc = function() {
         if (OBJ === null)
             return;
         var vs = (OBJ.getE1().isDxyztFunc()) ? OBJ.getE1().value().getVars() : OBJ.getE1().getVars();
@@ -181,11 +175,11 @@ function MainCalcPanel(_man, _canvas) {
     // a lot of focus problem to solve to unify behavior in various android
     // version :
 
-    var set_href = function (_bool) {
+    var set_href = function(_bool) {
         if ($U.isOldAndroid()) {
             if ($APPLICATION)
                 var lnk = (_bool) ? "http://keyboardshow" : "http://keyboardhide";
-//            var lnk = (_bool) ? "http://www.google.fr" : "javascript:void(0)";
+            //            var lnk = (_bool) ? "http://www.google.fr" : "javascript:void(0)";
             else
                 var lnk = (_bool) ? "javascript:$STANDARD_KBD.show()" : "javascript:void(0)";
             KBBtn.setAttr("href", lnk);
@@ -201,10 +195,10 @@ function MainCalcPanel(_man, _canvas) {
     };
 
 
-    $STANDARD_KBD.setbtn = function () {
+    $STANDARD_KBD.setbtn = function() {
         set_href(true);
     };
-    $STANDARD_KBD.show = function () {
+    $STANDARD_KBD.show = function() {
         var act = txtman.getActive();
         if (act !== null) {
             var inp = act.getInput();
@@ -219,7 +213,7 @@ function MainCalcPanel(_man, _canvas) {
             }
         }
     };
-    $STANDARD_KBD.hide = function () {
+    $STANDARD_KBD.hide = function() {
         var act = txtman.getActive();
         if (act !== null) {
             act.getInput().blur();
@@ -255,8 +249,8 @@ function MainCalcPanel(_man, _canvas) {
     doc.appendChild(KBBtn.getDocObject());
     var deg_slider = null;
 
-    var showDegSlider = function () {
-        deg_slider = new slider(me.getDocObject(), s_left, s_top, 150, 50, 0, 1, 0, function (_v) {
+    var showDegSlider = function() {
+        deg_slider = new slider(me.getDocObject(), s_left, s_top, 150, 50, 0, 1, 0, function(_v) {
             Cn.setDEG(_v === 1);
             Cn.computeAll();
             canvas.paint();
@@ -268,18 +262,21 @@ function MainCalcPanel(_man, _canvas) {
         deg_slider.setBackgroundColor("rgba(0,0,0,0)");
         deg_slider.setLabel("RAD", 60);
         deg_slider.setTextColor("#252525");
-        deg_slider.setTabValues([[0, "DEG"], [1, "DEG"]]);
+        deg_slider.setTabValues([
+            [0, "DEG"],
+            [1, "DEG"]
+        ]);
         deg_slider.setValue(1 * Cn.isDEG());
     };
 
 
-    var showBtns = function () {
+    var showBtns = function() {
         validBtn.show();
         cancelBtn.show();
         KBBtn_img.show();
         showDegSlider();
     };
-    var hideBtns = function () {
+    var hideBtns = function() {
         segBtn.hide();
         pointBtn.hide();
         func1Btn.hide();
@@ -294,11 +291,11 @@ function MainCalcPanel(_man, _canvas) {
     me.show();
 
 
-    me.insertText = function (_st) {
+    me.insertText = function(_st) {
         txtman.insertText(_st);
     };
 
-    var setPointBtn = function () {
+    var setPointBtn = function() {
         if ((OBJ === null) || (OBJ.getCode() !== "expression") || (!OBJ.getE1()))
             return;
         var oneValidValue = OBJ.getE1().getValidValue();
@@ -315,7 +312,7 @@ function MainCalcPanel(_man, _canvas) {
                 segBtn.show();
         }
     };
-    var setFuncBtn = function () {
+    var setFuncBtn = function() {
         if ((OBJ === null) || (OBJ.getCode() !== "expression") || (!OBJ.getE1()))
             return;
         var oneValidValue = OBJ.getE1().getValidValue();
@@ -329,7 +326,7 @@ function MainCalcPanel(_man, _canvas) {
             return;
         func1Btn.show();
     };
-    var mainFilter = function () {
+    var mainFilter = function() {
         pointBtn.hide();
         segBtn.hide();
         func1Btn.hide();
@@ -343,8 +340,8 @@ function MainCalcPanel(_man, _canvas) {
         return;
     };
 
-    var cFilter = function (_proc, _p1, _p2, _p3) {
-        return function (_t) {
+    var cFilter = function(_proc, _p1, _p2, _p3) {
+        return function(_t) {
             _proc(_t, _p1, _p2, _p3);
             mainFilter();
             if (OBJ) {
@@ -359,13 +356,13 @@ function MainCalcPanel(_man, _canvas) {
         }
     }
 
-    var editFilter = function (_proc, _p1, _p2, _p3) {
-        return function () {
+    var editFilter = function(_proc, _p1, _p2, _p3) {
+        return function() {
             _proc(_p1, _p2, _p3);
         }
     }
 
-    me.createObj = function () {
+    me.createObj = function() {
         OBJ = new ExpressionObject(Cn, "_E", "", "", "", "", 10, 120);
         OBJ.setT("");
         var r = Math.random() * 128;
@@ -389,7 +386,7 @@ function MainCalcPanel(_man, _canvas) {
     }
 
     var editObj = null;
-    me.edit = function (_obj) {
+    me.edit = function(_obj) {
         if (OBJ !== null) {
             txtman.insertText(_obj.getVarName());
             txtman.nextCar();
@@ -401,7 +398,8 @@ function MainCalcPanel(_man, _canvas) {
                     editObj = [editFilter(OBJ.setE1, OBJ.getE1().getSource().replace(/\\\"/g, "\"")),
                         editFilter(OBJ.setT, OBJ.getText()),
                         editFilter(OBJ.setMin, OBJ.getMinSource()),
-                        editFilter(OBJ.setMax, OBJ.getMaxSource())];
+                        editFilter(OBJ.setMax, OBJ.getMaxSource())
+                    ];
                     E2.setPreferredKB(1);
                     var t = OBJ.getE1().getSource().replace(/\\/g, "");
                     E1.setText(t);
@@ -431,7 +429,8 @@ function MainCalcPanel(_man, _canvas) {
                     txtman.setFirst(false);
                     editObj = [editFilter(OBJ.setE1, OBJ.getE1().getSource()),
                         editFilter(OBJ.setMin, OBJ.getMinSource()),
-                        editFilter(OBJ.setMax, OBJ.getMaxSource())];
+                        editFilter(OBJ.setMax, OBJ.getMaxSource())
+                    ];
                     E2.setPreferredKB(0);
                     E1.setText(OBJ.getE1().getSource());
                     MIN.setText(OBJ.getMinSource());

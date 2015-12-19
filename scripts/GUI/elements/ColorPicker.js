@@ -2,15 +2,14 @@ function ColorPicker(_owner, _left, _top, _width, _height) {
 
     var dfs = localStorage.getItem("ColorPaletteDefault");
     if (!dfs || dfs === "")
-        localStorage.setItem("ColorPaletteDefault", ["#0000B2","#007C7C","#006633","#966400","#770012","#cc66cc"]);
+        localStorage.setItem("ColorPaletteDefault", ["#0000B2", "#007C7C", "#006633", "#966400", "#770012", "#cc66cc"]);
 
     var c_picker = $Private_ColorPicker({
         width: _width,
         height: _height,
         arrowColor: '#fff',
         defaultRgb: [200, 125, 58],
-        onchange: function(color) {
-        }
+        onchange: function(color) {}
     });
 
     c_picker.style.setProperty("position", "absolute");
@@ -26,21 +25,28 @@ function ColorPicker(_owner, _left, _top, _width, _height) {
     };
 
     this.setBounds(_left, _top, _width, _height);
-    var hex_callback = function(_hex) {
-    };
+    var hex_callback = function(_hex) {};
     this.setHEXcallback = function(_proc) {
         c_picker.setCallback(_proc);
     };
     this.setRGB = function(_r, _g, _b) {
-        c_picker.setRGB({r: _r, g: _g, b: _b});
+        c_picker.setRGB({
+            r: _r,
+            g: _g,
+            b: _b
+        });
     };
     this.setHSV = function(_h, _s, _v) {
-        c_picker.setHSV({h: _h, s: _s, v: _v});
+        c_picker.setHSV({
+            h: _h,
+            s: _s,
+            v: _v
+        });
     };
     this.setHEX = function(_hex) {
         c_picker.setHEX(_hex);
     };
-    this.getHEX=function(){
+    this.getHEX = function() {
         return c_picker.getHEX();
     }
 
@@ -51,7 +57,8 @@ function ColorPicker(_owner, _left, _top, _width, _height) {
 (function(win) {
 
     var createPicker = function(width, height, onchange, arrowColor, defaultHsv, defaultRgb) {
-        var W = width, H = height;
+        var W = width,
+            H = height;
         var LW = 28; // Vertical Hue Picker width
         var SPH = 0; // h space between SV Rectangle and Hue pickers
         var SPV = 0; // v space between pickers and predefined icons
@@ -118,8 +125,8 @@ function ColorPicker(_owner, _left, _top, _width, _height) {
             drawArrows();
             drawSVMap();
             drawIcns();
-        }
-        ;
+        };
+
         function isCur(i) {
             if (i < ICs.length) {
                 var rgb = hsv2rgb(cur.hue, cur.sat, cur.val).rgb;
@@ -159,7 +166,15 @@ function ColorPicker(_owner, _left, _top, _width, _height) {
         }
 
         function drawHLine() {
-            var hue = [[255, 0, 0], [255, 255, 0], [0, 255, 0], [0, 255, 255], [0, 0, 255], [255, 0, 255], [255, 0, 0]];
+            var hue = [
+                [255, 0, 0],
+                [255, 255, 0],
+                [0, 255, 0],
+                [0, 255, 255],
+                [0, 0, 255],
+                [255, 0, 255],
+                [255, 0, 0]
+            ];
             var grad = ctx.createLinearGradient(0, 0, 0, LH);
             for (var i = 0; i <= 6; i++) {
                 var color = 'rgb(' + hue[i][0] + ',' + hue[i][1] + ',' + hue[i][2] + ')';
@@ -278,7 +293,8 @@ function ColorPicker(_owner, _left, _top, _width, _height) {
         }
 
         function findPos(obj) {
-            var curleft = 0, curtop = 0;
+            var curleft = 0,
+                curtop = 0;
             if (obj.offsetParent) {
                 do {
                     curleft += obj.offsetLeft;
@@ -361,10 +377,12 @@ function ColorPicker(_owner, _left, _top, _width, _height) {
             tch.preventDefault();
             mouseDown(tch.touches[0]);
         }
+
         function touchMove(tch) {
             tch.preventDefault();
             mouseMove(tch.touches[0]);
         }
+
         function touchEnd(tch) {
             tch.preventDefault();
             mouseUp(tch.touches[0]);
@@ -375,8 +393,8 @@ function ColorPicker(_owner, _left, _top, _width, _height) {
         refresh();
 
         // Communication routines :
-        canvas.getHEX=function(){
-            return hsv2rgb(cur.hue,cur.sat,cur.val).hex;
+        canvas.getHEX = function() {
+            return hsv2rgb(cur.hue, cur.sat, cur.val).hex;
         };
         canvas.setHSV = function(col) {
             cur.hue = col.h;
@@ -413,9 +431,15 @@ function ColorPicker(_owner, _left, _top, _width, _height) {
         G += [X, C, C, X, 0, 0][h];
         B += [0, 0, X, C, C, X][h];
         var r = parseInt(R * 255),
-                g = parseInt(G * 255),
-                b = parseInt(B * 255);
-        return {r: r, g: g, b: b, hex: "#" + (16777216 | b | (g << 8) | (r << 16)).toString(16).slice(1), rgb: [r, g, b]};
+            g = parseInt(G * 255),
+            b = parseInt(B * 255);
+        return {
+            r: r,
+            g: g,
+            b: b,
+            hex: "#" + (16777216 | b | (g << 8) | (r << 16)).toString(16).slice(1),
+            rgb: [r, g, b]
+        };
     }
 
     /**
@@ -433,14 +457,19 @@ function ColorPicker(_owner, _left, _top, _width, _height) {
         V = Math.max(r, g, b);
         C = V - Math.min(r, g, b);
         H = (C == 0 ? null :
-                V == r ? (g - b) / C + (g < b ? 6 : 0) :
-                V == g ? (b - r) / C + 2 :
-                (r - g) / C + 4);
+            V == r ? (g - b) / C + (g < b ? 6 : 0) :
+            V == g ? (b - r) / C + 2 :
+            (r - g) / C + 4);
         H = (H % 6) * 60;
         S = C == 0 ? 0 : C / V;
         S *= 100;
         V *= 100;
-        return {h: H, s: S, v: V, hsv: [H, S, V]};
+        return {
+            h: H,
+            s: S,
+            v: V,
+            hsv: [H, S, V]
+        };
     }
 
     win.$Private_ColorPicker = function(params) {
@@ -452,11 +481,3 @@ function ColorPicker(_owner, _left, _top, _width, _height) {
         return createPicker(params.width, params.height, params.onchange, params.arrowColor, params.defaultHsv, params.defaultRgb);
     }
 })(window);
-
-
-
-
-
-
-
-

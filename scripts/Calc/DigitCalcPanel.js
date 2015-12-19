@@ -8,9 +8,9 @@ function DigitCalcPanel(_man, _canvas) {
     var scl = ($U.isMobile.mobilePhone()) ? $P.MobileScale - 0.02 : 1;
 
     me.setAttr("className", "digitCalcPanel");
-//    me.setStyles("background: " + $U.browserCode() + "-linear-gradient(top, #9c9ba6, #57575f);box-shadow: inset 0 1px 0 #bfbfbf;border-top: 1px solid #303236");
+    //    me.setStyles("background: " + $U.browserCode() + "-linear-gradient(top, #9c9ba6, #57575f);box-shadow: inset 0 1px 0 #bfbfbf;border-top: 1px solid #303236");
 
-//    me.setStyles("background: -webkit-linear-gradient(top, #9c9ba6, #57575f);margin: 20px auto;padding-top: 10px;box-shadow: inset 0 1px 0 #bfbfbf;border-top: 1px solid #303236;border-radius: 0 0 5px 5px");
+    //    me.setStyles("background: -webkit-linear-gradient(top, #9c9ba6, #57575f);margin: 20px auto;padding-top: 10px;box-shadow: inset 0 1px 0 #bfbfbf;border-top: 1px solid #303236;border-radius: 0 0 5px 5px");
 
 
     me.show = function() {
@@ -76,12 +76,12 @@ function DigitCalcPanel(_man, _canvas) {
     btnH = 45 * scl;
     var funcpad = new GUIElement(me, "div");
     funcpad.setAbsolute();
-//    funcpad.setStyles("background-color:green");
+    //    funcpad.setStyles("background-color:green");
     var fcts = "cos@|sin@|tan@|exp@|round@|mod@|x()_acos@|asin@|atan@|log@|floor@|arg@|y()_sqrt@|abs@|max@|min@|random@|conj@|d(,)".split("_");
     var h = 0;
     var line = "?|:|=|<|>|( )|[ ]|;|,|i".split("|");
     for (var k = 0; k < line.length; k++) {
-//        console.log(k);
+        //        console.log(k);
 
         var btn = new DigitBtn(me);
         btn.setBounds(k * (btnW + gap), h, btnW, btnH);

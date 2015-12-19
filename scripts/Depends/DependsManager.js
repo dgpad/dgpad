@@ -5,24 +5,24 @@ function DependsManager(_z) {
     var O = null; // origin object
     var M = null; // Depends objects
 
-//    var valueChanged = function(_val) {
-//        if ((O === null) || (T === null)) return;
-//        if (_val === 0) {
-//            O.removeMagnet(T[0]);
-//            setPaintMode();
-//            zc.paint();
-//            return;
-//        }
-//        var forcepaint = (O.getMagnet(T[0]) === null);
-//        T = O.addMagnet(T[0], _val);
-//        T[1] = _val;
-//        standardM = _val;
-//        T[0].setMacroMode(3);
-//        if (forcepaint) {
-//            setPaintMode();
-//            zc.paint();
-//        }
-//    };
+    //    var valueChanged = function(_val) {
+    //        if ((O === null) || (T === null)) return;
+    //        if (_val === 0) {
+    //            O.removeMagnet(T[0]);
+    //            setPaintMode();
+    //            zc.paint();
+    //            return;
+    //        }
+    //        var forcepaint = (O.getMagnet(T[0]) === null);
+    //        T = O.addMagnet(T[0], _val);
+    //        T[1] = _val;
+    //        standardM = _val;
+    //        T[0].setMacroMode(3);
+    //        if (forcepaint) {
+    //            setPaintMode();
+    //            zc.paint();
+    //        }
+    //    };
 
     var setPaintMode = function() {
         var V = C.elements();
@@ -46,7 +46,7 @@ function DependsManager(_z) {
 
     me.add = function(_o) {
         if (_o === O) return;
-        if (_o.getCode()!=="point") return;
+        if (_o.getCode() !== "point") return;
         O.add_removeDragPoint(_o);
         setPaintMode();
         zc.paint();
@@ -56,8 +56,7 @@ function DependsManager(_z) {
 
 
     me.quit = function() {
-//        if (P) P.quit();
+        //        if (P) P.quit();
     };
 
 }
-

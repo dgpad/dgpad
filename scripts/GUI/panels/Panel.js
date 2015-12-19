@@ -12,8 +12,7 @@ function Panel(_owner) {
     me.setAbsolute();
     var docObject = me.getDocObject();
 
-    this.show_callback = function() {
-    };
+    this.show_callback = function() {};
 
     this.show = function() {
         // Si je n'ai pas encore de parent :
@@ -23,24 +22,21 @@ function Panel(_owner) {
         }
     };
 
-    this.close_callback = function() {
-    };
+    this.close_callback = function() {};
 
     this.close = function() {
-        
+
         this.applyTransitionOUT();
         setTimeout(function() {
             if (docObject.parentNode !== null) {
                 try {
                     docObject.parentNode.removeChild(docObject);
-//                    me.owner.removeChild(docObject);
-                } catch (e) {
-                }
-                ;
+                    //                    me.owner.removeChild(docObject);
+                } catch (e) {};
 
             }
         }, 300);
-//        this.close_callback();
+        //        this.close_callback();
     };
 
     this.isVisible = function() {
@@ -52,7 +48,7 @@ function Panel(_owner) {
         effect = _type;
         switch (effect) {
             case "translate_x":
-//                console.log(document.body.parentNode);
+                //                console.log(document.body.parentNode);
                 docObject.style.setProperty("transition", "transform " + _speed + "s linear");
                 docObject.style.setProperty("-webkit-transition", "-webkit-transform " + _speed + "s linear");
                 docObject.style.setProperty("-moz-transition", "-moz-transform " + _speed + "s linear");
@@ -170,7 +166,7 @@ function Panel(_owner) {
         me.setStyle("backgroundColor", _col);
     };
 
-// For overflow panels(speed : 1-10) :
+    // For overflow panels(speed : 1-10) :
     me.scroll = function(_dir, tf, _speed) {
         var s = "";
         switch (_dir) {

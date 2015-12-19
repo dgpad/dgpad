@@ -1,15 +1,14 @@
-
 // Liste de points (reliés ou non) :
 function ListObject(_construction, _name, _EXP) {
-    $U.extend(this, new ConstructionObject(_construction, _name));                           // Héritage
-    $U.extend(this, new MoveableObject(_construction));                                      // Héritage
+    $U.extend(this, new ConstructionObject(_construction, _name)); // Héritage
+    $U.extend(this, new MoveableObject(_construction)); // Héritage
 
     var me = this;
     var Cn = _construction;
     var ORG3D = null;
-    var pt3D = Cn.getInterpreter().getEX().EX_point3D;      // Pour les points3D
-    var EXP = _EXP;                                         // Expression contenant la liste de points (ou points3D)
-    var Ptab = [];                                          // Tableau de points
+    var pt3D = Cn.getInterpreter().getEX().EX_point3D; // Pour les points3D
+    var EXP = _EXP; // Expression contenant la liste de points (ou points3D)
+    var Ptab = []; // Tableau de points
     var initPtab = function() {
         var lst = EXP.getValue();
         Ptab.length = 0;
@@ -24,7 +23,10 @@ function ListObject(_construction, _name, _EXP) {
                 // Il s'agit d'un point 2D :
                 var xx = Cn.coordsSystem.px(lst[i][0]);
                 var yy = Cn.coordsSystem.py(lst[i][1]);
-                Ptab.push({x: xx, y: yy});
+                Ptab.push({
+                    x: xx,
+                    y: yy
+                });
             } else if (lst[i].length === 3) {
                 // Il s'agit d'un point 3D :
                 if (ORG3D === null) {
@@ -35,12 +37,15 @@ function ListObject(_construction, _name, _EXP) {
                         return;
                     }
                 }
-                
-//                me.set3D(true);
+
+                //                me.set3D(true);
                 var c2d = pt3D([Cn.coordsSystem.x(ORG3D.getX()), Cn.coordsSystem.y(ORG3D.getY())], lst[i]);
                 var xx = Cn.coordsSystem.px(c2d[0]);
                 var yy = Cn.coordsSystem.py(c2d[1]);
-                Ptab.push({x: xx, y: yy});
+                Ptab.push({
+                    x: xx,
+                    y: yy
+                });
             } else {
                 // Sinon il y a erreur dans l'expression:
                 Ptab.length = 0;
@@ -50,8 +55,8 @@ function ListObject(_construction, _name, _EXP) {
     };
     initPtab();
     var fillStyle = this.prefs.color.point_free;
-    var segSize = -1;                                       // Taille des segments
-    var shape = 0;                                          // Apparence des points
+    var segSize = -1; // Taille des segments
+    var shape = 0; // Apparence des points
 
     this.getEXP = function() {
         return EXP;
@@ -105,13 +110,19 @@ function ListObject(_construction, _name, _EXP) {
 
     this.projectXY = function(x, y) {
         var p = Ptab[0];
-        var x1 = p.x, y1 = p.y;
+        var x1 = p.x,
+            y1 = p.y;
         var count = 0;
-        var xmin = x1, ymin = y1, dmin = 1e20, cmin = 0;
+        var xmin = x1,
+            ymin = y1,
+            dmin = 1e20,
+            cmin = 0;
         for (var i = 1, len = Ptab.length; i < len; i++) {
             p = Ptab[i];
-            var x2 = p.x, y2 = p.y;
-            var dx = x2 - x1, dy = y2 - y1;
+            var x2 = p.x,
+                y2 = p.y;
+            var dx = x2 - x1,
+                dy = y2 - y1;
             var r = dx * dx + dy * dy;
             if (r > 1e-5) {
                 var h = dx * (x - x1) / r + dy * (y - y1) / r;
@@ -120,7 +131,8 @@ function ListObject(_construction, _name, _EXP) {
                 } else if (h < 0) {
                     h = 0;
                 }
-                var xh = x1 + h * dx, yh = y1 + h * dy;
+                var xh = x1 + h * dx,
+                    yh = y1 + h * dy;
                 var dist2 = (x - xh) * (x - xh) + (y - yh) * (y - yh);
                 if (dist2 < dmin) {
                     dmin = dist2;
@@ -138,12 +150,12 @@ function ListObject(_construction, _name, _EXP) {
     };
 
     this.project = function(p) {
-//        console.log("project");
+        //        console.log("project");
         var coords = this.projectXY(p.getX(), p.getY());
         p.setXY(coords[0], coords[1]);
     };
     this.projectAlpha = function(p) {
-//        console.log("projectAlpha");
+        //        console.log("projectAlpha");
         if ((Ptab.length < 2) || (segSize === -1))
             return;
         var alp = p.getAlpha();
@@ -170,7 +182,9 @@ function ListObject(_construction, _name, _EXP) {
     this.setAlpha = function(p) {
         if (Ptab.length < 2)
             return;
-        var dmin = 1e20, nb = 0, k = 0;
+        var dmin = 1e20,
+            nb = 0,
+            k = 0;
         if (segSize > 0) {
             for (var i = 1, len = Ptab.length; i < len; i++) {
                 var am = (Ptab[i - 1].x - p.getX()) * (Ptab[i - 1].x - p.getX()) + (Ptab[i - 1].y - p.getY()) * (Ptab[i - 1].y - p.getY());
@@ -203,7 +217,14 @@ function ListObject(_construction, _name, _EXP) {
         var PtsTab = []; // Liste des sommets du polygone représentant le lieu
         // Initialisation de Ptab :
         for (var i = 0; i < Ptab.length; i++) {
-            PtsTab.push({"alpha": i, "x": 0, "y": 0, "x1": 0, "y1": 0, "r": 0});
+            PtsTab.push({
+                "alpha": i,
+                "x": 0,
+                "y": 0,
+                "x1": 0,
+                "y1": 0,
+                "r": 0
+            });
         }
         return PtsTab;
     };
@@ -214,7 +235,8 @@ function ListObject(_construction, _name, _EXP) {
     };
 
     this.mouseInside = function(ev) {
-        var mx = this.mouseX(ev), my = this.mouseY(ev);
+        var mx = this.mouseX(ev),
+            my = this.mouseY(ev);
         if (Ptab.length > 0) {
             if ($U.isNearToPoint(Ptab[0].x, Ptab[0].y, mx, my, this.getOversize()))
                 return true;
@@ -222,7 +244,7 @@ function ListObject(_construction, _name, _EXP) {
                 if ($U.isNearToPoint(Ptab[i].x, Ptab[i].y, mx, my, this.getOversize()))
                     return true;
                 if ((segSize > 0) &&
-                        ($U.isNearToSegment(Ptab[i - 1].x, Ptab[i - 1].y, Ptab[i].x, Ptab[i].y, mx, my, this.getOversize())))
+                    ($U.isNearToSegment(Ptab[i - 1].x, Ptab[i - 1].y, Ptab[i].x, Ptab[i].y, mx, my, this.getOversize())))
                     return true;
             }
         }
@@ -261,7 +283,7 @@ function ListObject(_construction, _name, _EXP) {
 
 
     this.paintObject = function(ctx) {
-        
+
         if ((segSize > 0) && (Ptab.length > 0)) {
             ctx.lineCap = "round";
             ctx.lineJoin = "round";

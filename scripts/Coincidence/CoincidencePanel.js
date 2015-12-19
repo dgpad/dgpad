@@ -10,7 +10,7 @@ function CoincidencePanel(_canvas, _ev, _t) {
     me.setAttr("className", "coincidencePanel");
     me.transition("scale", 0.2);
 
-    var exec = function (_o) {
+    var exec = function(_o) {
         me.close();
         var cn = canvas.getConstruction();
         cn.clearIndicated();
@@ -22,7 +22,7 @@ function CoincidencePanel(_canvas, _ev, _t) {
 
     var coincidenceList = new CoincidenceListPanel(me, _t, exec);
 
-    var closeIfNeeded = function (ev) {
+    var closeIfNeeded = function(ev) {
         var x0 = canvas.mouseX(ev);
         var y0 = canvas.mouseY(ev);
         if (x0 < x || y0 < y || x0 > (x + width) || y0 > (y + height)) {
@@ -31,14 +31,14 @@ function CoincidencePanel(_canvas, _ev, _t) {
         }
     }
 
-    this.show = function () {
+    this.show = function() {
         canvas.getDocObject().parentNode.appendChild(me.getDocObject());
         me.applyTransitionIN();
     };
 
-    this.close = function () {
+    this.close = function() {
         me.applyTransitionOUT();
-        setTimeout(function () {
+        setTimeout(function() {
             if (me.getDocObject().parentNode !== null) {
                 canvas.getDocObject().parentNode.removeChild(me.getDocObject());
             }
@@ -47,7 +47,7 @@ function CoincidencePanel(_canvas, _ev, _t) {
         }, 300);
     };
 
-    me.init = function () {
+    me.init = function() {
         var t = me.getOwnerBounds();
         me.setBounds(x, y, width, height);
         var action = ($U.isMobile.any()) ? 'touchstart' : 'mousedown';
@@ -75,9 +75,9 @@ function CoincidenceListPanel(_panel, _t, _exec) {
     title.setText($L.coincidence_message + " : " + $L.coincidence_select.replace("$1", _t.length));
     title.setBounds(10, 10, 230, 40);
 
-    var mousedown = function (ev) {
+    var mousedown = function(ev) {
         ev.preventDefault();
-        setTimeout(function () {
+        setTimeout(function() {
             ev.target.className = "coincidenceLIclassSel";
             _exec(ev.target.obj);
         }, 1);

@@ -17,8 +17,10 @@ function ToolsManager(_canvas) {
         toolgap *= parseFloat(canvas.prefs.tool.touchfactor);
         toolmarginV *= parseFloat(canvas.prefs.tool.touchfactor);
     }
-    var toolX = 0, toolY = 0;
-    var beginX = 0, beginY = 0;
+    var toolX = 0,
+        toolY = 0;
+    var beginX = 0,
+        beginY = 0;
     var tools = [];
     var visible = false;
 
@@ -120,11 +122,10 @@ function ToolsManager(_canvas) {
         canvas.paint(ev);
     };
 
-    me.mouseMoved = function(ev) {
-    };
+    me.mouseMoved = function(ev) {};
 
     me.mouseReleased = function(ev) {
-        
+
         if (OC.isInstantTool())
             return;
         canvas.clearFilters();
@@ -144,5 +145,4 @@ function ToolsManager(_canvas) {
     };
 
 
-}
-;
+};

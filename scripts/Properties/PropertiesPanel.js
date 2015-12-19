@@ -11,34 +11,34 @@ function PropertiesPanel(_canvas) {
 
     me.show();
 
-    me.getCS = function () {
+    me.getCS = function() {
         return canvas.getConstruction().coordsSystem;
     };
 
-    me.setMagnifierMode = function (_val) {
+    me.setMagnifierMode = function(_val) {
         canvas.magnifyManager.setMagnifierMode(_val);
     };
-    me.getMagnifierMode = function () {
+    me.getMagnifierMode = function() {
         return canvas.magnifyManager.getMagnifierMode();
     };
-    me.setDegree = function (_val) {
+    me.setDegree = function(_val) {
         canvas.getConstruction().setDEG(_val);
         canvas.getConstruction().computeAll();
         canvas.paint();
     };
-    me.getDegree = function (_val) {
+    me.getDegree = function(_val) {
         return canvas.getConstruction().isDEG();
     };
-    me.setDemoMode = function (_val) {
+    me.setDemoMode = function(_val) {
         canvas.demoModeManager.setDemoMode(_val);
     };
-    me.getDemoMode = function () {
+    me.getDemoMode = function() {
         return canvas.demoModeManager.getDemoMode();
     };
-    me.getBackgroundColor = function () {
+    me.getBackgroundColor = function() {
         return canvas.getBackground();
     };
-    me.setBackgroundColor = function (val) {
+    me.setBackgroundColor = function(val) {
         return canvas.setBackground(val);
     };
 
@@ -54,7 +54,7 @@ function PropertiesPanel(_canvas) {
 
     props_message.show();
 
-    me.showProperties = function (_obj) {
+    me.showProperties = function(_obj) {
         if ($U.isMobile.mobilePhone()) {
             props_color.clearContent();
             props_message.clearContent();
@@ -83,58 +83,58 @@ function PropertiesPanel(_canvas) {
             }
         }
     };
-//
-    me.compute = function () {
+    //
+    me.compute = function() {
         canvas.getConstruction().computeAll();
     };
-    me.repaint = function () {
+    me.repaint = function() {
         canvas.paint();
     };
 
 
-    me.setAllSize = function (_type, _sze) {
+    me.setAllSize = function(_type, _sze) {
         canvas.getConstruction().setAllSize(_type, _sze);
     };
-    me.setAllColor = function (_type, _sze) {
+    me.setAllColor = function(_type, _sze) {
         canvas.getConstruction().setAllColor(_type, _sze);
     };
-    me.setAllOpacity = function (_type, _sze) {
+    me.setAllOpacity = function(_type, _sze) {
         canvas.getConstruction().setAllOpacity(_type, _sze);
     };
-    me.setAllLayer = function (_type, _sze) {
+    me.setAllLayer = function(_type, _sze) {
         canvas.getConstruction().setAllLayer(_type, _sze);
     };
-    me.setAllPtShape = function (_shape) {
+    me.setAllPtShape = function(_shape) {
         canvas.getConstruction().setAllPtShape(_shape);
     };
-    me.setAllFontSize = function (_type, _sze) {
+    me.setAllFontSize = function(_type, _sze) {
         canvas.getConstruction().setAllFontSize(_type, _sze);
     };
-    me.setAllPrecision = function (_type, _sze) {
+    me.setAllPrecision = function(_type, _sze) {
         canvas.getConstruction().setAllPrecision(_type, _sze);
     };
-    me.setAllIncrement = function (_type, _sze) {
+    me.setAllIncrement = function(_type, _sze) {
         canvas.getConstruction().setAllIncrement(_type, _sze);
     };
-    me.setAllDash = function (_type, _sze) {
+    me.setAllDash = function(_type, _sze) {
         canvas.getConstruction().setAllDash(_type, _sze);
     };
-    me.setAll360 = function (_type, _360) {
+    me.setAll360 = function(_type, _360) {
         canvas.getConstruction().setAll360(_type, _360);
     };
-    me.setAllTrigo = function (_type, _t) {
+    me.setAllTrigo = function(_type, _t) {
         canvas.getConstruction().setAllTrigo(_type, _t);
     };
-    me.setAllNoMouse = function (_type, _sze) {
+    me.setAllNoMouse = function(_type, _sze) {
         canvas.getConstruction().setAllNoMouse(_type, _sze);
     };
-    me.setTrack = function (_o, _val) {
+    me.setTrack = function(_o, _val) {
         if (_val)
             canvas.trackManager.add(_o);
         else
             canvas.trackManager.remove(_o);
     };
-    me.setAllTrack = function (_type, _val) {
+    me.setAllTrack = function(_type, _val) {
         canvas.trackManager.setAllTrack(_type, _val);
     };
 
@@ -143,28 +143,26 @@ function PropertiesPanel(_canvas) {
 
 
 
-function  props_panel(_owner) {
+function props_panel(_owner) {
     $U.extend(this, new Panel(_owner.getDocObject()));
     this.obj = null;
     this.owner = _owner;
 
-    this.set = function (_obj) {
+    this.set = function(_obj) {
         this.obj = _obj;
         this.setObj();
     };
 
-// callback function :
-    this.setObj = function () {
-    };
+    // callback function :
+    this.setObj = function() {};
 
-    this.repaint = function () {
+    this.repaint = function() {
         this.owner.repaint();
     };
-    this.compute = function () {
+    this.compute = function() {
         this.owner.compute();
     };
-}
-;
+};
 
 function props_messagePanel(_owner) {
     var me = this;
@@ -187,17 +185,17 @@ function props_messagePanel(_owner) {
     me.addContent(t2);
     ch += 30;
 
-    var DEMOcallback = function (val) {
-//        $U.setDemoMode(val);
+    var DEMOcallback = function(val) {
+        //        $U.setDemoMode(val);
         _owner.setDemoMode(val);
     };
-    var MAGNIFIERcallback = function (val) {
+    var MAGNIFIERcallback = function(val) {
         _owner.setMagnifierMode(val);
     };
-    var COLORcallback = function (val) {
+    var COLORcallback = function(val) {
         _owner.setBackgroundColor(val)
     };
-    var DEGREEcallback = function (val) {
+    var DEGREEcallback = function(val) {
         _owner.setDegree(val);
     };
 
@@ -233,7 +231,7 @@ function props_gridPanel(_owner) {
     title.setStyle("color", "#252525");
     title.setBounds(0, 10, 220, 20);
 
-    var HEXcallback = function (_c) {
+    var HEXcallback = function(_c) {
         CS.setColor(_c);
         me.repaint();
     }
@@ -245,7 +243,7 @@ function props_gridPanel(_owner) {
         ch = 40;
 
 
-    var FONTcallback = function (_s) {
+    var FONTcallback = function(_s) {
         CS.setFontSize(_s);
         me.repaint();
     }
@@ -257,7 +255,7 @@ function props_gridPanel(_owner) {
     sFont.setBackgroundColor("rgba(0,0,0,0)");
     ch += 40;
 
-    var AXIScallback = function (_s) {
+    var AXIScallback = function(_s) {
         CS.setAxisWidth(_s);
         me.repaint();
     }
@@ -268,7 +266,7 @@ function props_gridPanel(_owner) {
     sAxis.setValuePrecision(0.5);
     sAxis.setBackgroundColor("rgba(0,0,0,0)");
     ch += 40;
-    var GRIDcallback = function (_s) {
+    var GRIDcallback = function(_s) {
         CS.setGridWidth(_s);
         me.repaint();
     }
@@ -281,7 +279,7 @@ function props_gridPanel(_owner) {
     ch += 50;
 
 
-    var SHGRIDcallback = function (_s) {
+    var SHGRIDcallback = function(_s) {
         CS.showGrid(_s);
         me.repaint();
     }
@@ -289,7 +287,7 @@ function props_gridPanel(_owner) {
     cbshowCS.setTextColor("#252525");
     ch += 30;
 
-    var OXcallback = function (_s) {
+    var OXcallback = function(_s) {
         CS.showOx(_s);
         me.repaint();
     }
@@ -297,7 +295,7 @@ function props_gridPanel(_owner) {
     cbshowOX.setTextColor("#252525");
     ch += 30;
 
-    var OYcallback = function (_s) {
+    var OYcallback = function(_s) {
         CS.showOy(_s);
         me.repaint();
     }
@@ -305,7 +303,7 @@ function props_gridPanel(_owner) {
     cbshowOY.setTextColor("#252525");
     ch += 30;
 
-    var LockXcallback = function (_s) {
+    var LockXcallback = function(_s) {
         CS.setlockOx(_s);
         me.repaint();
     }
@@ -313,7 +311,7 @@ function props_gridPanel(_owner) {
     cblockX.setTextColor("#252525");
     ch += 30;
 
-    var LockYcallback = function (_s) {
+    var LockYcallback = function(_s) {
         CS.setlockOy(_s);
         me.repaint();
     }
@@ -321,7 +319,7 @@ function props_gridPanel(_owner) {
     cblockY.setTextColor("#252525");
     ch += 30;
 
-    var CenterZcallback = function (_s) {
+    var CenterZcallback = function(_s) {
         CS.setCenterZoom(_s);
         me.repaint();
     };
@@ -330,7 +328,7 @@ function props_gridPanel(_owner) {
     cbcenterzoom.setTextColor("#252525");
 
 
-    this.setObj = function () {
+    this.setObj = function() {
         if (!$U.isMobile.mobilePhone()) {
             cp.setHEX(CS.getColor());
         }
@@ -351,7 +349,7 @@ function props_namePanel(_owner) {
     input.setBounds(10, 10, 100, 25);
     me.addContent(input);
 
-    var show_callback = function (_val) {
+    var show_callback = function(_val) {
         me.obj.setShowName(_val);
         me.repaint();
     }
@@ -359,10 +357,9 @@ function props_namePanel(_owner) {
     var show = new Checkbox(me.getDocObject(), 130, 8, 100, 30, false, $L.props_showname, show_callback);
     show.setTextColor("#252525");
 
-    input.valid_callback = function (_t) {
-    };
+    input.valid_callback = function(_t) {};
 
-    input.keyup_callback = function (_t) {
+    input.keyup_callback = function(_t) {
         me.obj.setName(_t);
         me.obj.setShowName(true);
         show.setValue(true);
@@ -371,12 +368,12 @@ function props_namePanel(_owner) {
     };
 
 
-    this.focus = function () {
+    this.focus = function() {
         input.focus();
         input.selectAll();
     };
 
-    this.setObj = function () {
+    this.setObj = function() {
         input.setText(me.obj.getName());
         show.setValue(me.obj.getShowName());
         if (me.isVisible()) {
@@ -386,7 +383,7 @@ function props_namePanel(_owner) {
         } else {
             me.show();
             if (!Object.touchpad) {
-                setTimeout(function () {
+                setTimeout(function() {
                     me.focus();
                 }, 300);
             }
@@ -419,7 +416,7 @@ function props_colorPanel(_owner) {
     me.setAttr("className", $U.isMobile.mobilePhone() ? "props_colorDIV_Mobile" : "props_colorDIV");
     me.transition("translate_x", 0.2, 200);
 
-    var HEXcallback = function (_hex) {
+    var HEXcallback = function(_hex) {
         if (setall)
             _owner.setAllColor(me.obj.getFamilyCode(), _hex);
         else
@@ -427,7 +424,7 @@ function props_colorPanel(_owner) {
         me.repaint();
     };
 
-    var BOcallback = function (_val) {
+    var BOcallback = function(_val) {
         if (setall)
             _owner.setAllOpacity(me.obj.getFamilyCode(), _val);
         else
@@ -435,7 +432,7 @@ function props_colorPanel(_owner) {
         me.repaint();
     };
 
-    var SZcallback = function (_val) {
+    var SZcallback = function(_val) {
         if (setall)
             _owner.setAllSize(me.obj.getFamilyCode(), _val);
         else {
@@ -447,7 +444,7 @@ function props_colorPanel(_owner) {
         }
         me.repaint();
     };
-    var SegSZcallback = function (_val) {
+    var SegSZcallback = function(_val) {
         if ((_val === 0) && (me.obj.getSize() === 0)) {
             me.obj.setSize(0.1);
             sSize.setValue(0.1);
@@ -456,7 +453,7 @@ function props_colorPanel(_owner) {
         me.obj.computeChilds();
         me.repaint();
     };
-    var LAYcallback = function (_val) {
+    var LAYcallback = function(_val) {
         if (setall)
             _owner.setAllLayer(me.obj.getFamilyCode(), _val);
         else
@@ -464,7 +461,7 @@ function props_colorPanel(_owner) {
         me.repaint();
     };
 
-    var FONTcallback = function (_val) {
+    var FONTcallback = function(_val) {
         if (setall)
             _owner.setAllFontSize(me.obj.getFamilyCode(), _val);
         else
@@ -473,7 +470,7 @@ function props_colorPanel(_owner) {
     };
 
 
-    var PRECcallback = function (_val) {
+    var PRECcallback = function(_val) {
         if (setall)
             _owner.setAllPrecision(me.obj.getFamilyCode(), _val);
         else {
@@ -484,7 +481,7 @@ function props_colorPanel(_owner) {
         }
         me.repaint();
     };
-    var INCCcallback = function (_val) {
+    var INCCcallback = function(_val) {
         if (setall)
             _owner.setAllIncrement(me.obj.getFamilyCode(), _val);
         else
@@ -493,24 +490,24 @@ function props_colorPanel(_owner) {
         me.repaint();
     };
 
-    var PSHAPEcallback = function (_val) {
+    var PSHAPEcallback = function(_val) {
         if (setall)
             _owner.setAllPtShape(_val);
         else
             me.obj.setShape(_val);
         me.repaint();
     };
-    var APALLcallback = function (_val) {
+    var APALLcallback = function(_val) {
         setall = _val;
     };
-    var DSHcallback = function (_val) {
+    var DSHcallback = function(_val) {
         if (setall)
             _owner.setAllDash(me.obj.getFamilyCode(), _val);
         else
             me.obj.setDash(_val);
         me.repaint();
     };
-    var m360callback = function (_val) {
+    var m360callback = function(_val) {
         if (setall)
             _owner.setAll360(me.obj.getFamilyCode(), _val);
         else
@@ -518,7 +515,7 @@ function props_colorPanel(_owner) {
         me.compute();
         me.repaint();
     };
-    var trigocallback = function (_val) {
+    var trigocallback = function(_val) {
         if (setall)
             _owner.setAllTrigo(me.obj.getFamilyCode(), _val);
         else
@@ -527,21 +524,21 @@ function props_colorPanel(_owner) {
         me.repaint();
     };
 
-    var NOMOUSEcallback = function (_val) {
+    var NOMOUSEcallback = function(_val) {
         if (setall)
             _owner.setAllNoMouse(me.obj.getFamilyCode(), _val);
         else
             me.obj.setNoMouseInside(_val);
         me.repaint();
     };
-    var TRKcallback = function (_val) {
+    var TRKcallback = function(_val) {
         if (setall)
             _owner.setAllTrack(me.obj.getFamilyCode(), _val);
         else
             _owner.setTrack(me.obj, _val);
     };
 
-    var precVal = function (val) {
+    var precVal = function(val) {
         if (val === -1)
             return val;
         else
@@ -549,14 +546,14 @@ function props_colorPanel(_owner) {
     };
 
 
-    me.setPickerColor = function (_hex) {
+    me.setPickerColor = function(_hex) {
         if (!$U.isMobile.mobilePhone())
             cp.setHEX(_hex);
         HEXcallback(_hex);
     };
 
 
-    me.setObj = function () {
+    me.setObj = function() {
         me.clearContent();
         ch = 140;
 
@@ -578,8 +575,7 @@ function props_colorPanel(_owner) {
         }
 
         if (!$U.isMobile.mobilePhone()) {
-            pShape = new ImageGroup(me.getDocObject(), 10, ch, 200, 25
-                    , $APP_PATH + "NotPacked/images/pointshape/bgOff.svg", $APP_PATH + "NotPacked/images/pointshape/bgOn.svg", PSHAPEcallback);
+            pShape = new ImageGroup(me.getDocObject(), 10, ch, 200, 25, $APP_PATH + "NotPacked/images/pointshape/bgOff.svg", $APP_PATH + "NotPacked/images/pointshape/bgOn.svg", PSHAPEcallback);
             pShape.setImageSize(25);
             pShape.setMargin(15);
             pShape.setHspace(25);
@@ -650,11 +646,15 @@ function props_colorPanel(_owner) {
         sPrec.setValuePrecision(1);
         sPrec.setBackgroundColor("rgba(0,0,0,0)");
         if ((me.obj.getCode() === "locus") || (me.obj.getCode() === "quadric")) {
-            sPrec.setTabValues([[1, $L.Locus_density_min], 5, 10, 20, 50, 100, 200, 500, 1000, 1500, 2000, [5000, $L.Locus_density_max]]);
+            sPrec.setTabValues([
+                [1, $L.Locus_density_min], 5, 10, 20, 50, 100, 200, 500, 1000, 1500, 2000, [5000, $L.Locus_density_max]
+            ]);
             sPrec.setValue(me.obj.getPrecision());
             sPrec.setLabel($L.Locus_density, 80);
         } else {
-            sPrec.setTabValues([[-1, $L.props_length_none], 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);
+            sPrec.setTabValues([
+                [-1, $L.props_length_none], 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
+            ]);
             sPrec.setValue(precVal(me.obj.getPrecision()));
             sPrec.setLabel($L.props_length, 80);
         }
@@ -673,7 +673,9 @@ function props_colorPanel(_owner) {
             ch += cbh;
         } else {
             sInc = new slider(me.getDocObject(), 10, ch, 200, sh, -4, 4, 0, INCCcallback);
-            sInc.setTabValues([[0, $L.props_inc_free], 0.001, 0.01, 0.1, 0.5, 1, 2, 5, 10, 100, 1000]);
+            sInc.setTabValues([
+                [0, $L.props_inc_free], 0.001, 0.01, 0.1, 0.5, 1, 2, 5, 10, 100, 1000
+            ]);
             sInc.setValue(me.obj.getIncrement());
             sInc.setValueWidth(40);
             sInc.setLabel($L.props_inc, 80);
@@ -736,7 +738,7 @@ function props_generic_color(_owner, _col, _left, _top, _width) {
     me.setAbsolute();
     me.setBounds(_left, _top, _width, _width);
 
-    var proc = function () {
+    var proc = function() {
         _owner.setPickerColor(col.getHEX());
     };
 
@@ -744,5 +746,4 @@ function props_generic_color(_owner, _col, _left, _top, _width) {
 
     _owner.addContent(me);
 
-}
-;
+};

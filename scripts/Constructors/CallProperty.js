@@ -28,12 +28,9 @@ function CallProperty() {
         zc.propertiesManager.edit(this.getC(0));
     };
 
-    this.selectCreatePoint = function(zc, ev) {
-    };
+    this.selectCreatePoint = function(zc, ev) {};
 
-    this.preview = function(ev, zc) {
-    };
+    this.preview = function(ev, zc) {};
 
 
 }
-

@@ -1,6 +1,9 @@
 function Color() {
     var me = this;
-    var r = 0, g = 0, b = 0, a = 0;
+    var r = 0,
+        g = 0,
+        b = 0,
+        a = 0;
     var hex = "";
     var rgb = "";
     var rgba = "";
@@ -8,7 +11,7 @@ function Color() {
     me.getHEX = function() {
         return hex;
     };
-    
+
     me.getRGB = function() {
         return rgb;
     };
@@ -39,7 +42,7 @@ function Color() {
 
     me.set = function(color) {
         var cache, p = parseInt;
-        
+
         color = color.replace(/\s\s*/g, '');
 
         // Checks for 6 digit hex and converts string to integer

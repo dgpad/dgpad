@@ -10,26 +10,26 @@ function TextManager(_canvas) {
     var firstLoad = true;
     var textPanel = null;
 
-    
-    me.compute=function(){
+
+    me.compute = function() {
         for (var i = 0, len = txts.length; i < len; i++) {
             txts[i].compute();
         }
     };
-    
-    me.refreshInputs = function () {
+
+    me.refreshInputs = function() {
         for (var i = 0, len = txts.length; i < len; i++) {
             txts[i].refreshInputs();
         }
     };
 
-    me.evaluateStrings = function (forceEvaluate) {
+    me.evaluateStrings = function(forceEvaluate) {
         for (var i = 0, len = txts.length; i < len; i++) {
             txts[i].evaluateString();
         }
     };
 
-    me.executeScript = function (_t, _i) {
+    me.executeScript = function(_t, _i) {
         if (_t > -1) {
             canvas.undoManager.beginAdd();
             txts[_t].exec(_i);
@@ -37,7 +37,7 @@ function TextManager(_canvas) {
         }
     }
 
-    me.getPosition = function (_t) {
+    me.getPosition = function(_t) {
         for (var i = 0, len = txts.length; i < len; i++) {
             if (txts[i] === _t)
                 return i;
@@ -45,29 +45,28 @@ function TextManager(_canvas) {
         return txts.length;
     };
 
-    var loadKaTeX = function () {
+    var loadKaTeX = function() {
         var parent = document.getElementsByTagName("head")[0];
         var lnk = document.createElement("link");
         lnk.rel = "stylesheet";
-        lnk.href=$APP_PATH+"NotPacked/thirdParty/katex.min.css";
-//        lnk.href = "http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.css";
+        lnk.href = $APP_PATH + "NotPacked/thirdParty/katex.min.css";
+        //        lnk.href = "http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.css";
         var script = document.createElement("script");
         script.type = "text/javascript";
-        script.src = $APP_PATH+"NotPacked/thirdParty/katex.min.js";
-//        script.src = "http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.js";
-        script.onload = function () {
+        script.src = $APP_PATH + "NotPacked/thirdParty/katex.min.js";
+        //        script.src = "http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.js";
+        script.onload = function() {
             me.evaluateStrings();
-//            script.id = "MathJax";
+            //            script.id = "MathJax";
         }
         parent.appendChild(lnk);
         parent.appendChild(script);
     }
 
-    me.edit = function (mytxt) {
+    me.edit = function(mytxt) {
         for (var k = 0; k < txts.length; k++) {
             txts[k].noedit();
-        }
-        ;
+        };
         if (mytxt) {
             mytxt.doedit();
             if (textPanel)
@@ -75,7 +74,7 @@ function TextManager(_canvas) {
         }
     }
 
-    me.deleteTeX = function (_tex) {
+    me.deleteTeX = function(_tex) {
         for (var k = 0; k < txts.length; k++) {
             if (txts[k] === _tex) {
                 txts.splice(k, 1);
@@ -91,12 +90,12 @@ function TextManager(_canvas) {
 
 
 
-    me.addName = function (_n) {
+    me.addName = function(_n) {
         if (textPanel)
             textPanel.addName(_n);
     };
 
-    me.addTeXElement = function (_m, _l, _t, _w, _h, _stl) {
+    me.addTeXElement = function(_m, _l, _t, _w, _h, _stl) {
         if (firstLoad) {
             loadKaTeX();
             firstLoad = false;
@@ -111,24 +110,24 @@ function TextManager(_canvas) {
     };
 
     // Pour le undoManager :
-    me.add = function (_tex) {
+    me.add = function(_tex) {
         var b = _tex.getBounds();
         return me.addTeXElement(_tex.getRawText(), b.left, b.top, b.width, b.height, _tex.getStyles());
     };
 
     // Uniquement pour l'ajout de textes en manuel :
-    me.addText = function (_m, _l, _t, _w, _h, _stl) {
+    me.addText = function(_m, _l, _t, _w, _h, _stl) {
         canvas.undoManager.beginAdd();
         me.addTeXElement(_m, _l, _t, _w, _h, _stl).edit();
         canvas.undoManager.endAdd();
     };
 
-    me.elements = function () {
+    me.elements = function() {
         return txts;
     };
 
 
-    me.getSource = function () {
+    me.getSource = function() {
         var t = "";
         for (var i = 0, len = txts.length; i < len; i++) {
             var b = txts[i].getBounds();
@@ -146,7 +145,7 @@ function TextManager(_canvas) {
         return t;
     };
 
-    me.clear = function () {
+    me.clear = function() {
         for (var i = 0, len = txts.length; i < len; i++) {
             if (txts[i].getDocObject().parentNode !== null) {
                 txts[i].getDocObject().parentNode.removeChild(txts[i].getDocObject());
@@ -155,13 +154,13 @@ function TextManager(_canvas) {
         txts = [];
     }
 
-    me.showPanel = function () {
+    me.showPanel = function() {
         if (!textPanel) {
             textPanel = new TextPanel(canvas);
         }
     };
 
-    me.hidePanel = function () {
+    me.hidePanel = function() {
         if (textPanel) {
             me.edit(null);
             textPanel.close();

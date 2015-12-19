@@ -70,8 +70,7 @@ function ImageGroup(_owner, _left, _top, _width, _height, _bgOff, _bgOn, _callba
         img.src = _src;
 
         img_wrapper.on = false;
-        img_wrapper.toggle = (_nobackground) ? function() {
-        } : function() {
+        img_wrapper.toggle = (_nobackground) ? function() {} : function() {
             if (img_wrapper.on)
                 iwp("background-image", "url('" + bgimageOff + "')");
             else
@@ -86,7 +85,7 @@ function ImageGroup(_owner, _left, _top, _width, _height, _bgOff, _bgOn, _callba
         if (!_nobackground) {
             iwp("background-color", "rgba(0,0,0,0)");
             iwp("background-size", "100%");
-//        iwp("background-position", "center");
+            //        iwp("background-position", "center");
             iwp("background-repeat", "no-repeat");
             iwp("background-image", "url('" + bgimageOff + "')");
         }
@@ -114,5 +113,4 @@ function ImageGroup(_owner, _left, _top, _width, _height, _bgOff, _bgOn, _callba
 
     setBounds(_left, _top, _width, _height);
     _owner.appendChild(wrapper);
-}
-;
+};

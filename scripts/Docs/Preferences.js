@@ -137,6 +137,6 @@ $P.MagnifierBounds.w = 120;
 $P.MagnifierBounds.h = 120;
 
 
-$P.clone = function () {
+$P.clone = function() {
     return JSON.parse(JSON.stringify($P));
 };

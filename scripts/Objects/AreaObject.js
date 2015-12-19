@@ -8,10 +8,11 @@ function AreaObject(_construction, _name, _Ptab) {
     var Cn = _construction;
     var Ptab = [];
     this.setParent();
-//    this.setOpacity(0.2);
+    //    this.setOpacity(0.2);
     this.setDefaults("area");
     var valid = true;
-    var X = NaN, Y = NaN; // Coordonnées du barycentre (utilisées pour l'aire)
+    var X = NaN,
+        Y = NaN; // Coordonnées du barycentre (utilisées pour l'aire)
     var A = NaN;
     var onBounds = false;
     for (var i = 0, len = _Ptab.length; i < len - 1; i++) {
@@ -31,7 +32,7 @@ function AreaObject(_construction, _name, _Ptab) {
 
     this.isCoincident = function(_C) {
         if (_C.isInstanceType("area")) {
-// Si l'autre objet est aussi un polygone :
+            // Si l'autre objet est aussi un polygone :
             return true;
         }
         return false;
@@ -50,7 +51,8 @@ function AreaObject(_construction, _name, _Ptab) {
     };
     this.barycenter = function() {
         var len = Ptab.length;
-        var xg = 0, yg = 0;
+        var xg = 0,
+            yg = 0;
         for (var i = 0; i < len; i++) {
             xg += Ptab[i].getX();
             yg += Ptab[i].getY();
@@ -59,7 +61,9 @@ function AreaObject(_construction, _name, _Ptab) {
     };
     this.barycenter3D = function() {
         var len = Ptab.length;
-        var xg = 0, yg = 0, zg = 0;
+        var xg = 0,
+            yg = 0,
+            zg = 0;
         for (var i = 0; i < len; i++) {
             var t = Ptab[i].coords3D();
             xg += t[0];
@@ -99,9 +103,7 @@ function AreaObject(_construction, _name, _Ptab) {
 
     var isInside = function(poly, x, y) {
         for (var c = false, i = -1, l = poly.length, j = l - 1; ++i < l; j = i)
-            ((poly[i].getY() <= y && y < poly[j].getY()) || (poly[j].getY() <= y && y < poly[i].getY()))
-                    && (x < (poly[j].getX() - poly[i].getX()) * (y - poly[i].getY()) / (poly[j].getY() - poly[i].getY()) + poly[i].getX())
-                    && (c = !c);
+            ((poly[i].getY() <= y && y < poly[j].getY()) || (poly[j].getY() <= y && y < poly[i].getY())) && (x < (poly[j].getX() - poly[i].getX()) * (y - poly[i].getY()) / (poly[j].getY() - poly[i].getY()) + poly[i].getX()) && (c = !c);
         return c;
     };
     this.mouseInside = function(ev) {
@@ -145,8 +147,10 @@ function AreaObject(_construction, _name, _Ptab) {
             return false;
         }
         var hits = 0;
-        var lastx = Ptab[npoints - 1].getX(), lasty = Ptab[npoints - 1].getY();
-        var curx = 0, cury = 0;
+        var lastx = Ptab[npoints - 1].getX(),
+            lasty = Ptab[npoints - 1].getY();
+        var curx = 0,
+            cury = 0;
         var test1, test2, leftx;
         for (var i = 0; i < npoints; lastx = curx, lasty = cury, i++) {
             var p = Ptab[i];
@@ -200,14 +204,21 @@ function AreaObject(_construction, _name, _Ptab) {
 
     this.projectXY = function(x, y) {
         var p = Ptab[0];
-        var x1 = p.getX(), y1 = p.getY();
-        var xstart = x1, ystart = y1;
+        var x1 = p.getX(),
+            y1 = p.getY();
+        var xstart = x1,
+            ystart = y1;
         var count = 0;
-        var xmin = x1, ymin = y1, dmin = 1e20, hmin = 0;
+        var xmin = x1,
+            ymin = y1,
+            dmin = 1e20,
+            hmin = 0;
         for (var i = 1, len = Ptab.length; i < len; i++) {
             p = Ptab[i];
-            var x2 = p.getX(), y2 = p.getY();
-            var dx = x2 - x1, dy = y2 - y1;
+            var x2 = p.getX(),
+                y2 = p.getY();
+            var dx = x2 - x1,
+                dy = y2 - y1;
             var r = dx * dx + dy * dy;
             if (r > 1e-5) {
                 var h = dx * (x - x1) / r + dy * (y - y1) / r;
@@ -216,7 +227,8 @@ function AreaObject(_construction, _name, _Ptab) {
                 } else if (h < 0) {
                     h = 0;
                 }
-                var xh = x1 + h * dx, yh = y1 + h * dy;
+                var xh = x1 + h * dx,
+                    yh = y1 + h * dy;
                 var dist = Math.sqrt((x - xh) * (x - xh) + (y - yh) * (y - yh));
                 if (dist < dmin) {
                     dmin = dist;
@@ -230,8 +242,10 @@ function AreaObject(_construction, _name, _Ptab) {
             y1 = y2;
         }
 
-        var x2 = xstart, y2 = ystart;
-        var dx = x2 - x1, dy = y2 - y1;
+        var x2 = xstart,
+            y2 = ystart;
+        var dx = x2 - x1,
+            dy = y2 - y1;
         var r = dx * dx + dy * dy;
         if (r > 1e-5) {
             var h = dx * (x - x1) / r + dy * (y - y1) / r;
@@ -240,7 +254,8 @@ function AreaObject(_construction, _name, _Ptab) {
             } else if (h < 0) {
                 h = 0;
             }
-            var xh = x1 + h * dx, yh = y1 + h * dy;
+            var xh = x1 + h * dx,
+                yh = y1 + h * dy;
             var dist = Math.sqrt((x - xh) * (x - xh) + (y - yh) * (y - yh));
             if (dist < dmin) {
                 dmin = dist;
@@ -253,7 +268,8 @@ function AreaObject(_construction, _name, _Ptab) {
     };
 
     this.project = function(p) {
-        var px = p.getX(), py = p.getY();
+        var px = p.getX(),
+            py = p.getY();
         if ((p.getOnBoundary()) || (!contains(px, py))) {
             var coords = this.projectXY(px, py);
             p.setXY(coords[0], coords[1]);
@@ -262,9 +278,12 @@ function AreaObject(_construction, _name, _Ptab) {
     this.projectAlpha = function(p) {
         var G = p.getAlpha();
         if (Ptab.length > 2) {
-            var xa = Ptab[0].getX(), ya = Ptab[0].getY();
-            var xb = Ptab[1].getX(), yb = Ptab[1].getY();
-            var xc = Ptab[2].getX(), yc = Ptab[2].getY();
+            var xa = Ptab[0].getX(),
+                ya = Ptab[0].getY();
+            var xb = Ptab[1].getX(),
+                yb = Ptab[1].getY();
+            var xc = Ptab[2].getX(),
+                yc = Ptab[2].getY();
             var xm = xa + G[0] * (xb - xa) + G[1] * (xc - xa);
             var ym = ya + G[0] * (yb - ya) + G[1] * (yc - ya);
             p.setXY(xm, ym);
@@ -296,9 +315,23 @@ function AreaObject(_construction, _name, _Ptab) {
         var PtsTab = []; // Liste des sommets du polygone représentant le lieu
         // Initialisation de Ptab :
         for (var i = 0; i < Ptab.length; i++) {
-            PtsTab.push({"alpha": i, "x": 0, "y": 0, "x1": 0, "y1": 0, "r": 0});
+            PtsTab.push({
+                "alpha": i,
+                "x": 0,
+                "y": 0,
+                "x1": 0,
+                "y1": 0,
+                "r": 0
+            });
         }
-        PtsTab.push({"alpha": i, "x": 0, "y": 0, "x1": 0, "y1": 0, "r": 0});
+        PtsTab.push({
+            "alpha": i,
+            "x": 0,
+            "y": 0,
+            "x1": 0,
+            "y1": 0,
+            "r": 0
+        });
         return PtsTab;
     };
 
@@ -357,7 +390,7 @@ function AreaObject(_construction, _name, _Ptab) {
             ctx.lineTo(Ptab[0].getX(), Ptab[0].getY());
             ctx.closePath();
             ctx.fill();
-//        if (this.getSize() > 0.5) ctx.stroke();
+            //        if (this.getSize() > 0.5) ctx.stroke();
             if ((this.getSize() > 0.5) || (this.isIndicated()))
                 ctx.stroke();
         }
@@ -370,5 +403,4 @@ function AreaObject(_construction, _name, _Ptab) {
         }
         src.geomWrite(true, this.getName(), "Polygon", pts.join(","));
     };
-}
-;
+};

@@ -6,9 +6,9 @@
 
 function Macro(_canvas, _name, _p, _proc) {
     this.name = _name;
-    this.shortname=_name.split("/");
-    this.shortname=this.shortname[this.shortname.length-1];
-    var me=this;
+    this.shortname = _name.split("/");
+    this.shortname = this.shortname[this.shortname.length - 1];
+    var me = this;
     var paramTypes = _p;
     var exec = _proc;
     var canvas = _canvas;
@@ -44,7 +44,7 @@ function Macro(_canvas, _name, _p, _proc) {
 
     var nextStep = function() {
         // S'il s'agit d'une macro sans initial :
-        if (paramTypes.length===0) {
+        if (paramTypes.length === 0) {
             executeMacro();
             canvas.getConstruction().setMode(5);
             canvas.paint();
@@ -56,12 +56,12 @@ function Macro(_canvas, _name, _p, _proc) {
             // Curiosité : le innerHTML semble prendre beaucoup de temps sur touchpad
             // D'où l'execution par setTimeout dans un autre Thread...
             setTimeout(function() {
-//                Li.settxt(Li.macro.name + commentMacro(params.length + 1, paramTypes.length, paramTypes[params.length]));
+                //                Li.settxt(Li.macro.name + commentMacro(params.length + 1, paramTypes.length, paramTypes[params.length]));
                 Li.o().innerHTML = Li.macro.shortname + commentMacro(params.length + 1, paramTypes.length, paramTypes[params.length]);
             }, 1);
         } else {
             executeMacro();
-//            canvas.macrosManager.endMacro();
+            //            canvas.macrosManager.endMacro();
             canvas.getConstruction().setMode(5);
             canvas.paint();
             params = [];
@@ -93,7 +93,8 @@ function Macro(_canvas, _name, _p, _proc) {
 
 
     this.getSource = function() {
-        var p = '[]', t = '[]';
+        var p = '[]',
+            t = '[]';
         if (paramTypes.length > 0) {
             p = '["' + paramTypes.join('","') + '"]';
         }

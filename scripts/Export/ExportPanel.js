@@ -11,19 +11,19 @@ function ExportPanel(_canvas, _closeProc) {
 
     me.show();
 
-    var close = function () {
+    var close = function() {
         _closeProc();
     };
 
-    var setText = function (_t) {
+    var setText = function(_t) {
         textarea.setAttr("innerHTML", _t);
     };
 
-    var setComment = function (_t) {
+    var setComment = function(_t) {
         comment.setAttr("innerHTML", _t);
     };
 
-    var typeCallback = function (_val) {
+    var typeCallback = function(_val) {
         sel = _val;
         switch (_val) {
             case 0:
@@ -59,28 +59,28 @@ function ExportPanel(_canvas, _closeProc) {
             textarea.getDocObject().select();
     };
 
-    var iBookStuff = function () {
+    var iBookStuff = function() {
         setText("");
-        canvas.getiBookPlugin(hidectrlpanel, "", function (_c) {
+        canvas.getiBookPlugin(hidectrlpanel, "", function(_c) {
             var url = window.URL.createObjectURL(_c);
             setComment($L.export_ibook + '<br><br><a download="iBookPlugin.zip" href="' + url + '" style="-webkit-touch-callout:default;font-size:13px;font-family:Helvetica, Arial, sans-serif;color:#252525;" target="_blank"><b>' + $L.export_ibook2 + '</b></a>');
         });
     };
 
-    var getHTML = function () {
+    var getHTML = function() {
         return canvas.getHTML(hidectrlpanel);
     };
 
-    var getHTMLJS = function () {
+    var getHTMLJS = function() {
         return canvas.getHTMLJS(hidectrlpanel);
     };
 
-    var getSRC = function () {
+    var getSRC = function() {
         var s = canvas.getSource();
         return s;
     };
 
-    var getPAGE = function () {
+    var getPAGE = function() {
         var s = '<!DOCTYPE html>\n';
         s += '<html style="margin:0;padding:0;width:100%;height:100%;display: table">\n';
         s += '<head>\n';
@@ -124,7 +124,7 @@ function ExportPanel(_canvas, _closeProc) {
     setComment($L.export_standardcomment);
     me.addContent(comment);
 
-    var addtoolsCBACK = function (_v) {
+    var addtoolsCBACK = function(_v) {
         hidectrlpanel = _v;
         typeCallback(sel);
     };
@@ -132,7 +132,7 @@ function ExportPanel(_canvas, _closeProc) {
     var cbshowCS = new Checkbox(me.getDocObject(), 250, 15, 200, 30, hidectrlpanel, $L.export_istools, addtoolsCBACK);
     cbshowCS.setTextColor("#000000");
 
-    setTimeout(function () {
+    setTimeout(function() {
         btns.select(0);
         typeCallback(0);
     }, 0);

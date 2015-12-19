@@ -1,5 +1,3 @@
-
-
 function CallList() {
     $U.extend(this, new ObjectConstructor()); //Héritage
 
@@ -21,18 +19,15 @@ function CallList() {
     };
 
     this.createObj = function(zc, ev) {
-        this.getC(0).setSegmentsSize(1*(this.getC(0).getSegmentsSize() === 0));
+        this.getC(0).setSegmentsSize(1 * (this.getC(0).getSegmentsSize() === 0));
         if ((this.getC(0).getSegmentsSize() === 0) && (this.getC(0).getSize() === 0)) {
             this.getC(0).setSize(0.5)
         }
         this.getC(0).computeChilds();
     };
 
-    this.selectCreatePoint = function(zc, ev) {
-    };
+    this.selectCreatePoint = function(zc, ev) {};
 
-    this.preview = function(ev, zc) {
-    };
+    this.preview = function(ev, zc) {};
 
 }
-

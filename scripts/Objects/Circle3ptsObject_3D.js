@@ -8,7 +8,7 @@ function Circle3ptsObject_3D(_construction, _name, _P1, _P2, _P3) {
     var M = new CenterObject(_construction, "_Center", this);
     _construction.add(M);
 
-    $U.extend(this, new ConstructionObject(_construction, _name));                           // Héritage
+    $U.extend(this, new ConstructionObject(_construction, _name)); // Héritage
 
     var me = this;
     var A = _P1;
@@ -60,7 +60,8 @@ function Circle3ptsObject_3D(_construction, _name, _P1, _P2, _P3) {
     };
 
     this.mouseInside = function(ev) {
-        var mx = this.mouseX(ev), my = this.mouseY(ev);
+        var mx = this.mouseX(ev),
+            my = this.mouseY(ev);
         for (var i = 0, len = Ptab.length; i < len; i++) {
             if ($U.isNearToPoint(Ptab[i][0][0], Ptab[i][0][1], mx, my, this.getOversize()))
                 return true;
@@ -70,8 +71,10 @@ function Circle3ptsObject_3D(_construction, _name, _P1, _P2, _P3) {
 
 
     this.projectXY = function(_x, _y) {
-        var xAB = (Ptab[0][0][0] - _x), yAB = (Ptab[0][0][1] - _y);
-        var d2 = xAB * xAB + yAB * yAB, d1 = 0;
+        var xAB = (Ptab[0][0][0] - _x),
+            yAB = (Ptab[0][0][1] - _y);
+        var d2 = xAB * xAB + yAB * yAB,
+            d1 = 0;
         var k = 0;
         for (var i = 1, len = Ptab.length; i < len; i++) {
             xAB = (Ptab[i][0][0] - _x);
@@ -158,8 +161,10 @@ function Circle3ptsObject_3D(_construction, _name, _P1, _P2, _P3) {
         var orgY = Cn.coordsSystem.y(org.getY());
         var fi = phi();
         var th = theta();
-        var cfi = Math.cos(fi), sfi = Math.sin(fi);
-        var cth = Math.cos(th), sth = Math.sin(th);
+        var cfi = Math.cos(fi),
+            sfi = Math.sin(fi);
+        var cth = Math.cos(th),
+            sth = Math.sin(th);
 
         var pt = function(_v) {
             return [orgX + _v[0] * (sfi) + _v[1] * (cfi), orgY + _v[0] * (-cfi * sth) + _v[1] * (sfi * sth) + _v[2] * (cth)];
@@ -187,7 +192,9 @@ function Circle3ptsObject_3D(_construction, _name, _P1, _P2, _P3) {
 
         // Determination des points du cercle par l'équation barycentrique
         // de ce cercle :
-        var tab = [], tbc = [], tca = [];
+        var tab = [],
+            tbc = [],
+            tca = [];
         var step = 1 / NB;
         var k, x, y, z, inter, coef;
         for (var i = 0; i < NB; i++) {
@@ -199,7 +206,10 @@ function Circle3ptsObject_3D(_construction, _name, _P1, _P2, _P3) {
             y = c[1] + coef * (a[1] - c[1] + k * (b[1] - a[1]));
             z = c[2] + coef * (a[2] - c[2] + k * (b[2] - a[2]));
             c2d = pt([x, y, z]);
-            tab.push([[px(c2d[0]), py(c2d[1])], [x, y, z]]);
+            tab.push([
+                [px(c2d[0]), py(c2d[1])],
+                [x, y, z]
+            ]);
             // Tracé de l'arc BC :
             inter = c2 * (1 - k) + b2 * k;
             coef = inter / (inter - a2 * k * (1 - k));
@@ -207,7 +217,10 @@ function Circle3ptsObject_3D(_construction, _name, _P1, _P2, _P3) {
             y = a[1] + coef * (b[1] - a[1] + k * (c[1] - b[1]));
             z = a[2] + coef * (b[2] - a[2] + k * (c[2] - b[2]));
             c2d = pt([x, y, z]);
-            tbc.push([[px(c2d[0]), py(c2d[1])], [x, y, z]]);
+            tbc.push([
+                [px(c2d[0]), py(c2d[1])],
+                [x, y, z]
+            ]);
             // Tracé de l'arc CA :
             inter = a2 * (1 - k) + c2 * k;
             coef = inter / (inter - b2 * k * (1 - k));
@@ -215,7 +228,10 @@ function Circle3ptsObject_3D(_construction, _name, _P1, _P2, _P3) {
             y = b[1] + coef * (c[1] - b[1] + k * (a[1] - c[1]));
             z = b[2] + coef * (c[2] - b[2] + k * (a[2] - c[2]));
             c2d = pt([x, y, z]);
-            tca.push([[px(c2d[0]), py(c2d[1])], [x, y, z]]);
+            tca.push([
+                [px(c2d[0]), py(c2d[1])],
+                [x, y, z]
+            ]);
 
         }
         // Concaténation des trois arcs en un seul tableau.
@@ -231,5 +247,4 @@ function Circle3ptsObject_3D(_construction, _name, _P1, _P2, _P3) {
     };
 
 
-}
-;
+};

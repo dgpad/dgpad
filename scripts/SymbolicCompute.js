@@ -122,7 +122,7 @@ function SymbolicCompute(_cn) {
                 return "quotient(" + v[0] + "," + v[1] + ")";
                 break;
             case "power":
-//                if (v[1] === "1") return v[0];
+                //                if (v[1] === "1") return v[0];
                 if (v[0] === 0) return 1;
                 if (v[1] === 1) return v[0];
                 if ((!isNaN(v[0])) && (!isNaN(v[1]))) return Math.pow(v[0], v[1]);
@@ -130,17 +130,17 @@ function SymbolicCompute(_cn) {
                 break;
             default:
                 return _s;
-//            default:
-//                return f + "(" + simplifyFromCode(_t, _m, _t[parseInt(st[1])]) + ")";
+                //            default:
+                //                return f + "(" + simplifyFromCode(_t, _m, _t[parseInt(st[1])]) + ")";
         }
 
     };
 
 
     var derivateFromCode = function(_t, _m, _s, _v) {
-//        console.log("****derivateFromCode="+_s);
+        //        console.log("****derivateFromCode="+_s);
         if (_s === _v) return 1;
-//        if (_s.indexOf(mask)===-1) return 0;
+        //        if (_s.indexOf(mask)===-1) return 0;
 
         var st = _s.split(_m);
         if (st.length === 1) return 0; // Il s'agit d'une constante
@@ -159,8 +159,7 @@ function SymbolicCompute(_cn) {
         for (var i = 0; i < p.length; i++) {
             dp[i] = derivateFromCode(_t, _m, p[i], _v);
             allCte = allCte && (dp[i] === 0);
-        }
-        ;
+        };
         if (allCte) return 0;
 
 
@@ -211,7 +210,7 @@ function SymbolicCompute(_cn) {
             case "sqrt":
                 return "quotient(" + dp[0] + ",times(2,sqrt(" + p[0] + ")))";
                 break;
-                case "abs":
+            case "abs":
                 return "times(" + dp[0] + ",quotient(abs(" + p[0] + ")," + p[0] + "))";
                 break;
             case "log":
@@ -231,10 +230,10 @@ function SymbolicCompute(_cn) {
                 break;
         }
 
-//        
-//        _s = _s.replace(new RegExp(mask + "(\\d+)", "g"), function(m, _d) {
-//            return tabExpr[_d];
-//        });
+        //        
+        //        _s = _s.replace(new RegExp(mask + "(\\d+)", "g"), function(m, _d) {
+        //            return tabExpr[_d];
+        //        });
         return 0;
 
     }
@@ -306,17 +305,17 @@ function SymbolicCompute(_cn) {
             return EXPS[_n].getVarName();
         });
 
-//        console.log("me.userCode : " + _s);
+        //        console.log("me.userCode : " + _s);
         var str;
         do {
             str = _s;
-//            // Remplacement des divisions et multiplications de nombres par le quotient ou produit :
-//            _s = _s.replace(/(^|[^\^]{1})(\b\d+\.*\d*\b)(\*|\/)(\b\d+\.*\d*\b)([^\^]{1}|$)/g, function(_m, _c, _n1,_op, _n2, _c2) {
-//                _n1 = parseFloat(_n1);
-//                _n2 = parseFloat(_n2);
-//                var r=(_op==="*")?(_n1 * _n2):(_n1 / _n2);
-//                return "" + _c + r + _c2;
-//            });
+            //            // Remplacement des divisions et multiplications de nombres par le quotient ou produit :
+            //            _s = _s.replace(/(^|[^\^]{1})(\b\d+\.*\d*\b)(\*|\/)(\b\d+\.*\d*\b)([^\^]{1}|$)/g, function(_m, _c, _n1,_op, _n2, _c2) {
+            //                _n1 = parseFloat(_n1);
+            //                _n2 = parseFloat(_n2);
+            //                var r=(_op==="*")?(_n1 * _n2):(_n1 / _n2);
+            //                return "" + _c + r + _c2;
+            //            });
             // Remplacement des puissances de nombres :
             _s = _s.replace(/(\b\d+\.*\d*\b)\^(\b\d+\.*\d*\b)/g, function(_m, _n1, _n2) {
                 _n1 = parseFloat(_n1);
@@ -334,27 +333,27 @@ function SymbolicCompute(_cn) {
                 var r = Math.round(_n1 * _n2 * 1e13) / 1e13;
                 return "" + _c + r + _c2;
             });
-//            // Remplacement des divisions de nombres par le quotient :
-//            _s = _s.replace(/([^\^]{1})(\b\d+\.*\d*\b)\/(\b\d+\.*\d*\b)([^\^]{1})/g, function(_m, _c,_n1, _n2,_c2) {
-//                _n1 = parseFloat(_n1);
-//                _n2 = parseFloat(_n2);
-//                return ""+_c+(_n1 / _n2)+_c2;
-//            });
+            //            // Remplacement des divisions de nombres par le quotient :
+            //            _s = _s.replace(/([^\^]{1})(\b\d+\.*\d*\b)\/(\b\d+\.*\d*\b)([^\^]{1})/g, function(_m, _c,_n1, _n2,_c2) {
+            //                _n1 = parseFloat(_n1);
+            //                _n2 = parseFloat(_n2);
+            //                return ""+_c+(_n1 / _n2)+_c2;
+            //            });
             // On commute variable et nombre de sorte que le nombre soit
             // au début :
-//            _s = _s.replace(/(^|[^\^]{1})(\b[xyzt]{1}\b)\*(\b\d+\.*\d*\b)([^\^]{1}|$)/g, "$1$3*$2$4");
+            //            _s = _s.replace(/(^|[^\^]{1})(\b[xyzt]{1}\b)\*(\b\d+\.*\d*\b)([^\^]{1}|$)/g, "$1$3*$2$4");
             // On commute mots et nombre de sorte que le nombre soit
             // au début :
-//            _s = _s.replace(/(^|[^\^]{1})(\b\w+\b)\*(\b\d+\.*\d*\b)([^\^]{1}|$)/g, "$1$3*$2$4");
-//            console.log(_s);
+            //            _s = _s.replace(/(^|[^\^]{1})(\b\w+\b)\*(\b\d+\.*\d*\b)([^\^]{1}|$)/g, "$1$3*$2$4");
+            //            console.log(_s);
         } while (str !== _s);
 
-//        _s=_s.replace(/\*/g,"");
+        //        _s=_s.replace(/\*/g,"");
 
 
-//        _s = _s.replace(/[0-9\.]+([\+\-\*\/\^]){1}/g, function(_m, _n) {
-//            return EXPS[_n].getVarName();
-//        });
+        //        _s = _s.replace(/[0-9\.]+([\+\-\*\/\^]){1}/g, function(_m, _n) {
+        //            return EXPS[_n].getVarName();
+        //        });
 
 
         return _s;
@@ -366,11 +365,11 @@ function SymbolicCompute(_cn) {
         var tab = prepareMaskFromCode(mask, _s);
         var simpl = simplifyFromCode(tab, mask, tab[tab.length - 1]);
         _s = restituteCodeFromMask(tab, mask, simpl);
-//        console.log("me.simplify=" + _s);
+        //        console.log("me.simplify=" + _s);
         return _s;
     }
-    
-    
+
+
 
 
     me.derivate = function(_s, _v) {
@@ -380,17 +379,17 @@ function SymbolicCompute(_cn) {
         var der = derivateFromCode(tab, mask, tab[tab.length - 1], _v);
         _s = restituteCodeFromMask(tab, mask, der);
 
-//        tab = prepareMaskFromCode(mask, _s, _v);
-//        der = simplifyFromCode(tab, mask, tab[tab.length - 1], _v);
-//        _s = restituteCodeFromMask(tab, mask, der);
+        //        tab = prepareMaskFromCode(mask, _s, _v);
+        //        der = simplifyFromCode(tab, mask, tab[tab.length - 1], _v);
+        //        _s = restituteCodeFromMask(tab, mask, der);
 
-//        console.log("CODE =" + _s);
-//        return me.simplify(_s);
-//        return _s;
+        //        console.log("CODE =" + _s);
+        //        return me.simplify(_s);
+        //        return _s;
 
         _s = me.userCode(me.simplify(_s));
 
-//        console.log("USER CODE="+_s);
+        //        console.log("USER CODE="+_s);
 
         return _s;
 

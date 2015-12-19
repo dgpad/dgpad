@@ -41,7 +41,7 @@ function Checkbox(_owner, _left, _top, _width, _height, _value, _label, _callbac
     lwp("font-size", "13px");
     lwp("text-align", "left");
     lwp("line-height", _height + "px");
-    lwp("white-space","nowrap");
+    lwp("white-space", "nowrap");
     lwp("overflow", "hidden");
 
     cbp("position", "absolute");
@@ -152,5 +152,4 @@ function Checkbox(_owner, _left, _top, _width, _height, _value, _label, _callbac
     wrapper.appendChild(box_wrapper);
     wrapper.appendChild(label_wrapper);
     _owner.appendChild(wrapper);
-}
-;
+};

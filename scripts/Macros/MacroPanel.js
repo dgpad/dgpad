@@ -8,13 +8,13 @@ function MacroPanel(_canvas, _exec) {
     var me = this;
     var canvas = _canvas;
     $U.extend(this, new VerticalBorderPanel(canvas, $P.MacroPanelWidth * $SCALE, true));
-    me.setBounds(me.getBounds().left-15, -5, 0, canvas.getHeight()-$P.controlpanel.size); // Le fond n'est pas affiché
-    var proc=function(_li,_m){
+    me.setBounds(me.getBounds().left - 15, -5, 0, canvas.getHeight() - $P.controlpanel.size); // Le fond n'est pas affiché
+    var proc = function(_li, _m) {
         me.deselectMacros();
-        _exec(_li,_m);
+        _exec(_li, _m);
     }
-    var pluginsList = new iPadList(me.getDocObject(), proc, $L.macro_plugins,10, 10, 180, 196);
-    var toolsList = new iPadList(me.getDocObject(), proc, $L.macro_tools,10, 215, 180, 196);
+    var pluginsList = new iPadList(me.getDocObject(), proc, $L.macro_plugins, 10, 10, 180, 196);
+    var toolsList = new iPadList(me.getDocObject(), proc, $L.macro_tools, 10, 215, 180, 196);
     var props = null;
     var props = new MacroPropertiesPanel(canvas, me);
 
@@ -39,7 +39,7 @@ function MacroPanel(_canvas, _exec) {
         pluginsList.reInit();
         toolsList.reInit();
     };
-    me.getToolPath=function(){
+    me.getToolPath = function() {
         return toolsList.getCurrentPath();
     };
 
@@ -48,9 +48,9 @@ function MacroPanel(_canvas, _exec) {
     };
 
     me.clearToolList = function() {
-        var old=(toolsList)?(toolsList.getDocObject()):null;
+        var old = (toolsList) ? (toolsList.getDocObject()) : null;
         if (old) old.parentNode.removeChild(old);
-        toolsList = new iPadList(me.getDocObject(), proc,$L.macro_tools, 10, 210, 180, 196);
+        toolsList = new iPadList(me.getDocObject(), proc, $L.macro_tools, 10, 210, 180, 196);
     };
 
     me.isMacroProps = function() {
@@ -94,8 +94,8 @@ function MacroPropertiesPanel(_canvas, _macropanel) {
     var nameDIV = new GUIElement(me, "div");
     nameDIV.setAttr("className", "macroPropsNameDIV");
 
-// La macro a été validée par la touche retour
-// après avoir tapé son nom dans le input text :
+    // La macro a été validée par la touche retour
+    // après avoir tapé son nom dans le input text :
     var validMacro = function() {
         var N = name.getDocObject();
         N.blur();
@@ -104,13 +104,13 @@ function MacroPropertiesPanel(_canvas, _macropanel) {
         for (var i = 0, len = params.length; i < len; i++) {
             codes.push(cn.find(params[i]).getFamilyCode());
         }
-        var m = canvas.macrosManager.addTool(macropanel.getToolPath()+N.value, codes, exec);
+        var m = canvas.macrosManager.addTool(macropanel.getToolPath() + N.value, codes, exec);
         canvas.macrosManager.refreshToolList();
         cn.clearMacroMode();
         canvas.paint();
         macropanel.hideMacroProps();
         macropanel.targetToolLI(m);
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
     };
 
     var form = new GUIElement(me, "form");
@@ -178,7 +178,7 @@ function MacroPropertiesPanel(_canvas, _macropanel) {
         textarea_exec.setAttr("innerHTML", exec.toString().replace(/\n/g, "\n\t"));
         inner.addContent(div_init);
         inner.addContent(div_final);
-//        inner.addContent(div_exec);
+        //        inner.addContent(div_exec);
     };
 
     form.addContent(name);
@@ -186,5 +186,4 @@ function MacroPropertiesPanel(_canvas, _macropanel) {
     viewport.addContent(inner);
     me.addContent(nameDIV);
     me.addContent(viewport);
-}
-;
+};

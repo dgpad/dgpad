@@ -32,12 +32,9 @@ function CallCalc() {
 
     };
 
-    this.selectCreatePoint = function(zc, ev) {
-    };
+    this.selectCreatePoint = function(zc, ev) {};
 
-    this.preview = function(ev, zc) {
-    };
+    this.preview = function(ev, zc) {};
 
 
 }
-

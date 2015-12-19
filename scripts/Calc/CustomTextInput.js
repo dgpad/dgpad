@@ -1,5 +1,5 @@
 function CustomTextInput(_man, _ownerdiv, _lbl) {
-//    $U.extend(this, new GUIElement(_ownerdiv, "div"));
+    //    $U.extend(this, new GUIElement(_ownerdiv, "div"));
     $U.extend(this, new Panel(_ownerdiv.getDocObject()));
     this.setStyles("opacity:0");
     this.transition("opacity", 0.4);
@@ -13,14 +13,14 @@ function CustomTextInput(_man, _ownerdiv, _lbl) {
     var preferredKB = 0; // Clavier préféré : 0 pour custom, et 1 pour standard
 
 
-//-linear-gradient(top, #eeeef0, #d3d3d9)
+    //-linear-gradient(top, #eeeef0, #d3d3d9)
     me.setStyles("position:absolute;border-radius:5px;border: 1px solid #b4b4b4;background-color:#FAFAFA");
-//    me.setStyles("background: " + $U.browserCode() + "-linear-gradient(top, #E1E3CD, #EFF2DA);text-shadow: 0 1px 0 #fff;display: inline-block");
+    //    me.setStyles("background: " + $U.browserCode() + "-linear-gradient(top, #E1E3CD, #EFF2DA);text-shadow: 0 1px 0 #fff;display: inline-block");
 
-    var isHidden = function () {
+    var isHidden = function() {
         return (parseInt(me.getStyle("opacity")) === 0);
     };
-    this.show = function () {
+    this.show = function() {
         if (isHidden()) {
             me.applyTransitionIN();
             inp.addDownEvent(mousedown);
@@ -28,42 +28,42 @@ function CustomTextInput(_man, _ownerdiv, _lbl) {
             inp.addMoveEvent(mousemove);
         }
     };
-    this.hide = function () {
+    this.hide = function() {
         me.applyTransitionOUT();
         inp.removeDownEvent(mousedown);
         inp.removeUpEvent(mouseup, window);
         inp.removeMoveEvent(mousemove);
     };
 
-    var mouseX = function (ev) {
+    var mouseX = function(ev) {
         return (ev.pageX - bounds.left - lb.getDocObject().offsetWidth - 20);
     };
 
-    var mousedown = function (ev) {
+    var mousedown = function(ev) {
         man.activate(me);
         sel.mousedown(mouseX(ev));
         click_on = true;
     };
 
-    var mouseup = function () {
+    var mouseup = function() {
         click_on = false;
     };
 
-    var mousemove = function (ev) {
+    var mousemove = function(ev) {
         if (click_on) {
             sel.mousemove(mouseX(ev));
         }
     };
 
-    me.setPreferredKB = function (_kb) {
+    me.setPreferredKB = function(_kb) {
         preferredKB = _kb
     };
 
-    me.setSelectionRange = function (_s, _e) {
+    me.setSelectionRange = function(_s, _e) {
         sel.setSelectionRange(_s, _e);
     };
 
-    me.setActive = function (_b) {
+    me.setActive = function(_b) {
         active = _b;
         sel.setActive();
         if ((!active) && (standard))
@@ -77,15 +77,14 @@ function CustomTextInput(_man, _ownerdiv, _lbl) {
             man.setKeyEvents(false);
     };
 
-    me.isActive = function () {
+    me.isActive = function() {
         return active;
     };
 
     // Appelée à chaque fois que le texte change, quel
     // que soit le clavier choisi. A surcharger par setChangedFilter :
-    var changedFilter = function (txt) {
-    };
-    me.setChangedFilter = function (_proc) {
+    var changedFilter = function(txt) {};
+    me.setChangedFilter = function(_proc) {
         changedFilter = _proc;
     };
 
@@ -93,10 +92,10 @@ function CustomTextInput(_man, _ownerdiv, _lbl) {
     var lb = new GUIElement(me, "div");
     var inp = new GUIElement(me, "div");
     var content = new GUIElement(me, "span");
-    me.getInputDIV = function () {
+    me.getInputDIV = function() {
         return inp;
     };
-    me.getContentSPAN = function () {
+    me.getContentSPAN = function() {
         return content;
     };
     lb.setAttr("textContent", _lbl);
@@ -110,7 +109,7 @@ function CustomTextInput(_man, _ownerdiv, _lbl) {
     me.addContent(inp);
 
     var standard = null;
-    setTimeout(function () {
+    setTimeout(function() {
         var doc = ($APPLICATION) ? window.parent.document.body : window.document.body;
         standard = new GUIElement(me, "input");
         var kb = standard.getDocObject();
@@ -122,44 +121,47 @@ function CustomTextInput(_man, _ownerdiv, _lbl) {
         stls += "width:" + (bounds.width - 40 - lb.getDocObject().offsetWidth) + "px;";
         stls += "height:" + bounds.height + "px;";
         standard.setStyles(stls += "background-color:#FAFAFA;z-index:3;position:absolute;overflow:hidden;border:0px;font-family:Courier New, Courier, monospace;font-size:20px;text-align:left;vertical-align:middle;outline-width:0px;border-radius:0px;padding:0px");
-        kb.onblur = function () {
+        kb.onblur = function() {
             man.filterKB(false);
             man.setKeyEvents(false);
             me.setText(kb.value);
             if (active)
                 sel.setSelectionRange(kb.selectionStart, kb.selectionEnd);
             standard.hide();
-            setTimeout($STANDARD_KBD.setbtn,5000);
+            setTimeout($STANDARD_KBD.setbtn, 5000);
         };
-        kb.onkeydown = function (ev) {
-        };
-        kb.onkeyup = function (ev) {
+        kb.onkeydown = function(ev) {};
+        kb.onkeyup = function(ev) {
             changedFilter(kb.value);
         };
-        standard.quit = function () {
+        standard.quit = function() {
             kb.blur();
         };
         doc.appendChild(kb);
     }, 1);
 
-    me.getInput = function () {
+    me.getInput = function() {
         return standard.getDocObject();
     };
-    me.getSel = function () {
+    me.getSel = function() {
         return sel;
     };
 
 
-    me.showKB = function () {
-    };
+    me.showKB = function() {};
 
 
-    me.isStandardKB = function () {
+    me.isStandardKB = function() {
         return (standard !== null);
     }
 
-    me.setBounds = function (l, t, w, h) {
-        bounds = {left: l, top: t, width: w, height: h};
+    me.setBounds = function(l, t, w, h) {
+        bounds = {
+            left: l,
+            top: t,
+            width: w,
+            height: h
+        };
         me.setStyles("left:" + l + "px;top:" + t + "px;width:" + w + "px;height:" + h + "px");
         lb.setStyles("height:" + h + "px;line-height:" + h + "px");
         inp.setBounds(LabelWidth + 20, 0, w - LabelWidth - 40, h);
@@ -172,7 +174,7 @@ function CustomTextInput(_man, _ownerdiv, _lbl) {
         content.setAttr("textContent", "abcdefghijklmnopqrstuvwxyz");
         content.setStyles("margin-left:0px")
         me.addContent(content);
-        setTimeout(function () {
+        setTimeout(function() {
             sel.setCarLength(content.getDocObject().offsetWidth / 26);
             sel.setOffset(lb.getDocObject().offsetWidth + 20);
             content.setAttr("textContent", "");
@@ -181,32 +183,32 @@ function CustomTextInput(_man, _ownerdiv, _lbl) {
         }, 1);
     };
 
-    me.setLabel = function (_l) {
+    me.setLabel = function(_l) {
         lb.setAttr("textContent", _l);
 
-//        me.setBounds(bounds.left, bounds.top, bounds.width, bounds.height);
-//        setTimeout(function() {
-//            sel.setSelectionRange(0, 0);
-//        }, 1);
+        //        me.setBounds(bounds.left, bounds.top, bounds.width, bounds.height);
+        //        setTimeout(function() {
+        //            sel.setSelectionRange(0, 0);
+        //        }, 1);
 
     };
 
-    me.setText = function (txt) {
+    me.setText = function(txt) {
         content.setAttr("textContent", txt);
         changedFilter(txt);
     };
-    me.getText = function () {
+    me.getText = function() {
         return content.getAttr("textContent");
     };
-    me.insertText = function (_st) {
+    me.insertText = function(_st) {
         if (!active)
             return;
         sel.insertText(_st);
     };
-    me.nextCar = function () {
+    me.nextCar = function() {
         sel.nextCar();
     };
-    me.executeCommand = function (_st) {
+    me.executeCommand = function(_st) {
         sel.executeCommand(_st);
     }
 }
@@ -218,17 +220,21 @@ function CustomTextSelection(_ti) {
     var me = this;
     var ti = _ti;
     var offsetX = 0;
-    var clickpos = NaN, selStart = NaN, selEnd = NaN, selStartX = NaN, selEndX = NaN;
+    var clickpos = NaN,
+        selStart = NaN,
+        selEnd = NaN,
+        selStartX = NaN,
+        selEndX = NaN;
     var blinkvar = NaN;
     var ONECAR = NaN;
     var marginOffsetX = 0;
 
     me.setStyles("pointer-events:none;z-index:2;visibility:hidden;position:absolute;background-color:blue;left:0px;top:2px;width:3px");
-    me.setOffset = function (_x) {
+    me.setOffset = function(_x) {
         offsetX = _x;
     };
 
-    var setMarginOffset = function () {
+    var setMarginOffset = function() {
         if (selStartX > ti.getInputDIV().getBounds().width) {
             marginOffsetX = ti.getInputDIV().getBounds().width - selStartX;
             ti.getContentSPAN().setStyles("margin-left:" + marginOffsetX + "px");
@@ -238,7 +244,7 @@ function CustomTextSelection(_ti) {
         }
     }
 
-    var display = function (_withOffset) {
+    var display = function(_withOffset) {
         if (_withOffset)
             setMarginOffset();
         if (isNaN(selStart)) {
@@ -258,27 +264,27 @@ function CustomTextSelection(_ti) {
                 me.setStyles("visibility:visible;background-color:rgba(0,0,255,0.2);left:" + (selStartX + offsetX + marginOffsetX) + "px;width:" + (selEndX - selStartX) + "px");
             }
         }
-//        console.log("display:" + selStartX); 
+        //        console.log("display:" + selStartX); 
     };
-    var blink = function () {
+    var blink = function() {
         if (me.getStyle("visibility") === "hidden")
             me.setStyle("visibility", "visible");
         else
             me.setStyle("visibility", "hidden");
     };
 
-    me.setHide = function (_h) {
+    me.setHide = function(_h) {
         if (_h)
             me.setStyle("display", "none");
         else {
             me.setStyle("display", "inline");
             me.setStyle("visibility", "visible");
-//            console.log("show !!!");
+            //            console.log("show !!!");
         }
 
     }
 
-    me.nextCar = function () {
+    me.nextCar = function() {
         if (selStart < ti.getText().length) {
             selStart++;
             selStartX = ONECAR * selStart;
@@ -288,13 +294,13 @@ function CustomTextSelection(_ti) {
             display(true);
         }
     };
-    me.getSelStart = function () {
+    me.getSelStart = function() {
         return selStart;
     };
-    me.getSelEnd = function () {
+    me.getSelEnd = function() {
         return selEnd;
     };
-    me.setSelectionRange = function (_start, _end) {
+    me.setSelectionRange = function(_start, _end) {
         selStart = _start;
         selStartX = ONECAR * selStart;
         selEnd = _end;
@@ -302,13 +308,13 @@ function CustomTextSelection(_ti) {
         clickpos = selStart;
         display(true);
     };
-    me.setCarLength = function (x) {
+    me.setCarLength = function(x) {
         ONECAR = x;
     };
-    me.getCarLength = function () {
+    me.getCarLength = function() {
         return ONECAR;
     }
-    me.mousedown = function (x) {
+    me.mousedown = function(x) {
         if (!ti.isActive())
             return;
         x = x - marginOffsetX;
@@ -321,7 +327,7 @@ function CustomTextSelection(_ti) {
         clickpos = selStart;
         display(false);
     };
-    me.mousemove = function (x) {
+    me.mousemove = function(x) {
         if (!ti.isActive())
             return;
         x = x - marginOffsetX;
@@ -337,18 +343,18 @@ function CustomTextSelection(_ti) {
         display(false);
     };
 
-    me.setActive = function () {
+    me.setActive = function() {
         if (!ti.isActive()) {
             selStart = NaN, selEnd = NaN, selStartX = NaN, selEndX = NaN;
             display(true);
         }
     };
 
-    me.getText = function () {
+    me.getText = function() {
         return (ti.getText().substring(selStart, selEnd));
     };
 
-    me.executeCommand = function (_st) {
+    me.executeCommand = function(_st) {
         switch (_st) {
             case "DEL":
                 if (selStart > 0) {
@@ -363,7 +369,7 @@ function CustomTextSelection(_ti) {
                     }
                     ti.setText(before + after);
                     selStart = before.length;
-//                    selStart--;
+                    //                    selStart--;
                 }
                 break;
             case "CLR":
@@ -387,7 +393,7 @@ function CustomTextSelection(_ti) {
         display(true);
     }
 
-    var command = function (_st) {
+    var command = function(_st) {
         if (_st.indexOf("cmd_") !== 0)
             return false;
         _st = _st.replace("cmd_", "");
@@ -408,7 +414,7 @@ function CustomTextSelection(_ti) {
         return true;
     };
 
-    var particularCases = function (_st) {
+    var particularCases = function(_st) {
         var s = ti.getText();
         var before = s.slice(0, selStart);
         var middle = s.substring(selStart, selEnd);
@@ -428,7 +434,7 @@ function CustomTextSelection(_ti) {
         return false;
     };
 
-    me.insertText = function (_st) {
+    me.insertText = function(_st) {
         if (!command(_st)) {
             if (!particularCases(_st)) {
                 var s = ti.getText();

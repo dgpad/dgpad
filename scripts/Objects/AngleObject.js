@@ -2,8 +2,8 @@
 //************ ARC 3 pts OBJECT ******************
 //************************************************
 function AngleObject(_construction, _name, _P1, _P2, _P3) {
-    $U.extend(this, new ConstructionObject(_construction, _name));                           // Héritage
-    $U.extend(this, new MoveableObject(_construction));                                                     // Héritage
+    $U.extend(this, new ConstructionObject(_construction, _name)); // Héritage
+    $U.extend(this, new MoveableObject(_construction)); // Héritage
     var me = this;
     var A = _P1;
     var O = _P2;
@@ -23,7 +23,7 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
 
     this.setParent(A, O, C);
 
-    this.redefine = function (_old, _new) {
+    this.redefine = function(_old, _new) {
         if (_old === A) {
             this.addParent(_new);
             A = _new;
@@ -35,67 +35,68 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
             C = _new;
         }
     };
-    this.is360 = function () {
+    this.is360 = function() {
         return mode360;
     };
-    this.set360 = function (_360) {
+    this.set360 = function(_360) {
         mode360 = _360;
     };
-    this.getValue = function () {
-        var a= mode360 ? AOC : AOC180;
+    this.getValue = function() {
+        var a = mode360 ? AOC : AOC180;
         return (Cn.isDEG()) ? (a * deg_coef) : a;
     };
-    this.getCode = function () {
+    this.getCode = function() {
         return "angle";
     };
-    this.getFamilyCode = function () {
+    this.getFamilyCode = function() {
         return "angle";
     };
     //Obsolete :
-    this.dragObject = function (_x, _y) {
+    this.dragObject = function(_x, _y) {
         var vx = _x - O.getX();
         var vy = _y - O.getY();
         R = Math.sqrt(vx * vx + vy * vy);
     };
-    this.compute_dragPoints = function (_x, _y) {
+    this.compute_dragPoints = function(_x, _y) {
         var vx = _x - O.getX();
         var vy = _y - O.getY();
         R = Math.sqrt(vx * vx + vy * vy);
     };
-    this.computeDrag = function () {
-    };
+    this.computeDrag = function() {};
 
-    this.paintLength = function (ctx) {
-        if (valid){
+    this.paintLength = function(ctx) {
+        if (valid) {
             ctx.save();
-        var r = R + this.prefs.fontmargin + this.getRealsize() / 2;
-        ctx.textAlign = "left";
-        var prec = this.getPrecision();
-        var display = (mode360) ? AOC : AOC180;
-        display = display * 180 / Math.PI;
-        display = Math.round(display * prec) / prec;
-        var a = trigo ? -toAngle + AOC / 2 : Math.PI - toAngle + AOC / 2;
-        a = a - Math.floor(a / $U.doublePI) * $U.doublePI; // retour dans [0;2π]
-        if ((a > $U.halfPI) && (a < 3 * $U.halfPI)) {
-            a += Math.PI;
-            r = -r;
-            ctx.textAlign = "right";
-        }
-        ctx.fillStyle = ctx.strokeStyle;
-        ctx.translate(O.getX(), O.getY());
-        ctx.rotate(a);
-        ctx.fillText($L.number(display) + "°", r, this.getFontSize() / 2);
-        ctx.restore();
+            var r = R + this.prefs.fontmargin + this.getRealsize() / 2;
+            ctx.textAlign = "left";
+            var prec = this.getPrecision();
+            var display = (mode360) ? AOC : AOC180;
+            display = display * 180 / Math.PI;
+            display = Math.round(display * prec) / prec;
+            var a = trigo ? -toAngle + AOC / 2 : Math.PI - toAngle + AOC / 2;
+            a = a - Math.floor(a / $U.doublePI) * $U.doublePI; // retour dans [0;2π]
+            if ((a > $U.halfPI) && (a < 3 * $U.halfPI)) {
+                a += Math.PI;
+                r = -r;
+                ctx.textAlign = "right";
+            }
+            ctx.fillStyle = ctx.strokeStyle;
+            ctx.translate(O.getX(), O.getY());
+            ctx.rotate(a);
+            ctx.fillText($L.number(display) + "°", r, this.getFontSize() / 2);
+            ctx.restore();
         }
     };
 
 
-    this.paintObject = function (ctx) {
+    this.paintObject = function(ctx) {
         if (valid) {
             ctx.beginPath();
             if ($U.approximatelyEqual(AOC180, $U.halfPI)) {
-                var cto = R * Math.cos(-toAngle), sto = R * Math.sin(-toAngle);
-                var cfrom = R * Math.cos(-fromAngle), sfrom = R * Math.sin(-fromAngle);
+                var cto = R * Math.cos(-toAngle),
+                    sto = R * Math.sin(-toAngle);
+                var cfrom = R * Math.cos(-fromAngle),
+                    sfrom = R * Math.sin(-fromAngle);
                 ctx.moveTo(O.getX() + cto, O.getY() + sto);
                 ctx.lineTo(O.getX() + cto + cfrom, O.getY() + sto + sfrom);
                 ctx.lineTo(O.getX() + cfrom, O.getY() + sfrom);
@@ -120,7 +121,7 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
 
     };
 
-    this.compute = function () {
+    this.compute = function() {
         var t = $U.computeAngleParams(A.getX(), A.getY(), O.getX(), O.getY(), C.getX(), C.getY());
         fromAngle = t.startAngle;
         toAngle = t.endAngle;
@@ -128,15 +129,15 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
         AOC = t.AOC;
         AOC180 = t.AOC180;
         valid = !isNaN(fromAngle);
-//        console.log("fromA="+fromAngle+" toA="+toAngle+" trig="+trigo+" AOC="+AOC);
+        //        console.log("fromA="+fromAngle+" toA="+toAngle+" trig="+trigo+" AOC="+AOC);
     };
 
 
-    this.getSource = function (src) {
+    this.getSource = function(src) {
         src.geomWrite(false, this.getName(), "Angle", A.getVarName(), O.getVarName(), C.getVarName());
     };
 
-    this.mouseInside = function (ev) {
+    this.mouseInside = function(ev) {
         return $U.isNearToArc(O.getX(), O.getY(), AOC, fromAngle, toAngle, trigo, R, this.mouseX(ev), this.mouseY(ev), this.getOversize());
     };
 

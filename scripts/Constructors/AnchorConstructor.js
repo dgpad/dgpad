@@ -30,10 +30,10 @@ function AnchorConstructor() {
             Obj.attachTo(Pt);
         } else {
             // Il s'agit d'un point à redéfinir :
-            if ((this.isNewPoint)&&(Pt.getParentLength()===0)) {
+            if ((this.isNewPoint) && (Pt.getParentLength() === 0)) {
                 // Un nouveau point libre a été créé, on l'enlève :
                 zc.getConstruction().remove(Pt);
-            }else{
+            } else {
                 // On a ciblé un objet, bon pour un point sur :
                 Obj.attachTo(Pt);
             }
@@ -41,7 +41,7 @@ function AnchorConstructor() {
     };
 
     this.preview = function(ev, zc) {
-//        console.log(this.getCList().length);
+        //        console.log(this.getCList().length);
         var ctx = zc.getContext();
         ctx.strokeStyle = zc.prefs.color.hilite;
         ctx.lineWidth = zc.prefs.size.line;

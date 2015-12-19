@@ -2,8 +2,8 @@
 //************** CIRCLE OBJECT *******************
 //************************************************
 function CircleObject(_construction, _name, _P1, _P2) {
-    $U.extend(this, new PrimitiveCircleObject(_construction, _name, _P1));   // Héritage
-    $U.extend(this, new MoveableObject(_construction));                                      // Héritage
+    $U.extend(this, new PrimitiveCircleObject(_construction, _name, _P1)); // Héritage
+    $U.extend(this, new MoveableObject(_construction)); // Héritage
     var me = this;
     this.setDefaults("circle");
     this.P2 = _P2;
@@ -79,6 +79,4 @@ function CircleObject(_construction, _name, _P1, _P2) {
 
 
 
-}
-;
-
+};

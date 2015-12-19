@@ -15,12 +15,9 @@ function InputText(_owner) {
         me.valid_callback(name.getAttr("value"));
     };
 
-    this.valid_callback = function(_t) {
-    };
-    this.keyup_callback = function(_t) {
-    };
-    this.focus_callback = function() {
-    };
+    this.valid_callback = function(_t) {};
+    this.keyup_callback = function(_t) {};
+    this.focus_callback = function() {};
 
 
     var form = new GUIElement(me, "form");
@@ -51,11 +48,11 @@ function InputText(_owner) {
 
     form.addContent(name);
     me.addContent(form);
-    
-    me.selectAll=function(){
+
+    me.selectAll = function() {
         inp.setSelectionRange(0, 9999);
     }
-    
+
 
 
     me.setBounds = function(l, t, w, h) {
@@ -82,5 +79,4 @@ function InputText(_owner) {
 
 
 
-}
-;
+};

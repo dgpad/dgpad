@@ -34,8 +34,8 @@ function CoordsSystem(_C) {
     me.restrictPhi = function(t) {
         phi = t;
     };
-    
-    var restrict3D=function(){
+
+    var restrict3D = function() {
         if (theta.length === 2) {
             if (y0 < theta[0])
                 y0 = theta[0];
@@ -151,7 +151,7 @@ function CoordsSystem(_C) {
             return maxInt;
         if (x < -maxInt)
             return -maxInt;
-//        return (Math.round(x));
+        //        return (Math.round(x));
         return (x);
     };
 
@@ -161,7 +161,7 @@ function CoordsSystem(_C) {
             return maxInt;
         if (y < -maxInt)
             return -maxInt;
-//        return (Math.round(y));
+        //        return (Math.round(y));
         return (y);
     };
 
@@ -182,7 +182,8 @@ function CoordsSystem(_C) {
             ctx.lineTo(Cn.getBounds().width, Math.round(y0));
             ctx.stroke();
         }
-        var dx = 16, dy = 8;
+        var dx = 16,
+            dy = 8;
         ctx.moveTo(Cn.getBounds().width + 1, Math.round(y0));
         ctx.lineTo(Cn.getBounds().width - dx, Math.round(y0) - dy);
         ctx.lineTo(Cn.getBounds().width - dx, Math.round(y0) + dy);
@@ -197,7 +198,8 @@ function CoordsSystem(_C) {
             ctx.lineTo(Math.round(x0), Cn.getBounds().height);
             ctx.stroke();
         }
-        var dx = 16, dy = 8;
+        var dx = 16,
+            dy = 8;
         ctx.moveTo(Math.round(x0), 0);
         ctx.lineTo(Math.round(x0) - dy, dx);
         ctx.lineTo(Math.round(x0) + dy, dx);

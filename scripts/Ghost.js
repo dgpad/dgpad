@@ -8,14 +8,14 @@ function Ghost(_canvas) {
     var ghostOn = false;
     var polygon = false;
     var canvas = _canvas;
-    var Cn=canvas.getConstruction();
+    var Cn = canvas.getConstruction();
 
     var prec2 = canvas.prefs.precision.caress;
     prec2 *= prec2;
     var minLength = 5;
-//    if (Object.touchpad) {
-//        minLength*=canvas.prefs.precision.over.touchfactor;
-//    }
+    //    if (Object.touchpad) {
+    //        minLength*=canvas.prefs.precision.over.touchfactor;
+    //    }
 
 
     var record = function(_x, _y) {
@@ -138,13 +138,12 @@ function Ghost(_canvas) {
                 var P1 = currentLine.getP1();
                 var P2 = currentLine.getP2();
                 createPoint(P1, ev);
-                createPoint(P2, ev,true);
+                createPoint(P2, ev, true);
                 path = path.slice(cornerPos);
                 currentLine = new GhostLine(corner.x, corner.y);
                 lines.push(currentLine);
                 currentLine.getP1().setPointObject(P2.getPointObject());
-            }
-            ;
+            };
         }
     };
 
@@ -219,16 +218,16 @@ function Ghost(_canvas) {
                     createPoint(lines[i].getP1(), ev);
                     Aoc.addC(lines[i].getP1().getPointObject());
                 }
-                createPoint(lines[len - 1].getP2(), ev,true);
+                createPoint(lines[len - 1].getP2(), ev, true);
 
 
 
-//                A décommenter pour le rendu du polygone :
-//                Aoc.addC(lines[len-1].getP2().getPointObject());
-//                if (lines[0].getP1().getPointObject()!=lines[len-1].getP2().getPointObject()) {
-//                    Aoc.addC(lines[0].getP1().getPointObject());
-//                }
-//                Aoc.createObj(canvas, ev);
+                //                A décommenter pour le rendu du polygone :
+                //                Aoc.addC(lines[len-1].getP2().getPointObject());
+                //                if (lines[0].getP1().getPointObject()!=lines[len-1].getP2().getPointObject()) {
+                //                    Aoc.addC(lines[0].getP1().getPointObject());
+                //                }
+                //                Aoc.createObj(canvas, ev);
                 // Création des segments :
                 var Soc = canvas.getConstructor("segment");
 
@@ -274,40 +273,39 @@ function Ghost(_canvas) {
             canvas.paint(ev);
         }
     };
-    
-    var mousedown=false;
-    var mousePressed=function(ev){
+
+    var mousedown = false;
+    var mousePressed = function(ev) {
         me.clear();
         me.setXY(ev);
-        ghostOn=true;
-        mousedown=true;
+        ghostOn = true;
+        mousedown = true;
     };
-    var mouseMoved=function(ev){
+    var mouseMoved = function(ev) {
         if (mousedown) {
             me.recordXY(ev);
             Cn.validate(ev);
             canvas.paint(ev);
         }
     };
-    var mouseReleased=function(ev){
-        mousedown=false;
+    var mouseReleased = function(ev) {
+        mousedown = false;
         me.create(ev);
         Cn.validate(ev);
         Cn.clearSelected();
         Cn.clearIndicated();
         canvas.paint(ev);
-        ghostOn=false;
+        ghostOn = false;
     };
-    
-    me.start=function(){
+
+    me.start = function() {
         canvas.setPressedFilter(mousePressed);
         canvas.setMovedFilter(mouseMoved);
         canvas.setReleasedFilter(mouseReleased);
     }
-    
-    
-}
-;
+
+
+};
 
 
 function GhostLine(_x, _y) {
@@ -324,8 +322,10 @@ function GhostLine(_x, _y) {
     };
 
     me.length = function() {
-        var x1 = P1.getX(), y1 = P1.getY();
-        var x2 = P2.getX(), y2 = P2.getY();
+        var x1 = P1.getX(),
+            y1 = P1.getY();
+        var x2 = P2.getX(),
+            y2 = P2.getY();
         return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
     };
 
@@ -414,6 +414,4 @@ function GhostPoint(_x, _y) {
             ctx.stroke();
         }
     };
-}
-;
-
+};

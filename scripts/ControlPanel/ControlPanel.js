@@ -9,7 +9,7 @@ function ControlPanel(_canvas) {
     var canvas = _canvas;
     $U.extend(this, new HorizontalBorderPanel(canvas, canvas.prefs.controlpanel.size, false));
 
-    me.addDownEvent(function(){});
+    me.addDownEvent(function() {});
     me.setStyle("background", canvas.prefs.controlpanel.color);
     me.setStyle("border-top", "1px solid hsla(0,0%,0%,.1)");
     me.setStyle("border-radius", "0px");
@@ -24,33 +24,33 @@ function ControlPanel(_canvas) {
     var copyDlog = null;
     var historyDlog = null;
 
-    var addBtnLeft = function (_code, _sel, _group, _proc) {
+    var addBtnLeft = function(_code, _sel, _group, _proc) {
         var btn = new ControlButton(me, left, margintop, size, size, "NotPacked/images/controls/" + _code + ".png", _sel, _group, _proc);
         left += size;
         return btn;
     };
-    var addSpaceLeft = function (h) {
+    var addSpaceLeft = function(h) {
         left += h;
     };
-    var addSepLeft = function () {
+    var addSepLeft = function() {
         var btn = new ControlButton(me, left, margintop, size, size, "NotPacked/images/controls/sep.png", true, null, null);
         left += size;
     };
-    var addNullLeft = function () {
+    var addNullLeft = function() {
         var btn = new ControlButton(me, left, margintop, 0, size, "NotPacked/images/controls/sep.png", true, null, null);
     };
-    var addBtnRight = function (_code, _sel, _group, _proc) {
+    var addBtnRight = function(_code, _sel, _group, _proc) {
         var btn = new ControlButton(me, right, margintop, size, size, "NotPacked/images/controls/" + _code + ".png", _sel, _group, _proc);
         right -= size;
         return btn;
     };
-    var addSpaceRight = function (h) {
+    var addSpaceRight = function(h) {
         right -= h;
     };
 
     var modeGroup = new BtnGroup();
 
-    var checkMode = function (_i) {
+    var checkMode = function(_i) {
         if (canvas.getMode() === _i) {
             modeGroup.deselect();
             canvas.setMode(0);
@@ -60,34 +60,34 @@ function ControlPanel(_canvas) {
             return false;
     };
 
-    var arrowMode = function () {
-//        if (checkMode(1)) 
-//        arrowBtn.select();
+    var arrowMode = function() {
+        //        if (checkMode(1)) 
+        //        arrowBtn.select();
         if (checkMode(1))
             return;
         canvas.setMode(1);
         canvas.paint();
     };
-    var fingerMode = function () {
-//        fingerBtn.select();
+    var fingerMode = function() {
+        //        fingerBtn.select();
         if (checkMode(7))
             return;
         canvas.setMode(7);
         canvas.paint();
     };
-    var hideMode = function () {
+    var hideMode = function() {
         if (checkMode(2))
             return;
         canvas.setMode(2);
         canvas.paint();
     };
-    var trashMode = function () {
+    var trashMode = function() {
         if (checkMode(3))
             return;
         canvas.setMode(3);
         canvas.paint();
     };
-    var macroMode = function () {
+    var macroMode = function() {
         if (checkMode(4))
             return;
         if (canvas.nameDialog)
@@ -99,7 +99,7 @@ function ControlPanel(_canvas) {
         canvas.setMode(4);
         canvas.paint();
     };
-    var calcMode = function () {
+    var calcMode = function() {
         if (checkMode(8))
             return;
         if (canvas.nameDialog)
@@ -111,7 +111,7 @@ function ControlPanel(_canvas) {
         canvas.setMode(8);
         canvas.paint();
     };
-    var texMode = function () {
+    var texMode = function() {
         if (checkMode(10))
             return;
         if (canvas.nameDialog)
@@ -123,7 +123,7 @@ function ControlPanel(_canvas) {
         canvas.setMode(10);
         canvas.paint();
     };
-    var propsMode = function () {
+    var propsMode = function() {
         if (checkMode(6))
             return;
         if (canvas.nameDialog)
@@ -136,18 +136,18 @@ function ControlPanel(_canvas) {
         canvas.paint();
     };
 
-    var undoProc = function () {
+    var undoProc = function() {
         canvas.undoManager.undo();
         canvas.refreshKeyboard();
     };
-    var redoProc = function () {
+    var redoProc = function() {
         canvas.undoManager.redo();
         canvas.refreshKeyboard();
     };
 
 
 
-    var nameProc = function () {
+    var nameProc = function() {
         if (canvas.nameDialog) {
             canvas.nameDialog.close();
             nameBtn.deselect();
@@ -162,7 +162,7 @@ function ControlPanel(_canvas) {
 
     };
 
-    var historyProc = function () {
+    var historyProc = function() {
         if (historyDlog) {
             historyDlog.close();
             historyDlog = null;
@@ -179,7 +179,7 @@ function ControlPanel(_canvas) {
         }
     }
 
-    var gridProc = function () {
+    var gridProc = function() {
         if (canvas.isCS()) {
             canvas.showCS(false);
             gridBtn.deselect();
@@ -189,7 +189,7 @@ function ControlPanel(_canvas) {
         }
     };
 
-    var exportProc = function () {
+    var exportProc = function() {
         if (copyDlog) {
             copyDlog.close();
             copyDlog = null;
@@ -206,20 +206,23 @@ function ControlPanel(_canvas) {
         }
     };
 
-    var downloadProc = function () {
-        filepicker.pick({extension: '.txt,.dgp', openTo: $U.getFilePickerDefaultBox()},
-        function (FPFile) {
-            filepicker.read(FPFile, function (data) {
-                canvas.OpenFile("", data);
-                if ($FPICKERFRAME !== null) {
-                    $FPICKERFRAME.close();
-                    $FPICKERFRAME = null;
-                }
+    var downloadProc = function() {
+        filepicker.pick({
+                extension: '.txt,.dgp',
+                openTo: $U.getFilePickerDefaultBox()
+            },
+            function(FPFile) {
+                filepicker.read(FPFile, function(data) {
+                    canvas.OpenFile("", data);
+                    if ($FPICKERFRAME !== null) {
+                        $FPICKERFRAME.close();
+                        $FPICKERFRAME = null;
+                    }
+                });
             });
-        });
     };
 
-    var uploadProc = function () {
+    var uploadProc = function() {
         if (canvas.getConstruction().isEmpty())
             return;
         var source = canvas.macrosManager.getSource() + canvas.getConstruction().getSource() + canvas.textManager.getSource();
@@ -227,61 +230,61 @@ function ControlPanel(_canvas) {
 
 
         filepicker.exportFile(
-                "http://dgpad.net/scripts/NotPacked/thirdParty/temp.txt",
-                {suggestedFilename: "",
-                    extension: ".dgp",
-                    services: ['DROPBOX', 'GOOGLE_DRIVE', 'BOX', 'SKYDRIVE', 'EVERNOTE', 'FTP', 'WEBDAV'],
-                    openTo: $U.getFilePickerDefaultBox()},
-        function (InkBlob) {
-            console.log(InkBlob.url);
-            filepicker.write(
+            "http://dgpad.net/scripts/NotPacked/thirdParty/temp.txt", {
+                suggestedFilename: "",
+                extension: ".dgp",
+                services: ['DROPBOX', 'GOOGLE_DRIVE', 'BOX', 'SKYDRIVE', 'EVERNOTE', 'FTP', 'WEBDAV'],
+                openTo: $U.getFilePickerDefaultBox()
+            },
+            function(InkBlob) {
+                console.log(InkBlob.url);
+                filepicker.write(
                     InkBlob,
-                    $U.base64_encode(source),
-                    {
+                    $U.base64_encode(source), {
                         base64decode: true,
                         mimetype: 'text/plain'
                     },
-            function (InkBlob) {
-                if ($FPICKERFRAME !== null) {
-                    $FPICKERFRAME.close();
-                    $FPICKERFRAME = null;
-                }
-            },
-                    function (FPError) {
+                    function(InkBlob) {
+                        if ($FPICKERFRAME !== null) {
+                            $FPICKERFRAME.close();
+                            $FPICKERFRAME = null;
+                        }
+                    },
+                    function(FPError) {
                         console.log(FPError.toString());
                     }
-            );
-        },
-                function (FPError) {
-                    console.log(FPError.toString());
-                }
+                );
+            },
+            function(FPError) {
+                console.log(FPError.toString());
+            }
         );
 
-//        filepicker.store(
-//                $U.base64_encode(source),
-//                {
-//                    base64decode: true,
-//                    mimetype: 'text/plain'
-//                },
-//        function(InkBlob) {
-//            filepicker.exportFile(
-//                    InkBlob,
-//                    {suggestedFilename:"",extension: ".txt",openTo: $U.getFilePickerDefaultBox()},
-//            function(InkBlob) {
-//                if ($FPICKERFRAME !== null) {
-//                    $FPICKERFRAME.close();
-//                    $FPICKERFRAME = null;
-//                }
-//            },
-//                    function(FPError) {
-//                        console.log(FPError.toString());
-//                    }
-//            );
-//        },
-//                function(FPError) {
-//                    console.log(FPError.toString());
-//                }
-//        );
+        //        filepicker.store(
+        //                $U.base64_encode(source),
+        //                {
+        //                    base64decode: true,
+        //                    mimetype: 'text/plain'
+        //                },
+        //        function(InkBlob) {
+        //            filepicker.exportFile(
+        //                    InkBlob,
+        //                    {suggestedFilename:"",extension: ".txt",openTo: $U.getFilePickerDefaultBox()},
+        //            function(InkBlob) {
+        //                if ($FPICKERFRAME !== null) {
+        //                    $FPICKERFRAME.close();
+        //                    $FPICKERFRAME = null;
+        //                }
+        //            },
+        //                    function(FPError) {
+        //                        console.log(FPError.toString());
+        //                    }
+        //            );
+        //        },
+        //                function(FPError) {
+        //                    console.log(FPError.toString());
+        //                }
+        //        );
     };
 
 
@@ -326,56 +329,56 @@ function ControlPanel(_canvas) {
     addSpaceRight(hspace);
     var undoBtn = addBtnRight("undo", true, null, undoProc);
 
-//    this.selectBtn = function(_mode) {
-//        switch (_mode) {
-//            case 1:
-//                arrowBtn.select();
-//                break;
-//            case 2:
-//                gommeBtn.select();
-//                break;
-//            case 3:
-//                trashBtn.select();
-//                break;
-//            case 4:
-//                macrosBtn.select();
-//                break;
-//            case 5:
-//                macrosBtn.select();
-//                break;
-//            case 6:
-//                propBtn.select();
-//                break;
-//        }
-//    }
+    //    this.selectBtn = function(_mode) {
+    //        switch (_mode) {
+    //            case 1:
+    //                arrowBtn.select();
+    //                break;
+    //            case 2:
+    //                gommeBtn.select();
+    //                break;
+    //            case 3:
+    //                trashBtn.select();
+    //                break;
+    //            case 4:
+    //                macrosBtn.select();
+    //                break;
+    //            case 5:
+    //                macrosBtn.select();
+    //                break;
+    //            case 6:
+    //                propBtn.select();
+    //                break;
+    //        }
+    //    }
 
-    this.selectPropBtn = function () {
+    this.selectPropBtn = function() {
         propBtn.select();
         propsMode();
     };
-    this.selectCalcBtn = function () {
+    this.selectCalcBtn = function() {
         calcBtn.select();
         calcMode();
     };
-    this.setUndoBtn = function (_active) {
+    this.setUndoBtn = function(_active) {
         undoBtn.setActive(_active);
     };
-    this.setRedoBtn = function (_active) {
+    this.setRedoBtn = function(_active) {
         redoBtn.setActive(_active);
     };
-    this.selectArrowBtn = function () {
+    this.selectArrowBtn = function() {
         arrowBtn.select();
         arrowMode();
     };
-    this.forceArrowBtn = function () {
+    this.forceArrowBtn = function() {
         arrowBtn.select();
         canvas.setMode(1);
         canvas.paint();
     };
-    this.deselectPointer = function () {
+    this.deselectPointer = function() {
         arrowBtn.deselect();
     };
-    this.deselectAll = function () {
+    this.deselectAll = function() {
         modeGroup.deselect();
     };
 
@@ -397,7 +400,10 @@ function FilePickerDIV(_c) {
     FPDiv.style.height = (canvas.getBounds().height) + "px";
     FPDiv.style.backgroundColor = "rgba(0,0,0,0.75)";
 
-    var FPsize = {width: 820, height: 520};
+    var FPsize = {
+        width: 820,
+        height: 520
+    };
     var FPFrame = document.createElement("iframe");
     FPFrame.setAttribute("ID", "FP_" + canvas.getID());
     FPFrame.setAttribute('width', FPsize.width);
@@ -421,30 +427,30 @@ function FilePickerDIV(_c) {
     FPClose.style.top = ((canvas.getBounds().height - FPsize.height) / 2 - 20) + "px";
     FPClose.style.width = "30px";
     FPClose.style.height = "30px";
-    FPClose.addEventListener('click', function (ev) {
+    FPClose.addEventListener('click', function(ev) {
         ParentDOM.removeChild(FPDiv);
     });
 
     FPDiv.appendChild(FPFrame);
     FPDiv.appendChild(FPClose);
 
-    me.div = function () {
+    me.div = function() {
         return FPDiv;
     };
 
-    me.id = function () {
+    me.id = function() {
         return ("FP_" + canvas.getID());
     };
 
-    me.frame = function () {
+    me.frame = function() {
         return FPFrame;
     };
 
-    me.show = function () {
+    me.show = function() {
         ParentDOM.appendChild(FPDiv);
     };
 
-    me.close = function () {
+    me.close = function() {
         ParentDOM.removeChild(FPDiv);
     };
 
@@ -465,9 +471,12 @@ function windowOpenIFrame(url) {
 
     FPDiv.style.backgroundColor = "rgba(0,0,0,0.75)";
 
-    var FPsize = {width: window.innerWidth - 50, height: window.innerHeight - 50};
+    var FPsize = {
+        width: window.innerWidth - 50,
+        height: window.innerHeight - 50
+    };
     var FPFrame = document.createElement("iframe");
-//    FPFrame.setAttribute("ID", "FP_" + canvas.getID());
+    //    FPFrame.setAttribute("ID", "FP_" + canvas.getID());
     FPFrame.setAttribute('width', FPsize.width);
     FPFrame.setAttribute('height', FPsize.height);
     FPFrame.setAttribute('frameborder', 0);
@@ -479,8 +488,8 @@ function windowOpenIFrame(url) {
     FPFrame.style.width = FPsize.width + "px";
     FPFrame.style.height = FPsize.height + "px";
     FPFrame.style.overflow = "scroll";
-    FPFrame.addEventListener('message', function (ev) {
-//        console.log("couosuuujrljsr");
+    FPFrame.addEventListener('message', function(ev) {
+        //        console.log("couosuuujrljsr");
     }, false);
 
     var FPClose = document.createElement("img");
@@ -492,30 +501,30 @@ function windowOpenIFrame(url) {
     FPClose.style.top = ((window.innerHeight - FPsize.height) / 2 - 20) + "px";
     FPClose.style.width = "30px";
     FPClose.style.height = "30px";
-    FPClose.addEventListener('click', function (ev) {
+    FPClose.addEventListener('click', function(ev) {
         document.body.removeChild(FPDiv);
     });
 
     FPDiv.appendChild(FPFrame);
     FPDiv.appendChild(FPClose);
 
-    me.div = function () {
+    me.div = function() {
         return FPDiv;
     };
 
-    me.frame = function () {
+    me.frame = function() {
         return FPFrame;
     };
 
-    me.show = function () {
+    me.show = function() {
         document.body.appendChild(FPDiv);
     };
 
-    me.close = function () {
+    me.close = function() {
         document.body.removeChild(FPDiv);
     };
 
-    me.reload = function () {
+    me.reload = function() {
         FPFrame.contentDocument.location.reload(true);
     };
 
@@ -523,5 +532,3 @@ function windowOpenIFrame(url) {
     FPFrame.src = url;
 
 }
-
-

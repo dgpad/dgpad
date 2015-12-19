@@ -20,11 +20,10 @@ function NameMover() {
     };
 
     this.createObj = function(zc, ev) {
-//        console.log("createObj");
+        //        console.log("createObj");
     };
 
-    this.selectCreatePoint = function(zc, ev) {
-    };
+    this.selectCreatePoint = function(zc, ev) {};
 
     this.preview = function(ev, zc) {
         var o = this.getC(0);
@@ -35,4 +34,3 @@ function NameMover() {
 
 
 }
-

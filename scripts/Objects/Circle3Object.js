@@ -2,7 +2,7 @@
 //************** CIRCLE OBJECT *******************
 //************************************************
 function Circle3Object(_construction, _name, _P3, _P2, _P1) {
-    $U.extend(this, new PrimitiveCircleObject(_construction, _name, _P1));   // Héritage
+    $U.extend(this, new PrimitiveCircleObject(_construction, _name, _P1)); // Héritage
     var me = this;
     this.setDefaults("circle");
 
@@ -47,6 +47,4 @@ function Circle3Object(_construction, _name, _P3, _P2, _P1) {
         src.geomWrite(false, this.getName(), "Circle3", this.P3.getVarName(), this.P2.getVarName(), this.P1.getVarName());
     };
 
-}
-;
-
+};

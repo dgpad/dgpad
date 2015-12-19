@@ -4,40 +4,43 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <title></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!--<link rel='stylesheet' href='../styles.css' type='text/css' media='all' />-->
-        <script type="text/javascript" src="../lang/LocalStrings.js"></script>
-        <script>
-            (function(win) {
-                var t = location.search.substring(1).split('&');
-                var f = {};
-                for (var i = 0; i < t.length; i++) {
-                    var x = t[ i ].split('=');
-                    f[x[0]] = x[1];
-                }
-                
-                win.$PARAMS = f;
-                win["\u03C0"]=Math.PI;
-                
-            })(window);
-            
-            var $LOADLANGUAGE = function() {
-                var language_Code = navigator.language || navigator.userLanguage;
-                language_Code = language_Code.toUpperCase().split("-")[0];
-                if ($PARAMS['lang']) language_Code = $PARAMS['lang'].toUpperCase();
-                var fname = "../lang/LocalStrings_" + language_Code + ".js";
-                var request = new XMLHttpRequest();
-                request.open("GET", fname, true);
-                request.send();
-                request.onload=function(e) {
-                    eval(request.responseText);
-                }
-            }();
-        </script>
-        <script type="text/javascript" src="Interpreter.js"></script>
-    </head>
-    <body style="background-color: red">
-    </body>
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--<link rel='stylesheet' href='../styles.css' type='text/css' media='all' />-->
+    <script type="text/javascript" src="../lang/LocalStrings.js"></script>
+    <script>
+    (function(win) {
+        var t = location.search.substring(1).split('&');
+        var f = {};
+        for (var i = 0; i < t.length; i++) {
+            var x = t[i].split('=');
+            f[x[0]] = x[1];
+        }
+
+        win.$PARAMS = f;
+        win["\u03C0"] = Math.PI;
+
+    })(window);
+
+    var $LOADLANGUAGE = function() {
+        var language_Code = navigator.language || navigator.userLanguage;
+        language_Code = language_Code.toUpperCase().split("-")[0];
+        if ($PARAMS['lang']) language_Code = $PARAMS['lang'].toUpperCase();
+        var fname = "../lang/LocalStrings_" + language_Code + ".js";
+        var request = new XMLHttpRequest();
+        request.open("GET", fname, true);
+        request.send();
+        request.onload = function(e) {
+            eval(request.responseText);
+        }
+    }();
+    </script>
+    <script type="text/javascript" src="Interpreter.js"></script>
+</head>
+
+<body style="background-color: red">
+</body>
+
 </html>

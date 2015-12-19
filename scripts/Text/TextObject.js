@@ -18,10 +18,12 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
     var borderRadius = 5;
     var numPrec = 1e4;
     var closebox = null;
-    var jsbox = null, txbox = null, exbox = null;
+    var jsbox = null,
+        txbox = null,
+        exbox = null;
     var printPanel = null;
 
-    me.parseExpressions = function () {
+    me.parseExpressions = function() {
         EXPs = [];
         SCPs = [];
         var t = txt.split("%");
@@ -32,37 +34,39 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
         for (var i = 1, len = t.length; i < len; i += 2) {
             t[i] = t[i].replace(/^[^\n]*name\s*=\s*\"([^\"]*)\"/, "");
             t[i] = t[i].replace(/^[^\n]*style\s*=\s*\"([^\"]*)\"/, "");
-            SCPs.push({src: t[i]});
+            SCPs.push({
+                src: t[i]
+            });
         }
     };
     me.parseExpressions();
 
     var styles = null;
 
-    me.exec = function (_i) {
+    me.exec = function(_i) {
         var src = SCPs[_i].src;
         var t = src.split("%");
         for (var i = 1, len = t.length; i < len; i += 2) {
             var exp = _canvas.getExpression(t[i]);
-//            exp.compute();
+            //            exp.compute();
             t[i] = "" + $U.parseArrayEnglish(exp.value(), numPrec, true);
         }
         _canvas.InterpretScript(me, t.join(""));
     };
 
-    var closePrint = function () {
+    var closePrint = function() {
         if (printPanel)
             printPanel.close();
         printPanel = null;
     };
 
-    me.print = function (_m) {
+    me.print = function(_m) {
         if (!printPanel)
             printPanel = new PrintPanel(_canvas, closePrint);
         printPanel.setText(_m);
     };
-    
-    me.refreshInputs=function(){
+
+    me.refreshInputs = function() {
         // convert HTMLCollection to Array :
         var inps = [].slice.call(container.getDocObject().getElementsByTagName('input'));
         var sels = container.getDocObject().getElementsByTagName('select');
@@ -74,55 +78,55 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
             inps.push(tas[n]);
         }
         for (var n = 0; n < inps.length; n++) {
-            inps[n].ontouchstart = inps[n].onmousedown = function (ev) {
+            inps[n].ontouchstart = inps[n].onmousedown = function(ev) {
                 ev.stopPropagation();
             };
             if (inps[n].hasAttribute("target")) {
-                var o=inps[n].targetObject = Cn.find(inps[n].getAttribute("target"));
+                var o = inps[n].targetObject = Cn.find(inps[n].getAttribute("target"));
                 if (o) {
-                var evtpe = "oninput";
-                switch (inps[n].type) {
-                    case "select-one":
-                        evtpe = "onchange";
-                        inps[n].value=o.getExp();
-                        break;
-                    case "checkbox":
-                        evtpe = "onchange";
-                        inps[n].checked=o.getValue();
-                        break;
-                    case "button":
-                        evtpe = "onmouseup";
-                        break;
-                    default:
-                        inps[n].value=o.getExp();
-                }
-                
-                    
-                
-                inps[n][evtpe] = function (ev) {
-                    var obj = ev.target.targetObject;
-                    if (obj) {
-                        var val = ev.target.value;
-                        switch (ev.target.type) {
-                            case "checkbox":
-                                val = ev.target.checked;
-                                break;
-                            case "button":
-                                val = !obj.getValue();
-                                break;
-                        }
-                        obj.setExp(val);
-                        obj.compute();
-                        obj.computeChilds();
-                        _canvas.paint();
+                    var evtpe = "oninput";
+                    switch (inps[n].type) {
+                        case "select-one":
+                            evtpe = "onchange";
+                            inps[n].value = o.getExp();
+                            break;
+                        case "checkbox":
+                            evtpe = "onchange";
+                            inps[n].checked = o.getValue();
+                            break;
+                        case "button":
+                            evtpe = "onmouseup";
+                            break;
+                        default:
+                            inps[n].value = o.getExp();
                     }
-                }
+
+
+
+                    inps[n][evtpe] = function(ev) {
+                        var obj = ev.target.targetObject;
+                        if (obj) {
+                            var val = ev.target.value;
+                            switch (ev.target.type) {
+                                case "checkbox":
+                                    val = ev.target.checked;
+                                    break;
+                                case "button":
+                                    val = !obj.getValue();
+                                    break;
+                            }
+                            obj.setExp(val);
+                            obj.compute();
+                            obj.computeChilds();
+                            _canvas.paint();
+                        }
+                    }
                 }
             }
         }
     };
 
-    var setHTML = function (_t) {
+    var setHTML = function(_t) {
         // On enlève tous les scripts injectés précédemment dans
         // ce widget :
         var scps = me.getDocObject().getElementsByTagName('script');
@@ -138,8 +142,8 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
             match = tab[i].match(/^[^\n]*style\s*=\s*\"([^\"]*)\"/);
             var st = " style=\"-webkit-appearance: button;" + ((match) ? match[1] : "") + "\" ";
             match = tab[i].match(/^[^\n]*id\s*=\s*\"([^\"]*)\"/);
-            var id=(match) ? " id=\""+match[1]+"\"":"";
-            tab[i] = "<input type=\"button\"  ontouchend=\"$CANVAS.textManager.executeScript(" + _canvas.textManager.getPosition(me) + "," + k + ");this.blur()\" onmouseup=\"$CANVAS.textManager.executeScript(" + _canvas.textManager.getPosition(me) + "," + k + ");this.blur()\" " + nm + st + id+">";
+            var id = (match) ? " id=\"" + match[1] + "\"" : "";
+            tab[i] = "<input type=\"button\"  ontouchend=\"$CANVAS.textManager.executeScript(" + _canvas.textManager.getPosition(me) + "," + k + ");this.blur()\" onmouseup=\"$CANVAS.textManager.executeScript(" + _canvas.textManager.getPosition(me) + "," + k + ");this.blur()\" " + nm + st + id + ">";
         }
         _t = tab.join("");
 
@@ -172,7 +176,7 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
     var editBox = new GUIElement(_canvas, "textarea");
     editBox.setStyles("position:absolute;font-family:'Lucida Console';font-size:13px;line-height:20px");
 
-    var endInput = function () {
+    var endInput = function() {
         txt = editBox.getDocObject().value;
         me.parseExpressions();
         setHTML(txt);
@@ -180,19 +184,19 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
         me.evaluateString();
     };
 
-    editBox.getDocObject().oninput = function (ev) {
+    editBox.getDocObject().oninput = function(ev) {
         endInput();
     };
     editBox.setStyle("width", (_w - 33) + "px");
     editBox.setStyle("height", (114) + "px");
 
 
-    var deleteTeX = function () {
+    var deleteTeX = function() {
         _canvas.undoManager.swap(me);
         _canvas.textManager.deleteTeX(me);
     };
 
-    var insertJS = function () {
+    var insertJS = function() {
         var js = "§ name=\"" + $L.props_text_js + "\" style=\"font-size:24px;color:blue\"\n";
         js += "for (var i=0;i<100;i++){\n";
         js += "\tA=Point(Math.random()*16-8,Math.random()*16-8)\n";
@@ -200,16 +204,16 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
         js += "§";
         me.addName(js);
     };
-    var insertTeX = function () {
+    var insertTeX = function() {
         var tx = "$\\frac{6+1}{3}\\approx2.3$";
         me.addName(tx);
     };
-    var insertEXP = function () {
+    var insertEXP = function() {
         var ex = "%5*2^2+9%";
         me.addName(ex);
     };
 
-    me.noedit = function () {
+    me.noedit = function() {
         me.removeContent(editBox);
         me.removeContent(closebox);
         me.removeContent(jsbox);
@@ -218,11 +222,11 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
         me.setStyle("z-index", 0);
     }
 
-    var moveStyles = function () {
+    var moveStyles = function() {
         editBox.setStyle("left", (35) + "px");
         editBox.setStyle("top", (_h + 4) + "px");
-//        editBox.setStyle("width", (_w - 33) + "px");
-//        editBox.setStyle("height", (114) + "px");
+        //        editBox.setStyle("width", (_w - 33) + "px");
+        //        editBox.setStyle("height", (114) + "px");
         if (jsbox) {
             jsbox.setStyle("left", (0) + "px");
             jsbox.setStyle("top", (_h + 4) + "px");
@@ -234,14 +238,14 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
 
     }
 
-    me.setEditFocus = function () {
-        setTimeout(function () {
+    me.setEditFocus = function() {
+        setTimeout(function() {
             editBox.getDocObject().focus();
             editBox.getDocObject().setSelectionRange(0, 9999);
         }, 100);
     };
 
-    me.doedit = function () {
+    me.doedit = function() {
         if ((!me.hasContent(editBox)) && (_canvas.getMode() === 10)) {
 
             me.setStyle("z-index", 3);
@@ -258,12 +262,12 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
         }
     };
 
-    me.edit = function () {
+    me.edit = function() {
         _canvas.textManager.edit(me);
     };
 
 
-//    container.addClickEvent(me.edit);
+    //    container.addClickEvent(me.edit);
 
 
 
@@ -273,9 +277,10 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
     growbox.setStyles("width:30px;height:30px;right:0px;bottom:0px;cursor:se-resize");
     me.addContent(growbox);
 
-    var xx = 0, yy = 0;
+    var xx = 0,
+        yy = 0;
 
-    var dragmove = function (ev) {
+    var dragmove = function(ev) {
         _l += (ev.pageX - xx);
         _t += (ev.pageY - yy);
         me.setStyle("left", _l + "px");
@@ -284,8 +289,8 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
         yy = ev.pageY;
     }
 
-    var dragdown = function (ev) {
-//        me.removeContent(editBox);
+    var dragdown = function(ev) {
+        //        me.removeContent(editBox);
         xx = ev.pageX;
         yy = ev.pageY;
         window.addEventListener('touchmove', dragmove, false);
@@ -294,7 +299,7 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
         window.addEventListener('mouseup', dragup, false);
     }
 
-    var dragup = function (ev) {
+    var dragup = function(ev) {
         window.removeEventListener('touchmove', dragmove, false);
         window.removeEventListener('touchend', dragup, false);
         window.removeEventListener('mousemove', dragmove, false);
@@ -302,12 +307,12 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
     }
 
     container.addDownEvent(dragdown);
-//    container.getDocObject().addEventListener('touchstart', dragdown, false);
-//    container.getDocObject().addEventListener('mousedown', dragdown, false);
+    //    container.getDocObject().addEventListener('touchstart', dragdown, false);
+    //    container.getDocObject().addEventListener('mousedown', dragdown, false);
     container.getDocObject().addEventListener('touchstart', me.edit, false);
     container.getDocObject().addEventListener('click', me.edit, false);
 
-    var sizemove = function (ev) {
+    var sizemove = function(ev) {
         _w += (ev.pageX - xx);
         _h += (ev.pageY - yy);
         me.setStyle("width", _w + "px");
@@ -321,7 +326,7 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
             closebox.setStyle("left", (_w - 15) + "px");
     }
 
-    var sizedown = function (ev) {
+    var sizedown = function(ev) {
         xx = ev.pageX;
         yy = ev.pageY;
         window.addEventListener('touchmove', sizemove, false);
@@ -330,7 +335,7 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
         window.addEventListener('mouseup', sizeup, false);
     }
 
-    var sizeup = function (ev) {
+    var sizeup = function(ev) {
         window.removeEventListener('touchmove', sizemove, false);
         window.removeEventListener('touchend', sizeup, false);
         window.removeEventListener('mousemove', sizemove, false);
@@ -341,15 +346,15 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
     _canvas.getDocObject().parentNode.appendChild(me.getDocObject());
     me.applyTransitionIN();
 
-    me.compute = function () {
+    me.compute = function() {
         for (var i = 0; i < EXPs.length; i++) {
             EXPs[i].compute();
         }
     };
 
 
-    me.evaluateString = function () {
-        
+    me.evaluateString = function() {
+
         var t = txt.split("%");
         var changed = (t.length > 1);
         for (var i = 1, len = t.length; i < len; i += 2) {
@@ -357,23 +362,21 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
                 var k = (i - 1) / 2;
                 EXPs[k].compute();
                 t[i] = $U.parseArray(EXPs[k].value(), numPrec);
-            } catch (e) {
-            }
+            } catch (e) {}
         }
         t = t.join("").split("$");
         changed = changed || (t.length > 1);
         for (var i = 1, len = t.length; i < len; i += 2) {
             try {
                 t[i] = katex.renderToString(t[i]);
-            } catch (e) {
-            }
+            } catch (e) {}
         }
         if (changed)
             setHTML(t.join(""));
     };
 
 
-    me.getBounds = function () {
+    me.getBounds = function() {
         return {
             "left": _l,
             "top": _t,
@@ -382,72 +385,72 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
         };
     };
 
-    me.getColor = function () {
+    me.getColor = function() {
         return (bgcolor.getHEX());
     };
-    me.setColor = function (val) {
+    me.setColor = function(val) {
         var op = bgcolor.getOpacity();
         bgcolor.set(val);
         bgcolor.setOpacity(op);
         me.setStyle("background-color", bgcolor.getRGBA());
         me.setStyle("border-color", bgcolor.getRGBA());
     };
-    me.getOpacity = function () {
+    me.getOpacity = function() {
         return (bgcolor.getOpacity());
     };
-    me.setOpacity = function (val) {
+    me.setOpacity = function(val) {
         bgcolor.setOpacity(val);
         me.setStyle("background-color", bgcolor.getRGBA());
         me.setStyle("border-color", bgcolor.getRGBA());
     };
-    me.getBorderSize = function () {
+    me.getBorderSize = function() {
         return borderSize;
     };
-    me.setBorderSize = function (val) {
+    me.setBorderSize = function(val) {
         borderSize = val;
         me.setStyle("border-width", borderSize + "px");
     };
-    me.getBorderRadius = function () {
+    me.getBorderRadius = function() {
         return borderRadius;
     };
-    me.setBorderRadius = function (val) {
+    me.setBorderRadius = function(val) {
         borderRadius = val;
         me.setStyle("border-radius", borderRadius + "px");
     };
-    me.setNumPrec = function (val) {
+    me.setNumPrec = function(val) {
         numPrec = Math.pow(10, val);
         me.evaluateString();
     };
-    me.getNumPrec = function () {
+    me.getNumPrec = function() {
         return Math.round(Math.log(numPrec) / Math.LN10);
     };
-    me.addName = function (_n) {
+    me.addName = function(_n) {
         if (me.hasContent(editBox)) {
-            $U.addTextToInput(editBox.getDocObject(),_n,"add");
+            $U.addTextToInput(editBox.getDocObject(), _n, "add");
             endInput();
         }
     };
 
-    me.setStyles = function (_s) {
+    me.setStyles = function(_s) {
         styles = _s;
         _s = _s.split(";");
         for (var i = 0, len = _s.length; i < len; i++) {
             var e = _s[i].split(":");
             switch (e[0]) {
-                case "c":// Color
+                case "c": // Color
                     bgcolor.set(e[1]);
                     me.setStyle("background-color", bgcolor.getRGBA());
                     me.setStyle("border-color", bgcolor.getRGBA());
                     break;
-                case "s":// Border size
+                case "s": // Border size
                     borderSize = parseFloat(e[1]);
                     me.setStyle("border-width", borderSize + "px");
                     break;
-                case "r"://Border radius
+                case "r": //Border radius
                     borderRadius = parseInt(e[1]);
                     me.setStyle("border-radius", borderRadius + "px");
                     break;
-                case "p"://Number precision
+                case "p": //Number precision
                     numPrec = Math.pow(10, parseInt(e[1]));
                     break;
             }
@@ -456,7 +459,7 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
 
 
 
-    me.getStyles = function () {
+    me.getStyles = function() {
         var stls = "c:" + bgcolor.getRGBA();
         stls += ";s:" + borderSize;
         stls += ";r:" + borderRadius;
@@ -465,17 +468,17 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
     };
 
 
-    me.setText = function (_t) {
+    me.setText = function(_t) {
         txt = _t;
-//        container.setAttr("innerHTML", _t);
-//        console.log("set text !");
+        //        container.setAttr("innerHTML", _t);
+        //        console.log("set text !");
     };
 
-    me.getRawText = function () {
+    me.getRawText = function() {
         return txt;
     }
 
-    me.getText = function () {
+    me.getText = function() {
         var s = txt;
         if (txt.split("$").length > 1) {
             s = s.replace(/\\/g, "\\\\");
@@ -483,7 +486,7 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
         return s;
     }
 
-    me.init = function () {
+    me.init = function() {
         me.setBounds(_l, _t, _w, _h);
         container.setBounds(10, 10, _w - 20, _h - 20);
 
@@ -492,4 +495,3 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
     me.init();
 
 }
-

@@ -5,8 +5,8 @@
 
 // Lieux de points, de droites et de cercles :
 function LocusObject(_construction, _name, _O, _ON) {
-    var parentObject = $U.extend(this, new ConstructionObject(_construction, _name));                           // Héritage
-    $U.extend(this, new MoveableObject(_construction));                                                     // Héritage
+    var parentObject = $U.extend(this, new ConstructionObject(_construction, _name)); // Héritage
+    $U.extend(this, new MoveableObject(_construction)); // Héritage
 
     var NB; // nombre de côtés du polygone
 
@@ -15,24 +15,24 @@ function LocusObject(_construction, _name, _O, _ON) {
     var O = _O; // Objet dont on veut le lieu
     var ON = _ON; // Point sur objet qui crée le lieu
     var Ptab;
-//    var ON.getParentAt(0).initLocusArray(NB, (O.getCode() !== "point"));
+    //    var ON.getParentAt(0).initLocusArray(NB, (O.getCode() !== "point"));
 
-//    var Ptab = ON.getParentAt(0).initLocusArray(NB, (O.getCode() !== "point"));
+    //    var Ptab = ON.getParentAt(0).initLocusArray(NB, (O.getCode() !== "point"));
 
-//    parentObject.setPrecision(7);
-//    
-//    // Il s'agit ici du réglage du nombre de côté du polygone de lieu
-//    // -1 pour 1000, 1 pour 10, 2 pour 20,...
-//    var precTab=[1000,1000,20,50,100,200,500,1000,1500,2000,3000,4000,5000,5000,5000,5000,5000];
-//    
-//    this.setPrecision = function(_prec) {
-//        var p=Math.round(1*_prec);
-//        parentObject.setPrecision(p);
-//        NB=precTab[p+1];
-//        Ptab = ON.getParentAt(0).initLocusArray(NB, (O.getCode() !== "point"));
-////        this.compute();
-////        console.log(p);
-//    };
+    //    parentObject.setPrecision(7);
+    //    
+    //    // Il s'agit ici du réglage du nombre de côté du polygone de lieu
+    //    // -1 pour 1000, 1 pour 10, 2 pour 20,...
+    //    var precTab=[1000,1000,20,50,100,200,500,1000,1500,2000,3000,4000,5000,5000,5000,5000,5000];
+    //    
+    //    this.setPrecision = function(_prec) {
+    //        var p=Math.round(1*_prec);
+    //        parentObject.setPrecision(p);
+    //        NB=precTab[p+1];
+    //        Ptab = ON.getParentAt(0).initLocusArray(NB, (O.getCode() !== "point"));
+    ////        this.compute();
+    ////        console.log(p);
+    //    };
 
     this.getPrecision = function() {
         return NB;
@@ -55,8 +55,8 @@ function LocusObject(_construction, _name, _O, _ON) {
 
         Ptab = ON.getParentAt(0).initLocusArray(NB, (O.getCode() !== "point"));
         NB = Ptab.length;
-//        console.log("Ptab.length="+Ptab.length+" NB="+NB);
-//        this.compute();
+        //        console.log("Ptab.length="+Ptab.length+" NB="+NB);
+        //        this.compute();
     };
 
     this.setPrecision(1000);
@@ -86,14 +86,16 @@ function LocusObject(_construction, _name, _O, _ON) {
 
 
     this.projectXY = function(_x, _y) {
-        var xAB = (Ptab[0].x - _x), yAB = (Ptab[0].y - _y);
-        var d2 = xAB * xAB + yAB * yAB, d1 = 0;
+        var xAB = (Ptab[0].x - _x),
+            yAB = (Ptab[0].y - _y);
+        var d2 = xAB * xAB + yAB * yAB,
+            d1 = 0;
         var k = 0;
         for (var i = 1; i < NB; i++) {
             xAB = (Ptab[i].x - _x);
             yAB = (Ptab[i].y - _y);
             d1 = xAB * xAB + yAB * yAB;
-            if ((d1 < d2)||isNaN(d2)) {
+            if ((d1 < d2) || isNaN(d2)) {
                 k = i;
                 d2 = d1;
             }
@@ -116,7 +118,8 @@ function LocusObject(_construction, _name, _O, _ON) {
     };
 
     this.setAlpha = function(p) {
-        var xAB = 0, yAB = 0;
+        var xAB = 0,
+            yAB = 0;
         for (var i = 0; i < NB; i++) {
             xAB = (Ptab[i].x - p.getX()), yAB = (Ptab[i].y - p.getY());
             if ((xAB === 0) && (yAB === 0)) {
@@ -133,7 +136,14 @@ function LocusObject(_construction, _name, _O, _ON) {
         var Ptab = []; // Liste des sommets du polygone représentant le lieu
         // Initialisation de Ptab :
         for (var i = 0; i < NB; i++) {
-            Ptab.push({"alpha": i, "x": 0, "y": 0, "x1": 0, "y1": 0, "r": 0});
+            Ptab.push({
+                "alpha": i,
+                "x": 0,
+                "y": 0,
+                "x1": 0,
+                "y1": 0,
+                "r": 0
+            });
         }
         return Ptab;
     };
@@ -145,28 +155,30 @@ function LocusObject(_construction, _name, _O, _ON) {
 
 
     var mouseInsidePoints = function(ev) {
-        var mx = this.mouseX(ev), my = this.mouseY(ev);
+        var mx = this.mouseX(ev),
+            my = this.mouseY(ev);
         for (var i = 0; i < NB; i++) {
             if ($U.isNearToPoint(Ptab[i].x, Ptab[i].y, mx, my, this.getOversize()))
                 return true;
         }
         return false;
     };
-    
+
     var mouseInsideLines = function(ev) {
-        var mx = this.mouseX(ev), my = this.mouseY(ev);
+        var mx = this.mouseX(ev),
+            my = this.mouseY(ev);
         for (var i = 0; i < NB; i++) {
-            if ($U.isNearToSegment(Ptab[i].x, Ptab[i].y,Ptab[i].x1, Ptab[i].y1, mx, my, this.getOversize()))
+            if ($U.isNearToSegment(Ptab[i].x, Ptab[i].y, Ptab[i].x1, Ptab[i].y1, mx, my, this.getOversize()))
                 return true;
         }
         return false;
     };
 
 
-    
 
 
-// Recalcul de la chaine de dépendance qui mène de ON à O :
+
+    // Recalcul de la chaine de dépendance qui mène de ON à O :
     var computeDeps = function() {
         for (var k = 0, len = depsChain.length; k < len; k++) {
             depsChain[k].compute();
@@ -245,9 +257,9 @@ function LocusObject(_construction, _name, _O, _ON) {
     };
 
 
-// ***********************************************************
-// *****Initialisation de this.compute et de this.paintObject*******
-// ***********************************************************
+    // ***********************************************************
+    // *****Initialisation de this.compute et de this.paintObject*******
+    // ***********************************************************
     switch (O.getFamilyCode()) {
         case "point":
             this.compute = computePoints;
@@ -273,5 +285,4 @@ function LocusObject(_construction, _name, _O, _ON) {
         src.geomWrite(false, this.getName(), "Locus", O.getVarName(), ON.getVarName());
     };
 
-}
-;
+};

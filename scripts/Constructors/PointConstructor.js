@@ -17,8 +17,7 @@ function PointConstructor() {
         else return 1;
     };
 
-    this.selectCreatePoint = function(zc, ev) {
-    };
+    this.selectCreatePoint = function(zc, ev) {};
 
     this.createObj = function(zc, ev) {
         var o = new PointObject(zc.getConstruction(), "_P", zc.mouseX(ev), zc.mouseY(ev));
@@ -33,14 +32,14 @@ function PointConstructor() {
         deps.sort(indsSortFilter);
         var len = deps.length;
         switch (len) {
-            case 1 :
+            case 1:
                 // On veut créer un point sur objet :
                 o.addParent(deps[0]);
                 deps[0].project(o);
                 deps[0].setAlpha(o);
                 deps[0].setBoundaryMode(o);
                 break;
-            case 2 :
+            case 2:
                 // On veut créer un point d'intersection :
                 if (deps[0].isCoincident(deps[1])) {
                     // Si les objets sont confondus, on crée un point sur objet :
@@ -73,11 +72,11 @@ function PointConstructor() {
             }
             var coords;
             switch (len) {
-                case 1 :
+                case 1:
                     // point sur objet :
                     coords = deps[0].projectXY(zc.mouseX(ev), zc.mouseY(ev));
                     break;
-                case 2 :
+                case 2:
                     // point d'intersection :
                     if (deps[0].isCoincident(deps[1])) {
                         // Si les objets sont confondus, on prévisualise un point sur objet :

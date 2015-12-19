@@ -3,7 +3,7 @@
 //************************************************
 function FixedAngleObject(_construction, _name, _P1, _P2, _trigo) {
     var superObject = $U.extend(this, new PrimitiveLineObject(_construction, _name, _P2));
-    $U.extend(this, new MoveableObject(_construction));             // Héritage
+    $U.extend(this, new MoveableObject(_construction)); // Héritage
     var me = this;
     var A = _P1;
     var O = _P2;
@@ -20,7 +20,7 @@ function FixedAngleObject(_construction, _name, _P1, _P2, _trigo) {
 
     this.setParent(A, O);
 
-    this.redefine = function (_old, _new) {
+    this.redefine = function(_old, _new) {
         if (_old === A) {
             this.addParent(_new);
             A = _new;
@@ -29,36 +29,36 @@ function FixedAngleObject(_construction, _name, _P1, _P2, _trigo) {
             O = _new;
         }
     };
-    this.isTrigo = function () {
+    this.isTrigo = function() {
         return trigo;
     };
-    this.setTrigo = function (_t) {
+    this.setTrigo = function(_t) {
         trigo = _t;
     };
- 
-    this.getValue = function () {
+
+    this.getValue = function() {
         return E1.value();
     };
-    this.getCode = function () {
+    this.getCode = function() {
         return "fixedangle";
     };
-    this.getFamilyCode = function () {
+    this.getFamilyCode = function() {
         return "fixedangle";
     };
-    this.setTrigo = function (_t) {
+    this.setTrigo = function(_t) {
         trigo = _t
     };
-    this.getTrigo = function () {
+    this.getTrigo = function() {
         return trigo;
     };
 
-    this.getAssociatedTools = function () {
+    this.getAssociatedTools = function() {
         var at = superObject.getAssociatedTools();
         at += ",@callcalc";
         return at;
     };
-    
-    this.setAlpha = function (p) {
+
+    this.setAlpha = function(p) {
         superObject.setAlpha(p);
         var a = p.getAlpha();
         if (a < 0) {
@@ -67,7 +67,7 @@ function FixedAngleObject(_construction, _name, _P1, _P2, _trigo) {
     };
 
     // see if point inside ray
-    this.checkIfValid = function (_P) {
+    this.checkIfValid = function(_P) {
         var dx = this.getDX();
         var dy = this.getDY();
         var xAP = _P.getX() - O.getX();
@@ -79,29 +79,28 @@ function FixedAngleObject(_construction, _name, _P1, _P2, _trigo) {
 
 
     // setExp pour les widgets :
-    me.setExp = me.setE1 = function (_t) {
+    me.setExp = me.setE1 = function(_t) {
         if (E1)
             delete E1;
         E1 = new Expression(me, _t);
     };
-    me.getExp = function () {
+    me.getExp = function() {
         return me.getE1().getSource();
     };
-    me.getE1 = function () {
+    me.getE1 = function() {
         return E1;
     };
 
-    this.compute_dragPoints = function (_x, _y) {
+    this.compute_dragPoints = function(_x, _y) {
         if (sel_arc) {
             var vx = _x - O.getX();
             var vy = _y - O.getY();
             R = Math.sqrt(vx * vx + vy * vy);
         }
     };
-    this.computeDrag = function () {
-    };
+    this.computeDrag = function() {};
 
-    this.paintLength = function (ctx) {
+    this.paintLength = function(ctx) {
         ctx.save();
         var r = R + this.prefs.fontmargin + this.getRealsize() / 2;
         ctx.textAlign = "left";
@@ -122,7 +121,7 @@ function FixedAngleObject(_construction, _name, _P1, _P2, _trigo) {
         ctx.restore();
     };
 
-    this.paintObject = function (ctx) {
+    this.paintObject = function(ctx) {
         ctx.beginPath();
         ctx.moveTo(O.getX(), O.getY());
         ctx.lineTo(this.getXmax(), this.getYmax());
@@ -130,20 +129,20 @@ function FixedAngleObject(_construction, _name, _P1, _P2, _trigo) {
         ctx.moveTo(O.getX(), O.getY());
         ctx.beginPath();
         ctx.lineTo(O.getX() + R * Math.cos(-fromAngle), O.getY() + R * Math.sin(-fromAngle));
-        ctx.lineWidth=ctx.lineWidth * 3;
+        ctx.lineWidth = ctx.lineWidth * 3;
         ctx.arc(O.getX(), O.getY(), R, -fromAngle, -toAngle, trigo);
         ctx.stroke();
         ctx.lineTo(O.getX(), O.getY());
         ctx.fill();
     };
 
-    this.compute = function () {
+    this.compute = function() {
         E1.compute();
         VALUE = AOC = E1.value();
         if (Cn.isDEG())
             AOC = AOC * Math.PI / 180;
         else
-            VALUE=VALUE*180/Math.PI;
+            VALUE = VALUE * 180 / Math.PI;
         if (!trigo)
             AOC = -AOC;
         AOC = AOC - Math.floor(AOC / $U.doublePI) * $U.doublePI; // AOC in [0,2π[
@@ -156,12 +155,12 @@ function FixedAngleObject(_construction, _name, _P1, _P2, _trigo) {
         toAngle = $U.angleH(C.getX() - O.getX(), C.getY() - O.getY());
     };
 
-    this.getSource = function (src) {
+    this.getSource = function(src) {
         var _ex = "\"" + E1.getUnicodeSource().replace(/\n/g, "\\n") + "\"";
         src.geomWrite(false, this.getName(), "FixedAngle", A.getVarName(), O.getVarName(), _ex, trigo);
     };
 
-    this.mouseInside = function (ev) {
+    this.mouseInside = function(ev) {
         sel_ray = $U.isNearToRay(O.getX(), O.getY(), C.getX(), C.getY(), this.mouseX(ev), this.mouseY(ev), this.getOversize());
         sel_arc = $U.isNearToArc(O.getX(), O.getY(), AOC, fromAngle, toAngle, trigo, R, this.mouseX(ev), this.mouseY(ev), this.getOversize());
         return sel_arc || sel_ray

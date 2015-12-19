@@ -4,17 +4,16 @@
 function Circle1Constructor() {
     $U.extend(this, new ObjectConstructor()); //Héritage
     var R = 0;
-    
+
     this.getCode = function() {
         return "circle1";
     };
-    
+
     this.getInitials = function() {
         return ["point"];
     };
 
-    this.selectCreatePoint = function(zc, ev) {
-    };
+    this.selectCreatePoint = function(zc, ev) {};
 
     this.newObj = function(_zc, _C) {
         return new Circle1Object(_zc.getConstruction(), "_C", _C[0], R);

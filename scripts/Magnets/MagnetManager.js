@@ -32,8 +32,7 @@ function MagnetManager(_z) {
         var V = C.elements();
         for (var i = 0, len = V.length; i < len; i++) {
             V[i].setMacroMode(0);
-        }
-        ;
+        };
         if (O) O.setMacroMode(2);
         M = O.getMagnets();
         for (var i = 0; i < M.length; i++) {
@@ -73,7 +72,7 @@ function MagnetManager(_z) {
             case "point":
                 PXY.setXY(T[0].getX(), T[0].getY());
                 break;
-            default :
+            default:
                 var t = T[0].projectXY(O.getX(), O.getY());
                 PXY.setXY(t[0], t[1]);
         }
@@ -96,7 +95,9 @@ function MagnetPanel(_zc, _proc) {
     var S = new slider(me.getDocObject(), 20, 5, 280, 30, 0, 1000, 0, _proc);
     S.setValueWidth(80);
     S.setTextColor("#BBBBBB");
-    S.setTabValues([[0, $L.magnet_without], 1, 2, 5, 10, 15, 20, 30, 50, 100, 200, 500, 1000, [5000, $L.magnet_max]]);
+    S.setTabValues([
+        [0, $L.magnet_without], 1, 2, 5, 10, 15, 20, 30, 50, 100, 200, 500, 1000, [5000, $L.magnet_max]
+    ]);
     S.setValue(20);
     S.setBackgroundColor("rgba(0,0,0,0)");
     S.setWindowsEvents();
@@ -121,7 +122,7 @@ function MagnetPanel(_zc, _proc) {
         S.setValue(val);
     };
 
-//    me.show();
+    //    me.show();
 
 
 }

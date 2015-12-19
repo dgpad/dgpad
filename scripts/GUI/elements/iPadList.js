@@ -92,7 +92,7 @@ function iPadList(_own, _proc, _nme, _l, _t, _w, _h) {
     // La liste se place dans le dossier contenant le LI cible, et
     // ensuite scroll la liste pour que le LI soit visible :
     me.targetLI = function(_r) {
-//        console.log("target!");
+        //        console.log("target!");
         var i = 0;
         while ((i < items.length) && (items[i].macro !== _r))
             i++;
@@ -149,8 +149,8 @@ function iPadList(_own, _proc, _nme, _l, _t, _w, _h) {
         dir.childs.push(item);
         items.push(item);
     };
-    
-    me.getDocObject=function(){
+
+    me.getDocObject = function() {
         if (wr) return wr.o();
         return null;
     };
@@ -167,7 +167,7 @@ function iPadList(_own, _proc, _nme, _l, _t, _w, _h) {
 
     function iPadDOMElt(_type) {
         var me = this;
-        var CLK=true;
+        var CLK = true;
         var docObject = document.createElement(_type);
         me.setStyle = function(_attr, _param) {
             docObject.style.setProperty(_attr, _param);
@@ -182,18 +182,18 @@ function iPadList(_own, _proc, _nme, _l, _t, _w, _h) {
         me.attr = function(_attr, _param) {
             docObject[_attr] = _param;
         };
-        var touchstart=function(ev){
-            CLK=true;
+        var touchstart = function(ev) {
+            CLK = true;
         };
-        var touchmove=function(ev){
-            CLK=false;
+        var touchmove = function(ev) {
+            CLK = false;
         };
-        me.evt = function( _proc) {
+        me.evt = function(_proc) {
             // Encore du bricolage pour les navigateurs android... :
             if ($U.isMobile.android()) {
                 docObject.addEventListener("touchstart", touchstart, false);
                 docObject.addEventListener("touchmove", touchmove, false);
-                docObject.addEventListener("touchend", function(ev){
+                docObject.addEventListener("touchend", function(ev) {
                     if (CLK) _proc(ev);
                 }, false);
             } else
@@ -236,4 +236,3 @@ function iPadList(_own, _proc, _nme, _l, _t, _w, _h) {
     }
 
 }
-

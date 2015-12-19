@@ -3,18 +3,18 @@ function TrackManager(_canvas) {
     var canvas = _canvas;
     var tracks = [];
     var docObject = document.createElement("canvas");
-//    canvas.getDocObject().parentNode.insertBefore(docObject, canvas.getDocObject());
-canvas.getDocObject().parentNode.insertBefore(docObject, canvas.getDocObject().nextSibling);
-//    canvas.getDocObject().parentNode.appendChild(docObject);
+    //    canvas.getDocObject().parentNode.insertBefore(docObject, canvas.getDocObject());
+    canvas.getDocObject().parentNode.insertBefore(docObject, canvas.getDocObject().nextSibling);
+    //    canvas.getDocObject().parentNode.appendChild(docObject);
 
 
-//    docObject.style.backgroundColor = "#0000F9";
-//    var img = "url('" + canvas.prefs.background.image + "'),";
-//    img += $U.browserCode();
-//    img += canvas.prefs.background.gradient;
-//    docObject.style.backgroundImage = img;
-//    docObject.style.backgroundRepeat = canvas.prefs.background.repeat;
-//    docObject.style.backgroundPosition = canvas.prefs.background.position;
+    //    docObject.style.backgroundColor = "#0000F9";
+    //    var img = "url('" + canvas.prefs.background.image + "'),";
+    //    img += $U.browserCode();
+    //    img += canvas.prefs.background.gradient;
+    //    docObject.style.backgroundImage = img;
+    //    docObject.style.backgroundRepeat = canvas.prefs.background.repeat;
+    //    docObject.style.backgroundPosition = canvas.prefs.background.position;
 
 
 
@@ -48,11 +48,11 @@ canvas.getDocObject().parentNode.insertBefore(docObject, canvas.getDocObject().n
             }
         }
     }
-    me.resize=function(){
+    me.resize = function() {
         $U.ATT(docObject, "width:" + canvas.getWidth() + ";height:" + canvas.getHeight());
     }
     me.clear = function() {
-//        docObject.width = docObject.width;
+        //        docObject.width = docObject.width;
         ctx.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 

@@ -1,53 +1,52 @@
 //************************************************
 //**************** AREA CONSTRUCTOR **************
 //************************************************
-function AreaConstructor(){
-    $U.extend(this,new ObjectConstructor()); //Héritage
-    var col=new Color();
-    
-    this.getCode=function(){
+function AreaConstructor() {
+    $U.extend(this, new ObjectConstructor()); //Héritage
+    var col = new Color();
+
+    this.getCode = function() {
         return "area";
     };
-    
-    this.getInitials=function(){
+
+    this.getInitials = function() {
         return ["point"];
     };
-    
-    this.isLastObject=function(){
-        var c=this.getCList();
-        var len=c.length;
-        if ((len>1)&&(c[0]===c[len-1])) {
+
+    this.isLastObject = function() {
+        var c = this.getCList();
+        var len = c.length;
+        if ((len > 1) && (c[0] === c[len - 1])) {
             return true;
         }
         return false;
     };
-    
-    
-    
-    this.newObj=function(_zc,_C){
-        var a=new AreaObject(_zc.getConstruction(), "_Poly",_C);
+
+
+
+    this.newObj = function(_zc, _C) {
+        var a = new AreaObject(_zc.getConstruction(), "_Poly", _C);
         a.setOpacity(0.2);
         return (a);
     };
-    
-    this.preview=function(ev,zc){
-        
-        var ctx=zc.getContext();
+
+    this.preview = function(ev, zc) {
+
+        var ctx = zc.getContext();
         col.set(zc.prefs.color.area);
         col.setOpacity(0.2);
-        ctx.strokeStyle=zc.prefs.color.hilite;
-        ctx.fillStyle=col.getRGBA();
-        ctx.lineWidth=zc.prefs.size.line;
+        ctx.strokeStyle = zc.prefs.color.hilite;
+        ctx.fillStyle = col.getRGBA();
+        ctx.lineWidth = zc.prefs.size.line;
         ctx.beginPath();
-        var c=this.getCList();
-        var len=c.length;
-        ctx.moveTo(this.getC(0).getX(),this.getC(0).getY());
-        for (var i=1;i<len;i++){
-            ctx.lineTo(this.getC(i).getX(),this.getC(i).getY());
+        var c = this.getCList();
+        var len = c.length;
+        ctx.moveTo(this.getC(0).getX(), this.getC(0).getY());
+        for (var i = 1; i < len; i++) {
+            ctx.lineTo(this.getC(i).getX(), this.getC(i).getY());
         }
-        ctx.lineTo(zc.mouseX(ev),zc.mouseY(ev));
+        ctx.lineTo(zc.mouseX(ev), zc.mouseY(ev));
         ctx.stroke();
         ctx.fill();
     };
 }
-

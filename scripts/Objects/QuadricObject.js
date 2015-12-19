@@ -80,7 +80,8 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
     }
 
     this.mouseInside = function(ev) {
-        var mx = this.mouseX(ev), my = this.mouseY(ev);
+        var mx = this.mouseX(ev),
+            my = this.mouseY(ev);
         for (var i = 0, len = PtabRow.length; i < len; i++) {
             if ($U.isNearToPoint(PtabRow[i].x, PtabRow[i].y, mx, my, this.getOversize()))
                 return true;
@@ -91,8 +92,8 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
     this.isMoveable = function() {
         // Si les extrémités sont des points libres :
         if ((_P1.getParentLength() === 0) && (_P2.getParentLength() === 0) &&
-                (_P3.getParentLength() === 0) && (_P4.getParentLength() === 0) &&
-                (_P5.getParentLength() === 0))
+            (_P3.getParentLength() === 0) && (_P4.getParentLength() === 0) &&
+            (_P5.getParentLength() === 0))
             return true;
         return false;
     };
@@ -117,8 +118,18 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
 
     var intersectQuadricQuadricXY = function(TAB) {
         // pour ax^2 + bxy + cy^2 + dx + ey + f = 0
-        var a0 = X[0], b0 = X[4], c0 = X[1], d0 = X[2], e0 = X[3], f0 = X[5];
-        var a1 = TAB[0], b1 = TAB[4], c1 = TAB[1], d1 = TAB[2], e1 = TAB[3], f1 = TAB[5];
+        var a0 = X[0],
+            b0 = X[4],
+            c0 = X[1],
+            d0 = X[2],
+            e0 = X[3],
+            f0 = X[5];
+        var a1 = TAB[0],
+            b1 = TAB[4],
+            c1 = TAB[1],
+            d1 = TAB[2],
+            e1 = TAB[3],
+            f1 = TAB[5];
         // Si les deux coniques sont homothétiques (cas courant en 3D) :
         if ((Math.abs(a0 / a1 - c0 / c1) < 1e-10)) {
             d1 = d1 * (a0 / a1) - d0;
@@ -134,10 +145,15 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
 
             var x0 = (c05 - Math.sqrt(c04)) / c06;
             var x1 = (c05 + Math.sqrt(c04)) / c06;
-            var y0=(-f1-d1*x0)/e1;
-            var y1=(-f1-d1*x1)/e1;
+            var y0 = (-f1 - d1 * x0) / e1;
+            var y1 = (-f1 - d1 * x1) / e1;
 
-            return [[x0,y0],[x1,y1],[NaN,NaN],[NaN,NaN]];
+            return [
+                [x0, y0],
+                [x1, y1],
+                [NaN, NaN],
+                [NaN, NaN]
+            ];
         }
 
         var k1 = -a1 * b0 * b1 * c0 + a0 * b1 * b1 * c0 + a1 * a1 * c0 * c0 + a1 * b0 * b0 * c1 - a0 * b0 * b1 * c1 - 2 * a0 * a1 * c0 * c1 + a0 * a0 * c1 * c1;
@@ -189,7 +205,9 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
         XX[3] = MTH.plus(XX[3], sc);
 
         var points = [];
-        var A = c0, B, C, AA = c1, BB, CC;
+        var A = c0,
+            B, C, AA = c1,
+            BB, CC;
         for (var i = 0; i < 4; i++) {
             if (Math.abs(XX[i][1]) > 1e-5) {
                 // Un complexe rencontré, ie une intersection non existante :
@@ -217,7 +235,8 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
     this.intersectXY = function(_C, _x, _y) {
         if (_C.isInstanceType("quadric")) {
             var Pts = intersectQuadricQuadricXY(_C.getCoeffs());
-            var p = _x, q = _y;
+            var p = _x,
+                q = _y;
             var dmin = NaN;
             var pos = 0;
             for (var i = 0; i < Pts.length; i++) {
@@ -243,13 +262,14 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
     // Pour la création de l'objet dans PointConstructor :
     this.initIntersect2 = function(_C, _P) {
         if (_C.isInstanceType("quadric")) {
-//            console.log("_C.getCoeffs()=" + _C.getCoeffs());
+            //            console.log("_C.getCoeffs()=" + _C.getCoeffs());
             var Pts = intersectQuadricQuadricXY(_C.getCoeffs());
-            var p = _P.getX(), q = _P.getY();
+            var p = _P.getX(),
+                q = _P.getY();
             var dmin = NaN;
             var pos = 0;
             for (var i = 0; i < Pts.length; i++) {
-//                console.log("i=" + i + "  Pts[i][0]=" + Pts[i][0]);
+                //                console.log("i=" + i + "  Pts[i][0]=" + Pts[i][0]);
                 var dd = (Pts[i][0] - p) * (Pts[i][0] - p) + (Pts[i][1] - q) * (Pts[i][1] - q);
                 if ((isNaN(dmin)) || (dd < dmin)) {
                     dmin = dd;
@@ -282,8 +302,10 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
 
     // Ancienne méthode laissée là pour comparaison 
     this.projectXY2 = function(_x, _y) {
-        var xAB = (PtabRow[0].x - _x), yAB = (PtabRow[0].y - _y);
-        var d2 = xAB * xAB + yAB * yAB, d1 = 0;
+        var xAB = (PtabRow[0].x - _x),
+            yAB = (PtabRow[0].y - _y);
+        var d2 = xAB * xAB + yAB * yAB,
+            d1 = 0;
         var k = 0;
         for (var i = 1, len = PtabRow.length; i < len; i++) {
             xAB = (PtabRow[i].x - _x);
@@ -308,16 +330,19 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
             var AA = P[0];
             var BB = P[1];
             var CC = P[2];
-            var xa = AA.getX(), ya = AA.getY();
-            var xb = BB.getX(), yb = BB.getY();
-            var xc = CC.getX(), yc = CC.getY();
+            var xa = AA.getX(),
+                ya = AA.getY();
+            var xb = BB.getX(),
+                yb = BB.getY();
+            var xc = CC.getX(),
+                yc = CC.getY();
             var xm = xa + G[0] * (xb - xa) + G[1] * (xc - xa);
             var ym = ya + G[0] * (yb - ya) + G[1] * (yc - ya);
             p.setXY(xm, ym);
             this.project(p);
-//            if ((p.getX() !== xm) || (p.getY() !== ym)) {
-//                this.setAlpha(p);
-//            }
+            //            if ((p.getX() !== xm) || (p.getY() !== ym)) {
+            //                this.setAlpha(p);
+            //            }
         } else {
             // Compatibilité avec les "anciennes" figures :
             if (PtabRow.length === 0)
@@ -356,7 +381,14 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
         var Ptab = []; // Liste des sommets du polygone représentant le lieu
         // Initialisation de Ptab :
         for (var i = 0; i < NB; i++) {
-            Ptab.push({"alpha": i, "x": 0, "y": 0, "x1": 0, "y1": 0, "r": 0});
+            Ptab.push({
+                "alpha": i,
+                "x": 0,
+                "y": 0,
+                "x1": 0,
+                "y1": 0,
+                "r": 0
+            });
         }
         return Ptab;
     };
@@ -368,51 +400,51 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
 
     this.center = function() {
         // pour ax^2 + 2bxy + cy^2 + 2dx + 2ey + f = 0
-//        var a = X[0], b = X[4] / 2, c = X[1], d = X[2] / 2, e = X[3] / 2, f = X[5];
-//        var det = a * c - b * b;
-//        var x0 = (b * e - c * d) / det;
-//        var y0 = (b * d - a * e) / det;
-//        x0 = Cn.coordsSystem.x(x0);
-//        y0 = Cn.coordsSystem.y(y0);
-//        return [x0, y0];
+        //        var a = X[0], b = X[4] / 2, c = X[1], d = X[2] / 2, e = X[3] / 2, f = X[5];
+        //        var det = a * c - b * b;
+        //        var x0 = (b * e - c * d) / det;
+        //        var y0 = (b * d - a * e) / det;
+        //        x0 = Cn.coordsSystem.x(x0);
+        //        y0 = Cn.coordsSystem.y(y0);
+        //        return [x0, y0];
         var M = MTH.quotient(MTH.plus(FOCI[0], FOCI[1]), 2);
         return Cn.coordsSystem.xy(M);
     };
 
     this.foci = function() {
-//        // pour ax^2 + 2bxy + cy^2 + 2dx + 2ey + f = 0
-//        var a = X[0], b = X[4] / 2, c = X[1], d = X[2] / 2, e = X[3] / 2, f = X[5];
-//        var A = [b * b - a * c, 0];
-//        var B = [c * d - b * e, a * e - b * d];
-//        var C = [e * e - d * d + f * (a - c), 2 * (b * f - d * e)];
-//
-////         Résolution de l'équation complexe Az^2+2Bz+C=0 :
-////         Racine du discriminant réduit :
-//        var SQ = MTH.csqrt(MTH.minus(MTH.times(B, B), MTH.times(A, C)))[0];
-//        var z1 = MTH.quotient(MTH.plus(B, SQ), A);
-//        var z2 = MTH.quotient(MTH.minus(B, SQ), A);
-//        return [Cn.coordsSystem.xy(z1), Cn.coordsSystem.xy(z2)];
+        //        // pour ax^2 + 2bxy + cy^2 + 2dx + 2ey + f = 0
+        //        var a = X[0], b = X[4] / 2, c = X[1], d = X[2] / 2, e = X[3] / 2, f = X[5];
+        //        var A = [b * b - a * c, 0];
+        //        var B = [c * d - b * e, a * e - b * d];
+        //        var C = [e * e - d * d + f * (a - c), 2 * (b * f - d * e)];
+        //
+        ////         Résolution de l'équation complexe Az^2+2Bz+C=0 :
+        ////         Racine du discriminant réduit :
+        //        var SQ = MTH.csqrt(MTH.minus(MTH.times(B, B), MTH.times(A, C)))[0];
+        //        var z1 = MTH.quotient(MTH.plus(B, SQ), A);
+        //        var z2 = MTH.quotient(MTH.minus(B, SQ), A);
+        //        return [Cn.coordsSystem.xy(z1), Cn.coordsSystem.xy(z2)];
         return [Cn.coordsSystem.xy(FOCI[0]), Cn.coordsSystem.xy(FOCI[1])];
     };
 
-//    this.projectAlpha = function(p) {
-//        if (PtabRow.length===0) return;
-//        var k = p.getAlpha();
-//        if (k < 0) k = 0;
-//        if (k > (PtabRow.length - 1)) k = PtabRow.length - 1;
-//        p.setXY(PtabRow[k].x, PtabRow[k].y);
-//    };
-//
-//    this.setAlpha = function(p) {
-//        var xAB = 0, yAB = 0;
-//        for (var i = 0, len = PtabRow.length; i < len; i++) {
-//            xAB = (PtabRow[i].x - p.getX()), yAB = (PtabRow[i].y - p.getY());
-//            if ((xAB === 0) && (yAB === 0)) {
-//                p.setAlpha(i);
-//                return;
-//            }
-//        }
-//    };
+    //    this.projectAlpha = function(p) {
+    //        if (PtabRow.length===0) return;
+    //        var k = p.getAlpha();
+    //        if (k < 0) k = 0;
+    //        if (k > (PtabRow.length - 1)) k = PtabRow.length - 1;
+    //        p.setXY(PtabRow[k].x, PtabRow[k].y);
+    //    };
+    //
+    //    this.setAlpha = function(p) {
+    //        var xAB = 0, yAB = 0;
+    //        for (var i = 0, len = PtabRow.length; i < len; i++) {
+    //            xAB = (PtabRow[i].x - p.getX()), yAB = (PtabRow[i].y - p.getY());
+    //            if ((xAB === 0) && (yAB === 0)) {
+    //                p.setAlpha(i);
+    //                return;
+    //            }
+    //        }
+    //    };
 
     this.paintObject = function(ctx) {
         for (var i = 0, len1 = Ptab.length; i < len1; i++) {
@@ -440,7 +472,8 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
         var tab = [];
         for (var x = MIN; x < MAX; x += STEP) {
             if (Math.abs(X[1]) > 1e-13) {
-                var p = (X[3] + x * X[4]) / X[1], q = (X[0] * x * x + X[2] * x + X[5]) / X[1];
+                var p = (X[3] + x * X[4]) / X[1],
+                    q = (X[0] * x * x + X[2] * x + X[5]) / X[1];
                 var h = p * p / 4 - q;
                 y = -p / 2 - Math.sqrt(h);
             } else {
@@ -452,7 +485,10 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
                     tab = [];
                 }
             } else
-                tab.push({x: x, y: y});
+                tab.push({
+                    x: x,
+                    y: y
+                });
         }
         if (tab.length > 0)
             Ptab.push(tab);
@@ -463,7 +499,8 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
         var tab = [];
         for (var x = MIN; x < MAX; x += STEP) {
             if (Math.abs(X[1]) > 1e-13) {
-                var p = (X[3] + x * X[4]) / X[1], q = (X[0] * x * x + X[2] * x + X[5]) / X[1];
+                var p = (X[3] + x * X[4]) / X[1],
+                    q = (X[0] * x * x + X[2] * x + X[5]) / X[1];
                 var h = p * p / 4 - q;
                 y = -p / 2 + Math.sqrt(h);
             } else {
@@ -475,7 +512,10 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
                     tab = [];
                 }
             } else
-                tab.push({x: x, y: y});
+                tab.push({
+                    x: x,
+                    y: y
+                });
         }
         if (tab.length > 0)
             Ptab.push(tab);
@@ -488,7 +528,10 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
             // Il s'agit d'une ellipse (b2-4ac<0) :
             if (Ptab.length === 2) {
                 Ptab[0] = Ptab[0].concat(Ptab[1].reverse());
-                Ptab[0].push({x: Ptab[0][0].x, y: Ptab[0][0].y});
+                Ptab[0].push({
+                    x: Ptab[0][0].x,
+                    y: Ptab[0][0].y
+                });
                 Ptab.splice(1, 1);
             }
         } else {
@@ -505,10 +548,14 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
 
 
     this.compute = function() {
-        var x01 = P[1].getX() - P[0].getX(), y01 = P[1].getY() - P[0].getY();
-        var x02 = P[2].getX() - P[0].getX(), y02 = P[2].getY() - P[0].getY();
-        var x03 = P[3].getX() - P[0].getX(), y03 = P[3].getY() - P[0].getY();
-        var x04 = P[4].getX() - P[0].getX(), y04 = P[4].getY() - P[0].getY();
+        var x01 = P[1].getX() - P[0].getX(),
+            y01 = P[1].getY() - P[0].getY();
+        var x02 = P[2].getX() - P[0].getX(),
+            y02 = P[2].getY() - P[0].getY();
+        var x03 = P[3].getX() - P[0].getX(),
+            y03 = P[3].getY() - P[0].getY();
+        var x04 = P[4].getX() - P[0].getX(),
+            y04 = P[4].getY() - P[0].getY();
         // Test très grossier (rapidité) pour le cas ou les trois
         // premiers points sont alignés, on fait comme si les 5 l'étaient
         // et on affiche un segment (pour la 3D) :
@@ -520,14 +567,21 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
             Ptab = [];
             PtabRow = [];
             var tab = [];
-            tab.push({x: x0, y: y0});
-            tab.push({x: x1, y: y1});
+            tab.push({
+                x: x0,
+                y: y0
+            });
+            tab.push({
+                x: x1,
+                y: y1
+            });
             Ptab.push(tab);
             return;
         }
         var A = [];
         for (var i = 0; i < 5; i++) {
-            var x = P[i].getX(), y = P[i].getY();
+            var x = P[i].getX(),
+                y = P[i].getY();
             A[i] = [x * x, y * y, x, y, x * y, 1];
             var sum = 0;
             for (var j = 0; j < 6; j++) {
@@ -541,8 +595,7 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
         var r = 0;
         var colindex = [];
         for (var c = 0; c < 6; c++) {
-            if (r >= 5)
-            {
+            if (r >= 5) {
                 colindex[c] = -1;
                 continue;
             }
@@ -590,22 +643,27 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
         for (var i = 0; i <= 5; i++) {
             sum += Math.abs(X[i]);
         }
-//        if (sum<1e-10) {
-//            Valid=false;
-//        }
+        //        if (sum<1e-10) {
+        //            Valid=false;
+        //        }
         for (var i = 0; i <= 5; i++) {
             X[i] /= sum;
             // Ce qui suit ressemble à un gag, pourtant il semble que l'epsilon au lieu de 0 en coeffs permet
             // de surmonter les effets de bord dans des cas particuliers (ex. hyperbole equilatère/parabole)
             // sans pour autant porter atteinte à la précision des coordonnées des points d'intersections
             // qui restent fiables à 1e-12, soit la précision maximale affichée du logiciel :
-//            X[i]=n(X[i]);
+            //            X[i]=n(X[i]);
         }
 
         // Calcul des coordonnées des foyers de la conique (double pour parabole) :
 
         // pour ax^2 + 2bxy + cy^2 + 2dx + 2ey + f = 0
-        var a = X[0], b = X[4] / 2, c = X[1], d = X[2] / 2, e = X[3] / 2, f = X[5];
+        var a = X[0],
+            b = X[4] / 2,
+            c = X[1],
+            d = X[2] / 2,
+            e = X[3] / 2,
+            f = X[5];
         var A = [b * b - a * c, 0];
         var B = [c * d - b * e, a * e - b * d];
         var C = [e * e - d * d + f * (a - c), 2 * (b * f - d * e)];
@@ -625,10 +683,10 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
         }
 
 
-//        var a = X[0], b = X[4], c = X[1], d = X[2], e = X[3], f = X[5];
-//        console.log("det="+((a*c-b*b/4)*f+b*e*d/4-c*d*d/4-a*e*e/4));
+        //        var a = X[0], b = X[4], c = X[1], d = X[2], e = X[3], f = X[5];
+        //        console.log("det="+((a*c-b*b/4)*f+b*e*d/4-c*d*d/4-a*e*e/4));
 
-//        console.log(" X[0]=" + X[0] + " X[1]=" + X[1] + " X[2]=" + X[2] + " X[3]=" + X[3] + " X[4]=" + X[4] + " X[5]=" + X[5]);
+        //        console.log(" X[0]=" + X[0] + " X[1]=" + X[1] + " X[2]=" + X[2] + " X[3]=" + X[3] + " X[4]=" + X[4] + " X[5]=" + X[5]);
 
         computeMinMaxStep();
         Ptab = [];
@@ -642,7 +700,7 @@ function QuadricObject(_construction, _name, _P1, _P2, _P3, _P4, _P5) {
             PtabRow = PtabRow.concat(Ptab[i]);
         }
 
-//        console.log("x0="+X[0]+" x1="+X[1]+" x2="+X[2]+" x3="+X[3]+" x4="+X[4]+" x5="+X[5]);
+        //        console.log("x0="+X[0]+" x1="+X[1]+" x2="+X[2]+" x3="+X[3]+" x4="+X[4]+" x5="+X[5]);
     };
 
 

@@ -1,5 +1,3 @@
-
-
 $INCLUDE("Docs/Preferences.js");
 $INCLUDE("Color.js");
 $INCLUDE("Utils.js");
@@ -136,6 +134,3 @@ $INCLUDE("Magnifier/MagnifierManager.js");
 $INCLUDE("Magnifier/MagnifierPanel.js");
 $INCLUDE("Magnifier/DemoModeManager.js");
 $INCLUDE("Magnifier/DemoModePanel.js");
-
-
-

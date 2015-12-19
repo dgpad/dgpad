@@ -3,7 +3,7 @@ function CalcManager(_canvas) {
     var canvas = _canvas;
     var maincalc = null;
     var digitcalc = null;
-    
+
 
     me.keypressed = function(ev) {
         var target = ev.target || ev.srcElement;

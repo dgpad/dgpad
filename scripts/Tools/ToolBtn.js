@@ -19,10 +19,10 @@ function ToolBtn(_canvas, _oc, _procDown, _procUp) {
     }
 
 
-//    $U.preloadImage($APP_PATH + "NotPacked/images/tools/" + code + ".svg");
+    //    $U.preloadImage($APP_PATH + "NotPacked/images/tools/" + code + ".svg");
     me.addImage($APP_PATH + "NotPacked/images/tools/" + code + ".svg");
 
-//console.log($APP_PATH + "NotPacked/images/tools/" + code + ".svg");
+    //console.log($APP_PATH + "NotPacked/images/tools/" + code + ".svg");
 
     me.transition("scale", 0.1);
 

@@ -53,7 +53,7 @@ function MacrosManager(_canvas) {
             currentTool.tagPossibleInitials();
     }
 
-// Pour l'execution de macros :
+    // Pour l'execution de macros :
     var startMacro = function(_li, _m) {
         if (currentTool === _m) {
             me.endMacro();
@@ -78,9 +78,9 @@ function MacrosManager(_canvas) {
         }
     };
 
-//Pour la construction de macros :
+    //Pour la construction de macros :
     me.refreshConstructionPanel = function(_p, _t, _e) {
-//        console.log(_p.length+_e);
+        //        console.log(_p.length+_e);
         if (_p.length === 0) {
             // S'il n'y a pas d'initiaux :
             macroPanel.hideMacroProps();
@@ -136,6 +136,4 @@ function MacrosManager(_canvas) {
         return txt;
     };
 
-}
-;
-
+};

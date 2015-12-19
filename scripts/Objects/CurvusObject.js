@@ -1,10 +1,14 @@
 function CurvusObject(_construction, _name, _a, _b, _f1) {
-    $U.extend(this, new ConstructionObject(_construction, _name));   // Héritage
+    $U.extend(this, new ConstructionObject(_construction, _name)); // Héritage
     var me = this;
     var Cn = _construction;
-//    var min = new Expression(this, _a), max = new Expression(this, _b);
-    var MIN = 0, MAX = 0, STEP = 0;
-    var E1 = null, min = null, max = null;
+    //    var min = new Expression(this, _a), max = new Expression(this, _b);
+    var MIN = 0,
+        MAX = 0,
+        STEP = 0;
+    var E1 = null,
+        min = null,
+        max = null;
     var CX = 0; // représente l'abscisse (pixel) de l'origine du repère
     var CZ = 1; // représente la valeur du zoom
 
@@ -15,7 +19,11 @@ function CurvusObject(_construction, _name, _a, _b, _f1) {
     // y pour ordonnée, d pour discontinuité repérée
     var Ptab = [];
     for (var i = 0; i < 10000; i++) {
-        Ptab.push({x: 0, y: 0, d: false});
+        Ptab.push({
+            x: 0,
+            y: 0,
+            d: false
+        });
     }
 
 
@@ -37,7 +45,8 @@ function CurvusObject(_construction, _name, _a, _b, _f1) {
 
 
     this.mouseInside = function(ev) {
-        var mx = this.mouseX(ev), my = this.mouseY(ev);
+        var mx = this.mouseX(ev),
+            my = this.mouseY(ev);
         for (var i = 0; i < NB; i++) {
             if ($U.isNearToPoint(Ptab[i].x, Ptab[i].y, mx, my, this.getOversize()))
                 return true;
@@ -47,8 +56,10 @@ function CurvusObject(_construction, _name, _a, _b, _f1) {
 
 
     this.projectXY = function(_x, _y) {
-        var xAB = (Ptab[0].x - _x), yAB = (Ptab[0].y - _y);
-        var d2 = xAB * xAB + yAB * yAB, d1 = 0;
+        var xAB = (Ptab[0].x - _x),
+            yAB = (Ptab[0].y - _y);
+        var d2 = xAB * xAB + yAB * yAB,
+            d1 = 0;
         var k = 0;
         for (var i = 1; i < NB; i++) {
             xAB = (Ptab[i].x - _x);
@@ -63,7 +74,7 @@ function CurvusObject(_construction, _name, _a, _b, _f1) {
     };
 
     this.project = function(p) {
-//        console.log("this.project");
+        //        console.log("this.project");
         var coords = this.projectXY(p.getX(), p.getY());
         p.setXY(coords[0], coords[1]);
     };
@@ -77,12 +88,13 @@ function CurvusObject(_construction, _name, _a, _b, _f1) {
     };
 
     this.setAlpha = function(p) {
-        var xAB = 0, yAB = 0;
+        var xAB = 0,
+            yAB = 0;
         for (var i = 0; i < NB; i++) {
             xAB = (Ptab[i].x - p.getX()), yAB = (Ptab[i].y - p.getY());
             if ((xAB === 0) && (yAB === 0)) {
-//                console.log("CX=" + CX + "  i=" + i + "  p.setAlpha(" + (i - CX) + ")");
-//                console.log("Cn.coordsSystem.x(i/2)=" + (Cn.coordsSystem.x(i / 2)));
+                //                console.log("CX=" + CX + "  i=" + i + "  p.setAlpha(" + (i - CX) + ")");
+                //                console.log("Cn.coordsSystem.x(i/2)=" + (Cn.coordsSystem.x(i / 2)));
                 if (me.compute === computeCartesian)
                     p.setAlpha(Cn.coordsSystem.x(i));
                 else
@@ -126,37 +138,37 @@ function CurvusObject(_construction, _name, _a, _b, _f1) {
     };
 
 
-// En chantier ci-dessous : étude naïve de la discontinuité :
-//    var computeCartesian = function() {
-//        if (E1) E1.compute();
-//        if (min) min.compute();
-//        if (max) max.compute();
-//        computeMinMaxStepCartesian();
-//        var k = MIN;
-//        var y0 = NaN;
-//        var y1 = NaN;
-//        var y2 = NaN;
-//        for (var i = 0; i < NB; i++) {
-//            y2 = E1.value(k);
-//            Ptab[i].x = Cn.coordsSystem.px(k);
-//            Ptab[i].y = Cn.coordsSystem.py(y2);
-//            Ptab[i].d = false;
-//            if (isNaN(y0)) {
-//                y0 = y2;
-//            } else if (isNaN(y1)) {
-//                y1 = y2;
-//            } else if (Math.abs((y0 + y2) / 2 - y1) > 1e-1) {
-//                // Discontinuité repérée :
-//                Ptab[i].d = true;
-//                y0 = NaN;
-//                y1 = NaN;
-//            } else {
-//                y0 = y1;
-//                y1 = y2;
-//            }
-//            k += STEP;
-//        }
-//    };
+    // En chantier ci-dessous : étude naïve de la discontinuité :
+    //    var computeCartesian = function() {
+    //        if (E1) E1.compute();
+    //        if (min) min.compute();
+    //        if (max) max.compute();
+    //        computeMinMaxStepCartesian();
+    //        var k = MIN;
+    //        var y0 = NaN;
+    //        var y1 = NaN;
+    //        var y2 = NaN;
+    //        for (var i = 0; i < NB; i++) {
+    //            y2 = E1.value(k);
+    //            Ptab[i].x = Cn.coordsSystem.px(k);
+    //            Ptab[i].y = Cn.coordsSystem.py(y2);
+    //            Ptab[i].d = false;
+    //            if (isNaN(y0)) {
+    //                y0 = y2;
+    //            } else if (isNaN(y1)) {
+    //                y1 = y2;
+    //            } else if (Math.abs((y0 + y2) / 2 - y1) > 1e-1) {
+    //                // Discontinuité repérée :
+    //                Ptab[i].d = true;
+    //                y0 = NaN;
+    //                y1 = NaN;
+    //            } else {
+    //                y0 = y1;
+    //                y1 = y2;
+    //            }
+    //            k += STEP;
+    //        }
+    //    };
 
     var computeMinMaxStepParam = function() {
         var mn = min ? min.value() : NaN;
@@ -190,8 +202,8 @@ function CurvusObject(_construction, _name, _a, _b, _f1) {
         ctx.moveTo(Ptab[0].x, Ptab[0].y);
         for (var i = 1; i < NB; i++) {
             ctx.lineTo(Ptab[i].x, Ptab[i].y);
-//            if (Ptab[i].d) ctx.moveTo(Ptab[i].x, Ptab[i].y);
-//            else ctx.lineTo(Ptab[i].x, Ptab[i].y);
+            //            if (Ptab[i].d) ctx.moveTo(Ptab[i].x, Ptab[i].y);
+            //            else ctx.lineTo(Ptab[i].x, Ptab[i].y);
         }
         ctx.stroke();
         if ((me.compute === computeCartesian) && (max) && (min)) {

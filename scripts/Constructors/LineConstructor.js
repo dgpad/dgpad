@@ -21,6 +21,6 @@ function LineConstructor() {
         var ctx = zc.getContext();
         ctx.lineWidth = zc.prefs.size.line;
         ctx.strokeStyle = zc.prefs.color.hilite;
-        $U.drawPartialLine(ctx,this.getC(0).getX(),this.getC(0).getY(),zc.mouseX(ev), zc.mouseY(ev),true,true);
+        $U.drawPartialLine(ctx, this.getC(0).getX(), this.getC(0).getY(), zc.mouseX(ev), zc.mouseY(ev), true, true);
     };
 }

@@ -6,7 +6,7 @@
 function VirtualPointObject(_x, _y) {
     var X = _x;
     var Y = _y;
-    var alpha=0;
+    var alpha = 0;
     var is_3D = false;
 
 
@@ -22,26 +22,25 @@ function VirtualPointObject(_x, _y) {
         X = x;
         Y = y;
     };
-    
-    this.setAlpha=function(_a){
-        alpha=_a;
+
+    this.setAlpha = function(_a) {
+        alpha = _a;
     };
-    
-    this.getAlpha=function(){
+
+    this.getAlpha = function() {
         return alpha;
     };
 
     this.near = function(_x, _y) {
         return ((Math.abs(X - _x) < 1E-10) && (Math.abs(Y - _y) < 1E-10));
     };
-    
+
     this.is3D = function() {
         return is_3D;
     };
-    
+
     this.set3D = function(_b) {
         is_3D = _b;
     };
-    
-}
-;
+
+};

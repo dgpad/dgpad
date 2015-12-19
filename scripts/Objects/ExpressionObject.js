@@ -1,32 +1,34 @@
 function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) {
-//    console.log("start create : "+_name);
-    var parent = $U.extend(this, new ConstructionObject(_construction, _name));   // Héritage
+    //    console.log("start create : "+_name);
+    var parent = $U.extend(this, new ConstructionObject(_construction, _name)); // Héritage
     $U.extend(this, new MoveableObject(_construction));
     var me = this;
     me.Flag = false;
     var Cn = _construction;
-    var X = (_x < 0) ? 0 : _x, Y = (_y < 0) ? 25 : _y, W = 0, H = 0;
+    var X = (_x < 0) ? 0 : _x,
+        Y = (_y < 0) ? 25 : _y,
+        W = 0,
+        H = 0;
     var arrow = String.fromCharCode(0x27fc); // Juste pour tromper jscompress qui converti abusivement...
     var OldX, OldY;
     var T = _txt;
-    var E1 = new Expression(me, ""), min = null, max = null;
+    var E1 = new Expression(me, ""),
+        min = null,
+        max = null;
     var cLength = 200; // Longueur initiale d'un curseur, en pixel.
     var cOffsetY = 20; // Décalage du curseur sous l'expression
-    var anchor = null;    // PointObject auquel l'expression est rattachée
+    var anchor = null; // PointObject auquel l'expression est rattachée
     var cPT = new PointObject(Cn, me.getName() + ".cursor", 0, 0);
-//    cPT.setParent(me);
+    //    cPT.setParent(me);
     cPT.getCode = function() {
         return "expression_cursor";
     };
     cPT.getAssociatedTools = function() {
         return "@callproperty"
     };
-    cPT.getSource = function() {
-    };
-    cPT.getStyle = function() {
-    };
-    cPT.compute = function() {
-    };
+    cPT.getSource = function() {};
+    cPT.getStyle = function() {};
+    cPT.compute = function() {};
     cPT.free = function() {
         return false;
     };
@@ -46,8 +48,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     cPT.getIncrement = function() {
         return cPT.increment;
     };
-    cPT.startDrag = function(_x, _y) {
-    };
+    cPT.startDrag = function(_x, _y) {};
     cPT.dragTo = function(_x, _y) {
         if (_x < X)
             _x = X;
@@ -84,7 +85,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     cPT.setDefaults("expression_cursor");
     Cn.add(cPT);
     // Attention, dépendance circulaire ! :
-//    me.setParent(cPT);
+    //    me.setParent(cPT);
     me.setIncrement = function(_i) {
         cPT.setIncrement(_i);
     };
@@ -119,7 +120,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     me.getW = function() {
         return W;
     };
-    me.is3D=function(){
+    me.is3D = function() {
         return E1.is3DArray();
     };
 
@@ -131,7 +132,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
             anchor = _o;
             this.addParent(anchor);
             this.setXY(anchor.getX() + Alpha[0], anchor.getY() + Alpha[1]);
-//            _o.setAlpha(this);
+            //            _o.setAlpha(this);
         }
     };
     this.setAlpha = function(_a) {
@@ -184,7 +185,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
 
 
     me.compute = function() {
-        
+
         if (E1)
             E1.compute();
         if (min)
@@ -194,7 +195,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         if (anchor) {
             this.setXY(anchor.getX() + Alpha[0], anchor.getY() + Alpha[1]);
         }
-        
+
     };
 
     var agrandirCursor = false;
@@ -205,10 +206,10 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         dragY = _y;
         OldX = X;
         OldY = Y;
-//        dragX = 10 * Math.round(_x / 10);
-//        dragY = 10 * Math.round(_y / 10);
-//        OldX = 10 * Math.round(X / 10);
-//        OldY = 10 * Math.round(Y / 10);
+        //        dragX = 10 * Math.round(_x / 10);
+        //        dragY = 10 * Math.round(_y / 10);
+        //        OldX = 10 * Math.round(X / 10);
+        //        OldY = 10 * Math.round(Y / 10);
     };
 
     this.dragTo = function(_x, _y) {
@@ -218,27 +219,27 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
             var x = X + cLength * bar;
             cPT.setXY(x, cPT.getY());
         } else {
-//            var oldX = X;
+            //            var oldX = X;
             this.setXY(OldX + Math.round((_x - dragX) / 10) * 10, OldY + Math.round((_y - dragY) / 10) * 10);
-//            X=OldX+Math.round((_x-dragX)/10)*10;
-//            Y=OldY+Math.round((_y-dragY)/10)*10;
-//            cPT.setXY(cPT.getX() + (X - oldX), Y + cOffsetY);
-//            var oldX = X;
-//            X = 10 * Math.round(_x / 10);
-//            Y = 10 * Math.round(_y / 10);
-//            X = X + (OldX - dragX);
-//            Y = Y + (OldY - dragY);
-//            cPT.setXY(cPT.getX() + (X - oldX), Y + cOffsetY);
+            //            X=OldX+Math.round((_x-dragX)/10)*10;
+            //            Y=OldY+Math.round((_y-dragY)/10)*10;
+            //            cPT.setXY(cPT.getX() + (X - oldX), Y + cOffsetY);
+            //            var oldX = X;
+            //            X = 10 * Math.round(_x / 10);
+            //            Y = 10 * Math.round(_y / 10);
+            //            X = X + (OldX - dragX);
+            //            Y = Y + (OldY - dragY);
+            //            cPT.setXY(cPT.getX() + (X - oldX), Y + cOffsetY);
         }
         this.computeAlpha();
     };
 
-    this.computeDrag = function() {
-    };
+    this.computeDrag = function() {};
 
     this.mouseInside = function(ev) {
         agrandirCursor = false;
-        var mx = this.mouseX(ev), my = this.mouseY(ev);
+        var mx = this.mouseX(ev),
+            my = this.mouseY(ev);
         var inside = ((mx > X) && (mx < X + W) && (my < Y) && (my > Y - this.getFontSize()));
         if ((!inside) && (isCursor())) {
             var l = X + cLength - 20;
@@ -264,7 +265,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
 
         var val = E1.get() + " : " + E1.value().getVars() + " " + arrow + " " + E1.value().get();
 
-//        var val = this.getVarName() + "(" + E1.value().getVars() + ") = " + E1.value().get();
+        //        var val = this.getVarName() + "(" + E1.value().getVars() + ") = " + E1.value().get();
         W = ctx.measureText(val).width;
         ctx.fillText(val, X, Y);
     };
@@ -273,16 +274,16 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         ctx.fillStyle = ctx.strokeStyle;
         ctx.textAlign = "left";
         var val = this.getVarName() + "(" + E1.getVars() + ") = " + E1.get() + " = " + E1.getDxyzt();
-//        var val = E1.get()+" : "+ E1.value().getVars() + " \u27fc " + E1.value().get();
+        //        var val = E1.get()+" : "+ E1.value().getVars() + " \u27fc " + E1.value().get();
 
-//        var v=[];
-//        console.log("****this.depList: ");
-//        for (var i=0;i<this.getParentLength();i++) {
-//            console.log("this.depList: "+this.getParentAt(i).getName());
-//        }
+        //        var v=[];
+        //        console.log("****this.depList: ");
+        //        for (var i=0;i<this.getParentLength();i++) {
+        //            console.log("this.depList: "+this.getParentAt(i).getName());
+        //        }
 
 
-//        var val = this.getVarName() + "(" + E1.value().getVars() + ") = " + E1.value().get();
+        //        var val = this.getVarName() + "(" + E1.value().getVars() + ") = " + E1.value().get();
         W = ctx.measureText(val).width;
         ctx.fillText(val, X, Y);
     };
@@ -306,25 +307,25 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     };
 
 
-//    var isArray = function(_a) {
-//        return (Object.prototype.toString.call(_a) === '[object Array]');
-//    };
-//
-//
-//    var parseArray = function(tab, prec) {
-//        if (isArray(tab)) {
-//            var elts = [];
-//            for (var i = 0, len = tab.length; i < len; i++) {
-//                elts.push(parseArray(tab[i], prec));
-//            }
-//            return "[" + elts.join($L.comma) + "]";
-//        } else {
-//            if (isNaN(tab))
-//                return "???";
-//            else
-//                return ($L.number(Math.round(tab * prec) / prec));
-//        }
-//    };
+    //    var isArray = function(_a) {
+    //        return (Object.prototype.toString.call(_a) === '[object Array]');
+    //    };
+    //
+    //
+    //    var parseArray = function(tab, prec) {
+    //        if (isArray(tab)) {
+    //            var elts = [];
+    //            for (var i = 0, len = tab.length; i < len; i++) {
+    //                elts.push(parseArray(tab[i], prec));
+    //            }
+    //            return "[" + elts.join($L.comma) + "]";
+    //        } else {
+    //            if (isNaN(tab))
+    //                return "???";
+    //            else
+    //                return ($L.number(Math.round(tab * prec) / prec));
+    //        }
+    //    };
 
     var paintNum = function(ctx) {
         ctx.fillStyle = ctx.strokeStyle;
@@ -375,11 +376,10 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         cPT.paint(ctx);
     };
 
-    this.paintObject = function(ctx) {
-    };
+    this.paintObject = function(ctx) {};
 
     this.getSource = function(src) {
-        var _ex=E1.getUnicodeSource().replace(/\n/g,"\\n");
+        var _ex = E1.getUnicodeSource().replace(/\n/g, "\\n");
         if (anchor) {
             var mn = (min === null) ? "\"\"" : "\"" + min.getSource() + "\"";
             var t = "\"" + $U.native2ascii(T) + "\"";
@@ -415,7 +415,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
 
     var isCursor = function() {
         return ((E1 !== null) && (min !== null) && (max !== null) &&
-                ((E1.isEmpty()) || (E1.isNum())) && (min.isNum()) && (max.isNum()));
+            ((E1.isEmpty()) || (E1.isNum())) && (min.isNum()) && (max.isNum()));
     };
 
     this.objToDelete = function() {
@@ -430,33 +430,31 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
 
 
     var setMethods = function() {
-//        console.log("curseur :" + isCursor());
+        //        console.log("curseur :" + isCursor());
         me.dx = E1.dx;
         me.dy = E1.dy;
         me.dz = E1.dz;
         me.dt = E1.dt;
 
-//        me.dx = (function() {
-//            return E1.dx;
-//        }());
+        //        me.dx = (function() {
+        //            return E1.dx;
+        //        }());
 
 
         if (E1.isText()) {
             me.paintObject = paintText;
-//            Cn.remove(cPT);
+            //            Cn.remove(cPT);
             cPT.setXY(NaN, NaN);
         } else if (E1.isDxyztFunc()) {
-//            console.log("func");
+            //            console.log("func");
             me.paintObject = paintDxyztFunc;
             cPT.setXY(NaN, NaN);
-        }
-        else if (E1.isDxyztDef()) {
-//            console.log("def");
+        } else if (E1.isDxyztDef()) {
+            //            console.log("def");
             E1.setDxyzt();
             me.paintObject = paintDxyztDef;
             cPT.setXY(NaN, NaN);
-        }
-        else if (E1.isFunc()) {
+        } else if (E1.isFunc()) {
             me.paintObject = paintFunction;
             cPT.setXY(NaN, NaN);
         } else if (isCursor()) {
@@ -475,20 +473,20 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
 
 
     // setExp pour les widgets :
-    me.setExp=me.setE1 = function(_t) {
+    me.setExp = me.setE1 = function(_t) {
         if (E1)
             delete E1;
         E1 = new Expression(me, _t);
         setMethods();
-//        me.computeChilds();
+        //        me.computeChilds();
     };
-    me.getExp=function(){
-      return me.getE1().getSource();  
+    me.getExp = function() {
+        return me.getE1().getSource();
     };
     me.getE1 = function() {
         return E1;
     };
-   
+
     me.setT = function(_t) {
         T = _t;
     };

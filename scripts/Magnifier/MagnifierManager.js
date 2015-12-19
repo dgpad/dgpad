@@ -6,18 +6,18 @@ function MagnifierManager(_canvas) {
             panel = new MagnifierPanel(_canvas);
             panel.show();
         } else if (panel) {
-                panel.close();
-                panel = null;
-            }
+            panel.close();
+            panel = null;
+        }
     };
     me.getMagnifierMode = function() {
         return (panel !== null);
     };
-    me.hide=function(){
-        if (panel) panel.setStyle("visibility","hidden");
+    me.hide = function() {
+        if (panel) panel.setStyle("visibility", "hidden");
     };
-    me.show=function(){
-        if (panel) panel.setStyle("visibility","visible");
+    me.show = function() {
+        if (panel) panel.setStyle("visibility", "visible");
     };
     me.magnifierPaint = function(coords) {
         if (panel) {

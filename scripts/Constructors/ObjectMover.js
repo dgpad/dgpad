@@ -23,17 +23,17 @@ function ObjectMover() {
         draggedObject = null;
     };
 
-    this.selectCreatePoint = function(zc, ev) {
-    };
+    this.selectCreatePoint = function(zc, ev) {};
 
-    var x0 = 0, y0 = 0;
+    var x0 = 0,
+        y0 = 0;
     this.preview = function(ev, zc) {
         if (draggedObject) {
             draggedObject.dragTo(zc.mouseX(ev) + x0, zc.mouseY(ev) + y0);
             zc.getConstruction().compute();
         } else {
             draggedObject = this.getC(0);
-            if ((draggedObject)&&(draggedObject.getFamilyCode() === "point")) {
+            if ((draggedObject) && (draggedObject.getFamilyCode() === "point")) {
                 x0 = draggedObject.getX() - zc.mouseX(ev);
                 y0 = draggedObject.getY() - zc.mouseY(ev);
             } else {
@@ -47,4 +47,3 @@ function ObjectMover() {
 
 
 }
-

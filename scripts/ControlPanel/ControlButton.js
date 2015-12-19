@@ -14,17 +14,17 @@ function ControlButton(owner, l, t, w, h, src, _isOn, _group, _proc) {
             "width": w,
             "height": h
         };
-//        var cb = owner.getBounds();
-//        var cw = w;
-//        var ch = h;
-//        var ct = cb.top + t;
-//        var cl = cb.left + l;
-//        return {
-//            "left": cl,
-//            "top": ct,
-//            "width": cw,
-//            "height": ch
-//        };
+        //        var cb = owner.getBounds();
+        //        var cw = w;
+        //        var ch = h;
+        //        var ct = cb.top + t;
+        //        var cl = cb.left + l;
+        //        return {
+        //            "left": cl,
+        //            "top": ct,
+        //            "width": cw,
+        //            "height": ch
+        //        };
     };
 
     this.setActive = function(_bool) {
@@ -63,7 +63,7 @@ function ControlButton(owner, l, t, w, h, src, _isOn, _group, _proc) {
     docObject.style.height = bounds.height + "px";
     docObject.style.left = bounds.left + "px";
     docObject.style.top = bounds.top + "px";
-    docObject.style.setProperty("-webkit-tap-highlight-color","transparent");
+    docObject.style.setProperty("-webkit-tap-highlight-color", "transparent");
 
     docObject.addEventListener('touchstart', function(ev) {
         ev.preventDefault();
@@ -71,8 +71,7 @@ function ControlButton(owner, l, t, w, h, src, _isOn, _group, _proc) {
             if (group) {
                 group.deselect();
                 me.select();
-            }
-            ;
+            };
             if (proc) {
                 proc();
             }
@@ -94,10 +93,9 @@ function ControlButton(owner, l, t, w, h, src, _isOn, _group, _proc) {
     docObject.addEventListener('mousedown', function(ev) {
         if (active) {
             if (group) {
-//                    group.deselect();
+                //                    group.deselect();
                 me.select();
-            }
-            ;
+            };
             if (proc) {
                 proc();
             }
@@ -110,5 +108,4 @@ function ControlButton(owner, l, t, w, h, src, _isOn, _group, _proc) {
     };
 
     owner.getDocObject().appendChild(docObject);
-}
-;
+};

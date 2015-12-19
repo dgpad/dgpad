@@ -1,5 +1,4 @@
-
-body{
+body {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -9,28 +8,32 @@ body{
     -ms-touch-action: none;
     touch-action: none;
 }
+
+
 /**********************************************
 ************* DEMO POINTER DIV ****************
 ***********************************************/
 
-.pointerDIV{
+.pointerDIV {
     position: absolute;
     width: 100px;
     height: 100px;
-    left:-500px;
-    top:-500px;
+    left: -500px;
+    top: -500px;
     border-radius: 50%;
     border-width: 10px;
     border-style: solid;
     border-color: #FFBA25;
-    background-color: rgba(255,186,0,0.2);
+    background-color: rgba(255, 186, 0, 0.2);
     pointer-events: none;
     z-index: 9;
-    
 }
 
+
 /*for Opera :*/
-x:-o-prefocus, .pointerDIV {
+
+x:-o-prefocus,
+.pointerDIV {
     display: none;
 }
 
@@ -39,7 +42,7 @@ x:-o-prefocus, .pointerDIV {
 ***************** PANNEAUX ********************
 ***********************************************/
 
-.verticalPanel{
+.verticalPanel {
     position: absolute;
     /*background-color: rgba(0,0,0,0)*/
     /*    border-radius: 10px;
@@ -50,7 +53,7 @@ x:-o-prefocus, .pointerDIV {
     /*pointer-events:none;*/
 }
 
-.horizontalPanel{
+.horizontalPanel {
     position: absolute;
     border-radius: 10px;
     background: -ms-linear-gradient(top, #9c9ba6, #57575f);
@@ -65,34 +68,32 @@ x:-o-prefocus, .pointerDIV {
     user-select: none;
 }
 
-.centerPanel{
+.centerPanel {
     position: absolute;
     border-radius: 10px;
-    background-color: rgba(230,230,230,0.9);
+    background-color: rgba(230, 230, 230, 0.9);
     border: 1px solid #b4b4b4;
     /*    background: -ms-linear-gradient(top, #9c9ba6, #57575f);
         background: -o-linear-gradient(top, #9c9ba6, #57575f);
         background: -moz-linear-gradient(top, #9c9ba6, #57575f);
         background: -webkit-linear-gradient(top, #9c9ba6, #57575f);*/
-
 }
 
-.mainCalcPanel{
+.mainCalcPanel {
     position: absolute;
     border-radius: 0px;
-    background-color: rgba(230,230,230,0.9);
+    background-color: rgba(230, 230, 230, 0.9);
     border-bottom: 1px solid #b4b4b4;
     /*    background: -ms-linear-gradient(top, #57575f, #57575f);
         background: -o-linear-gradient(top, #57575f, #57575f);
         background: -moz-linear-gradient(top, #57575f, #57575f);
         background: -webkit-linear-gradient(top, #57575f, #57575f);*/
-
 }
 
-.digitCalcPanel{
+.digitCalcPanel {
     position: absolute;
     border-radius: 0px;
-    background-color: rgba(230,230,230,0.9);
+    background-color: rgba(230, 230, 230, 0.9);
     border-top: 1px solid #b4b4b4;
     border-bottom: 1px solid #b4b4b4;
     /*pointer-events:none;*/
@@ -103,7 +104,7 @@ x:-o-prefocus, .pointerDIV {
         background: -webkit-linear-gradient(top, #57575f, #57575f);*/
 }
 
-.progressPanel{
+.progressPanel {
     position: absolute;
     border-radius: 5px;
     /*    background: -o-linear-gradient(top, #9c9ba6, #57575f);
@@ -111,30 +112,29 @@ x:-o-prefocus, .pointerDIV {
         background: -webkit-linear-gradient(top, #9c9ba6, #57575f);*/
 }
 
-.progressBar{
+.progressBar {
     position: absolute;
     border-radius: 0px;
     overflow: hidden;
     /*background-color:whitesmoke;*/
 }
 
-.moveprogressBar{
+.moveprogressBar {
     position: absolute;
     border-radius: 0px;
-    background-color:#6699ff;
+    background-color: #6699ff;
 }
 
-.TeXDisplay{
+.TeXDisplay {
     font-size: 16px;
     font-family: Helvetica, Arial, sans-serif;
-    text-shadow:1px 1px 5px #777;
+    text-shadow: 1px 1px 5px #777;
     text-align: center;
     white-space: pre-wrap;
     margin: 0px;
 }
 
-
-.textPanel{
+.textPanel {
     position: absolute;
     border-radius: 10px 10px 10px 10px;
     /*    background-color: rgba(100,100,100,0.3);
@@ -149,21 +149,21 @@ x:-o-prefocus, .pointerDIV {
     /*margin: 100px;*/
 }
 
-.viewportListPanel{
-    -webkit-transition:-webkit-transform 0.2s linear;
-    -moz-transition:-moz-transform 0.2s linear;
-    -o-transition:-o-transform 0.2s linear;
-    -webkit-transform:translateX(0px);
-    -webkit-overflow-scrolling:touch;
+.viewportListPanel {
+    -webkit-transition: -webkit-transform 0.2s linear;
+    -moz-transition: -moz-transform 0.2s linear;
+    -o-transition: -o-transform 0.2s linear;
+    -webkit-transform: translateX(0px);
+    -webkit-overflow-scrolling: touch;
     background-color: #AAAAAA;
-    width:100%;
+    width: 100%;
     height: 100%;
     overflow: scroll;
-    overflow-x:hidden;
+    overflow-x: hidden;
 }
 
 .viewportListUL {
-    width:100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -176,7 +176,7 @@ x:-o-prefocus, .pointerDIV {
     color: #252525;
     font-size: 16px;
     font-family: Helvetica, Arial, sans-serif;
-    text-shadow:1px 1px 5px #777;
+    text-shadow: 1px 1px 5px #777;
     z-index: 2;
 }
 
@@ -188,6 +188,7 @@ x:-o-prefocus, .pointerDIV {
 /**********************************************
 ************ SAISIE EXPRESSIONS ***************
 ***********************************************/
+
 
 /*.expNameDIV {
     position: inherit;
@@ -231,10 +232,10 @@ x:-o-prefocus, .pointerDIV {
     left: -o-calc(50% - 125px);
     left: calc(50% - 125px);
     top: 20px;
-    width:250px;
-    height:35px;
+    width: 250px;
+    height: 35px;
     border-radius: 10px;
-    background-color:rgba(230,230,230,0.9);
+    background-color: rgba(230, 230, 230, 0.9);
     cursor: pointer;
     text-decoration: none;
     -webkit-border-radius: .5em;
@@ -253,14 +254,13 @@ x:-o-prefocus, .pointerDIV {
         background: -o-linear-gradient(top,  #666,  #000);*/
 }
 
-
 .props_TeX_DIV {
     left: 10px;
     top: 10px;
-    width:220px;
-    height:460px;
+    width: 220px;
+    height: 460px;
     border-radius: 10px;
-    background-color: rgba(230,230,230,0.9);
+    background-color: rgba(230, 230, 230, 0.9);
     border: 1px solid #b4b4b4;
 }
 
@@ -272,20 +272,20 @@ x:-o-prefocus, .pointerDIV {
 .props_messageDIV {
     left: 10px;
     top: 10px;
-    width:220px;
-    height:405px;
+    width: 220px;
+    height: 405px;
     border-radius: 10px;
-    background-color: rgba(230,230,230,0.9);
+    background-color: rgba(230, 230, 230, 0.9);
     border: 1px solid #b4b4b4;
 }
 
 .props_gridDIV {
     left: 10px;
     top: 10px;
-    width:220px;
-    height:490px;
+    width: 220px;
+    height: 490px;
     border-radius: 10px;
-    background-color: rgba(230,230,230,0.9);
+    background-color: rgba(230, 230, 230, 0.9);
     border: 1px solid #b4b4b4;
     /*overflow: hidden;*/
 }
@@ -293,10 +293,10 @@ x:-o-prefocus, .pointerDIV {
 .props_gridDIV_Mobile {
     left: 10px;
     top: 10px;
-    width:220px;
-    height:360px;
+    width: 220px;
+    height: 360px;
     border-radius: 10px;
-    background-color: rgba(230,230,230,0.9);
+    background-color: rgba(230, 230, 230, 0.9);
     border: 1px solid #b4b4b4;
     /*overflow: hidden;*/
 }
@@ -304,23 +304,22 @@ x:-o-prefocus, .pointerDIV {
 .props_nameDIV {
     left: 10px;
     top: 10px;
-    width:220px;
-    height:42px;
+    width: 220px;
+    height: 42px;
     border-radius: 10px;
-    background-color: rgba(230,230,230,0.9);
+    background-color: rgba(230, 230, 230, 0.9);
     border: 1px solid #b4b4b4;
     /*overflow: hidden;*/
 }
-
 
 .props_colorDIV {
     position: absolute;
     left: 10px;
     top: 60px;
-    width:220px;
-    height:540px;
+    width: 220px;
+    height: 540px;
     border-radius: 10px;
-    background-color: rgba(230,230,230,0.9);
+    background-color: rgba(230, 230, 230, 0.9);
     /*background-color: #E6E6E6;*/
     /*opacity: 0.95;*/
     border: 1px solid #b4b4b4;
@@ -332,10 +331,10 @@ x:-o-prefocus, .pointerDIV {
     position: absolute;
     left: 10px;
     top: 60px;
-    width:220px;
-    height:350px;
+    width: 220px;
+    height: 350px;
     border-radius: 10px;
-    background-color: rgba(230,230,230,0.9);
+    background-color: rgba(230, 230, 230, 0.9);
     border: 1px solid #b4b4b4;
     /*overflow: hidden;*/
 }
@@ -345,15 +344,14 @@ x:-o-prefocus, .pointerDIV {
 ***************** MAGNETISME ******************
 ***********************************************/
 
-
 .magnetDIV {
     left: 100px;
     top: 100px;
-    width:300px;
-    height:40px;
+    width: 300px;
+    height: 40px;
     border-radius: 10px;
     background-color: #252525;
-    box-shadow: 5px 5px 5px 0px rgba( 150, 150, 150, .4 );
+    box-shadow: 5px 5px 5px 0px rgba( 150, 150, 150, .4);
 }
 
 .magnetDIV::before {
@@ -363,18 +361,18 @@ x:-o-prefocus, .pointerDIV {
     height: 35px;
     position: absolute;
     top: -8px;
-    left:135px;
-    transform:         rotate( 45deg );
-    -moz-transform:    rotate( 45deg );
-    -ms-transform:     rotate( 45deg );
-    -o-transform:      rotate( 45deg );
-    -webkit-transform: rotate( 45deg );
-    width:  35px;
+    left: 135px;
+    transform: rotate( 45deg);
+    -moz-transform: rotate( 45deg);
+    -ms-transform: rotate( 45deg);
+    -o-transform: rotate( 45deg);
+    -webkit-transform: rotate( 45deg);
+    width: 35px;
 }
 
 .bulleM {
-    float: left;   
-    margin: 5px 45px 5px 20px;         
+    float: left;
+    margin: 5px 45px 5px 20px;
 }
 
 
@@ -382,20 +380,19 @@ x:-o-prefocus, .pointerDIV {
 *************** COINCIDENCES ******************
 ***********************************************/
 
-.coincidencePanel{
+.coincidencePanel {
     position: absolute;
     border-radius: 10px;
-
 }
 
 .coincidenceListDIV {
     left: 10px;
     top: 10px;
-    width:250px;
-    height:170px;
+    width: 250px;
+    height: 170px;
     border-radius: 10px;
     background-color: #252525;
-    box-shadow: 5px 5px 5px 0px rgba( 150, 150, 150, .4 );
+    box-shadow: 5px 5px 5px 0px rgba( 150, 150, 150, .4);
 }
 
 .coincidenceListDIV::before {
@@ -405,26 +402,26 @@ x:-o-prefocus, .pointerDIV {
     height: 35px;
     position: absolute;
     top: 15px;
-    left:-5px;
-    transform:         rotate( 45deg );
-    -moz-transform:    rotate( 45deg );
-    -ms-transform:     rotate( 45deg );
-    -o-transform:      rotate( 45deg );
-    -webkit-transform: rotate( 45deg );
-    width:  35px;
+    left: -5px;
+    transform: rotate( 45deg);
+    -moz-transform: rotate( 45deg);
+    -ms-transform: rotate( 45deg);
+    -o-transform: rotate( 45deg);
+    -webkit-transform: rotate( 45deg);
+    width: 35px;
 }
 
 .bulle {
-    float: left;   
-    margin: 5px 45px 5px 20px;         
+    float: left;
+    margin: 5px 45px 5px 20px;
 }
 
 .coincidenceListViewportMask {
     position: absolute;
-    left:10px;
-    top:50px;
-    width:230px;
-    height:105px;
+    left: 10px;
+    top: 50px;
+    width: 230px;
+    height: 105px;
     background-color: #252525;
     border-color: #252525;
     border-width: 1px;
@@ -436,9 +433,9 @@ x:-o-prefocus, .pointerDIV {
 .coincidenceListViewport {
     position: absolute;
     background-color: #FFF;
-    left:-1px;
-    top:0px;
-    width:280px;
+    left: -1px;
+    top: 0px;
+    width: 280px;
     height: 105px;
     margin: 0px;
     padding: 0px;
@@ -451,7 +448,7 @@ x:-o-prefocus, .pointerDIV {
     overflow-style: scrollbar;
 }
 
-.coincidenceListViewport p{
+.coincidenceListViewport p {
     font-family: Helvetica, Arial, sans-serif;
     background: #eee;
     color: #252525;
@@ -461,7 +458,7 @@ x:-o-prefocus, .pointerDIV {
     text-decoration: none;
     font-size: 16px;
     line-height: 24px;
-    text-shadow:1px 1px 5px #777;
+    text-shadow: 1px 1px 5px #777;
 }
 
 .coincidenceListViewport p:nth-child(odd) {
@@ -469,55 +466,51 @@ x:-o-prefocus, .pointerDIV {
 }
 
 
-
 /**********************************************
 **************LISTES DE MACROS ****************
 ***********************************************/
 
-
-
-
-.iPadListMasterDIV{
+.iPadListMasterDIV {
     position: absolute;
     border-radius: 10px;
-    background-color: rgba(230,230,230,0.9);
+    background-color: rgba(230, 230, 230, 0.9);
     border: 1px solid #b4b4b4;
     overflow: hidden;
 }
 
-.iPadListContentDIV{
+.iPadListContentDIV {
     position: absolute;
     border-radius: 0px;
     left: 0px;
-    top:30px;
+    top: 30px;
     width: 100%;
     bottom: 30px;
-    -webkit-transition:-webkit-transform 0.2s linear;
-    -moz-transition:-moz-transform 0.2s linear;
-    -o-transition:-o-transform 0.2s linear;
-    transform:translateX(0%);
-    -webkit-transform:translateX(0%);
-    -moz-transform:translateX(0%);
-    -o-transform:translateX(0%);
-    -webkit-overflow-scrolling:touch;
+    -webkit-transition: -webkit-transform 0.2s linear;
+    -moz-transition: -moz-transform 0.2s linear;
+    -o-transition: -o-transform 0.2s linear;
+    transform: translateX(0%);
+    -webkit-transform: translateX(0%);
+    -moz-transform: translateX(0%);
+    -o-transform: translateX(0%);
+    -webkit-overflow-scrolling: touch;
     background-color: #AAAAAA;
     overflow: scroll;
-    overflow-x:hidden;
+    overflow-x: hidden;
 }
 
 .iPadListUL {
     position: absolute;
-    width:100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     list-style: none;
-    -webkit-transition:-webkit-transform 0.2s linear;
-    -moz-transition:-moz-transform 0.2s linear;
-    -o-transition:-o-transform 0.2s linear;
+    -webkit-transition: -webkit-transform 0.2s linear;
+    -moz-transition: -moz-transform 0.2s linear;
+    -o-transition: -o-transform 0.2s linear;
     transform: translateX(100%);
-    -webkit-transform:translateX(100%);
-    -moz-transform:translateX(100%);
-    -o-transform:translateX(100%);
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -o-transform: translateX(100%);
 }
 
 .iPadListLI {
@@ -544,18 +537,17 @@ x:-o-prefocus, .pointerDIV {
     left: 0px;
     /*top: 2px;*/
     bottom: 5px;
-
     line-height: 20px;
     text-shadow: 0 -1px #4d4d4d;
     /*color: #E5E5E5;*/
-    color:#EEEEEE;
+    color: #EEEEEE;
     text-decoration: none;
     font-family: sans-serif;
     font-size: 15px;
 }
+
 .iPadBtnBack:before {
     content: '';
-
     position: absolute;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -564,20 +556,17 @@ x:-o-prefocus, .pointerDIV {
     height: 20px;
     margin-top: 0px;
     z-index: -1;
-
     /*border: 1px solid #808080;*/
     border-bottom-color: #808080;
     border-top-color: #4d4d4d;
     border-left-width: 0;
     border-radius: 5px;
-
     background: #808080;
     /*    background-image: -webkit-linear-gradient(top, #b3b3b3, #4d4d4d);
         background-image: -moz-linear-gradient(top, #b3b3b3, #4d4d4d);
         background-image: -ms-linear-gradient(top, #b3b3b3, #4d4d4d);
         background-image: -o-linear-gradient(top, #b3b3b3, #4d4d4d);
         background-image: linear-gradient(top, #b3b3b3, #4d4d4d);*/
-
 }
 
 .iPadBtnBack:after {
@@ -590,21 +579,18 @@ x:-o-prefocus, .pointerDIV {
     width: 17px;
     top: 1px;
     z-index: -2;
-
     /*border: 1px solid #FFF;*/
     border-top: 0 transparent;
     border-right: 0 transparent;
     border-bottom-color: #808080;
     border-left-color: #4d4d4d;
     border-radius: 7px 5px 5px 1px;
-
     background: #808080;
     /*    background-image: -webkit-linear-gradient(135deg, #b3b3b3, #4d4d4d);
         background-image: -moz-linear-gradient(135deg, #b3b3b3, #4d4d4d);
         background-image: -ms-linear-gradient(135deg, #b3b3b3, #4d4d4d);
         background-image: -o-linear-gradient(135deg, #b3b3b3, #4d4d4d);
         background-image: linear-gradient(135deg, #b3b3b3, #4d4d4d);*/
-
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
@@ -613,8 +599,8 @@ x:-o-prefocus, .pointerDIV {
 }
 
 .iPadArrowRight {
-    width: 0; 
-    height: 0; 
+    width: 0;
+    height: 0;
     float: right;
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
@@ -636,44 +622,43 @@ x:-o-prefocus, .pointerDIV {
 .pluginsListDIV {
     left: 10px;
     top: 10px;
-    width:180px;
-    height:190px;
+    width: 180px;
+    height: 190px;
     border-radius: 10px;
-    background-color: rgba(230,230,230,0.9);
+    background-color: rgba(230, 230, 230, 0.9);
     overflow: hidden;
 }
 
 .toolsListDIV {
     left: 10px;
     top: 210px;
-    width:180px;
-    height:190px;
+    width: 180px;
+    height: 190px;
     border-radius: 10px;
-    background-color: rgba(230,230,230,0.9);
+    background-color: rgba(230, 230, 230, 0.9);
     overflow: hidden;
 }
 
 .macroPropsDIV {
     left: 10px;
     /*top: 490px;*/
-    width:180px;
-    height:139px;
-    bottom:0px;
+    width: 180px;
+    height: 139px;
+    bottom: 0px;
     border-radius: 10px;
-    background-color: rgba(230,230,230,0.9);
+    background-color: rgba(230, 230, 230, 0.9);
     border: 1px solid #b4b4b4;
     overflow: hidden;
-
 }
 
 
-
 /*Chaque élément du panneau d'édition de macros :*/
+
 .macroLabelDiv {
     background-color: whitesmoke;
     padding: 5px;
     border-color: #ddd;
-    /*border-width:1px 1px 1px 1px;*/ 
+    /*border-width:1px 1px 1px 1px;*/
     /*border-style:solid;*/
     /*width:100px;*/
     /*width: 800px;*/
@@ -686,19 +671,18 @@ x:-o-prefocus, .pointerDIV {
     background: #fff;
 }
 
-
 .macroLabelImage {
     position: inherit;
     width: 25px;
-    height:25px;
+    height: 25px;
     vertical-align: middle;
 }
 
 .macroLabelSpan {
-    margin-left: 10px;  
+    margin-left: 10px;
     width: 100%;
     font-family: Helvetica, Arial, sans-serif;
-    text-shadow:1px 1px 5px #777;
+    text-shadow: 1px 1px 5px #777;
     font-size: 16px;
 }
 
@@ -714,10 +698,9 @@ x:-o-prefocus, .pointerDIV {
     /*left: 50px;*/
     /*margin-left: 0px;*/
     /*right: 20px;*/
-
 }
 
-.macroAddImage{
+.macroAddImage {
     position: absolute;
     width: 25px;
     /*top:0px;*/
@@ -725,13 +708,15 @@ x:-o-prefocus, .pointerDIV {
     right: 5px;
 }
 
+
 /*Nom de la macro :*/
+
 .macroPropsNameDIV {
     position: inherit;
-    left:10px;
+    left: 10px;
     right: 10px;
     background-color: whitesmoke;
-    top:10px;
+    top: 10px;
     height: 25px;
     /*overflow: hidden;*/
     border-radius: 12px;
@@ -740,7 +725,7 @@ x:-o-prefocus, .pointerDIV {
 .macroPropsNameINPUT {
     position: absolute;
     background-color: whitesmoke;
-    top:0px;
+    top: 0px;
     left: 10px;
     width: 138px;
     height: 25px;
@@ -754,50 +739,47 @@ x:-o-prefocus, .pointerDIV {
     padding: 0px;
 }
 
-
 .macroPropsViewport {
     position: inherit;
     background-color: #AAAAAA;
-    left:0px;
-    top:45px;
-    width:180px;
+    left: 0px;
+    top: 45px;
+    width: 180px;
     bottom: 20px;
-    -webkit-overflow-scrolling:touch;
+    -webkit-overflow-scrolling: touch;
     overflow: scroll;
-    overflow-x:hidden;
+    overflow-x: hidden;
 }
 
 .macroPropsInnerDIV {
     position: inherit;
     background-color: #CCCCCC;
-    left:0px;
-    top:0px;
-    width:180px;
+    left: 0px;
+    top: 0px;
+    width: 180px;
     bottom: 0px;
 }
 
-
-
 .macroListViewport {
-    -webkit-transition:-webkit-transform 0.2s linear;
-    -moz-transition:-moz-transform 0.2s linear;
-    -o-transition:-o-transform 0.2s linear;
-    -webkit-transform:translateX(0px);
+    -webkit-transition: -webkit-transform 0.2s linear;
+    -moz-transition: -moz-transform 0.2s linear;
+    -o-transition: -o-transform 0.2s linear;
+    -webkit-transform: translateX(0px);
     position: inherit;
     background-color: #252525;
-    left:5px;
-    top:30px;
-    width:170px;
+    left: 5px;
+    top: 30px;
+    width: 170px;
     bottom: 20px;
-    -webkit-overflow-scrolling:touch;
+    -webkit-overflow-scrolling: touch;
     overflow: scroll;
-    overflow-x:hidden;
+    overflow-x: hidden;
 }
 
 .macroULclass {
     /*width:100%;*/
     /*left:50px;*/
-    width:100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -810,7 +792,7 @@ x:-o-prefocus, .pointerDIV {
     font-size: 16px;
     color: #700;
     font-family: Helvetica, Arial, sans-serif;
-    text-shadow:1px 1px 5px #777;
+    text-shadow: 1px 1px 5px #777;
     z-index: 2;
 }
 
@@ -821,9 +803,10 @@ x:-o-prefocus, .pointerDIV {
     color: #252525;
     font-size: 16px;
     font-family: Helvetica, Arial, sans-serif;
-    text-shadow:1px 1px 5px #777;
+    text-shadow: 1px 1px 5px #777;
     z-index: 2;
 }
+
 .macroLIclass:nth-child(odd) {
     background: #fff;
 }
@@ -835,10 +818,11 @@ x:-o-prefocus, .pointerDIV {
     color: #252525;
     font-size: 16px;
     font-family: Helvetica, Arial, sans-serif;
-    font-weight:bold;
-    text-shadow:2px 2px 5px #aaa;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px #aaa;
     z-index: 2;
 }
+
 .macroLIclassSel:nth-child(odd) {
     background: #fff;
 }

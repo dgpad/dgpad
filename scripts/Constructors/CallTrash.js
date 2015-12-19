@@ -27,12 +27,9 @@ function CallTrash() {
         zc.undoManager.deleteObjs(zc.getConstruction().safelyDelete(this.getC(0)));
     };
 
-    this.selectCreatePoint = function(zc, ev) {
-    };
+    this.selectCreatePoint = function(zc, ev) {};
 
-    this.preview = function(ev, zc) {
-    };
+    this.preview = function(ev, zc) {};
 
 
 }
-

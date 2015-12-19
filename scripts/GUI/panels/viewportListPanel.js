@@ -27,7 +27,7 @@ function viewportListPanel(_owner) {
         var li = new GUIElement(me, "li");
         li.setAttr("className", "viewportListLI");
         li.setAttr("innerHTML", name);
-//        li.setAttr("onmousedown", mousedown);
+        //        li.setAttr("onmousedown", mousedown);
         myul.addContent(li);
     };
 
@@ -38,14 +38,14 @@ function viewportListPanel(_owner) {
 
 
 
-function viewportListUL(_owner){
-    var me=this;
-    var owner=_owner;
+function viewportListUL(_owner) {
+    var me = this;
+    var owner = _owner;
     $U.extend(this, new GUIElement(me, "ul"));
     me.setAttr("className", "viewportListUL");
-    
-    
-    
-    
-    
+
+
+
+
+
 };

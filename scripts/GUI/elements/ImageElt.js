@@ -1,11 +1,11 @@
 function ImageElt(_owner, _src, _proc, _l, _t, _w, _h) {
     var me = this;
-//    $U.extend(this, new GUIElement(_owner, "div"));
+    //    $U.extend(this, new GUIElement(_owner, "div"));
     $U.extend(this, new Panel(_owner.getDocObject()));
     me.setStyles("opacity:0");
     me.transition("opacity", 0.4);
-//    this.hide();
-    
+    //    this.hide();
+
 
 
     me.setAbsolute();
