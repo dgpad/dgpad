@@ -5,10 +5,12 @@ function Arc3ptsObject(_construction, _name, _P1, _P2, _P3) {
     var M = new VirtualPointObject(0, 0);
     var M = new CenterObject(_construction, "_Center", this);
     _construction.add(M);
-    $U.extend(this, new PrimitiveCircleObject(_construction, _name, M));                           // Héritage
-    $U.extend(this, new MoveableObject(_construction));                                                     // Héritage
+    $U.extend(this, new PrimitiveCircleObject(_construction, _name, M)); // Héritage
+    $U.extend(this, new MoveableObject(_construction)); // Héritage
 
     M.setParent(this);
+    M.forceFillStyle(this.prefs.color.point_inter);
+    M.setHidden(true);
 
     var A = _P1;
     var B = _P2;
@@ -19,10 +21,10 @@ function Arc3ptsObject(_construction, _name, _P1, _P2, _P3) {
     var trigo = true; // sens de dessin de l'arc ( comment va-t-on de A à C)
     this.setParent(A, B, C);
 
-    
+
 
     this.setDefaults("circle");
-    
+
     this.redefine = function(_old, _new) {
         if (_old === A) {
             this.addParent(_new);
@@ -34,7 +36,7 @@ function Arc3ptsObject(_construction, _name, _P1, _P2, _P3) {
             this.addParent(_new);
             C = _new;
         }
-    }; 
+    };
 
     this.getCode = function() {
         return "arc3pts";
@@ -205,9 +207,8 @@ function Arc3ptsObject(_construction, _name, _P1, _P2, _P3) {
 
     this.mouseInside = function(ev) {
         return $U.isNearToArc(M.getX(), M.getY(), AOC, fromAngle, toAngle, trigo, this.R, this.mouseX(ev), this.mouseY(ev), this.getOversize());
-//        return $U.isNearToArc(M.getX(), M.getY(), A.getX(), A.getY(), B.getX(), B.getY(), C.getX(), C.getY(), this.R, this.mouseX(ev), this.mouseY(ev), this.getOversize());
+        //        return $U.isNearToArc(M.getX(), M.getY(), A.getX(), A.getY(), B.getX(), B.getY(), C.getX(), C.getY(), this.R, this.mouseX(ev), this.mouseY(ev), this.getOversize());
     };
 
 
-}
-;
+};
