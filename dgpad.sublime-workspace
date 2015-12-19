@@ -31,14 +31,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "scripts/Objects/AngleObject.js",
-			"settings":
-			{
-				"buffer_size": 5094,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -47,10 +39,14 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 96.0,
-		"last_filter": "install",
+		"height": 201.0,
+		"last_filter": "Package Control: re",
 		"selected_items":
 		[
+			[
+				"Package Control: re",
+				"Package Control: Remove Package"
+			],
 			[
 				"install",
 				"Package Control: Install Package"
@@ -64,7 +60,7 @@
 				"PackageResourceViewer: Open Resource"
 			]
 		],
-		"width": 449.0
+		"width": 467.0
 	},
 	"console":
 	{
@@ -89,24 +85,39 @@
 	],
 	"file_history":
 	[
+		"/media/erichake/Sauvegarde Mint/dgpad.py",
+		"//usr/share/dgpad/dgpad.py",
+		"/home/erichake/.config/sublime-text-3/Packages/User/View In Browser.sublime-settings",
+		"/home/erichake/.config/sublime-text-3/Packages/User/DGPad Chrome.sublime-build",
+		"/home/erichake/Gdrive/dgpad/scripts/Construction.js",
+		"/home/erichake/Gdrive/dgpad/dgpad.sublime-project",
+		"/home/erichake/.config/sublime-text-3/Packages/User/GoogleChrome.sublime-build",
+		"/home/erichake/.config/sublime-text-3/Packages/View In Browser/View In Browser.sublime-settings",
+		"/home/erichake/.config/sublime-text-3/Packages/User/chrome.sublime-build",
+		"/home/erichake/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/erichake/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/erichake/.config/sublime-text-3/Settings/SideBarEnhancements.json",
+		"/home/erichake/.config/sublime-text-3/Packages/User/Side Bar.sublime-settings",
+		"/home/erichake/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/erichake/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/erichake/.config/sublime-text-3/Packages/SideBarEnhancements/Side Bar.sublime-settings",
+		"/home/erichake/Gdrive/dgpad/scripts/Expression.js",
+		"/home/erichake/Gdrive/dgpad/scripts/CoordsSystem.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Main.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/AngleObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/AngleBisectorObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/AreaObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/Arc3ptsObject.js",
 		"/home/erichake/Gdrive/dgpad/dgpad.html",
 		"/home/erichake/.config/sublime-text-3/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc",
-		"/home/erichake/Gdrive/dgpad/dgpad.sublime-project",
 		"/home/erichake/Gdrive/dgpad/scripts/Canvas.js",
 		"/home/erichake/.config/sublime-text-3/Packages/Theme - Default/Default.sublime-theme",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/TwoPointsLineObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/ExpressionObject.js",
 		"/home/erichake/.config/sublime-text-3/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
 		"/home/erichake/Gdrive/dgpad/scripts/index.html",
-		"/home/erichake/.config/sublime-text-3/Packages/User/View In Browser.sublime-settings",
-		"/home/erichake/.config/sublime-text-3/Packages/View In Browser/View In Browser.sublime-settings",
 		"/home/erichake/.config/sublime-text-3/Packages/User/JavaScript.sublime-settings",
-		"/home/erichake/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
 		"/home/erichake/.config/sublime-text-3/Packages/User/Distraction Free.sublime-settings",
-		"//usr/share/dgpad/dgpad.py",
 		"/home/erichake/Dropbox/Public/DGPad/deb/dgpad/usr/share/dgpad/dgpad.py",
 		"/home/erichake/.config/dgpad/prefs.xml",
 		"/home/erichake/Bureau/aa.html",
@@ -159,39 +170,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "scripts/Objects/AngleObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5094,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -226,11 +206,15 @@
 		]
 	},
 	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 118.0
+	},
 	"output.find_results":
 	{
 		"height": 0.0
 	},
-	"pinned_build_system": "",
+	"pinned_build_system": "Packages/User/DGPad Chrome.sublime-build",
 	"project": "dgpad.sublime-project",
 	"replace":
 	{
@@ -257,12 +241,16 @@
 	},
 	"select_symbol":
 	{
-		"height": 0.0,
+		"height": 392.0,
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"",
+				"CoincidencePanel"
+			]
 		],
-		"width": 0.0
+		"width": 392.0
 	},
 	"selected_group": 0,
 	"settings":
