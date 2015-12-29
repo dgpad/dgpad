@@ -7,10 +7,10 @@ function Canvas(_id) {
 
 
 
-    me.nameDialog = null;
+    // me.nameDialog = null;
     me.refreshKeyboard = function() {
-        if (me.nameDialog) {
-            me.nameDialog.actualiseBtns();
+        if (me.namesManager.isVisible()) {
+            me.namesManager.refresh();
         }
     };
 
@@ -307,6 +307,9 @@ function Canvas(_id) {
     me.deselectAll = function() {
         mainpanel.deselectAll();
     };
+    me.selectNameBtn=function(_b){
+        mainpanel.selectNameBtn(_b);
+    };
     me.ctrl_show = function(_bool) {
         if (_bool) {
             if (mainpanel) {
@@ -490,6 +493,7 @@ function Canvas(_id) {
     me.demoModeManager = new DemoModeManager(me);
     me.textManager = new TextManager(me);
     me.dependsManager = new DependsManager(me);
+    me.namesManager = new NamesManager(me);
 
     me.addText = function(_m, _l, _t, _w, _h, _stl) {
         me.textManager.addTeXElement(_m, _l, _t, _w, _h, _stl);
@@ -597,6 +601,7 @@ function Canvas(_id) {
             $U.addTextToInput(document.activeElement, obj.getName(), inter);
             return;
         };
+        if (me.namesManager.replaceName(obj)) return;
         switch (Cn.getMode()) {
             case 0:
                 // Outil de consultation :

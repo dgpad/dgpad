@@ -22,12 +22,7 @@ function PointConstructor() {
     this.createObj = function(zc, ev) {
         var o = new PointObject(zc.getConstruction(), "_P", zc.mouseX(ev), zc.mouseY(ev));
         zc.addObject(o);
-        if (zc.nameDialog) {
-            o.setName(zc.nameDialog.getName());
-            o.setShowName(true);
-            zc.nameDialog.actualiseBtns();
-        }
-
+        zc.namesManager.setName(o);
         var deps = this.getCList();
         deps.sort(indsSortFilter);
         var len = deps.length;

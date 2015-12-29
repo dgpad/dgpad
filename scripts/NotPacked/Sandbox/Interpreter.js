@@ -1107,7 +1107,8 @@ function Interpreter(_win, _canvas) {
             return _s;
         // Remplacement des expressions sans variable : E1 -> ___EXPR___n
         // et mise du contenu en mémoire tabExpr[n]="funcValue(E1)()"
-        _s = _s.replace(/\b(\w+)\b([^\(]|$)/g, function(m, _n, _e) {
+        // _s = _s.replace(/\b(\w+)\b([^\(]|$)/g, function(m, _n, _e) {
+        _s = _s.replace(/([àáâãäåæçèéêëìíîïñòóôõöœùúûüýÿÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖŒÙÚÛÜÝŸΆΈ-ώἀ-ῼa-zA-Z1-9_]+)([^\(]|$)/g, function(m, _n, _e) {
             var o = (window[_n] === undefined) ? me.fv(window["$locvar_" + _n]) : me.fv(window[_n]);
             if (o === undefined)
                 o = me.fv(_n);
@@ -1273,12 +1274,12 @@ function Interpreter(_win, _canvas) {
 
 
 
-        //        if ((s2 !== "") && ((isValidParenthesis(s2)))) {
-        //            console.log("***user result = " + s);
-        //            console.log("pseudo result = " + s3);
-        //            console.log("main result = " + s2);
-        //            console.log("name : " + _o.getName());
-        //        }
+               if ((s2 !== "") && ((isValidParenthesis(s2)))) {
+                   console.log("***user result = " + s);
+                   console.log("pseudo result = " + s3);
+                   console.log("main result = " + s2);
+                   console.log("name : " + _o.getName());
+               }
 
 
         return {
@@ -1398,7 +1399,7 @@ function Interpreter(_win, _canvas) {
             // Determination du module générique :
             var mod = Math.pow(Math.sqrt((a[0] * a[0]) + (a[1] * a[1])), 1 / 2);
             res.push([mod * Math.cos(arg), mod * Math.sin(arg)]);
-            res.push([mod * Math.cos(arg + Math.PI), mod * Math.sin(arg + Math.PI)]);
+            res.push([mod * Math.cos(arg + Math.simplePI), mod * Math.sin(arg + Math.simplePI)]);
             return res;
         }
         return NaN;

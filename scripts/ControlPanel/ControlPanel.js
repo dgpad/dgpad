@@ -90,8 +90,8 @@ function ControlPanel(_canvas) {
     var macroMode = function() {
         if (checkMode(4))
             return;
-        if (canvas.nameDialog)
-            nameProc();
+        // if (canvas.namesManager.isVisible())
+        //     nameProc();
         if (historyDlog)
             historyProc();
         if (copyDlog)
@@ -102,8 +102,8 @@ function ControlPanel(_canvas) {
     var calcMode = function() {
         if (checkMode(8))
             return;
-        if (canvas.nameDialog)
-            nameProc();
+        // if (canvas.namesManager.isVisible())
+        //     nameProc();
         if (historyDlog)
             historyProc();
         if (copyDlog)
@@ -114,8 +114,8 @@ function ControlPanel(_canvas) {
     var texMode = function() {
         if (checkMode(10))
             return;
-        if (canvas.nameDialog)
-            nameProc();
+        // if (canvas.namesManager.isVisible())
+        //     nameProc();
         if (historyDlog)
             historyProc();
         if (copyDlog)
@@ -126,8 +126,8 @@ function ControlPanel(_canvas) {
     var propsMode = function() {
         if (checkMode(6))
             return;
-        if (canvas.nameDialog)
-            nameProc();
+        // if (canvas.namesManager.isVisible())
+        //     nameProc();
         if (historyDlog)
             historyProc();
         if (copyDlog)
@@ -148,17 +148,28 @@ function ControlPanel(_canvas) {
 
 
     var nameProc = function() {
-        if (canvas.nameDialog) {
-            canvas.nameDialog.close();
+        if (canvas.namesManager.isVisible()) {
+            canvas.namesManager.hide();
             nameBtn.deselect();
         } else {
-            if (!canvas.getConstruction().isArrowMode()) {
-                arrowMode();
-                arrowBtn.select();
-            }
-            canvas.nameDialog = new NameDialog(canvas);
+            // if (!canvas.getConstruction().isArrowMode()) {
+            //     arrowMode();
+            //     arrowBtn.select();
+            // }
+            canvas.namesManager.show();
             nameBtn.select();
         }
+        // if (canvas.nameDialog) {
+        //     canvas.nameDialog.close();
+        //     nameBtn.deselect();
+        // } else {
+        //     if (!canvas.getConstruction().isArrowMode()) {
+        //         arrowMode();
+        //         arrowBtn.select();
+        //     }
+        //     canvas.nameDialog = new NameDialog(canvas);
+        //     nameBtn.select();
+        // }
 
     };
 
@@ -206,14 +217,75 @@ function ControlPanel(_canvas) {
         }
     };
 
+    var Utf8 = {
+
+        // public method for url encoding
+        encode: function(string) {
+
+            var utftext = "";
+
+            for (var n = 0; n < string.length; n++) {
+
+                var c = string.charCodeAt(n);
+
+                if (c < 128) {
+                    utftext += String.fromCharCode(c);
+                } else if ((c > 127) && (c < 2048)) {
+                    utftext += String.fromCharCode((c >> 6) | 192);
+                    utftext += String.fromCharCode((c & 63) | 128);
+                } else {
+                    utftext += String.fromCharCode((c >> 12) | 224);
+                    utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                    utftext += String.fromCharCode((c & 63) | 128);
+                }
+
+            }
+
+            return utftext;
+        },
+
+        // public method for url decoding
+        decode: function(utftext) {
+            var string = "";
+            var i = 0;
+            var c = c1 = c2 = 0;
+
+            while (i < utftext.length) {
+
+                c = utftext.charCodeAt(i);
+
+                if (c < 128) {
+                    string += String.fromCharCode(c);
+                    i++;
+                } else if ((c > 191) && (c < 224)) {
+                    c2 = utftext.charCodeAt(i + 1);
+                    string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+                    i += 2;
+                } else {
+                    c2 = utftext.charCodeAt(i + 1);
+                    c3 = utftext.charCodeAt(i + 2);
+                    string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+                    i += 3;
+                }
+
+            }
+
+            return string;
+        }
+
+    }
+
+
+
     var downloadProc = function() {
         filepicker.pick({
-                extension: '.txt,.dgp',
+                extensions: ['.txt', '.dgp'],
+                // mimetype: 'text/plain',
                 openTo: $U.getFilePickerDefaultBox()
             },
             function(FPFile) {
                 filepicker.read(FPFile, function(data) {
-                    canvas.OpenFile("", data);
+                    canvas.OpenFile("", Utf8.decode(data));
                     if ($FPICKERFRAME !== null) {
                         $FPICKERFRAME.close();
                         $FPICKERFRAME = null;
@@ -237,13 +309,17 @@ function ControlPanel(_canvas) {
                 openTo: $U.getFilePickerDefaultBox()
             },
             function(InkBlob) {
-                console.log(InkBlob.url);
+                // console.log(InkBlob.url);
                 filepicker.write(
                     InkBlob,
-                    $U.base64_encode(source), {
-                        base64decode: true,
+                    source, {
+                        base64decode: false,
                         mimetype: 'text/plain'
                     },
+                    // $U.base64_encode(source), {
+                    //     base64decode: true,
+                    //     mimetype: 'text/plain'
+                    // },
                     function(InkBlob) {
                         if ($FPICKERFRAME !== null) {
                             $FPICKERFRAME.close();
@@ -380,6 +456,10 @@ function ControlPanel(_canvas) {
     };
     this.deselectAll = function() {
         modeGroup.deselect();
+    };
+    this.selectNameBtn = function(_b) {
+        if (_b) nameBtn.select()
+        else nameBtn.deselect();
     };
 
 

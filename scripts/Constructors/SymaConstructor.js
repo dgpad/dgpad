@@ -13,11 +13,7 @@ function SymaConstructor() {
     };
 
     this.createCallBack = function(zc, o) {
-        if (zc.nameDialog) {
-            o.setName(zc.nameDialog.getName());
-            o.setShowName(true);
-            zc.nameDialog.actualiseBtns();
-        }
+        zc.namesManager.setName(o);
     };
 
     this.newObj = function(_zc, _C) {

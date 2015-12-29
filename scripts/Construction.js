@@ -483,6 +483,12 @@ function Construction(_canvas) {
             return c;
     };
 
+    me.getNames=function(){
+        return Object.keys(AO);
+    };
+
+
+
     me.find = function(_oName) {
         return AO[_oName];
     };
@@ -552,16 +558,17 @@ function Construction(_canvas) {
                 _n = "_O";
                 break;
                 // A partir de là, on traite les "mots" réservés :
-            case "x":
-                _n = "_x";
-                break;
-            case "y":
-                _n = "_y";
-                break;
-            case "d":
-                _n = "_d";
-                break;
+            // case "x":
+            //     _n = "_x";
+            //     break;
+            // case "y":
+            //     _n = "_y";
+            //     break;
+            // case "d":
+            //     _n = "_d";
+            //     break;
         }
+        _n=_n.replace(/\"/g,"");
         var n = (_n.charAt(0) === "_") ? genericName(_n.slice(1), _o) : uniqueName(_n, _o);
         if (_o.getName) {
             delete AO[_o.getName()];

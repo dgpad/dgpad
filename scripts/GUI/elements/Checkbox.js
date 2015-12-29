@@ -90,6 +90,10 @@ function Checkbox(_owner, _left, _top, _width, _height, _value, _label, _callbac
         lwp("color", _col);
     };
 
+    me.setTextFontSize = function(_s) {
+        lwp("font-size", _s + "px");
+    };
+
     me.setText = function(_t) {
         label_wrapper.innerHTML = _t;
     };

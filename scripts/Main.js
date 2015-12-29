@@ -134,3 +134,5 @@ $INCLUDE("Magnifier/MagnifierManager.js");
 $INCLUDE("Magnifier/MagnifierPanel.js");
 $INCLUDE("Magnifier/DemoModeManager.js");
 $INCLUDE("Magnifier/DemoModePanel.js");
+$INCLUDE("Names/NamesManager.js");
+$INCLUDE("Names/NamesPanel.js");

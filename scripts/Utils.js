@@ -548,28 +548,29 @@ $U.loadFile = function(fileName) {
 
 $U.leaveAccents = function(s) {
     var r = s.replace(new RegExp("\\s", 'g'), "");
-    r = r.replace(new RegExp("[àáâãäå]", 'g'), "a");
-    r = r.replace(new RegExp("æ", 'g'), "ae");
-    r = r.replace(new RegExp("ç", 'g'), "c");
-    r = r.replace(new RegExp("[èéêë]", 'g'), "e");
-    r = r.replace(new RegExp("[ìíîï]", 'g'), "i");
-    r = r.replace(new RegExp("ñ", 'g'), "n");
-    r = r.replace(new RegExp("[òóôõö]", 'g'), "o");
-    r = r.replace(new RegExp("œ", 'g'), "oe");
-    r = r.replace(new RegExp("[ùúûü]", 'g'), "u");
-    r = r.replace(new RegExp("[ýÿ]", 'g'), "y");
+    // r = r.replace(new RegExp("[àáâãäå]", 'g'), "a");
+    // r = r.replace(new RegExp("æ", 'g'), "ae");
+    // r = r.replace(new RegExp("ç", 'g'), "c");
+    // r = r.replace(new RegExp("[èéêë]", 'g'), "e");
+    // r = r.replace(new RegExp("[ìíîï]", 'g'), "i");
+    // r = r.replace(new RegExp("ñ", 'g'), "n");
+    // r = r.replace(new RegExp("[òóôõö]", 'g'), "o");
+    // r = r.replace(new RegExp("œ", 'g'), "oe");
+    // r = r.replace(new RegExp("[ùúûü]", 'g'), "u");
+    // r = r.replace(new RegExp("[ýÿ]", 'g'), "y");
 
-    r = r.replace(new RegExp("[ÀÁÂÃÄÅ]", 'g'), "A");
-    r = r.replace(new RegExp("Æ", 'g'), "AE");
-    r = r.replace(new RegExp("Ç", 'g'), "C");
-    r = r.replace(new RegExp("[ÈÉÊË]", 'g'), "E");
-    r = r.replace(new RegExp("[ÌÍÎÏ]", 'g'), "I");
-    r = r.replace(new RegExp("Ñ", 'g'), "N");
-    r = r.replace(new RegExp("[ÒÓÔÕÖ]", 'g'), "O");
-    r = r.replace(new RegExp("Œ", 'g'), "OE");
-    r = r.replace(new RegExp("[ÙÚÛÜ]", 'g'), "U");
-    r = r.replace(new RegExp("[ÝŸ]", 'g'), "Y");
-    r = r.replace(new RegExp("\\W", 'g'), "");
+    // r = r.replace(new RegExp("[ÀÁÂÃÄÅ]", 'g'), "A");
+    // r = r.replace(new RegExp("Æ", 'g'), "AE");
+    // r = r.replace(new RegExp("Ç", 'g'), "C");
+    // r = r.replace(new RegExp("[ÈÉÊË]", 'g'), "E");
+    // r = r.replace(new RegExp("[ÌÍÎÏ]", 'g'), "I");
+    // r = r.replace(new RegExp("Ñ", 'g'), "N");
+    // r = r.replace(new RegExp("[ÒÓÔÕÖ]", 'g'), "O");
+    // r = r.replace(new RegExp("Œ", 'g'), "OE");
+    // r = r.replace(new RegExp("[ÙÚÛÜ]", 'g'), "U");
+    // r = r.replace(new RegExp("[ÝŸ]", 'g'), "Y");
+    // r = r.replace(new RegExp("\\W", 'g'), "");
+    r = r.replace(new RegExp("[^àáâãäåæçèéêëìíîïñòóôõöœùúûüýÿÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖŒÙÚÛÜÝŸΆΈ-ώἀ-ῼa-zA-Z1-9_]", 'g'), "");
     return r;
 };
 
@@ -986,6 +987,8 @@ $U.initCanvas = function(_id) {
     ZC.addTool(new NoAnchorConstructor());
     ZC.addTool(new VectorConstructor());
     ZC.clearBackground();
+
+    // new Names_panel(window.document.body,ZC.getConstruction().getNames);
 
     //    var eee=new SymbolicCompute();
     ////    var sss=eee.simplify("times(3,pow(x,minus(3,1)))");
