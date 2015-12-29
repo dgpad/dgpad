@@ -1108,7 +1108,7 @@ function Interpreter(_win, _canvas) {
         // Remplacement des expressions sans variable : E1 -> ___EXPR___n
         // et mise du contenu en mémoire tabExpr[n]="funcValue(E1)()"
         // _s = _s.replace(/\b(\w+)\b([^\(]|$)/g, function(m, _n, _e) {
-        _s = _s.replace(/([àáâãäåæçèéêëìíîïñòóôõöœùúûüýÿÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖŒÙÚÛÜÝŸΆΈ-ώἀ-ῼa-zA-Z1-9_]+)([^\(]|$)/g, function(m, _n, _e) {
+        _s = _s.replace(/([àáâãäåæçèéêëìíîïñòóôõöœùúûüýÿÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖŒÙÚÛÜÝŸΆΈ-ώἀ-ῼa-zA-Z0-9_]+)([^\(]|$)/g, function(m, _n, _e) {
             var o = (window[_n] === undefined) ? me.fv(window["$locvar_" + _n]) : me.fv(window[_n]);
             if (o === undefined)
                 o = me.fv(_n);

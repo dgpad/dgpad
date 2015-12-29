@@ -570,7 +570,7 @@ $U.leaveAccents = function(s) {
     // r = r.replace(new RegExp("[ÙÚÛÜ]", 'g'), "U");
     // r = r.replace(new RegExp("[ÝŸ]", 'g'), "Y");
     // r = r.replace(new RegExp("\\W", 'g'), "");
-    r = r.replace(new RegExp("[^àáâãäåæçèéêëìíîïñòóôõöœùúûüýÿÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖŒÙÚÛÜÝŸΆΈ-ώἀ-ῼa-zA-Z1-9_]", 'g'), "");
+    r = r.replace(new RegExp("[^àáâãäåæçèéêëìíîïñòóôõöœùúûüýÿÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖŒÙÚÛÜÝŸΆΈ-ώἀ-ῼa-zA-Z0-9_]", 'g'), "");
     return r;
 };
 
