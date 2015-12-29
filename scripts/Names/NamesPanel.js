@@ -15,7 +15,7 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
     var tabs = []; // tab set
     var mods = []; // modifiers
     var keys = []; // keyboard keys
-    var modtab = ["", "'", "\"", "\u2080"];
+    var modtab = ["", "'", "''", "\u2080"];
     var tab_width = 60; // tab width
     var tab_height = 25; // tab height
     var tab_gap = 5; // gap between tabs
