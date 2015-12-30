@@ -16,7 +16,6 @@ $INCLUDE("GUI/elements/BtnGroup.js");
 $INCLUDE("GUI/elements/InputText.js");
 $INCLUDE("GUI/elements/Button.js");
 $INCLUDE("GUI/elements/Label.js");
-$INCLUDE("GUI/elements/NameDialog.js");
 $INCLUDE("GUI/elements/Iframe.js");
 $INCLUDE("GUI/elements/ImageElt.js");
 $INCLUDE("GUI/elements/iPadList.js");

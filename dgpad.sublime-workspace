@@ -140,29 +140,13 @@
 	"buffers":
 	[
 		{
-			"contents": "Searching 260 files for \"leaveaccent\"\n\n/home/erichake/Gdrive/dgpad/scripts/Construction.js:\n   51      var getNewVarName = function(s) {\n   52          //        console.log(\"getNewVarName\");\n   53:         var v = $U.leaveAccents(s);\n   54          if (VARS.hasOwnProperty(v)) {\n   55              var b = 1;\n\n/home/erichake/Gdrive/dgpad/scripts/Macros/MacrosManager.js:\n  130          txt += \"$macros={};\\n\";\n  131          for (var i = 0, len = tools.length; i < len; i++) {\n  132:             txt += \"$macros[\\\"\" + $U.leaveAccents(tools[i].name) + \"\\\"]={\\n\";\n  133              txt += tools[i].getSource();\n  134              txt += \"};\\n\\n\";\n\n/home/erichake/Gdrive/dgpad/scripts/MainTheLot.js:\n  727  };\n  728  \n  729: $U.leaveAccents = function (s) {\n  730      var r = s.replace(new RegExp(\"\\\\s\", 'g'), \"\");\n  731      r = r.replace(new RegExp(\"[àáâãäå]\", 'g'), \"a\");\n  ...\n  754  };\n  755  \n  756: //$U.leaveAccents = function(s, _uppercase) {\n  757  //    var r = s.toLowerCase();\n  758  //    r = r.replace(new RegExp(\"\\\\s\", 'g'), \"\");\n  ...\n 3763      var getNewVarName = function (s) {\n 3764  //        console.log(\"getNewVarName\");\n 3765:         var v = $U.leaveAccents(s);\n 3766          if (VARS.hasOwnProperty(v)) {\n 3767              var b = 1;\n ....\n 6987          txt += \"$macros={};\\n\";\n 6988          for (var i = 0, len = tools.length; i < len; i++) {\n 6989:             txt += \"$macros[\\\"\" + $U.leaveAccents(tools[i].name) + \"\\\"]={\\n\";\n 6990              txt += tools[i].getSource();\n 6991              txt += \"};\\n\\n\";\n ....\n 20300  \n 20301  //    var getvarname = function(s) {\n 20302: //        var v = $U.leaveAccents(s);\n 20303  //        if (vars.hasOwnProperty(v)) {\n 20304  //            var b = 1;\n\n/home/erichake/Gdrive/dgpad/scripts/SourceWriter.js:\n   15  \n   16      //    var getvarname = function(s) {\n   17:     //        var v = $U.leaveAccents(s);\n   18      //        if (vars.hasOwnProperty(v)) {\n   19      //            var b = 1;\n\n/home/erichake/Gdrive/dgpad/scripts/Utils.js:\n  547  \n  548  \n  549: $U.leaveAccents = function(s) {\n  550      var r = s.replace(new RegExp(\"\\\\s\", 'g'), \"\");\n  551      // r = r.replace(new RegExp(\"[àáâãäå]\", 'g'), \"a\");\n  ...\n  575  };\n  576  \n  577: //$U.leaveAccents = function(s, _uppercase) {\n  578  //    var r = s.toLowerCase();\n  579  //    r = r.replace(new RegExp(\"\\\\s\", 'g'), \"\");\n\n10 matches across 5 files\n",
+			"contents": "Searching 259 files for \"NameDialog\"\n\n0 matches",
 			"settings":
 			{
-				"buffer_size": 2398,
+				"buffer_size": 47,
 				"line_ending": "Unix",
 				"name": "Find Results",
 				"scratch": true
-			}
-		},
-		{
-			"file": "scripts/Utils.js",
-			"settings":
-			{
-				"buffer_size": 30931,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/NotPacked/Sandbox/Interpreter.js",
-			"settings":
-			{
-				"buffer_size": 55467,
-				"line_ending": "Unix"
 			}
 		}
 	],
@@ -227,25 +211,27 @@
 	},
 	"expanded_folders":
 	[
-		"/home/erichake/Gdrive/dgpad/scripts",
+		"/home/erichake/Gdrive/dgpad/scripts/Names",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox"
 	],
 	"file_history":
 	[
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/CenterObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Calc/MainCalcPanel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Names/NamesPanel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Names/NamesManager.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Utils.js",
-		"/home/erichake/Dropbox/toto.dgp",
-		"/home/erichake/Gdrive/dgpad/scripts/GUI/elements/Checkbox.js",
 		"/home/erichake/Gdrive/dgpad/scripts/ControlPanel/ControlPanel.js",
-		"/home/erichake/Gdrive/dgpad/dgpad.html",
-		"/home/erichake/Gdrive/dgpad/scripts/Construction.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Canvas.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Main.js",
+		"/home/erichake/Gdrive/dgpad/scripts/DGPad.js",
+		"/home/erichake/Gdrive/dgpad/scripts/MainTheLot.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Utils.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/CenterObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Calc/MainCalcPanel.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Names/NamesPanel.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Names/NamesManager.js",
+		"/home/erichake/Dropbox/toto.dgp",
+		"/home/erichake/Gdrive/dgpad/scripts/GUI/elements/Checkbox.js",
+		"/home/erichake/Gdrive/dgpad/dgpad.html",
+		"/home/erichake/Gdrive/dgpad/scripts/Construction.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Constructors/PointConstructor.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Constructors/MidPointConstructor.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Constructors/SymaConstructor.js",
@@ -285,7 +271,6 @@
 		"/home/erichake/Gdrive/dgpad/scripts/Blockly/Blockly_dgpad.js",
 		"/home/erichake/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
 		"/home/erichake/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
-		"/home/erichake/Gdrive/dgpad/scripts/DGPad.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/demos/resizable/overlay.html",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/demos/resizable/index.html",
 		"/home/erichake/Téléchargements/google-blockly-a77788d/demos/fixed/index.html",
@@ -359,8 +344,7 @@
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings_ES.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/plug-ins.js",
 		"/home/erichake/Gdrive/dgpad/scripts/GUI/panels/viewportListPanel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/History/HistoryPanel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Macros/Macro.js"
+		"/home/erichake/Gdrive/dgpad/scripts/History/HistoryPanel.js"
 	],
 	"find":
 	{
@@ -386,6 +370,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"NameDialog",
 			"leaveaccent",
 			"getUnusedName",
 			"filepicker",
@@ -490,7 +475,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -498,63 +483,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2398,
+						"buffer_size": 47,
 						"regions":
 						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										218,
-										229
-									],
-									[
-										522,
-										533
-									],
-									[
-										727,
-										738
-									],
-									[
-										911,
-										922
-									],
-									[
-										1171,
-										1182
-									],
-									[
-										1419,
-										1430
-									],
-									[
-										1633,
-										1644
-									],
-									[
-										1873,
-										1884
-									],
-									[
-										2050,
-										2061
-									],
-									[
-										2236,
-										2247
-									]
-								],
-								"scope": ""
-							}
 						},
 						"selection":
 						[
 							[
-								2044,
-								2044
+								0,
+								0
 							]
 						],
 						"settings":
@@ -569,67 +506,7 @@
 							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 171.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "scripts/Utils.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 30931,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								16453,
-								16453
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 10246.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "scripts/NotPacked/Sandbox/Interpreter.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 55467,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								34932,
-								34932
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 20455.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

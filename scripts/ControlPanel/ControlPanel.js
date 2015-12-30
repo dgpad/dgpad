@@ -152,25 +152,9 @@ function ControlPanel(_canvas) {
             canvas.namesManager.hide();
             nameBtn.deselect();
         } else {
-            // if (!canvas.getConstruction().isArrowMode()) {
-            //     arrowMode();
-            //     arrowBtn.select();
-            // }
             canvas.namesManager.show();
             nameBtn.select();
         }
-        // if (canvas.nameDialog) {
-        //     canvas.nameDialog.close();
-        //     nameBtn.deselect();
-        // } else {
-        //     if (!canvas.getConstruction().isArrowMode()) {
-        //         arrowMode();
-        //         arrowBtn.select();
-        //     }
-        //     canvas.nameDialog = new NameDialog(canvas);
-        //     nameBtn.select();
-        // }
-
     };
 
     var historyProc = function() {

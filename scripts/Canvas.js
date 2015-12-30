@@ -7,7 +7,7 @@ function Canvas(_id) {
 
 
 
-    // me.nameDialog = null;
+
     me.refreshKeyboard = function() {
         if (me.namesManager.isVisible()) {
             me.namesManager.refresh();

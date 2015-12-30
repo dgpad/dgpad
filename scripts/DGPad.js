@@ -8,7 +8,7 @@ $BODY_SCRIPT = $BODY_SCRIPT[$BODY_SCRIPT.length - 1];
 
 if (!$APP_PATH) {
     // Si le script est le premier script DGPad trouvé dans la page :
-    var $ECHO_SOURCE = true;
+    var $ECHO_SOURCE = false;
     // Désactive toutes les alertes sur cette fenêtre pour éviter que l'uiwebview
     // soit polluée par une alerte "popup" de filepicker :
     window.$ALERT = window.alert;
