@@ -140,13 +140,27 @@
 	"buffers":
 	[
 		{
-			"contents": "Searching 259 files for \"NameDialog\"\n\n0 matches",
+			"file": "scripts/ControlPanel/ControlPanel.js",
 			"settings":
 			{
-				"buffer_size": 47,
-				"line_ending": "Unix",
-				"name": "Find Results",
-				"scratch": true
+				"buffer_size": 16696,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "scripts/Utils.js",
+			"settings":
+			{
+				"buffer_size": 32276,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "scripts/Objects/PointObject.js",
+			"settings":
+			{
+				"buffer_size": 20450,
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -211,19 +225,27 @@
 	},
 	"expanded_folders":
 	[
-		"/home/erichake/Gdrive/dgpad/scripts/Names",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox"
+		"/home/erichake/Gdrive/dgpad/scripts",
+		"/home/erichake/Gdrive/dgpad/scripts/ControlPanel",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects"
 	],
 	"file_history":
 	[
-		"/home/erichake/Gdrive/dgpad/scripts/ControlPanel/ControlPanel.js",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/ControlPanel/ControlPanel.js",
+		"/home/erichake/Gdrive/dgpad/index.php",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Utils.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Canvas.js",
+		"/home/erichake/Gdrive/dgpad/scripts/ControlPanel/ControlPanel.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyManager.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/ConstructionObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_dgpad.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Main.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyPanel.js",
 		"/home/erichake/Gdrive/dgpad/scripts/DGPad.js",
 		"/home/erichake/Gdrive/dgpad/scripts/MainTheLot.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Utils.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/CenterObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Calc/MainCalcPanel.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Names/NamesPanel.js",
@@ -239,9 +261,7 @@
 		"/home/erichake/Gdrive/dgpad/scripts/GUI/elements/NameDialog.js",
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/Blockly/Blockly_Panel.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/TwoPointsLineObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/ConstructionObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/PointObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_dgpad.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/xml.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Blockly/Blockly_Manager.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/utils.js",
@@ -259,8 +279,6 @@
 		"/home/erichake/.config/sublime-text-3/Packages/Origami/Origami.sublime-settings",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/demos/generator/index.html",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/base32.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js",
 		"/home/erichake/Gdrive/dgpad/bloquement/index.html",
 		"/home/erichake/Gdrive/dgpad/bloquement/javascript/blocks_complements.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/base32.js",
@@ -340,11 +358,7 @@
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/SymaObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/SymcObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/VectorObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/VirtualPointObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings_ES.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/plug-ins.js",
-		"/home/erichake/Gdrive/dgpad/scripts/GUI/panels/viewportListPanel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/History/HistoryPanel.js"
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/VirtualPointObject.js"
 	],
 	"find":
 	{
@@ -370,6 +384,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"OpenFile",
+			"manager",
 			"NameDialog",
 			"leaveaccent",
 			"getUnusedName",
@@ -475,15 +491,76 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+					"file": "scripts/ControlPanel/ControlPanel.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 47,
+						"buffer_size": 16696,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5596,
+								5596
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3287.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "scripts/Utils.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 32276,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								20140,
+								20140
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 12464.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "scripts/Objects/PointObject.js",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 20450,
 						"regions":
 						{
 						},
@@ -496,20 +573,15 @@
 						],
 						"settings":
 						{
-							"detect_indentation": false,
-							"line_numbers": false,
-							"output_tag": 1,
-							"result_base_dir": "",
-							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
