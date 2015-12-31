@@ -208,3 +208,23 @@ $L.props_360 = "360°"
 
 // Mercredi 16 décembre 2015
 $L.props_trigo = "Counterclockwise";
+
+// Lundi 21 décembre 2015
+$L.blockly = {};
+$L.blockly.geometry = "Geometry";
+$L.blockly.logic = "Logic";
+$L.blockly.loops = "Loops";
+$L.blockly.math = "Math";
+$L.blockly.lists = "Lists";
+$L.blockly.variables = "Variables";
+$L.blockly.functions = "Functions";
+$L.blockly.construction = "Construction";
+$L.blockly.cn_auto = "auto";
+$L.blockly.pt_type = "Point";
+$L.blockly.pt_base = "base point";
+$L.blockly.pt_on = "point on";
+$L.blockly.pt_inter = "intersection of";
+$L.blockly.pt_coords = "with coordinates";
+$L.blockly.pt_exp = "with expression";
+$L.blockly.pt_andof = "and";
+$L.blockly.pt_and = "and";

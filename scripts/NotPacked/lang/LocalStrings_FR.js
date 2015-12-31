@@ -200,3 +200,22 @@ $L.props_general_degree = "Angles en degr\u00e9s";
 
 // Mercredi 16 décembre 2015
 $L.props_trigo = "Sens trigonométrique";
+
+// Lundi 21 décembre 2015
+$L.blockly.geometry = "Géométrie";
+$L.blockly.logic = "Logique";
+$L.blockly.loops="Boucles";
+$L.blockly.math = "Math";
+$L.blockly.lists = "Listes";
+$L.blockly.variables = "Variables";
+$L.blockly.functions = "Fonctions";
+$L.blockly.construction = "Construction";
+$L.blockly.cn_auto = "auto";
+$L.blockly.pt_type = "Point";
+$L.blockly.pt_base = "de base";
+$L.blockly.pt_on = "point sur";
+$L.blockly.pt_inter = "à l'intersection de";
+$L.blockly.pt_coords = "de coordonnées";
+$L.blockly.pt_exp = "d'expression";
+$L.blockly.pt_andof = "et de";
+$L.blockly.pt_and = "et";

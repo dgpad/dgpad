@@ -1032,6 +1032,8 @@ $U.initCanvas = function(_id) {
     ZC.addTool(new VectorConstructor());
     ZC.clearBackground();
 
+    ZC.blocklyManager.show();
+
     // new Names_panel(window.document.body,ZC.getConstruction().getNames);
 
     //    var eee=new SymbolicCompute();

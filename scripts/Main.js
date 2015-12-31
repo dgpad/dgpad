@@ -135,3 +135,5 @@ $INCLUDE("Magnifier/DemoModeManager.js");
 $INCLUDE("Magnifier/DemoModePanel.js");
 $INCLUDE("Names/NamesManager.js");
 $INCLUDE("Names/NamesPanel.js");
+$INCLUDE("Blockly/BlocklyManager.js");
+$INCLUDE("Blockly/BlocklyPanel.js");

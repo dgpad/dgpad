@@ -49,8 +49,17 @@ function ConstructionObject(_construction, _name) {
 
     var timestamp = 0;
 
+    var blockObj = null; // Blocky object
+
     this.me = function() {
         return this;
+    }
+
+    this.setBlockObj = function(_b) { // Set Blocky object
+        blockObj = _b;
+    }
+    this.blockDrag = function(_x, _y) {
+        if ((blockObj) && (blockObj.dragto)) blockObj.dragto(_x, _y);
     }
 
     this.newTimeStamp = function() {
@@ -177,6 +186,7 @@ function ConstructionObject(_construction, _name) {
                 freeDragPts[i].checkMagnets();
                 dragCoords[i].x += freeDragPts[i].getX() - oldX;
                 dragCoords[i].y += freeDragPts[i].getY() - oldY;
+                freeDragPts[i].blockDrag(freeDragPts[i].getX(), freeDragPts[i].getY());
             }
         } else {
             Cn.translate(_x - dragCoords[0].x, _y - dragCoords[0].y);

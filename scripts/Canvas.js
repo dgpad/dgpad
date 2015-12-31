@@ -307,7 +307,7 @@ function Canvas(_id) {
     me.deselectAll = function() {
         mainpanel.deselectAll();
     };
-    me.selectNameBtn=function(_b){
+    me.selectNameBtn = function(_b) {
         mainpanel.selectNameBtn(_b);
     };
     me.ctrl_show = function(_bool) {
@@ -494,6 +494,7 @@ function Canvas(_id) {
     me.textManager = new TextManager(me);
     me.dependsManager = new DependsManager(me);
     me.namesManager = new NamesManager(me);
+    me.blocklyManager = new BlocklyManager(me);
 
     me.addText = function(_m, _l, _t, _w, _h, _stl) {
         me.textManager.addTeXElement(_m, _l, _t, _w, _h, _stl);
