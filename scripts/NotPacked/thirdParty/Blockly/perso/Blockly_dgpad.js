@@ -1,42 +1,3 @@
-Blockly.dgpad_names = {
-    maj: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    min: "abcdefghijklmnopqrstuvwxyz",
-    vars: [],
-    pt: 0,
-    clear: function() {
-        this.vars = [];
-        this.pt = 0;
-    },
-    unique: function(_s) {
-        var r = _s.replace(/\d+$/, "");
-        var n = 0;
-        while (this.vars.indexOf(_s) != -1) {
-            _s = r + n;
-            n++
-        };
-        this.vars.push(_s);
-        return (_s)
-    },
-    point: function() {
-        return this.unique(this.maj.charAt(this.pt % this.maj.length));
-    },
-    segment: function() {
-            return this.unique("s0");
-        }
-        // console.log(window);
-}
-
-Blockly.Block.prototype.firstadd = true;
-// Blockly.Block.prototype.varname = "";
-Blockly.Block.prototype.name = function() {
-    return this.getFieldValue("name");
-}
-Blockly.Block.prototype.isInConstruction = function() {
-    return ((this.getSurroundParent()) &&
-        (this.getSurroundParent().type === "dgpad_construction"));
-}
-
-
 Blockly.Blocks['dgpad_construction'] = {
     init: function() {
         this.appendDummyInput()
@@ -149,16 +110,16 @@ Blockly.Blocks['dgpad_point'] = {
             this.sourceBlock_.updateShape_(option);
         });
         this.blocktype = "point";
-        var bnds = Blockly.dgpad_panel.getBounds();
+        var bnds = Blockly.dgpad.getBounds();
         var right = bnds.l + bnds.w;
-        this.cx = Blockly.dgpad_Cn.coordsSystem.x(right) + Math.random() * Blockly.dgpad_Cn.coordsSystem.l((Blockly.dgpad_canvas.getWidth() - right));
+        this.cx = Blockly.dgpad.CN.coordsSystem.x(right) + Math.random() * Blockly.dgpad.CN.coordsSystem.l((Blockly.dgpad.ZC.getWidth() - right));
         this.cx = Math.round(this.cx * 10) / 10;
-        this.cy = Blockly.dgpad_Cn.coordsSystem.y(0) - Math.random() * Blockly.dgpad_Cn.coordsSystem.l(Blockly.dgpad_canvas.getHeight());
+        this.cy = Blockly.dgpad.CN.coordsSystem.y(0) - Math.random() * Blockly.dgpad.CN.coordsSystem.l(Blockly.dgpad.ZC.getHeight());
         this.cy = Math.round(this.cy * 10) / 10;
         this.appendDummyInput()
             .appendField(new Blockly.FieldImage($APP_PATH + "NotPacked/images/tools/point.svg", 25, 25, "*"))
             .appendField(new Blockly.FieldCheckbox("TRUE"), "visible")
-            .appendField(new Blockly.FieldTextInput(Blockly.dgpad_names.point()), "name")
+            .appendField(new Blockly.FieldTextInput(Blockly.dgpad.getName()), "name")
             .appendField(" : " + $L.blockly.pt_type)
             .appendField(dropdown, "behavior");
         this.setPreviousStatement(true, "dgpad");
@@ -167,9 +128,9 @@ Blockly.Blocks['dgpad_point'] = {
         this.setColour(290);
         this.setTooltip('');
     },
-    dragto:function(_x, _y){
-        this.cx=Blockly.dgpad_Cn.coordsSystem.x(_x);
-        this.cy=Blockly.dgpad_Cn.coordsSystem.y(_y);
+    dragto: function(_x, _y) {
+        this.cx = Blockly.dgpad.CN.coordsSystem.x(_x);
+        this.cy = Blockly.dgpad.CN.coordsSystem.y(_y);
         // console.log(this.name()+" : x="+this.cx+" y="+this.cy);
     },
     onselect: function() {
@@ -177,12 +138,13 @@ Blockly.Blocks['dgpad_point'] = {
     },
     onchange: function() {
         if (this.isInConstruction()) {
-            var obj=Blockly.dgpad_Cn.find(this.name());
+            var obj = Blockly.dgpad.CN.find(this.name());
             if (obj) {
                 obj.setBlockObj(this);
             };
             if (this.firstadd) {
-                Blockly.dgpad_names.pt++;
+                Blockly.dgpad.addName(this.name());
+                Blockly.dgpad.refresh();
                 this.firstadd = false;
             }
         }

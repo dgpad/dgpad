@@ -3,6 +3,9 @@
 	[
 		{
 			"path": "scripts"
+		},
+		{
+			"path": "/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly"
 		}
 	]
 }

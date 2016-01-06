@@ -24,6 +24,7 @@ function NamesManager(_canvas) {
         panel.refreshkeyboard()
     }
     me.getName = function() {
+        // console.log(panel.getName());
         return panel.getName();
     }
     me.setName = function(_o) {
@@ -42,10 +43,13 @@ function NamesManager(_canvas) {
         }
         return false;
     }
+    me.setObserver = function(_o) {
+        if (panel != null) panel.setObserver(_o);
+    }
 
-    left = canvas.getWidth() - width-5;
-    top = canvas.getHeight() - height-canvas.prefs.controlpanel.size-5;
+    left = canvas.getWidth() - width - 5;
+    top = canvas.getHeight() - height - canvas.prefs.controlpanel.size - 5;
 
-    var panel = new NamesPanel(window.document.body, left,top,width,height,Cn.getNames, close);
+    var panel = new NamesPanel(window.document.body, left, top, width, height, Cn.getNames, close);
 
 }

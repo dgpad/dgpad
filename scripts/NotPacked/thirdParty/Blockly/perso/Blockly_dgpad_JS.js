@@ -5,7 +5,6 @@ Blockly.JavaScript['dgpad_construction'] = function(block) {
 
 Blockly.JavaScript['dgpad_point'] = function(block) {
     var name = block.getFieldValue('name');
-    // if (typeof Blockly.dgpad_Cn.find(name) != "undefined") return "";
     var cod = name + "=Point(\"" + name + "\"," + block.cx + "," + block.cy + ");\n";
     switch (block.blocktype) {
         case "pointon":

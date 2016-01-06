@@ -38,10 +38,14 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
 
     me.isEditMode = function() {
         return replace_mode
-    }
+    };
     var setEdit = function(_b) {
         replace_mode = _b
-    }
+    };
+
+    me.setObserver = function(_o) {
+        getNames = _o;
+    };
 
     me.setbounds = function(l, t, w, h) {
         left = l;
@@ -217,6 +221,7 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
     var showCurrentKey = function() {
         if (current_key === -1) return;
         var nmes = getNames(); // All names already used
+        // console.log("showCurrentKey: "+nmes);
         for (var i = current_key; i < keys.length; i++) {
             if (nmes.indexOf(keys[i].key) === -1) {
                 current_key = i;

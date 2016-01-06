@@ -15,20 +15,47 @@ function BlocklyManager(_canvas) {
     var source = "";
     var selected = "";
     var workspace = null;
+
+    var initBlockly = function() {
+        Blockly.Block.prototype.firstadd = true;
+        // Blockly.Block.prototype.varname = "";
+        Blockly.Block.prototype.name = function() {
+            return this.getFieldValue("name");
+        }
+        Blockly.Block.prototype.isInConstruction = function() {
+            return ((this.getSurroundParent()) &&
+                (this.getSurroundParent().type === "dgpad_construction"));
+        }
+        Blockly.dgpad = new function() {
+            var me = this;
+            var NMS = [];
+            me.ZC = canvas;
+            me.CN = canvas.getConstruction();
+            me.getBounds = panel.getBounds;
+            me.getNames = function() {
+                return NMS;
+            };
+            me.addName = function(_n) {
+                NMS.push(_n);
+            };
+            me.getName = canvas.namesManager.getName;
+            me.refresh = canvas.namesManager.refresh;
+        };
+        Blockly.bindEvent_(panel.DIV, "mouseup", null, onmouseup);
+        canvas.namesManager.setObserver(Blockly.dgpad.getNames);
+    };
+
     var onload = function() {
         setTimeout(function() {
-
+            // Blockly.FieldTextInput.FONTSIZE = 36;
             workspace = Blockly.inject(panel.DIV, {
                 media: $APP_PATH + "NotPacked/thirdParty/Blockly/media/",
                 toolbox: document.getElementById('toolbox')
             });
             Blockly.Xml.domToWorkspace(workspace, document.getElementById('startBlocks'));
-
-            Blockly.dgpad_canvas = canvas;
-            Blockly.dgpad_Cn = canvas.getConstruction();
-            Blockly.dgpad_panel = panel;
+            initBlockly();
             workspace.addChangeListener(onchanged);
-            Blockly.bindEvent_(panel.DIV, "mouseup", null, onmouseup);
+
         }, 200);
     };
 
@@ -89,6 +116,8 @@ function BlocklyManager(_canvas) {
             addScript(0);
         }
     };
+
+
 
     me.show = function() {
         if (panel === null) loadBlockly();
