@@ -719,6 +719,56 @@ $U.isFullLocalStorage = function() {
     return (n >= ($P.localstorage.max - 1));
 };
 
+$U.createDiv = function() {
+        var el = document.createElement("div");
+        el.event_proc = [];
+        el.stl = function(_p, _v) {
+            el.style.setProperty(_p, _v);
+        };
+        el.att = function(_a, _v) {
+            el[_a] = _v;
+        };
+        el.stls = function(_st) {
+            var t = _st.split(";");
+            for (var i = 0, len = t.length; i < len; i++) {
+                var a = t[i].split(":");
+                el.stl(a[0].replace(/^\s+|\s+$/g, ''), a[1].replace(/^\s+|\s+$/g, ''));
+            }
+        }
+        el.bnds = function(l, t, w, h) {
+            el.stls("left:" + l + "px;top:" + t + "px;width:" + w + "px;height:" + h + "px");
+        }
+        el.add = function(_ch) {
+            el.appendChild(_ch);
+        }
+        el.md = function(_p) {
+            el.addEventListener('touchstart', _p, false);
+            el.addEventListener('mousedown', _p, false);
+            el.event_proc.push(_p);
+        }
+        el.mm = function(_p) {
+            el.addEventListener('touchmove', _p, false);
+            el.addEventListener('mousemove', _p, false);
+            el.event_proc.push(_p);
+        }
+        el.mu = function(_p) {
+            el.addEventListener('touchend', _p, false);
+            el.addEventListener('mouseup', _p, false);
+            el.event_proc.push(_p);
+        }
+        el.rmevt = function() {
+            for (var i = 0; i < el.event_proc.length; i++) {
+                el.removeEventListener('touchstart', el.event_proc[i], false);
+                el.removeEventListener('mousedown', el.event_proc[i], false);
+                el.removeEventListener('touchmove', el.event_proc[i], false);
+                el.removeEventListener('mousemove', el.event_proc[i], false);
+                el.removeEventListener('touchend', el.event_proc[i], false);
+                el.removeEventListener('mouseup', el.event_proc[i], false);
+            }
+        }
+        return el;
+    };
+
 
 
 $U.clearOneLocalStorage = function() {
@@ -771,6 +821,8 @@ $U.set$FPICKERFRAME = function(_p) {
 $U.get$FPICKERFRAME = function() {
     return $FPICKERFRAME
 }
+
+
 
 $U.timer = function(_proc, _delay, _param) {
     var delay = _delay,
@@ -964,10 +1016,10 @@ $U.initEvents = function(ZC, cTag) {
     cTag.addEventListener('dragover', ZC.dragOver, false);
     cTag.addEventListener('drop', ZC.drop, false);
 
-    if (!Object.touchpad) {
-        window.addEventListener("keypress", ZC.keypress, false);
-        window.addEventListener("keydown", ZC.keydown, false);
-    }
+    // if (!Object.touchpad) {
+    //     window.addEventListener("keypress", ZC.keypress, false);
+    //     window.addEventListener("keydown", ZC.keydown, false);
+    // }
 }
 
 // This function is called each time something happend in construction.
@@ -1030,9 +1082,10 @@ $U.initCanvas = function(_id) {
     ZC.addTool(new AnchorConstructor());
     ZC.addTool(new NoAnchorConstructor());
     ZC.addTool(new VectorConstructor());
+    ZC.addTool(new SpringConstructor());
     ZC.clearBackground();
 
-    ZC.blocklyManager.show();
+    // ZC.blocklyManager.show();
 
     // new Names_panel(window.document.body,ZC.getConstruction().getNames);
 

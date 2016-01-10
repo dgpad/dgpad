@@ -182,7 +182,7 @@ function Canvas(_id) {
         }
         mainpanel = new ControlPanel(me);
         me.setMode(1);
-
+        if (Cn) Cn.resizeBtn();
 
 
         if ($U.isMobile.android()) {
@@ -1174,16 +1174,30 @@ function Canvas(_id) {
 
 
 
+    var previewEvent = null;
+
+    // Only for animations :
+    me.paintAnim = function() {
+        context.globalAlpha = 1;
+        me.clearBackground();
+        if (OC && (OC.getC(0)) && previewEvent) {
+            OC.preview(previewEvent, me);
+        }
+        handPath.paint(context);
+        Cn.paint(context);
+        me.trackManager.draw();
+    }
+
     me.paint = function(ev, coords) {
         context.globalAlpha = 1;
         me.clearBackground();
-        if (OC && (OC.getC(0)))
+        if (OC && (OC.getC(0))) {
+            previewEvent = ev;
             OC.preview(ev, me);
+        } else previewEvent = null;
         handPath.paint(context);
         Cn.paint(context, coords);
         me.trackManager.draw();
-
-
     };
 
 

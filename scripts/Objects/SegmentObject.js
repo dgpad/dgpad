@@ -33,6 +33,11 @@ function SegmentObject(_construction, _name, _P1, _P2) {
         }
     };
 
+    // Necessaire pour les animations :
+    this.getAlphaBounds = function() {
+        return [0, 1, $U.d(this.P1, this.P2)]
+    };
+
     // Pour les objets "locus". Initialise le polygone à partir de la donnée
     // du nombre _nb de sommets voulus :
     this.initLocusArray = function(_nb) {

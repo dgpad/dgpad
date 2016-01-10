@@ -104,7 +104,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         var oldX = X;
         X = x;
         Y = y;
-        if (isCursor()) {
+        if (me.isCursor()) {
             if (isNaN(cPT.getX()) || isNaN(cPT.getX()))
                 initCursorPos();
             else
@@ -122,6 +122,48 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     };
     me.is3D = function() {
         return E1.is3DArray();
+    };
+
+
+    // Uniquement pour les animations :
+    me.incrementAlpha = function(anim) {
+        // console.log(anim);
+        var v = anim.speed;
+        var s = anim.direction;
+        var ar = anim.ar;
+        var inc = s * (v * anim.delay / 1000);
+        // console.log(me.isCursor());
+        if (me.isCursor()) {
+            inc = inc *(max.value()-min.value())/ 100;
+            var e1 = E1.value();
+            e1 += inc;
+
+            if (e1 < min.value()) {
+                if (ar) {
+                    anim.direction *= -1;
+                    e1 = 2 * min.value() - e1;
+                } else {
+                    e1 = max.value() + e1 - min.value();
+                }
+            }
+            if (e1 > max.value()) {
+                if (ar) {
+                    anim.direction *= -1;
+                    e1 = 2 * max.value() - e1;
+                } else {
+                    e1 = min.value() + e1 - max.value();
+                }
+            }
+            if (e1 < min.value()) e1 = min.value();
+            if (e1 > max.value()) e1 = max.value();
+            if (Math.abs(e1) < 1e-13) e1 = 0;
+            initCursorPos();
+            E1.setValue(e1);
+        } else {
+            var val=E1.value() + inc;
+            if (Math.abs(val) < 1e-13) val = 0;
+            E1.setValue(val);
+        }
     };
 
 
@@ -171,10 +213,12 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     };
 
     this.getAssociatedTools = function() {
+        var s = "@callproperty,@calltrash,@objectmover,@anchor,@callcalc";
         if (anchor)
-            return "@callproperty,@calltrash,@objectmover,@noanchor,@callcalc";
-        else
-            return "@callproperty,@calltrash,@objectmover,@anchor,@callcalc";
+            s = "@callproperty,@calltrash,@objectmover,@noanchor,@callcalc";
+        // if (me.isCursor())
+        if ((E1 !== null) && (E1.isNum())) s += ",@spring";
+        return s;
     };
 
 
@@ -241,7 +285,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         var mx = this.mouseX(ev),
             my = this.mouseY(ev);
         var inside = ((mx > X) && (mx < X + W) && (my < Y) && (my > Y - this.getFontSize()));
-        if ((!inside) && (isCursor())) {
+        if ((!inside) && (me.isCursor())) {
             var l = X + cLength - 20;
             var sz = me.getSize();
             inside = (mx > l) && (mx < X + cLength + 20) && (my > Y + cOffsetY - sz / 2 - 5) && (my < Y + cOffsetY + sz / 2 + 5);
@@ -413,13 +457,15 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         src.styleWrite(true, me.getName(), "STL", s);
     };
 
-    var isCursor = function() {
+    me.isCursor = function() {
         return ((E1 !== null) && (min !== null) && (max !== null) &&
             ((E1.isEmpty()) || (E1.isNum())) && (min.isNum()) && (max.isNum()));
     };
 
+
+
     this.objToDelete = function() {
-        if (isCursor())
+        if (me.isCursor())
             return cPT;
         else
             return this;
@@ -430,7 +476,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
 
 
     var setMethods = function() {
-        //        console.log("curseur :" + isCursor());
+        //        console.log("curseur :" + me.isCursor());
         me.dx = E1.dx;
         me.dy = E1.dy;
         me.dz = E1.dz;
@@ -457,7 +503,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         } else if (E1.isFunc()) {
             me.paintObject = paintFunction;
             cPT.setXY(NaN, NaN);
-        } else if (isCursor()) {
+        } else if (me.isCursor()) {
             me.setParent(cPT);
             me.paintObject = paintCursor;
             if (E1.isEmpty()) {
@@ -529,7 +575,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
 
     // Refait à neuf la liste des parents :
     me.refresh = function() {
-        me.setParentList((isCursor()) ? [cPT] : []);
+        me.setParentList((me.isCursor()) ? [cPT] : []);
         if (E1)
             E1.refresh();
         if (min)

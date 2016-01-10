@@ -108,6 +108,7 @@ $INCLUDE("Constructors/CallTrash.js");
 $INCLUDE("Constructors/AnchorConstructor.js");
 $INCLUDE("Constructors/NoAnchorConstructor.js");
 $INCLUDE("Constructors/VectorConstructor.js");
+$INCLUDE("Constructors/SpringConstructor.js");
 $INCLUDE("Tools/ToolBtn.js");
 $INCLUDE("Tools/ToolsManager.js");
 $INCLUDE("Tools/Tool.js");

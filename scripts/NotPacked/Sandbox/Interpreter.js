@@ -818,6 +818,10 @@ function Interpreter(_win, _canvas) {
                     };
                     o.setMagnets(t);
                     break;
+                case "an": // Animations
+                    var t = eval("[" + e[1] + "]");
+                    me.C.addAnimation(o,t[0][0], t[0][1], t[0][2]);
+                    break;
                 case "dp": // Dépendance des objets
                     var t = e[1].substring(1, e[1].length - 1).split(",");
                     for (var k = 0; k < t.length; k++) {
@@ -1274,12 +1278,12 @@ function Interpreter(_win, _canvas) {
 
 
 
-               if ((s2 !== "") && ((isValidParenthesis(s2)))) {
-                   console.log("***user result = " + s);
-                   console.log("pseudo result = " + s3);
-                   console.log("main result = " + s2);
-                   console.log("name : " + _o.getName());
-               }
+        // if ((s2 !== "") && ((isValidParenthesis(s2)))) {
+        //     console.log("***user result = " + s);
+        //     console.log("pseudo result = " + s3);
+        //     console.log("main result = " + s2);
+        //     console.log("name : " + _o.getName());
+        // }
 
 
         return {

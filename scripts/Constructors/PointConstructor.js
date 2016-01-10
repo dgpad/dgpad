@@ -33,6 +33,7 @@ function PointConstructor() {
                 deps[0].project(o);
                 deps[0].setAlpha(o);
                 deps[0].setBoundaryMode(o);
+                // o.setAnimation(10, -1, true);
                 break;
             case 2:
                 // On veut créer un point d'intersection :
@@ -52,6 +53,9 @@ function PointConstructor() {
         o.setFillStyle();
         Expression.fixAll();
         o.compute();
+
+
+
         return o;
     };
 

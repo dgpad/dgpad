@@ -259,6 +259,7 @@ function Construction(_canvas) {
         mode = _mode;
         setObjectsMode(mode);
         me.clearMacroMode();
+        // me.showAnimations(mode<2);
         switch (mode) {
             case 0:
                 me.paint = standardPaint;
@@ -483,7 +484,7 @@ function Construction(_canvas) {
             return c;
     };
 
-    me.getNames=function(){
+    me.getNames = function() {
         return Object.keys(AO);
     };
 
@@ -558,17 +559,17 @@ function Construction(_canvas) {
                 _n = "_O";
                 break;
                 // A partir de là, on traite les "mots" réservés :
-            // case "x":
-            //     _n = "_x";
-            //     break;
-            // case "y":
-            //     _n = "_y";
-            //     break;
-            // case "d":
-            //     _n = "_d";
-            //     break;
+                // case "x":
+                //     _n = "_x";
+                //     break;
+                // case "y":
+                //     _n = "_y";
+                //     break;
+                // case "d":
+                //     _n = "_d";
+                //     break;
         }
-        _n=_n.replace(/\"/g,"");
+        _n = _n.replace(/\"/g, "");
         var n = (_n.charAt(0) === "_") ? genericName(_n.slice(1), _o) : uniqueName(_n, _o);
         if (_o.getName) {
             delete AO[_o.getName()];
@@ -1438,4 +1439,141 @@ function Construction(_canvas) {
         //        console.log(src.getGeom());
 
     };
+
+
+
+    // **********************************************************
+    // **********************************************************
+    // ******************* ANIMATIONS PART **********************
+    // **********************************************************
+    // **********************************************************
+
+
+    var animations = [];
+    var animations_runable = true;
+    var animations_id = null;
+    var animations_delay = 20;
+    var animations_ctrl = null;
+
+    var clearAnimations = function() {
+        for (var i = 0; i < animations.length; i++) {
+            var an = animations[i];
+            if ((V.indexOf(an.obj) === -1) || (an.speed === 0)) {
+                animations.splice(i, 1);
+                i--
+            }
+        };
+        if (animations.length === 0) {
+            clearInterval(animations_id);
+            animations_id = null;
+            animations = [];
+            if ((animations_ctrl) && (animations_ctrl.parentNode)) {
+                document.body.removeChild(animations_ctrl);
+            }
+            animations_ctrl = null;
+            return true
+        }
+        return false;
+    }
+
+
+    var loopAnimations = function() {
+        if (clearAnimations()) return;
+        if (animations_runable) {
+            for (var i = 0; i < animations.length; i++) {
+                var an = animations[i];
+                if (V.indexOf(an.obj) !== -1) {
+                    an.obj.incrementAlpha(an);
+                    an.obj.compute();
+                    an.obj.computeChilds();
+                } else {
+                    animations.splice(i, 1);
+                    i--
+                }
+            }
+            canvas.paintAnim();
+        }
+    }
+
+    var animations_sort = function(a, b) {
+        return (b.obj.getChildList().length - a.obj.getChildList().length)
+    }
+
+    var showAnim_btn = function(_showpause) {
+        if (clearAnimations()) return;
+        var img_pause = $APP_PATH + "NotPacked/images/controls/anim_stop.svg";
+        var img_start = $APP_PATH + "NotPacked/images/controls/anim_start.svg";
+        if (!animations_ctrl) {
+            var el = $U.createDiv();
+            el.stls("background-color:rgba(0,0,0,0);position:absolute;z-index:9000;background-position:center;background-repeat:no-repeat;background-size:100% 100%");
+            document.body.appendChild(el);
+            animations_ctrl = el;
+            me.resizeBtn();
+        }
+        animations_ctrl.rmevt();
+        if (_showpause) {
+            animations_ctrl.stl("background-image", "url(" + img_pause + ")");
+            animations_ctrl.md(function(ev) {
+                ev.preventDefault();
+                me.showAnimations(false)
+            })
+        } else {
+            animations_ctrl.stl("background-image", "url(" + img_start + ")");
+            animations_ctrl.md(function(ev) {
+                ev.preventDefault();
+                me.showAnimations(true)
+            })
+        }
+    }
+
+    me.resizeBtn = function() {
+        if (animations_ctrl) {
+            var sz = 50;
+            var margins = 5;
+            var l = margins;
+            var t = canvas.getHeight() - canvas.prefs.controlpanel.size - sz - margins;
+            animations_ctrl.bnds(l, t, sz, sz);
+        }
+    }
+
+    me.showAnimations = function(_b) {
+        animations_runable = _b;
+        showAnim_btn(_b);
+    }
+
+
+    me.findInAnimations = function(_o) {
+        for (var i = 0; i < animations.length; i++) {
+            if (animations[i].obj === _o) return animations[i];
+        }
+        return null;
+    }
+
+
+    me.addAnimation = function(_o, _v, _d, _m) {
+        var an0 = me.findInAnimations(_o);
+        if (an0) {
+            an0.speed = _v;
+            an0.direction = _d;
+            an0.ar = _m;
+            an0.delay = animations_delay;
+        } else {
+            animations.push({
+                obj: _o,
+                speed: _v,
+                direction: _d,
+                ar: _m,
+                delay: animations_delay
+            });
+            animations.sort(animations_sort);
+        }
+
+        if (!animations_id) {
+            animations_id = setInterval(loopAnimations, animations_delay);
+
+        }
+        me.showAnimations(true);
+    };
+
+
 }

@@ -35,8 +35,41 @@ function PointObject(_construction, _name, _x, _y) {
     var isArray = $U.isArray;
 
 
+
+
     var currentMagnet = null; // Pour gérer les changements de magnétisme : utilise pour
     // les traces d'objets.
+
+
+    // Uniquement pour les animations :
+    me.incrementAlpha = function(anim) {
+        var v = anim.speed;
+        var s = anim.direction;
+        var ar = anim.ar;
+        // b[0] et b[1] indiquent l'intervalle Alpha
+        // b[2] indique la longueur de la ligne
+        var b = me.getParentAt(0).getAlphaBounds();
+        var inc = s * (v * anim.delay / 1000) / b[2];
+        Alpha += inc;
+        if (Alpha < b[0]) {
+            if (ar) {
+                anim.direction *= -1;
+                Alpha = 2 * b[0] - Alpha;
+            } else {
+                Alpha = b[1] + Alpha - b[0];
+            }
+        }
+        if (Alpha > b[1]) {
+            if (ar) {
+                anim.direction *= -1;
+                Alpha = 2 * b[1] - Alpha;
+            } else {
+                Alpha = b[0] + Alpha - b[1];
+            }
+        }
+        if (Alpha < b[0]) Alpha=b[0];
+        if (Alpha > b[1]) Alpha=b[1];
+    };
 
 
     this.getValue = function() {
@@ -136,6 +169,8 @@ function PointObject(_construction, _name, _x, _y) {
             at += ",@pushpin";
             at += ",@magnet";
         }
+        if ((this.getParentLength() === 1)&&(this.getParentAt(0).getAlphaBounds))
+            at += ",@spring";
         if (this.getCn().findPtOn(this) !== null)
             at += ",locus";
         return at;
@@ -245,8 +280,6 @@ function PointObject(_construction, _name, _x, _y) {
         Cn.reconstructChilds();
         this.computeChilds();
     };
-
-
 
     this.getX = function() {
         return X;

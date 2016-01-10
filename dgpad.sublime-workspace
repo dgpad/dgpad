@@ -4,6 +4,58 @@
 		"selected_items":
 		[
 			[
+				"ani",
+				"animations_ctrl"
+			],
+			[
+				"anima",
+				"animations_delay"
+			],
+			[
+				"d",
+				"direction"
+			],
+			[
+				"getC",
+				"getCode"
+			],
+			[
+				"an",
+				"animations_ctrl"
+			],
+			[
+				"getA",
+				"getAlphaBounds"
+			],
+			[
+				"getPare",
+				"getParentAt"
+			],
+			[
+				"fce",
+				"fce_cir_deg"
+			],
+			[
+				"fc",
+				"fce_cir_rad"
+			],
+			[
+				"prev",
+				"previewEvent"
+			],
+			[
+				"o",
+				"obj"
+			],
+			[
+				"a",
+				"animations"
+			],
+			[
+				"is",
+				"ispainting"
+			],
+			[
 				"in",
 				"initBlockly"
 			],
@@ -72,10 +124,6 @@
 				"newsource"
 			],
 			[
-				"d",
-				"dgpad_Cn"
-			],
-			[
 				"Blo",
 				"Blockly"
 			],
@@ -106,10 +154,6 @@
 			[
 				"rz",
 				"rz_width"
-			],
-			[
-				"a",
-				"appendChild"
 			],
 			[
 				"tl",
@@ -148,26 +192,34 @@
 	"buffers":
 	[
 		{
-			"file": "scripts/NotPacked/thirdParty/Blockly/perso/Blockly_dgpad.js",
+			"file": "scripts/Objects/PointObject.js",
 			"settings":
 			{
-				"buffer_size": 7798,
+				"buffer_size": 21483,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/field_textinput.js",
+			"file": "scripts/Objects/ConstructionObject.js",
 			"settings":
 			{
-				"buffer_size": 10497,
+				"buffer_size": 32353,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scripts/NotPacked/thirdParty/Blockly/perso/Blockly_dgpad_JS.js",
+			"file": "scripts/NotPacked/Sandbox/Interpreter.js",
 			"settings":
 			{
-				"buffer_size": 2841,
+				"buffer_size": 55631,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "scripts/Objects/ExpressionObject.js",
+			"settings":
+			{
+				"buffer_size": 17798,
 				"line_ending": "Unix"
 			}
 		},
@@ -175,39 +227,31 @@
 			"file": "scripts/Canvas.js",
 			"settings":
 			{
-				"buffer_size": 48647,
+				"buffer_size": 49100,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scripts/Blockly/BlocklyManager.js",
+			"file": "scripts/Construction.js",
 			"settings":
 			{
-				"buffer_size": 4324,
+				"buffer_size": 45322,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scripts/Blockly/BlocklyPanel.js",
+			"file": "scripts/Constructors/SpringConstructor.js",
 			"settings":
 			{
-				"buffer_size": 6641,
+				"buffer_size": 4214,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scripts/Names/NamesManager.js",
+			"file": "scripts/Utils.js",
 			"settings":
 			{
-				"buffer_size": 1427,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/Names/NamesPanel.js",
-			"settings":
-			{
-				"buffer_size": 14491,
+				"buffer_size": 34315,
 				"line_ending": "Unix"
 			}
 		}
@@ -273,44 +317,54 @@
 	},
 	"expanded_folders":
 	[
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly"
+		"/home/erichake/Gdrive/dgpad/scripts",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/images/tools"
 	],
 	"file_history":
 	[
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_dgpad.js",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/Objects/ConstructionObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyManager.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Construction.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/PrimitiveCircleObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Canvas.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Names/NamesManager.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Constructors/LineConstructor.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Main.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Constructors/PointConstructor.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/SegmentObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/ConstructionObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/PointObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/worker.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Animations/Animations.js",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/field_textinput.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyManager.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Names/NamesPanel.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_dgpad.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_dgpad_JS.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Utils.js",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/Objects/ConstructionObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings.js",
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js",
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/lang/LocalStrings.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Utils.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyPanel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Canvas.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Main.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Names/NamesPanel.js",
 		"/home/erichake/Gdrive/dgpad/scripts/ControlPanel/ControlPanel.js",
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/ControlPanel/ControlPanel.js",
 		"/home/erichake/Gdrive/dgpad/index.php",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
 		"/home/erichake/Gdrive/dgpad/scripts/DGPad.js",
 		"/home/erichake/Gdrive/dgpad/scripts/MainTheLot.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/CenterObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Calc/MainCalcPanel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Names/NamesManager.js",
 		"/home/erichake/Dropbox/toto.dgp",
 		"/home/erichake/Gdrive/dgpad/scripts/GUI/elements/Checkbox.js",
 		"/home/erichake/Gdrive/dgpad/dgpad.html",
-		"/home/erichake/Gdrive/dgpad/scripts/Construction.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Constructors/PointConstructor.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Constructors/MidPointConstructor.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Constructors/SymaConstructor.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Constructors/SymcConstructor.js",
 		"/home/erichake/Gdrive/dgpad/scripts/GUI/elements/NameDialog.js",
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/Blockly/Blockly_Panel.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/TwoPointsLineObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/PointObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/xml.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Blockly/Blockly_Manager.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/utils.js",
@@ -318,7 +372,6 @@
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_toolbox.xml",
 		"/home/erichake/Gdrive/dgpad/scripts/Blockly/Blockly_Panel.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/generator.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_dgpad_JS.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/realtime.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/block.js",
 		"/home/erichake/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
@@ -398,13 +451,7 @@
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/OXObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/OYObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/ParallelLineObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/PerpBisectorObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/PlumbObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/PrimitiveCircleObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/QuadricObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/RayObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/SegmentObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/SymaObject.js"
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/PerpBisectorObject.js"
 	],
 	"find":
 	{
@@ -415,6 +462,7 @@
 		"height": 93.0,
 		"where_history":
 		[
+			"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core,/home/erichake/Téléchargements/geogebra-dc38301728dd99860dca4172bd4b1c2491bcd530",
 			"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core",
 			"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly",
 			"/home/erichake/Gdrive/dgpad/scripts",
@@ -432,6 +480,29 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"resizeWindow",
+			"resize",
+			"_an",
+			"isCursor",
+			"b[1]",
+			"Alpha",
+			"b[0]",
+			"b",
+			"0",
+			"isCursor",
+			"numéro",
+			"getConstruction",
+			"dx",
+			"unit",
+			"doOrder",
+			"me.delete",
+			"animate",
+			"yp1",
+			"xp1",
+			"_i",
+			"paint=",
+			"paint",
+			"webworker",
 			"size",
 			"FONTSIZE",
 			"FieldTextInput",
@@ -555,19 +626,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "scripts/NotPacked/thirdParty/Blockly/perso/Blockly_dgpad.js",
+					"file": "scripts/Objects/PointObject.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7798,
+						"buffer_size": 21483,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								842,
-								842
+								2155,
+								2155
 							]
 						],
 						"settings":
@@ -577,34 +648,224 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 525.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/field_textinput.js",
+					"file": "scripts/Objects/ConstructionObject.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10497,
+						"buffer_size": 32353,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								72,
-								72
+								31244,
+								31244
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 18784.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "scripts/NotPacked/Sandbox/Interpreter.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 55631,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								24446,
+								24446
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 14164.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "scripts/Objects/ExpressionObject.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17798,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4094,
+								4094
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2160.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"file": "scripts/Objects/ExpressionObject.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17798,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								14611,
+								14611
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 7698.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "scripts/Canvas.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 49100,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7423,
+								7423
+							]
+						],
+						"settings":
+						{
+							"history_list_is_closing": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2608.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "scripts/Construction.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 45322,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								43206,
+								43206
+							]
+						],
+						"settings":
+						{
+							"history_list_is_closing": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 27020.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "scripts/Constructors/SpringConstructor.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4214,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								932,
+								932
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -614,176 +875,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "scripts/NotPacked/thirdParty/Blockly/perso/Blockly_dgpad_JS.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2841,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								292,
-								292
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "scripts/Canvas.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 48647,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								23180,
-								23180
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 0,
-			"sheets":
-			[
-				{
-					"buffer": 4,
-					"file": "scripts/Blockly/BlocklyManager.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4324,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1762,
-								1762
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 324.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "scripts/Blockly/BlocklyPanel.js",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 6641,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1149,
-								1149
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "scripts/Names/NamesManager.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1427,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								486,
-								486
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
 					"buffer": 7,
-					"file": "scripts/Names/NamesPanel.js",
+					"file": "scripts/Utils.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14491,
+						"buffer_size": 34315,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8019,
-								8019
+								23063,
+								23063
 							]
 						],
 						"settings":
@@ -793,10 +898,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3986.0,
+						"translation.y": 12925.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -830,7 +935,7 @@
 		"cols":
 		[
 			0.0,
-			0.466271991133,
+			0.368124969045,
 			1.0
 		],
 		"rows":
@@ -886,7 +991,7 @@
 		],
 		"width": 392.0
 	},
-	"selected_group": 0,
+	"selected_group": 1,
 	"settings":
 	{
 	},

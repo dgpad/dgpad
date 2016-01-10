@@ -1077,6 +1077,10 @@ function ConstructionObject(_construction, _name) {
             }
             s += ";dp:[" + t.join(",") + "]";
         }
+        var an = Cn.findInAnimations(this);
+        if (an) {
+            s+=";an:["+an.speed+","+an.direction+","+an.ar+"]";
+        }
         return s;
     };
 

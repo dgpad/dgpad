@@ -40,6 +40,11 @@ function PrimitiveCircleObject(_construction, _name, _P1) {
         return at;
     };
 
+    // Necessaire pour les animations :
+    this.getAlphaBounds = function() {
+        return [0, $U.doublePI, 1]
+    };
+
     this.projectXY = function(xM, yM) {
         var xA = this.P1.getX();
         var yA = this.P1.getY();
