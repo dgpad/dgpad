@@ -6,13 +6,14 @@
 function PropertiesPanel(_canvas) {
     var me = this;
     var canvas = _canvas;
+    var Cn = canvas.getConstruction();
     $U.extend(this, new VerticalBorderPanel(canvas, 240, false));
     me.setBounds(me.getBounds().left + 15, -5, 0, 0); // Le fond n'est pas affiché
 
     me.show();
 
     me.getCS = function() {
-        return canvas.getConstruction().coordsSystem;
+        return Cn.coordsSystem;
     };
 
     me.setMagnifierMode = function(_val) {
@@ -22,12 +23,12 @@ function PropertiesPanel(_canvas) {
         return canvas.magnifyManager.getMagnifierMode();
     };
     me.setDegree = function(_val) {
-        canvas.getConstruction().setDEG(_val);
-        canvas.getConstruction().computeAll();
+        Cn.setDEG(_val);
+        Cn.computeAll();
         canvas.paint();
     };
     me.getDegree = function(_val) {
-        return canvas.getConstruction().isDEG();
+        return Cn.isDEG();
     };
     me.setDemoMode = function(_val) {
         canvas.demoModeManager.setDemoMode(_val);
@@ -85,48 +86,55 @@ function PropertiesPanel(_canvas) {
     };
     //
     me.compute = function() {
-        canvas.getConstruction().computeAll();
+        Cn.computeAll();
     };
     me.repaint = function() {
         canvas.paint();
     };
+    me.getAnimationSpeed = function(_o) {
+        return Cn.getAnimationSpeed(_o)
+    };
+
+    me.setAnimationSpeed = function(_o, _v) {
+        Cn.setAnimationSpeed(_o, _v);
+    };
 
 
     me.setAllSize = function(_type, _sze) {
-        canvas.getConstruction().setAllSize(_type, _sze);
+        Cn.setAllSize(_type, _sze);
     };
     me.setAllColor = function(_type, _sze) {
-        canvas.getConstruction().setAllColor(_type, _sze);
+        Cn.setAllColor(_type, _sze);
     };
     me.setAllOpacity = function(_type, _sze) {
-        canvas.getConstruction().setAllOpacity(_type, _sze);
+        Cn.setAllOpacity(_type, _sze);
     };
     me.setAllLayer = function(_type, _sze) {
-        canvas.getConstruction().setAllLayer(_type, _sze);
+        Cn.setAllLayer(_type, _sze);
     };
     me.setAllPtShape = function(_shape) {
-        canvas.getConstruction().setAllPtShape(_shape);
+        Cn.setAllPtShape(_shape);
     };
     me.setAllFontSize = function(_type, _sze) {
-        canvas.getConstruction().setAllFontSize(_type, _sze);
+        Cn.setAllFontSize(_type, _sze);
     };
     me.setAllPrecision = function(_type, _sze) {
-        canvas.getConstruction().setAllPrecision(_type, _sze);
+        Cn.setAllPrecision(_type, _sze);
     };
     me.setAllIncrement = function(_type, _sze) {
-        canvas.getConstruction().setAllIncrement(_type, _sze);
+        Cn.setAllIncrement(_type, _sze);
     };
     me.setAllDash = function(_type, _sze) {
-        canvas.getConstruction().setAllDash(_type, _sze);
+        Cn.setAllDash(_type, _sze);
     };
     me.setAll360 = function(_type, _360) {
-        canvas.getConstruction().setAll360(_type, _360);
+        Cn.setAll360(_type, _360);
     };
     me.setAllTrigo = function(_type, _t) {
-        canvas.getConstruction().setAllTrigo(_type, _t);
+        Cn.setAllTrigo(_type, _t);
     };
     me.setAllNoMouse = function(_type, _sze) {
-        canvas.getConstruction().setAllNoMouse(_type, _sze);
+        Cn.setAllNoMouse(_type, _sze);
     };
     me.setTrack = function(_o, _val) {
         if (_val)
@@ -137,6 +145,9 @@ function PropertiesPanel(_canvas) {
     me.setAllTrack = function(_type, _val) {
         canvas.trackManager.setAllTrack(_type, _val);
     };
+    // me.setAnimation=function(_o,_val){
+
+    // };
 
 }
 
@@ -409,6 +420,7 @@ function props_colorPanel(_owner) {
     var cbNomouse = null;
     var cbTrack = null;
     var setall = false;
+    var sAnim = null;
 
 
 
@@ -488,6 +500,9 @@ function props_colorPanel(_owner) {
             me.obj.setIncrement(_val);
         me.compute();
         me.repaint();
+    };
+    var ANIMcallback = function(_val) {
+        _owner.setAnimationSpeed(me.obj, _val)
     };
 
     var PSHAPEcallback = function(_val) {
@@ -687,12 +702,33 @@ function props_colorPanel(_owner) {
         }
 
 
-
-
-
-        cbDash = new Checkbox(me.getDocObject(), 10, ch, 200, cbh, false, $L.props_dash, DSHcallback);
-        cbDash.setTextColor("#252525");
-        cbDash.setValue(me.obj.isDash());
+        // Curseur animation :
+        if (((me.obj.getCode() === "point") && (me.obj.getParentLength() === 1) && (me.obj.getParentAt(0).getAlphaBounds)) || ((me.obj.getCode() === "expression") && (me.obj.getE1() != null) && (me.obj.getE1().isNum()))) {
+            sAnim = new slider(me.getDocObject(), 10, ch, 200, sh, -4, 4, 0, ANIMcallback);
+            var fce;
+            if (me.obj.getCode() === "expression") {
+                fce = $P.fce_exp.slice();
+            } else {
+                var p = me.obj.getParentAt(0);
+                if (p.getCode() === "segment") {
+                    fce = $P.fce_seg.slice();
+                } else if (p.isInstanceType("circle")) {
+                    fce = $P.fce_cir_deg.slice();
+                }
+            }
+            fce[0] = [fce[0], $L.animation_without];
+            sAnim.setTabValues(fce);
+            sAnim.setValueWidth(40);
+            sAnim.setLabel($L.animation_label, 80);
+            sAnim.setTextColor("#252525");
+            sAnim.setValuePrecision(1);
+            sAnim.setBackgroundColor("rgba(0,0,0,0)");
+            sAnim.setValue(_owner.getAnimationSpeed(me.obj));
+        } else {
+            cbDash = new Checkbox(me.getDocObject(), 10, ch, 200, cbh, false, $L.props_dash, DSHcallback);
+            cbDash.setTextColor("#252525");
+            cbDash.setValue(me.obj.isDash());
+        }
 
         if (!$U.isMobile.mobilePhone()) {
             ch += cbh;

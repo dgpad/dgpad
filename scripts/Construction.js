@@ -1549,6 +1549,40 @@ function Construction(_canvas) {
         return null;
     }
 
+    var isOnCircle = function(_o) {
+        return ((_o.getCode() === "point") && (_o.getParentLength() === 1) && (_o.getParentAt(0).isInstanceType("circle")))
+    }
+
+    me.getAnimationSpeed = function(_o) {
+        var an = me.findInAnimations(_o);
+        if (an) {
+            var v = (isOnCircle(_o)) ? Math.round(an.speed * 180 / Math.PI) : an.speed;
+            return v
+        } else return 0;
+    }
+
+    me.setAnimationSpeed = function(_o, _v) {
+        var an0 = me.findInAnimations(_o);
+        if (isOnCircle(_o)) _v = _v * Math.PI / 180;
+        if (an0) {
+            an0.speed = _v;
+        } else {
+            animations.push({
+                obj: _o,
+                speed: _v,
+                direction: 1,
+                ar: false,
+                delay: animations_delay
+            });
+            animations.sort(animations_sort);
+        }
+        if (!animations_id) {
+            animations_id = setInterval(loopAnimations, animations_delay);
+
+        }
+        me.showAnimations(true);
+    }
+
 
     me.addAnimation = function(_o, _v, _d, _m) {
         var an0 = me.findInAnimations(_o);

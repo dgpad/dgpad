@@ -219,3 +219,7 @@ $L.blockly.pt_coords = "de coordonnées";
 $L.blockly.pt_exp = "d'expression";
 $L.blockly.pt_andof = "et de";
 $L.blockly.pt_and = "et";
+
+// Lundi 11 janvier 2016
+$L.animation_without="Sans";
+$L.animation_label="Animation";

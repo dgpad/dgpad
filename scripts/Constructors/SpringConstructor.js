@@ -7,14 +7,7 @@ function SpringConstructor() {
     var img = new Image();
     img.src = $APP_PATH + "NotPacked/images/tools/spring_const.svg";
     img.h = 30;
-    var fce_seg = [0, 1, 5, 10, 25, 50, 100, 200, 300, 500, 800, 1000, 1500];
-    var fce_exp = [0, 1, 5, 10, 20, 50, 100, 200, 500, 1000, 1500];
-    var fce_cir_deg = [0, 1, 6, 10, 30, 45, 60, 70, 90, 180, 270, 360];
-    var fce_cir_rad = [];
-    for (var i = 0; i < fce_cir_deg.length; i++) {
-        fce_cir_rad.push(fce_cir_deg[i] * Math.PI / 180);
-    }
-    var fce = fce_seg;
+    var fce = $P.fce_seg;
     var f = 0;
     var ar = false;
     var dir = 1;
@@ -66,7 +59,7 @@ function SpringConstructor() {
         var message = "";
         if (this.getC(0).getCode() === "point") {
             if (this.getC(0).getParentAt(0).getCode() === "segment") {
-                fce = fce_seg;
+                fce = $P.fce_seg;
                 f = Math.floor(d / (max / fce.length));
                 if (f >= fce.length) f = fce.length - 1;
                 var xp = this.getC(0).getParentAt(0).getP1().getX();
@@ -80,17 +73,17 @@ function SpringConstructor() {
                 message = ar ? fce[f] + " px/s \u21C4" : fce[f] + " px/s";
             } else if (this.getC(0).getParentAt(0).isInstanceType("circle")) {
                 ar = false;
-                fce = fce_cir_rad;
+                fce = $P.fce_cir_rad;
                 f = Math.floor(d / (max / fce.length));
                 if (f >= fce.length) f = fce.length - 1;
                 var xp = this.getC(0).getParentAt(0).getP1().getX();
                 var yp = this.getC(0).getParentAt(0).getP1().getY();
                 var ps = (yp - y0) * (x1 - xp) + (x0 - xp) * (y1 - yp);
                 dir = (ps > 0) ? 1 : -1;
-                message = fce_cir_deg[f] + " deg/s";
+                message = $P.fce_cir_deg[f] + " deg/s";
             }
         } else if (this.getC(0).getCode() === "expression") {
-            fce = fce_exp;
+            fce = $P.fce_exp;
             ar = false;
             f = Math.floor(d / (max / fce.length));
             if (f >= fce.length) f = fce.length - 1;
