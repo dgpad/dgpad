@@ -18,7 +18,7 @@ $U.native2ascii = function(str) {
         }
     }
     return out;
-}
+};
 
 $U.isStr = function(_x) {
     return (typeof _x === "string");

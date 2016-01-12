@@ -73,6 +73,10 @@ function ConstructionObject(_construction, _name) {
         return timestamp;
     }
 
+    this.isAnimationPossible = function() {
+        return false;
+    }
+
 
     // ************************* CHANTIER ****************************
     // On remplace les dépendances pour le déplacement des objets
@@ -1079,7 +1083,7 @@ function ConstructionObject(_construction, _name) {
         }
         var an = Cn.findInAnimations(this);
         if (an) {
-            s+=";an:["+an.speed+","+an.direction+","+an.ar+"]";
+            s += ";an:[" + an.speed + "," + an.direction + "," + an.ar + "]";
         }
         return s;
     };

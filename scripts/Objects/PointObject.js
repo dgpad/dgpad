@@ -40,17 +40,35 @@ function PointObject(_construction, _name, _x, _y) {
     var currentMagnet = null; // Pour gérer les changements de magnétisme : utilise pour
     // les traces d'objets.
 
+    // ****************************************
+    // **** Uniquement pour les animations ****
+    // ****************************************
 
-    // Uniquement pour les animations :
-    me.incrementAlpha = function(anim) {
+    this.isAnimationPossible = function() {
+        return ((this.getParentLength() === 1) && (this.getParentAt(0).getAlphaBounds));
+    }
+
+    this.getAnimationSpeedTab = function() {
+        return this.getParentAt(0).getAnimationSpeedTab();
+    }
+
+    this.getAnimationParams = function(mx, my) {
+        return this.getParentAt(0).getAnimationParams(X, Y, mx, my);
+    }
+
+    this.incrementAlpha = function(anim) {
         var v = anim.speed;
         var s = anim.direction;
         var ar = anim.ar;
+        var d = new Date();
+        anim.delay = d.getTime() - anim.timestamp;
+        anim.timestamp = d.getTime();
         // b[0] et b[1] indiquent l'intervalle Alpha
         // b[2] indique la longueur de la ligne
-        var b = me.getParentAt(0).getAlphaBounds();
-        var inc = s * (v * anim.delay / 1000) / b[2];
-        Alpha += inc;
+        var b = me.getParentAt(0).getAlphaBounds(anim);
+        // var inc = s * (v * anim.delay / 1000) / b[2];
+        // var inc=b[2];
+        Alpha += b[2];
         if (Alpha < b[0]) {
             if (ar) {
                 anim.direction *= -1;
@@ -67,9 +85,12 @@ function PointObject(_construction, _name, _x, _y) {
                 Alpha = b[0] + Alpha - b[1];
             }
         }
-        if (Alpha < b[0]) Alpha=b[0];
-        if (Alpha > b[1]) Alpha=b[1];
+        if (Alpha < b[0]) Alpha = b[0];
+        if (Alpha > b[1]) Alpha = b[1];
     };
+
+    // ****************************************
+    // ****************************************
 
 
     this.getValue = function() {
@@ -169,7 +190,7 @@ function PointObject(_construction, _name, _x, _y) {
             at += ",@pushpin";
             at += ",@magnet";
         }
-        if ((this.getParentLength() === 1)&&(this.getParentAt(0).getAlphaBounds))
+        if (this.isAnimationPossible())
             at += ",@spring";
         if (this.getCn().findPtOn(this) !== null)
             at += ",locus";

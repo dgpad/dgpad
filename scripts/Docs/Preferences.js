@@ -136,17 +136,6 @@ $P.MagnifierBounds.t = 10;
 $P.MagnifierBounds.w = 120;
 $P.MagnifierBounds.h = 120;
 
-$P.fce_seg = [0, 1, 5, 10, 25, 50, 100, 200, 300, 500, 800, 1000, 1500];
-$P.fce_exp = [0, 1, 5, 10, 20, 50, 100, 200, 500, 1000, 1500];
-$P.fce_cir_deg = [0, 1, 6, 10, 30, 45, 60, 70, 90, 180, 270, 360];
-$P.fce_cir_rad = [];
-
-(function() {
-    for (var i = 0; i < $P.fce_cir_deg.length; i++) {
-        $P.fce_cir_rad.push($P.fce_cir_deg[i] * Math.PI / 180);
-    }
-}());
-
 $P.clone = function() {
     return JSON.parse(JSON.stringify($P));
 };

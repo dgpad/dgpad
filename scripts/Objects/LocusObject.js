@@ -84,6 +84,61 @@ function LocusObject(_construction, _name, _O, _ON) {
     };
 
 
+    // ****************************************
+    // **** Uniquement pour les animations ****
+    // ****************************************
+
+
+    this.getAlphaBounds = function(anim) {
+        var inc = 5 * Math.round(anim.direction * (anim.speed * anim.delay / 1000));
+        return [0, Ptab.length - 1, inc]
+    };
+
+    this.getAnimationSpeedTab = function() {
+        return [0, 20, 25, 50, 100, 200, 400, 500, 750, 1000];
+    };
+
+    this.getAnimationParams = function(x0, y0, x1, y1) {
+        var d = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
+        var fce = this.getAnimationSpeedTab();
+        var f = Math.floor(d / (500 / fce.length));
+        if (f >= fce.length) f = fce.length - 1;
+
+        var xAB = (Ptab[0].x - x0),
+            yAB = (Ptab[0].y - y0);
+        var d2 = xAB * xAB + yAB * yAB,
+            d1 = 0;
+        var k = 0;
+        for (var i = 1; i < NB; i++) {
+            xAB = (Ptab[i].x - x0);
+            yAB = (Ptab[i].y - y0);
+            d1 = xAB * xAB + yAB * yAB;
+            if ((d1 < d2) || isNaN(d2)) {
+                k = i;
+                d2 = d1;
+            }
+        }
+        var xp = Ptab[k - 1].x;
+        var yp = Ptab[k - 1].y;
+        var ps = (xp - x0) * (x1 - x0) + (yp - y0) * (y1 - y0);
+        var dir = (ps > 0) ? 1 : -1;
+        var dop = Math.sqrt((xp - x0) * (xp - x0) + (yp - y0) * (yp - y0));
+        var dom = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
+        var cs = ps / (dop * dom);
+        var aller_retour = (Math.abs(cs) < 0.707);
+        var pcent = Math.round(100 * fce[f] / fce[fce.length - 1])+"%";
+
+        return {
+            message: aller_retour ? pcent + " \u21C4" : pcent + "",
+            speed: fce[f],
+            direction: dir,
+            ar: aller_retour
+        }
+    }
+
+    // ****************************************
+    // ****************************************
+
 
     this.projectXY = function(_x, _y) {
         var xAB = (Ptab[0].x - _x),

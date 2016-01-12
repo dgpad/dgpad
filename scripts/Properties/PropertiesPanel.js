@@ -703,19 +703,9 @@ function props_colorPanel(_owner) {
 
 
         // Curseur animation :
-        if (((me.obj.getCode() === "point") && (me.obj.getParentLength() === 1) && (me.obj.getParentAt(0).getAlphaBounds)) || ((me.obj.getCode() === "expression") && (me.obj.getE1() != null) && (me.obj.getE1().isNum()))) {
+        if (me.obj.isAnimationPossible()) {
             sAnim = new slider(me.getDocObject(), 10, ch, 200, sh, -4, 4, 0, ANIMcallback);
-            var fce;
-            if (me.obj.getCode() === "expression") {
-                fce = $P.fce_exp.slice();
-            } else {
-                var p = me.obj.getParentAt(0);
-                if (p.getCode() === "segment") {
-                    fce = $P.fce_seg.slice();
-                } else if (p.isInstanceType("circle")) {
-                    fce = $P.fce_cir_deg.slice();
-                }
-            }
+            var fce=me.obj.getAnimationSpeedTab();
             fce[0] = [fce[0], $L.animation_without];
             sAnim.setTabValues(fce);
             sAnim.setValueWidth(40);

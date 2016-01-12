@@ -1539,6 +1539,15 @@ function Construction(_canvas) {
     me.showAnimations = function(_b) {
         animations_runable = _b;
         showAnim_btn(_b);
+        if (_b) {
+            var d = new Date();
+            var t = d.getTime();
+            for (var i = 0; i < animations.length; i++) {
+                animations[i].timestamp = t;
+                animations[i].loopnum = 0;
+                animations[i].currentstamp = t;
+            }
+        }
     }
 
 
@@ -1572,7 +1581,8 @@ function Construction(_canvas) {
                 speed: _v,
                 direction: 1,
                 ar: false,
-                delay: animations_delay
+                delay: animations_delay,
+                timestamp: null
             });
             animations.sort(animations_sort);
         }
@@ -1597,7 +1607,8 @@ function Construction(_canvas) {
                 speed: _v,
                 direction: _d,
                 ar: _m,
-                delay: animations_delay
+                delay: animations_delay,
+                timestamp: null
             });
             animations.sort(animations_sort);
         }

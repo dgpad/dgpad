@@ -40,10 +40,42 @@ function PrimitiveCircleObject(_construction, _name, _P1) {
         return at;
     };
 
-    // Necessaire pour les animations :
-    this.getAlphaBounds = function() {
-        return [0, $U.doublePI, 1]
+
+    // ****************************************
+    // **** Uniquement pour les animations ****
+    // ****************************************
+
+    this.getAlphaBounds = function(anim) {
+        var inc = anim.direction * (anim.speed * anim.delay / 1000);
+        return [0, $U.doublePI, inc]
     };
+
+
+    this.getAnimationSpeedTab = function() {
+        return [0, 1, 6, 10, 30, 45, 60, 70, 90, 180, 270, 360];
+    };
+
+    this.getAnimationParams = function(x0, y0, x1, y1) {
+        var d = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
+        var fce = this.getAnimationSpeedTab();
+        var f = Math.floor(d / (500 / fce.length));
+        if (f >= fce.length) f = fce.length - 1;
+
+        var xp = this.getP1().getX();
+        var yp = this.getP1().getY();
+        var ps = (yp - y0) * (x1 - xp) + (x0 - xp) * (y1 - yp);
+        var dir = (ps > 0) ? 1 : -1;
+        return {
+            message: fce[f] + " deg/s",
+            speed: fce[f] * Math.PI / 180,
+            direction: dir,
+            ar: false
+        }
+    }
+
+    // ****************************************
+    // ****************************************
+
 
     this.projectXY = function(xM, yM) {
         var xA = this.P1.getX();

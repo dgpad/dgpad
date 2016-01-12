@@ -7,6 +7,7 @@ $macros[$L.macros.repere] = {
     parameters: ["point"],
     exec: function(O) {
         Set3D(true);
+        SetGeneralStyle("degree:false");
         STL(O, "fl:true");
         X = Point("X", "[1,0,0]", "0");
         Y = Point("Y", "[0,1,0]", "0");

@@ -125,16 +125,58 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     };
 
 
-    // Uniquement pour les animations :
+    // ****************************************
+    // **** Uniquement pour les animations ****
+    // ****************************************
+
+    me.isAnimationPossible = function() {
+        return ((E1 != null) && (E1.isNum()));
+    }
+
+    me.getAnimationSpeedTab = function() {
+        return [0, 1, 5, 10, 20, 50, 100, 200, 500, 1000, 1500];
+    }
+
+    me.getAnimationParams = function(x1, y1) {
+        var x0 = X;
+        var y0 = Y;
+
+        var d = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
+        var fce = this.getAnimationSpeedTab();
+        var f = Math.floor(d / (500 / fce.length));
+        if (f >= fce.length) f = fce.length - 1;
+        var mess = fce[f];
+        var ang = $U.angleH(x1 - x0, y1 - y0);
+        var dir = ((ang > Math.PI / 2) && (ang < 3 * Math.PI / 2)) ? 1 : -1;
+        var aller_retour = false;
+
+        if (this.isCursor()) {
+            aller_retour = ((ang > Math.PI / 4) && (ang < 3 * Math.PI / 4)) || ((ang > 5 * Math.PI / 4) && (ang < 7 * Math.PI / 4));
+            if (aller_retour) mess += " \u21C4"
+
+        } else mess += " u/s";
+
+        return {
+            message: aller_retour ? fce[f] + " \u21C4" : fce[f],
+            speed: fce[f],
+            direction: dir,
+            ar: aller_retour
+        }
+    }
+
+
     me.incrementAlpha = function(anim) {
         // console.log(anim);
         var v = anim.speed;
         var s = anim.direction;
         var ar = anim.ar;
+        var d = new Date();
+        anim.delay = d.getTime() - anim.timestamp;
+        anim.timestamp = d.getTime();
         var inc = s * (v * anim.delay / 1000);
         // console.log(me.isCursor());
         if (me.isCursor()) {
-            inc = inc *(max.value()-min.value())/ 100;
+            inc = inc * (max.value() - min.value()) / 100;
             var e1 = E1.value();
             e1 += inc;
 
@@ -160,11 +202,14 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
             initCursorPos();
             E1.setValue(e1);
         } else {
-            var val=E1.value() + inc;
+            var val = E1.value() + inc;
             if (Math.abs(val) < 1e-13) val = 0;
             E1.setValue(val);
         }
     };
+
+    // ****************************************
+    // ****************************************
 
 
     // Utilisé pour attacher une expression à un point (anchor) :
