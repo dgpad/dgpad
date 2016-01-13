@@ -271,6 +271,7 @@ function PointObject(_construction, _name, _x, _y) {
     // For Circle, it's a radian in [0;2π[
     var Alpha = 0;
     this.setAlpha = function(_a) {
+        // console.log("Alpha="+_a);
         Alpha = _a;
     };
     this.getAlpha = function() {
@@ -451,6 +452,7 @@ function PointObject(_construction, _name, _x, _y) {
     }
 
     this.dragObject = function(_x, _y) {
+
         this.computeIncrement(_x, _y);
         if (this.getParentLength() === 1) {
             this.getParentAt(0).project(this);

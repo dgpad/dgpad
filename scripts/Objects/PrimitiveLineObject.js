@@ -11,7 +11,9 @@ function PrimitiveLineObject(_construction, _name, _P1) {
     this.setDefaults("line");
 
     // Vecteur directeur normé (en 2D) :
-    var DX = 0,
+    var realDX = 0,
+        DX = 0,
+        realDY = 0,
         DY = 0;
     // Vecteur directeur normé (en 2D et 3D) :
     var NDX = 0,
@@ -85,6 +87,66 @@ function PrimitiveLineObject(_construction, _name, _P1) {
     //        };
     //    }
 
+
+    // ****************************************
+    // **** Uniquement pour les animations ****
+    // ****************************************
+
+
+    this.getAlphaBounds = function(anim) {
+        var xA = this.P1.getX();
+        var yA = this.P1.getY();
+
+        var w = this.getWidth();
+        var h = this.getHeight();
+        var dx = realDX;
+        var dy = realDY;
+
+        var tsort = function(a, b) {
+            return (a - b)
+        }
+
+        var t = (dy === 0) ? [-xA / dx, (w - xA) / dx] :
+            ((dx === 0) ? [-yA / dy, (h - yA) / dy] : [-xA / dx, (w - xA) / dx, -yA / dy, (h - yA) / dy]);
+        t.sort(tsort);
+        if (t.length === 4) {
+            t.splice(0, 1);
+            t.splice(2, 1);
+        }
+        var d = Math.sqrt((t[1] - t[0]) * (t[1] - t[0]) * (dx * dx + dy * dy));
+        console.log("d=" + d + " t0=" + t[0] + " t1=" + t[1]);
+        var inc = Math.abs(t[1] - t[0]) * anim.direction * (anim.speed * anim.delay / 1000) / d;
+        return [t[0], t[1], inc]
+    };
+
+    this.getAnimationSpeedTab = function() {
+        return [0, 1, 5, 10, 25, 50, 100, 200, 300, 500, 800, 1000, 1500];
+    };
+
+    this.getAnimationParams = function(x0, y0, x1, y1) {
+        var d = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
+        var fce = this.getAnimationSpeedTab();
+        var f = Math.floor(d / (500 / fce.length));
+        if (f >= fce.length) f = fce.length - 1;
+        var xp = this.getP1().getX();
+        var yp = this.getP1().getY();
+        var ps = realDX * (x1 - x0) + realDY * (y1 - y0);
+        var dir = (ps > 0) ? -1 : 1;
+        var dop = Math.sqrt((xp - x0) * (xp - x0) + (yp - y0) * (yp - y0));
+        var dom = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
+        var cs = ps / (dop * dom);
+        var aller_retour = (Math.abs(cs) < 0.707);
+        return {
+            message: aller_retour ? fce[f] + " px/s \u21C4" : fce[f] + " px/s",
+            speed: fce[f],
+            direction: dir,
+            ar: aller_retour
+        }
+    }
+
+    // ****************************************
+    // ****************************************
+
     // setDXDY en "directive de compilation" selon que
     // l'on est en mode 3D ou 2D :
 
@@ -93,6 +155,8 @@ function PrimitiveLineObject(_construction, _name, _P1) {
     this.setDXDY = function(_x0, _y0, _x1, _y1) {
         DX = _x1 - _x0;
         DY = _y1 - _y0;
+        realDX = DX;
+        realDY = DY;
         var n = Math.sqrt(DX * DX + DY * DY);
         NDX = DX / n;
         NDY = DY / n;
