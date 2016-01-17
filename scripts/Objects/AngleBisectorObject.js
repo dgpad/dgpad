@@ -39,6 +39,13 @@ function AngleBisectorObject(_construction, _name, _P1, _P2, _P3) {
         return false;
     };
 
+
+    this.getAlphaBounds = function(anim) {
+        var t = superObject.getAlphaBounds(anim);
+        t[0] = 0;
+        return t;
+    };
+
     this.setAlpha = function(p) {
         superObject.setAlpha(p);
         var a = p.getAlpha();

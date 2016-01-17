@@ -18,6 +18,8 @@ function RayObject(_construction, _name, _P1, _P2) {
         }
     };
 
+
+
     this.isInstanceType = function(_c) {
         return ((_c === "line") || (_c === "ray"));
     };
@@ -46,6 +48,12 @@ function RayObject(_construction, _name, _P1, _P2) {
         ctx.lineTo(this.getXmax(), this.getYmax());
         ctx.stroke();
         ctx.lineCap = 'butt';
+    };
+
+    this.getAlphaBounds = function(anim) {
+        var t = superObject.getAlphaBounds(anim);
+        t[0] = 0;
+        return t;
     };
 
     this.getSource = function(src) {

@@ -41,30 +41,6 @@ function SegmentObject(_construction, _name, _P1, _P2) {
         return [0, 1, inc]
     };
 
-    this.getAnimationSpeedTab = function() {
-        return [0, 1, 5, 10, 25, 50, 100, 200, 300, 500, 800, 1000, 1500];
-    };
-
-    this.getAnimationParams = function(x0, y0, x1, y1) {
-        var d = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
-        var fce = this.getAnimationSpeedTab();
-        var f = Math.floor(d / (500 / fce.length));
-        if (f >= fce.length) f = fce.length - 1;
-        var xp = this.getP1().getX();
-        var yp = this.getP1().getY();
-        var ps = (xp - x0) * (x1 - x0) + (yp - y0) * (y1 - y0);
-        var dir = (ps > 0) ? 1 : -1;
-        var dop = Math.sqrt((xp - x0) * (xp - x0) + (yp - y0) * (yp - y0));
-        var dom = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
-        var cs = ps / (dop * dom);
-        var aller_retour = (Math.abs(cs) < 0.707);
-        return {
-            message: aller_retour ? fce[f] + " px/s \u21C4" : fce[f] + " px/s",
-            speed: fce[f],
-            direction: dir,
-            ar: aller_retour
-        }
-    }
 
     // ****************************************
     // ****************************************

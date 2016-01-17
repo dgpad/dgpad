@@ -64,29 +64,29 @@ function PointObject(_construction, _name, _x, _y) {
         anim.delay = d.getTime() - anim.timestamp;
         anim.timestamp = d.getTime();
         // b[0] et b[1] indiquent l'intervalle Alpha
-        // b[2] indique la longueur de la ligne
-        var b = me.getParentAt(0).getAlphaBounds(anim);
-        // var inc = s * (v * anim.delay / 1000) / b[2];
-        // var inc=b[2];
-        Alpha += b[2];
-        if (Alpha < b[0]) {
-            if (ar) {
-                anim.direction *= -1;
-                Alpha = 2 * b[0] - Alpha;
-            } else {
-                Alpha = b[1] + Alpha - b[0];
+        // b[2] indique l'incrément
+        var b = me.getParentAt(0).getAlphaBounds(anim, me);
+        if (b) {
+            Alpha += b[2];
+            if (Alpha < b[0]) {
+                if (ar) {
+                    anim.direction *= -1;
+                    Alpha = 2 * b[0] - Alpha;
+                } else {
+                    Alpha = b[1] + Alpha - b[0];
+                }
             }
-        }
-        if (Alpha > b[1]) {
-            if (ar) {
-                anim.direction *= -1;
-                Alpha = 2 * b[1] - Alpha;
-            } else {
-                Alpha = b[0] + Alpha - b[1];
+            if (Alpha > b[1]) {
+                if (ar) {
+                    anim.direction *= -1;
+                    Alpha = 2 * b[1] - Alpha;
+                } else {
+                    Alpha = b[0] + Alpha - b[1];
+                }
             }
+            if (Alpha < b[0]) Alpha = b[0];
+            if (Alpha > b[1]) Alpha = b[1];
         }
-        if (Alpha < b[0]) Alpha = b[0];
-        if (Alpha > b[1]) Alpha = b[1];
     };
 
     // ****************************************
@@ -275,6 +275,7 @@ function PointObject(_construction, _name, _x, _y) {
         Alpha = _a;
     };
     this.getAlpha = function() {
+        // console.log(Alpha);
         return Alpha;
     };
 

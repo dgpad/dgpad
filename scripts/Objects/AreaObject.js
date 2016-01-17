@@ -134,6 +134,124 @@ function AreaObject(_construction, _name, _Ptab) {
         Cn.computeChilds(Ptab);
     };
 
+    // ****************************************
+    // **** Uniquement pour les animations ****
+    // ****************************************
+
+    // Renvoie les caractéristiques du côté contenant
+    // un point donné :
+    var getEdge = function(_xp, _yp) {
+        var xp = _xp,
+            yp = _yp;
+        var x0 = Ptab[0].getX(),
+            y0 = Ptab[0].getY();
+        var x1 = Ptab[1].getX(),
+            y1 = Ptab[1].getY();
+        var hmin = 0;
+        var AM = Math.sqrt((x0 - xp) * (x0 - xp) + (y0 - yp) * (y0 - yp));
+        var MB = Math.sqrt((x1 - xp) * (x1 - xp) + (y1 - yp) * (y1 - yp));
+        var AB = Math.sqrt((x0 - x1) * (x0 - x1) + (y0 - y1) * (y0 - y1));
+        var nMB = MB;
+        var nMA, nAB;
+        for (var i = 2, len = Ptab.length; i < len; i++) {
+            x0 = x1;
+            y0 = y1;
+            x1 = Ptab[i].getX();
+            y1 = Ptab[i].getY();
+            nAM = nMB;
+            nMB = Math.sqrt((x1 - xp) * (x1 - xp) + (y1 - yp) * (y1 - yp));
+            nAB = Math.sqrt((x0 - x1) * (x0 - x1) + (y0 - y1) * (y0 - y1));
+            if ((nAM + nMB - nAB) < (AM + MB - AB)) {
+                hmin = i - 1;
+                AM = nAM;
+                MB = nMB;
+                AB = nAB;
+            }
+        }
+        x0 = x1;
+        y0 = y1;
+        x1 = Ptab[0].getX();
+        y1 = Ptab[0].getY();
+        nAM = nMB;
+        nMB = Math.sqrt((x1 - xp) * (x1 - xp) + (y1 - yp) * (y1 - yp));
+        nAB = Math.sqrt((x0 - x1) * (x0 - x1) + (y0 - y1) * (y0 - y1));
+        if ((nAM + nMB - nAB) < (AM + MB - AB)) {
+            hmin = i - 1;
+            AM = nAM;
+            MB = nMB;
+            AB = nAB;
+        }
+        var hmax = (hmin === Ptab.length - 1) ? 0 : hmin + 1;
+        return {
+            "min": hmin,
+            "max": hmax,
+            "AM": AM,
+            "MB": MB,
+            "AB": AB
+        };
+    };
+
+    this.getAlphaBounds = function(anim, _p) {
+        if (Ptab.length > 1) {
+            if (!anim.hasOwnProperty("min")) {
+                // Recherche du segment contenant le point :
+                var c = getEdge(_p.getX(), _p.getY());
+                anim.min = c.min;
+                anim.max = c.max;
+                anim.AM = c.AM;
+                anim.AB = c.AB;
+            }
+            var inc =
+                anim.direction * (anim.speed * anim.delay / 1000);
+            anim.AM += inc;
+            if (anim.AM > anim.AB) {
+                anim.AM = anim.AM - anim.AB;
+                anim.min = anim.max;
+                anim.max = (anim.min === Ptab.length - 1) ? 0 : anim.min + 1;
+                anim.AB = $U.d(Ptab[anim.min], Ptab[anim.max]);
+            } else if (anim.AM < 0) {
+
+                anim.max = anim.min;
+                anim.min = (anim.max === 0) ? Ptab.length - 1 : anim.max - 1;
+                anim.AB = $U.d(Ptab[anim.min], Ptab[anim.max]);
+                anim.AM = anim.AB + anim.AM;
+            }
+            var x = Ptab[anim.min].getX() + (anim.AM / anim.AB) * (Ptab[anim.max].getX() - Ptab[anim.min].getX());
+            var y = Ptab[anim.min].getY() + (anim.AM / anim.AB) * (Ptab[anim.max].getY() - Ptab[anim.min].getY());
+            _p.setXY(x, y);
+            this.setAlpha(_p);
+        };
+        return null;
+    };
+
+    this.getAnimationSpeedTab = function() {
+        return [0, 20, 25, 50, 100, 200, 400, 500, 750, 1000,1500];
+    };
+
+    this.getAnimationParams = function(x0, y0, mx, my) {
+        var d = Math.sqrt((mx - x0) * (mx - x0) + (my - y0) * (my - y0));
+        var fce = this.getAnimationSpeedTab();
+        var f = Math.floor(d / (300 / fce.length));
+        if (f >= fce.length) f = fce.length - 1;
+        var c = getEdge(x0, y0);
+        var xp = Ptab[c.min].getX();
+        var yp = Ptab[c.min].getY();
+        var ps = (xp - x0) * (mx - x0) + (yp - y0) * (my - y0);
+        var dir = (ps > 0) ? 1 : -1;
+        var px = fce[f] + " px/s";
+        return {
+            message: px + "",
+            speed: fce[f],
+            direction: dir,
+            ar: false
+        }
+    }
+
+    // ****************************************
+    // ****************************************
+
+
+
     this.setBoundaryMode = function(_P) {
         var c = this.projectXY(_P.getX(), _P.getY());
         var d = (_P.getX() - c[0]) * (_P.getX() - c[0]) + (_P.getY() - c[1]) * (_P.getY() - c[1]);
@@ -295,15 +413,15 @@ function AreaObject(_construction, _name, _Ptab) {
     };
     this.setAlpha = function(p) {
         if (Ptab.length > 2) {
-            var a = Ptab[1].getX() - Ptab[0].getX();
-            var b = Ptab[2].getX() - Ptab[0].getX();
-            var c = p.getX() - Ptab[0].getX();
-            var d = Ptab[1].getY() - Ptab[0].getY();
-            var e = Ptab[2].getY() - Ptab[0].getY();
-            var f = p.getY() - Ptab[0].getY();
-            var det = a * e - d * b;
+            var xAB = Ptab[1].getX() - Ptab[0].getX();
+            var xAC = Ptab[2].getX() - Ptab[0].getX();
+            var xAM = p.getX() - Ptab[0].getX();
+            var yAB = Ptab[1].getY() - Ptab[0].getY();
+            var yAC = Ptab[2].getY() - Ptab[0].getY();
+            var yAM = p.getY() - Ptab[0].getY();
+            var det = xAB * yAC - yAB * xAC;
             if (det !== 0) {
-                p.setAlpha([(c * e - b * f) / det, (a * f - c * d) / det]);
+                p.setAlpha([(xAM * yAC - xAC * yAM) / det, (xAB * yAM - xAM * yAB) / det]);
             }
         }
     };

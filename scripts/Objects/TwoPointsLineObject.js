@@ -58,6 +58,15 @@ function TwoPointsLineObject(_construction, _name, _P1, _P2, _isExtended) {
         this.P2.computeChilds();
     };
 
+    this.getAlphaBounds = function(anim) {
+        var t = superObject.getAlphaBounds(anim);
+        var d = $U.d(this.P1, this.P2);
+        t[0] = t[0] / d;
+        t[1] = t[1] / d;
+        t[2] = t[2] / d;
+        return t;
+    };
+
     this.projectAlpha = function(p) {
         var xA = this.P1.getX();
         var yA = this.P1.getY();

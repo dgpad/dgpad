@@ -101,7 +101,7 @@ function LocusObject(_construction, _name, _O, _ON) {
     this.getAnimationParams = function(x0, y0, x1, y1) {
         var d = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
         var fce = this.getAnimationSpeedTab();
-        var f = Math.floor(d / (500 / fce.length));
+        var f = Math.floor(d / (300 / fce.length));
         if (f >= fce.length) f = fce.length - 1;
 
         var xAB = (Ptab[0].x - x0),

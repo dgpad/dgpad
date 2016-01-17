@@ -41,6 +41,7 @@ function PerpBisectorObject(_construction, _name, _A1, _A2) {
         var xB = this.A2.getX(),
             yB = this.A2.getY();
         M.setXY((xA + xB) / 2, (yA + yB) / 2);
+        console.log(yA-yB);
         this.setDXDY(0, 0, yA - yB, xB - xA);
         superObject.compute();
     };

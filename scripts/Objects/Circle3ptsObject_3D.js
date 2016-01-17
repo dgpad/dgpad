@@ -87,7 +87,7 @@ function Circle3ptsObject_3D(_construction, _name, _P1, _P2, _P3) {
     this.getAnimationParams = function(x0, y0, x1, y1) {
         var d = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
         var fce = this.getAnimationSpeedTab();
-        var f = Math.floor(d / (500 / fce.length));
+        var f = Math.floor(d / (300 / fce.length));
         if (f >= fce.length) f = fce.length - 1;
 
         var xAB = (Ptab[0][0][0] - x0),
@@ -108,17 +108,17 @@ function Circle3ptsObject_3D(_construction, _name, _P1, _P2, _P3) {
         var yp = Ptab[k - 1][0][1];
         var ps = (xp - x0) * (x1 - x0) + (yp - y0) * (y1 - y0);
         var dir = (ps > 0) ? 1 : -1;
-        var dop = Math.sqrt((xp - x0) * (xp - x0) + (yp - y0) * (yp - y0));
-        var dom = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
-        var cs = ps / (dop * dom);
-        var aller_retour = (Math.abs(cs) < 0.707);
+        // var dop = Math.sqrt((xp - x0) * (xp - x0) + (yp - y0) * (yp - y0));
+        // var dom = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
+        // var cs = ps / (dop * dom);
+        // var aller_retour = (Math.abs(cs) < 0.707);
         var pcent = Math.round(100 * fce[f] / fce[fce.length - 1])+"%";
 
         return {
-            message: aller_retour ? pcent + " \u21C4" : pcent + "",
+            message: pcent + "",
             speed: fce[f],
             direction: dir,
-            ar: aller_retour
+            ar: false
         }
     }
 
