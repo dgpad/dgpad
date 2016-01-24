@@ -1,7 +1,7 @@
 $P = {};
 
 $P.background = {};
-$P.background.color = "#FAFAFA";
+$P.background.color = "#F8F8F8";
 //$P.background.color = "hsl(0,0%,90%)";
 //$P.background.image = $APP_PATH+"NotPacked/images/controls/noise.png";
 //$P.background.gradient = "-linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.4))";
@@ -96,8 +96,8 @@ $P.precision.over.expression_cursor = 16;
 
 
 $P.magnifyfactor = {};
-$P.magnifyfactor.point = 3;
-$P.magnifyfactor.line = 3;
+$P.magnifyfactor.point = 2;
+$P.magnifyfactor.line = 2;
 $P.magnifyfactor.expression_cursor = 1;
 $P.magnifyfactor.expression = 1;
 $P.magnifyfactor.list = 1;

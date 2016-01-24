@@ -215,78 +215,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "scripts/Objects/PrimitiveLineObject.js",
-			"settings":
-			{
-				"buffer_size": 20581,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/Objects/SegmentObject.js",
-			"settings":
-			{
-				"buffer_size": 6553,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/Objects/AreaObject.js",
-			"settings":
-			{
-				"buffer_size": 16854,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/Objects/LocusObject.js",
-			"settings":
-			{
-				"buffer_size": 10469,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/Objects/RayObject.js",
-			"settings":
-			{
-				"buffer_size": 1777,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/Objects/AngleBisectorObject.js",
-			"settings":
-			{
-				"buffer_size": 3414,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/Objects/FixedAngleObject.js",
-			"settings":
-			{
-				"buffer_size": 5589,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/Objects/PointObject.js",
-			"settings":
-			{
-				"buffer_size": 22256,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/Construction.js",
-			"settings":
-			{
-				"buffer_size": 46712,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -350,35 +278,50 @@
 	"expanded_folders":
 	[
 		"/home/erichake/Gdrive/dgpad/scripts",
-		"/home/erichake/Gdrive/dgpad/scripts/Constructors",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects"
+		"/home/erichake/Gdrive/dgpad/scripts/Docs"
 	],
 	"file_history":
 	[
+		"/home/erichake/Gdrive/dgpad/scripts/Utils.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Docs/Preferences.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/ConstructionObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Construction.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Canvas.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Properties/PropertiesPanel.js",
+		"/home/erichake/Gdrive/dgpad/scripts/DGPad.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/styles.css",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings.js",
+		"/home/erichake/Bureau/aa.dgp",
+		"/home/erichake/Bureau/Sierpinski/pourCaRMetal.js",
+		"/home/erichake/Dropbox/Public/DGPad/Sierpinski/Sierpinski1.dgp",
+		"/home/erichake/Dropbox/Public/DGPad/Sierpinski/Sierpinski2.dgp",
+		"/home/erichake/Bureau/Sierpinski/res.txt",
+		"/run/user/1000/gvfs/ftp:host=ftp.dgpad.net/www/accueil/video.html",
+		"/run/user/1000/gvfs/ftp:host=ftp.dgpad.net/www/index.html",
+		"/home/erichake/Bureau/Sierpinski/Sierpinski1.dgp",
+		"/home/erichake/Bureau/Sierpinski/EditExpressionWidget.txt",
+		"/home/erichake/Bureau/Sierpinski/Sierpinski2.dgp",
+		"/home/erichake/Bureau/Sierpinski/SierpinskiDB.dgp",
+		"/home/erichake/Bureau/Sierpinski/SierpinskiDyn.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/AreaObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/RayObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/AngleBisectorObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/FixedAngleObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/PointObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/PrimitiveLineObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/LocusObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/ParallelLineObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/PerpBisectorObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/TwoPointsLineObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/SegmentObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/PrimitiveCircleObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/CurvusObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/LocusObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/Circle3ptsObject_3D.js",
-		"/home/erichake/Gdrive/dgpad/scripts/DGPad.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Properties/PropertiesPanel.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Constructors/SpringConstructor.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Utils.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Construction.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/plug-ins.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Docs/Preferences.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/ConstructionObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/ExpressionObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Canvas.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Names/NamesManager.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Constructors/LineConstructor.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Main.js",
@@ -439,7 +382,6 @@
 		"/home/erichake/Téléchargements/google-blockly-a77788d/demos/fixed/index.html",
 		"/home/erichake/Téléchargements/google-blockly-a77788d/generators/javascript/math.js",
 		"/home/erichake/Téléchargements/google-blockly-a77788d/demos/generator/index.html",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/styles.css",
 		"/home/erichake/Gdrive/dgpad/scripts/GUI/elements/slider.js",
 		"/home/erichake/Gdrive/dgpad/scripts/DGBlocks.js",
 		"/home/erichake/Téléchargements/google-blockly-a77788d/javascript_compressed.js",
@@ -467,27 +409,11 @@
 		"/home/erichake/Gdrive/dgpad/scripts/Ghost.js",
 		"/home/erichake/Gdrive/dgpad/scripts/SourceWriter.js",
 		"/home/erichake/Gdrive/dgpad/scripts/SymbolicCompute.js",
-		"/home/erichake/Gdrive/dgpad/scripts/TrackManager.js",
-		"/home/erichake/Gdrive/dgpad/scripts/index.html",
-		"/home/erichake/Gdrive/dgpad/scripts/index.php",
-		"/home/erichake/Gdrive/dgpad/scripts/newhtml.html",
-		"/home/erichake/Gdrive/dgpad/scripts/sandbox.html",
-		"/home/erichake/Gdrive/dgpad/scripts/svgcanvas.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/AngleBisectorObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/Arc3ptsObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/AreaObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/Circle1Object.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/Circle3Object.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/Circle3ptsObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/CircleObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/FixedAngleObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/ListObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/MidPointObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/MoveableObject.js"
+		"/home/erichake/Gdrive/dgpad/scripts/TrackManager.js"
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 38.0
 	},
 	"find_in_files":
 	{
@@ -512,6 +438,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"degree",
+			"SetGeneral",
+			"carmetal.org/index.php/fr/",
 			"c",
 			"pcent",
 			"y1",
@@ -636,10 +565,7 @@
 			"bindEvent",
 			"addChangeListener",
 			"_s",
-			"getSurroundParent",
-			"provideFunction",
-			"Blockly.Realtime.model",
-			"Blockly.Realtime.model_.create"
+			"getSurroundParent"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -657,356 +583,14 @@
 	"groups":
 	[
 		{
-			"selected": 2,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "scripts/Objects/PrimitiveLineObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 20581,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2343,
-								2343
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
-							"word_wrap": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1268.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "scripts/Objects/SegmentObject.js",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 6553,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1182,
-								1182
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
-							"word_wrap": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 162.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "scripts/Objects/AreaObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 16854,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6392,
-								6392
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
-							"word_wrap": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3384.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "scripts/Objects/LocusObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10469,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4760,
-								4760
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1395.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 6,
-			"sheets":
-			[
-				{
-					"buffer": 2,
-					"file": "scripts/Objects/AreaObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 16854,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1214,
-								1214
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
-							"word_wrap": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 148.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "scripts/Objects/AreaObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 16854,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1214,
-								1214
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true,
-							"word_wrap": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 99.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "scripts/Objects/RayObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1777,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1586,
-								1586
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 378.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "scripts/Objects/AngleBisectorObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3414,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1199,
-								1199
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 324.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "scripts/Objects/FixedAngleObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5589,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1488,
-								1488
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 594.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "scripts/Objects/PointObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 22256,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2225,
-								2225
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 756.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "scripts/Construction.js",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 46712,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 28345.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 27.0
+		"height": 30.0
 	},
 	"input":
 	{
@@ -1021,18 +605,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.613656819444,
 			1.0
 		],
 		"rows":
@@ -1054,7 +631,7 @@
 	"project": "dgpad.sublime-project",
 	"replace":
 	{
-		"height": 64.0
+		"height": 56.0
 	},
 	"save_all_on_build": true,
 	"select_file":

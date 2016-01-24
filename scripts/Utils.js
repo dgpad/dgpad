@@ -1078,7 +1078,7 @@ $U.initCanvas = function(_id) {
     ZC.addTool(new CallMagnet());
     ZC.addTool(new CallDepends());
     ZC.addTool(new CallList());
-    ZC.addTool(new CallTrash());
+    ZC.addTool(new CallTrash()); 
     ZC.addTool(new AnchorConstructor());
     ZC.addTool(new NoAnchorConstructor());
     ZC.addTool(new VectorConstructor());
