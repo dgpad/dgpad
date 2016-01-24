@@ -820,7 +820,7 @@ function Interpreter(_win, _canvas) {
                     break;
                 case "an": // Animations
                     var t = eval("[" + e[1] + "]");
-                    me.C.addAnimation(o,t[0][0], t[0][1], t[0][2]);
+                    me.C.addAnimation(o, t[0][0], t[0][1], t[0][2]);
                     break;
                 case "dp": // Dépendance des objets
                     var t = e[1].substring(1, e[1].length - 1).split(",");
@@ -852,7 +852,11 @@ function Interpreter(_win, _canvas) {
                     me.Z.setBackground(e[1]);
                     break;
                 case "degree":
-                    me.C.setDEG(e[1] === "true")
+                    me.C.setDEG(e[1] === "true");
+                    break;
+                case "dragmoveable":
+                    me.C.setDragOnlyMoveable(e[1] === "true");
+                    break;
             }
         }
     };

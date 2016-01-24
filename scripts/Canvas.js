@@ -1379,6 +1379,7 @@ function Canvas(_id) {
         var t = "SetGeneralStyle(\"";
         t += "background-color:" + me.getBackground();
         if (Cn.isDEG()) t += ";degree:true";
+        if (Cn.isDragOnlyMoveable()) t += ";dragmoveable:true";
         t += "\");\n";
         return t;
     };

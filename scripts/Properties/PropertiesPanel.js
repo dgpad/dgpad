@@ -22,6 +22,12 @@ function PropertiesPanel(_canvas) {
     me.getMagnifierMode = function() {
         return canvas.magnifyManager.getMagnifierMode();
     };
+    me.setDragOnlyMoveable = function(_val) {
+        Cn.setDragOnlyMoveable(_val);
+    };
+    me.isDragOnlyMoveable=function(){
+        return Cn.isDragOnlyMoveable();
+    };
     me.setDegree = function(_val) {
         Cn.setDEG(_val);
         Cn.computeAll();
@@ -102,6 +108,9 @@ function PropertiesPanel(_canvas) {
 
     me.setAllSize = function(_type, _sze) {
         Cn.setAllSize(_type, _sze);
+    };
+    me.setAllSegSize = function(_type, _sze) {
+        Cn.setAllSegSize(_type, _sze);
     };
     me.setAllColor = function(_type, _sze) {
         Cn.setAllColor(_type, _sze);
@@ -209,6 +218,9 @@ function props_messagePanel(_owner) {
     var DEGREEcallback = function(val) {
         _owner.setDegree(val);
     };
+    var DRAGALLcallback=function(_val){
+        _owner.setDragOnlyMoveable(!(_val));
+    };
 
     var cp = new ColorPicker(me.getDocObject(), 10, ch, 200, 200);
     cp.setHEXcallback(COLORcallback);
@@ -224,6 +236,10 @@ function props_messagePanel(_owner) {
     ch += 30;
 
     var cbDegree = new Checkbox(me.getDocObject(), 10, ch, 200, 30, _owner.getDegree(), $L.props_general_degree, DEGREEcallback);
+    cbMagnifier.setTextColor("#252525");
+    ch += 30;
+
+    var cbDragOnly = new Checkbox(me.getDocObject(), 10, ch, 200, 30, (!(_owner.isDragOnlyMoveable())), $L.props_general_dragall, DRAGALLcallback);
     cbMagnifier.setTextColor("#252525");
 
 }
@@ -457,12 +473,16 @@ function props_colorPanel(_owner) {
         me.repaint();
     };
     var SegSZcallback = function(_val) {
-        if ((_val === 0) && (me.obj.getSize() === 0)) {
-            me.obj.setSize(0.1);
-            sSize.setValue(0.1);
+        if (setall) {
+            _owner.setAllSegSize(me.obj.getFamilyCode(), _val);
+        } else {
+            if ((_val === 0) && (me.obj.getSize() === 0)) {
+                me.obj.setSize(0.1);
+                sSize.setValue(0.1);
+            }
+            me.obj.setSegmentsSize(_val);
+            me.obj.computeChilds();
         }
-        me.obj.setSegmentsSize(_val);
-        me.obj.computeChilds();
         me.repaint();
     };
     var LAYcallback = function(_val) {
@@ -705,7 +725,7 @@ function props_colorPanel(_owner) {
         // Curseur animation :
         if (me.obj.isAnimationPossible()) {
             sAnim = new slider(me.getDocObject(), 10, ch, 200, sh, -4, 4, 0, ANIMcallback);
-            var fce=me.obj.getAnimationSpeedTab();
+            var fce = me.obj.getAnimationSpeedTab();
             fce[0] = [fce[0], $L.animation_without];
             sAnim.setTabValues(fce);
             sAnim.setValueWidth(40);

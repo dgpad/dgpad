@@ -223,3 +223,6 @@ $L.blockly.pt_and = "et";
 // Lundi 11 janvier 2016
 $L.animation_without="Sans";
 $L.animation_label="Animation";
+
+// Dimanche 24 janvier 2016
+$L.props_general_dragall="Déplacer tous les objets"

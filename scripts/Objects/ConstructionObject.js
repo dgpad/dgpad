@@ -139,6 +139,7 @@ function ConstructionObject(_construction, _name) {
 
 
     this.startDrag = function(_x, _y) {
+        if ((Cn.isDragOnlyMoveable()) && (!this.isMoveable())) return;
         $U.changed();
         PtsChilds = [];
         dragCoords = [];
@@ -203,6 +204,7 @@ function ConstructionObject(_construction, _name) {
 
 
     this.dragTo2D = function(_x, _y) {
+        if ((Cn.isDragOnlyMoveable()) && (!this.isMoveable())) return;
         this.compute_dragPoints(_x, _y);
         for (var i = 0, len = PtsChilds.length; i < len; i++) {
             PtsChilds[i].compute();

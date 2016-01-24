@@ -30,6 +30,17 @@ function Construction(_canvas) {
     // Degree mode for angle calculus :
     var DEGmode = true;
 
+    // User can drag all types of objects or only moveable objects :
+    var DragOnlyMoveable = true;
+
+
+    me.isDragOnlyMoveable = function() {
+        return DragOnlyMoveable;
+    };
+    me.setDragOnlyMoveable = function(_d) {
+        DragOnlyMoveable = _d
+    };
+
     me.isDEG = function() {
         return DEGmode;
     };
@@ -370,6 +381,16 @@ function Construction(_canvas) {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].getFamilyCode() === _type)
                 V[i].setSize(_sze);
+        }
+    };
+    me.setAllSegSize = function(_type, _sze) {
+        for (var i = 0, len = V.length; i < len; i++) {
+            if (V[i].getFamilyCode() === _type) {
+                if ((_sze === 0) && (V[i].getSize() === 0)) {
+                    V[i].setSize(0.1);
+                }
+                V[i].setSegmentsSize(_sze);
+            }
         }
     };
     me.setAllColor = function(_type, _col) {

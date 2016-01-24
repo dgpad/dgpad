@@ -210,7 +210,6 @@ function AreaObject(_construction, _name, _Ptab) {
                 anim.max = (anim.min === Ptab.length - 1) ? 0 : anim.min + 1;
                 anim.AB = $U.d(Ptab[anim.min], Ptab[anim.max]);
             } else if (anim.AM < 0) {
-
                 anim.max = anim.min;
                 anim.min = (anim.max === 0) ? Ptab.length - 1 : anim.max - 1;
                 anim.AB = $U.d(Ptab[anim.min], Ptab[anim.max]);
@@ -249,8 +248,6 @@ function AreaObject(_construction, _name, _Ptab) {
 
     // ****************************************
     // ****************************************
-
-
 
     this.setBoundaryMode = function(_P) {
         var c = this.projectXY(_P.getX(), _P.getY());
