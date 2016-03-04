@@ -495,6 +495,7 @@ function Canvas(_id) {
     me.dependsManager = new DependsManager(me);
     me.namesManager = new NamesManager(me);
     me.blocklyManager = new BlocklyManager(me);
+    me.longpressManager = new LongpressManager(me);
 
     me.addText = function(_m, _l, _t, _w, _h, _stl) {
         me.textManager.addTeXElement(_m, _l, _t, _w, _h, _stl);
@@ -603,6 +604,7 @@ function Canvas(_id) {
             return;
         };
         if (me.namesManager.replaceName(obj)) return;
+        if (me.blocklyManager.tryEdit(obj)) return;
         switch (Cn.getMode()) {
             case 0:
                 // Outil de consultation :
@@ -806,6 +808,11 @@ function Canvas(_id) {
         return ((pressedCoords) && ($U.getTime() - pressedCoords.t) < 800) && (((pressedCoords.x - x0) * (pressedCoords.x - x0) + (pressedCoords.y - y0) * (pressedCoords.y - y0)) < prec2);
     };
 
+    var longPressTimeout = 0;
+    var longPress = function(ev) {
+        me.longpressManager.show(ev);
+    };
+
     // Mouse Events :
     me.mousePressed = function(ev) {
         ev.preventDefault();
@@ -813,6 +820,9 @@ function Canvas(_id) {
             pressedFilter(ev);
             return;
         }
+        if (me.longpressManager.isVisible()) return;
+        if (me.coincidenceManager.isVisible()) return;
+        if (me.blocklyManager.isSettingsVisible()) return;
         draggedObject = null;
         dragCoords = null;
         actualCoords.x = me.mouseX(ev);
@@ -823,6 +833,7 @@ function Canvas(_id) {
             y: actualCoords.y,
             t: $U.getTime()
         };
+
         //        actualCoords
 
         // Si on a cliqué à côté des outils :
@@ -850,9 +861,17 @@ function Canvas(_id) {
 
         draggedObject = me.selectMoveable(ev);
 
+        if (draggedObject === null && Cn.getMode() === 1) {
+            // Si on a tapé/cliqué "dans le vide" et qu'aucun objet
+            // n'est sous le doigt/souris (pour le longpress menu) :
+            longPressTimeout = setTimeout(function() {
+                longPress(ev);
+            }, 500);
+        }
         if (draggedObject === null && Cn.getMode() === 0) {
             // Si on a tapé/cliqué "dans le vide" et qu'aucun objet
-            // n'est sous le doigt/souris :
+            // n'est sous le doigt/souris (pour le translate en mode présentation) :
+
             dragCoords = {
                 x: actualCoords.x,
                 y: actualCoords.y
@@ -870,6 +889,7 @@ function Canvas(_id) {
 
     me.mouseMoved = function(ev) {
         ev.preventDefault();
+        clearTimeout(longPressTimeout);
         actualCoords.x = me.mouseX(ev);
         actualCoords.y = me.mouseY(ev);
         if (dragCoords) {
@@ -893,6 +913,7 @@ function Canvas(_id) {
                     };
                 draggedObject.dragTo(actualCoords.x, actualCoords.y);
                 me.textManager.evaluateStrings();
+                draggedObject.blocks.evaluate("ondrag"); // blockly
                 actualCoords.x = NaN;
                 actualCoords.y = NaN;
             } else {
@@ -911,6 +932,7 @@ function Canvas(_id) {
 
     me.mouseReleased = function(ev) {
         ev.preventDefault();
+        clearTimeout(longPressTimeout);
         actualCoords.x = NaN;
         actualCoords.y = NaN;
         if (releasedFilter) {
@@ -934,6 +956,8 @@ function Canvas(_id) {
                     me.paint(ev);
                     me.initTools(ev, draggedObject);
                 }
+            } else {
+                draggedObject.blocks.evaluate("onmouseup"); // blockly
             }
             //            me.textManager.evaluateStrings(true);
             draggedObject = null;

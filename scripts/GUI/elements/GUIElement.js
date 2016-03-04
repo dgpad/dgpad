@@ -287,5 +287,4 @@ function GUIElement(_owner, _type) {
     };
 
 
-
 };

@@ -377,22 +377,24 @@ x:-o-prefocus,
 
 
 /**********************************************
+***************** LONGPRESS *******************
+***********************************************/
+
+
+/**********************************************
 *************** COINCIDENCES ******************
 ***********************************************/
 
 .coincidencePanel {
     position: absolute;
     border-radius: 10px;
+    z-index: 1000;
 }
 
 .coincidenceListDIV {
-    left: 10px;
-    top: 10px;
-    width: 250px;
-    height: 170px;
     border-radius: 10px;
     background-color: #252525;
-    box-shadow: 5px 5px 5px 0px rgba( 150, 150, 150, .4);
+    /*box-shadow: 5px 5px 5px 0px rgba( 150, 150, 150, .4);*/
 }
 
 .coincidenceListDIV::before {
@@ -418,38 +420,34 @@ x:-o-prefocus,
 
 .coincidenceListViewportMask {
     position: absolute;
-    left: 10px;
-    top: 50px;
-    width: 230px;
-    height: 105px;
     background-color: #252525;
-    border-color: #252525;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.coincidenceListViewport {
-    position: absolute;
-    background-color: #FFF;
-    left: -1px;
-    top: 0px;
-    width: 280px;
-    height: 105px;
-    margin: 0px;
-    padding: 0px;
     border-color: #252525;
     border-width: 1px;
     border-style: solid;
     border-radius: 10px;
     overflow-y: scroll;
     overflow-x: hidden;
-    overflow-style: scrollbar;
+    -webkit-overflow-scrolling: touch;
+    /*overflow: hidden;*/
 }
 
-.coincidenceListViewport p {
+.coincidenceListViewport {
+    position: absolute;
+    background-color: #FFF;
+    margin: 0px;
+    padding: 0px;
+    border-color: #252525;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 10px;
+    /*    overflow-y: scroll;
+    overflow-x: hidden;*/
+    /*overflow-style: scrollbar;*/
+}
+
+.coincidenceListViewport div {
     font-family: Helvetica, Arial, sans-serif;
+    cursor: pointer;
     background: #eee;
     color: #252525;
     padding: 10px;
@@ -461,7 +459,7 @@ x:-o-prefocus,
     text-shadow: 1px 1px 5px #777;
 }
 
-.coincidenceListViewport p:nth-child(odd) {
+.coincidenceListViewport div:nth-child(odd) {
     background: #fff;
 }
 

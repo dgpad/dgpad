@@ -204,7 +204,8 @@ $L.props_trigo = "Sens trigonométrique";
 // Lundi 21 décembre 2015
 $L.blockly.geometry = "Géométrie";
 $L.blockly.logic = "Logique";
-$L.blockly.loops="Boucles";
+$L.blockly.loops = "Boucles";
+$L.blockly.expression = "Expressions";
 $L.blockly.math = "Math";
 $L.blockly.lists = "Listes";
 $L.blockly.variables = "Variables";
@@ -221,8 +222,54 @@ $L.blockly.pt_andof = "et de";
 $L.blockly.pt_and = "et";
 
 // Lundi 11 janvier 2016
-$L.animation_without="Sans";
-$L.animation_label="Animation";
+$L.animation_without = "Sans";
+$L.animation_label = "Animation";
 
 // Dimanche 24 janvier 2016
-$L.props_general_dragall="Déplacer tous les objets"
+$L.props_general_dragall = "Déplacer tous les objets";
+
+// Lundi 22 février 2016
+$L.blockly.var_return = "Retourner";
+$L.blockly.push_add = "Rajouter";
+$L.blockly.push_end = "à la fin de la liste";
+$L.blockly.list_new = "Créer une nouvelle liste vide";
+
+// Mardi 23 février 2016
+$L.blockly.value = "Valeur";
+$L.blockly.o = {};
+$L.blockly.o.expression = "de l'expression";
+$L.blockly.o.point = "du point";
+$L.blockly.o.circle1 = "du cercle";
+$L.blockly.o.segment = "du segment";
+$L.blockly.o.fixedangle = "de l'angle fixe";
+$L.blockly.o.angle = "de l'angle";
+$L.blockly.o.area = "du polygone";
+$L.blockly.o2 = {};
+$L.blockly.o2.expression = "l'expression";
+$L.blockly.o2.point = "le point";
+$L.blockly.o2.circle1 = "le cercle";
+$L.blockly.o2.segment = "le segment";
+$L.blockly.o2.fixedangle = "l'angle fixe";
+$L.blockly.o2.angle = "l'angle";
+$L.blockly.o2.area = "le polygone";
+$L.blockly.stop_list = "Rompre la liste";
+$L.longpress_message = "Que voulez-vous faire ?";
+$L.create_exp = "Créer une expression";
+$L.create_exp_pts = "Créer une liste de points";
+$L.create_exp_segs = "Créer une liste de segments";
+$L.create_cursor_int = "Créer un curseur entier";
+$L.create_cursor_cont = "Créer un curseur continu";
+$L.create_widget_edit = "Créer le widget d'édition";
+$L.edit_widget_name = "Nom de l'objet à éditer";
+$L.edit_widget_edit = "Editer l'objet";
+$L.blockly.fixvalue = "Fixer";
+$L.blockly.copyall = "Copier tous les blocs";
+$L.blockly.copyselected = "Copier les blocs sélectionnés";
+$L.blockly.paste = "Coller les blocs";
+$L.blockly.displaySource = "Afficher le code source";
+$L.blockly.print = "Afficher";
+$L.blockly.withlf = "avec retour à la ligne";
+$L.blockly.withoutlf = "sans retour à la ligne";
+$L.blockly.tab_exp = "Expression";
+$L.blockly.tab_drag = "Déplacé";
+$L.blockly.tab_mouseup = "Relâché";

@@ -20,6 +20,17 @@ $U.native2ascii = function(str) {
     return out;
 };
 
+// Convert numéric string with 0->a, 1->b, 2->c, etc...
+$U.number2letter = function(_n) {
+    var a = "a".charCodeAt(0);
+    var z = "0".charCodeAt(0);
+    var st = "";
+    for (var i = 0; i < _n.length; i++) {
+        st += String.fromCharCode(a + _n.charCodeAt(i) - z);
+    }
+    return st;
+};
+
 $U.isStr = function(_x) {
     return (typeof _x === "string");
 };
@@ -720,54 +731,54 @@ $U.isFullLocalStorage = function() {
 };
 
 $U.createDiv = function() {
-        var el = document.createElement("div");
-        el.event_proc = [];
-        el.stl = function(_p, _v) {
-            el.style.setProperty(_p, _v);
-        };
-        el.att = function(_a, _v) {
-            el[_a] = _v;
-        };
-        el.stls = function(_st) {
-            var t = _st.split(";");
-            for (var i = 0, len = t.length; i < len; i++) {
-                var a = t[i].split(":");
-                el.stl(a[0].replace(/^\s+|\s+$/g, ''), a[1].replace(/^\s+|\s+$/g, ''));
-            }
-        }
-        el.bnds = function(l, t, w, h) {
-            el.stls("left:" + l + "px;top:" + t + "px;width:" + w + "px;height:" + h + "px");
-        }
-        el.add = function(_ch) {
-            el.appendChild(_ch);
-        }
-        el.md = function(_p) {
-            el.addEventListener('touchstart', _p, false);
-            el.addEventListener('mousedown', _p, false);
-            el.event_proc.push(_p);
-        }
-        el.mm = function(_p) {
-            el.addEventListener('touchmove', _p, false);
-            el.addEventListener('mousemove', _p, false);
-            el.event_proc.push(_p);
-        }
-        el.mu = function(_p) {
-            el.addEventListener('touchend', _p, false);
-            el.addEventListener('mouseup', _p, false);
-            el.event_proc.push(_p);
-        }
-        el.rmevt = function() {
-            for (var i = 0; i < el.event_proc.length; i++) {
-                el.removeEventListener('touchstart', el.event_proc[i], false);
-                el.removeEventListener('mousedown', el.event_proc[i], false);
-                el.removeEventListener('touchmove', el.event_proc[i], false);
-                el.removeEventListener('mousemove', el.event_proc[i], false);
-                el.removeEventListener('touchend', el.event_proc[i], false);
-                el.removeEventListener('mouseup', el.event_proc[i], false);
-            }
-        }
-        return el;
+    var el = document.createElement("div");
+    el.event_proc = [];
+    el.stl = function(_p, _v) {
+        el.style.setProperty(_p, _v);
     };
+    el.att = function(_a, _v) {
+        el[_a] = _v;
+    };
+    el.stls = function(_st) {
+        var t = _st.split(";");
+        for (var i = 0, len = t.length; i < len; i++) {
+            var a = t[i].split(":");
+            el.stl(a[0].replace(/^\s+|\s+$/g, ''), a[1].replace(/^\s+|\s+$/g, ''));
+        }
+    }
+    el.bnds = function(l, t, w, h) {
+        el.stls("left:" + l + "px;top:" + t + "px;width:" + w + "px;height:" + h + "px");
+    }
+    el.add = function(_ch) {
+        el.appendChild(_ch);
+    }
+    el.md = function(_p) {
+        el.addEventListener('touchstart', _p, false);
+        el.addEventListener('mousedown', _p, false);
+        el.event_proc.push(_p);
+    }
+    el.mm = function(_p) {
+        el.addEventListener('touchmove', _p, false);
+        el.addEventListener('mousemove', _p, false);
+        el.event_proc.push(_p);
+    }
+    el.mu = function(_p) {
+        el.addEventListener('touchend', _p, false);
+        el.addEventListener('mouseup', _p, false);
+        el.event_proc.push(_p);
+    }
+    el.rmevt = function() {
+        for (var i = 0; i < el.event_proc.length; i++) {
+            el.removeEventListener('touchstart', el.event_proc[i], false);
+            el.removeEventListener('mousedown', el.event_proc[i], false);
+            el.removeEventListener('touchmove', el.event_proc[i], false);
+            el.removeEventListener('mousemove', el.event_proc[i], false);
+            el.removeEventListener('touchend', el.event_proc[i], false);
+            el.removeEventListener('mouseup', el.event_proc[i], false);
+        }
+    }
+    return el;
+};
 
 
 
@@ -1031,6 +1042,7 @@ $U.changed = function() {
 $U.AllCanvas = [];
 
 
+
 $U.initCanvas = function(_id) {
     var ZC = new Canvas(_id);
     $U.AllCanvas.push(ZC);
@@ -1078,12 +1090,15 @@ $U.initCanvas = function(_id) {
     ZC.addTool(new CallMagnet());
     ZC.addTool(new CallDepends());
     ZC.addTool(new CallList());
-    ZC.addTool(new CallTrash()); 
+    ZC.addTool(new CallTrash());
     ZC.addTool(new AnchorConstructor());
     ZC.addTool(new NoAnchorConstructor());
     ZC.addTool(new VectorConstructor());
     ZC.addTool(new SpringConstructor());
+    ZC.addTool(new BlocklyConstructor());
     ZC.clearBackground();
+
+
 
     // ZC.blocklyManager.show();
 

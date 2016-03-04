@@ -18,7 +18,8 @@ function Circle1Object(_construction, _name, _P1, _R) {
     me.setExp = me.setRX = function(ex) {
         if (isStr(ex)) {
             // Si ex et ey sont des expressions :
-            me.setParent(me.P1)
+            me.setParent(me.P1);
+            RX = Expression.delete(RX);
             RX = new Expression(me, ex);
             me.isMoveable = function() {
                 return false;
@@ -27,7 +28,7 @@ function Circle1Object(_construction, _name, _P1, _R) {
             me.getSource = getSourceFixed;
         } else {
             // Si ex et ey sont des nombres :
-            RX = null;
+            RX = Expression.delete(RX);
             me.R = ex;
             me.isMoveable = function() {
                 return true;

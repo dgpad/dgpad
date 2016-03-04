@@ -1,6 +1,8 @@
 function CoincidenceManager(_canvas) {
     var canvas = _canvas;
     var me = this;
+    var panel = null;
+    var event = null;
 
 
     var priority = function(_o) {
@@ -64,7 +66,16 @@ function CoincidenceManager(_canvas) {
 
 
         // Si on arrive jusqu'ici, c'est qu'il y a ambiguité :
-        var cp = new CoincidencePanel(canvas, ev, t);
+
+        for (var i = 0; i < t.length; i++) {
+            t[i] = [t[i].getName() + ": " + $L.object[t[i].getCode()], t[i]];
+            if (t[i][1].isHidden()) t[i].push("#777");
+            else t[i].push(t[i][1].getColor().getHEX());
+        }
+        event = ev;
+        panel = new BubblePanel(canvas, me.exec, me.close, ev, t, $L.coincidence_message + " : " + $L.coincidence_select.replace("$1", t.length), 270, 190, 50);
+
+        // var cp = new CoincidencePanel(canvas, ev, t);
 
 
         //        for (var i = 0, len = t.length; i < t.length; i++) {
@@ -72,6 +83,23 @@ function CoincidenceManager(_canvas) {
         //        }
         return true;
         //        console.log(t);
+    }
+
+    me.isVisible = function() {
+        return (panel && panel.isVisible());
+    };
+
+    me.close = function() {
+        panel = null;
+    }
+
+    me.exec = function(_o) {
+        var cn = canvas.getConstruction();
+        cn.clearIndicated();
+        cn.clearSelected();
+        cn.addSelected(_o);
+        canvas.paint(event);
+        canvas.initTools(event, _o);
     }
 
 

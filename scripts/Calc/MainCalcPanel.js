@@ -418,7 +418,6 @@ function MainCalcPanel(_man, _canvas) {
                     E1.setLabel(OBJ.getName() + " =");
                     txtman.activate(E1);
                     E1.setSelectionRange(t.length, t.length);
-
                     break;
                 case "list":
                     var _o = OBJ;

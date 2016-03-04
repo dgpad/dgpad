@@ -4,6 +4,74 @@
 		"selected_items":
 		[
 			[
+				"comp",
+				"computeAll"
+			],
+			[
+				"de",
+				"delete"
+			],
+			[
+				"blo",
+				"blockly_namespace"
+			],
+			[
+				"dra",
+				"draggedObject"
+			],
+			[
+				"clear",
+				"clearOBJ"
+			],
+			[
+				"setO",
+				"setObjBlocks"
+			],
+			[
+				"MO",
+				"MOD_DRAG"
+			],
+			[
+				"M",
+				"MOD_ACTU"
+			],
+			[
+				"cur",
+				"current_tab"
+			],
+			[
+				"vie",
+				"viewport"
+			],
+			[
+				"is",
+				"isVisible"
+			],
+			[
+				"lon",
+				"longpressManager"
+			],
+			[
+				"C",
+				"CN"
+			],
+			[
+				"char",
+				"charCodeAt"
+			],
+			[
+				"from",
+				"fromCharCode"
+			],
+			[
+				"get",
+				"getBlock"
+			],
+			[
+				"tl_",
+				"tl_str"
+			],
+			[
 				"m",
 				"max"
 			],
@@ -30,10 +98,6 @@
 			[
 				"al",
 				"aller_retour"
-			],
-			[
-				"get",
-				"getConstruction"
 			],
 			[
 				"ani",
@@ -84,10 +148,6 @@
 				"animations"
 			],
 			[
-				"is",
-				"ispainting"
-			],
-			[
 				"in",
 				"initBlockly"
 			],
@@ -126,14 +186,6 @@
 			[
 				"pre",
 				"preventDefault"
-			],
-			[
-				"dra",
-				"dragTo"
-			],
-			[
-				"blo",
-				"blockObj"
 			],
 			[
 				"pr",
@@ -200,10 +252,6 @@
 				"save_prefs"
 			],
 			[
-				"M",
-				"max_width"
-			],
-			[
 				"W",
 				"WindowHints"
 			],
@@ -215,6 +263,72 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "scripts/Objects/BlocklyObjects.js",
+			"settings":
+			{
+				"buffer_size": 4593,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "scripts/Construction.js",
+			"settings":
+			{
+				"buffer_size": 48088,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 312 files for \".setExp\" (case sensitive)\n\n/home/erichake/Gdrive/dgpad/scripts/Constructors/FixedAngleConstructor.js:\n   21          var angle = (_zc.getConstruction().isDEG()) ? Math.round(AOC180 * 180 / Math.PI) : AOC180;\n   22          var obj = new FixedAngleObject(_zc.getConstruction(), \"_A\", _C[0], _C[1], trig);\n   23:         obj.setExp(angle);\n   24          return (obj);\n   25      };\n\n/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js:\n  330      var SetExpressionValue = function(_e, _m) {\n  331          var o = me.f(_e);\n  332:         o.setExp(JSON.stringify(_m).replace(/null/g,\"NaN\"));\n  333      };\n  334  \n  ...\n  475          var B = me.f(_b);\n  476          var o = me.f(me.o(\"FixedAngleObject\", _n, A, B, _trig));\n  477:         o.setExp(_ex);\n  478          return o.getName();\n  479      };\n\n/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/blockly_compressed.js:\n  778  goog.ui.tree.BaseNode.prototype.enterDocument=function(){goog.ui.tree.BaseNode.superClass_.enterDocument.call(this);goog.ui.tree.BaseNode.allNodes[this.getId()]=this;this.initAccessibility()};goog.ui.tree.BaseNode.prototype.exitDocument=function(){goog.ui.tree.BaseNode.superClass_.exitDocument.call(this);delete goog.ui.tree.BaseNode.allNodes[this.getId()]};\n  779  goog.ui.tree.BaseNode.prototype.addChildAt=function(a,b,c){goog.asserts.assert(!a.getParent());goog.asserts.assertInstanceof(a,goog.ui.tree.BaseNode);c=this.getChildAt(b-1);var d=this.getChildAt(b);goog.ui.tree.BaseNode.superClass_.addChildAt.call(this,a,b);a.previousSibling_=c;a.nextSibling_=d;c?c.nextSibling_=a:this.firstChild_=a;d?d.previousSibling_=a:this.lastChild_=a;(b=this.getTree())&&a.setTreeInternal(b);a.setDepth_(this.getDepth()+1);if(this.getElement()&&(this.updateExpandIcon(),this.getExpanded())){b=\n  780: this.getChildrenElement();a.getElement()||a.createDom();var e=a.getElement(),f=d&&d.getElement();b.insertBefore(e,f);this.isInDocument()&&a.enterDocument();d||(c?c.updateExpandIcon():(goog.style.setElementShown(b,!0),this.setExpanded(this.getExpanded())))}};goog.ui.tree.BaseNode.prototype.add=function(a,b){goog.asserts.assert(!b||b.getParent()==this,\"Can only add nodes before siblings\");a.getParent()&&a.getParent().removeChild(a);this.addChildAt(a,b?this.indexOfChild(b):this.getChildCount());return a};\n  781  goog.ui.tree.BaseNode.prototype.removeChild=function(a,b){var c=this.getTree(),d=c?c.getSelectedItem():null;if(d==a||a.contains(d))c.hasFocus()?(this.select(),goog.Timer.callOnce(this.onTimeoutSelect_,10,this)):this.select();goog.ui.tree.BaseNode.superClass_.removeChild.call(this,a);this.lastChild_==a&&(this.lastChild_=a.previousSibling_);this.firstChild_==a&&(this.firstChild_=a.nextSibling_);a.previousSibling_&&(a.previousSibling_.nextSibling_=a.nextSibling_);a.nextSibling_&&(a.nextSibling_.previousSibling_=\n  782  a.previousSibling_);d=a.isLastSibling();a.tree=null;a.depth_=-1;if(c&&(c.removeNode(this),this.isInDocument())){c=this.getChildrenElement();if(a.isInDocument()){var e=a.getElement();c.removeChild(e);a.exitDocument()}d&&(d=this.getLastChild())&&d.updateExpandIcon();this.hasChildren()||(c.style.display=\"none\",this.updateExpandIcon(),this.updateIcon_())}return a};goog.ui.tree.BaseNode.prototype.remove=goog.ui.tree.BaseNode.prototype.removeChild;goog.ui.tree.BaseNode.prototype.onTimeoutSelect_=function(){this.select()};\n  ...\n  785  goog.ui.tree.BaseNode.prototype.getPreviousSibling=function(){return this.previousSibling_};goog.ui.tree.BaseNode.prototype.getNextSibling=function(){return this.nextSibling_};goog.ui.tree.BaseNode.prototype.isLastSibling=function(){return!this.nextSibling_};goog.ui.tree.BaseNode.prototype.isSelected=function(){return this.selected_};goog.ui.tree.BaseNode.prototype.select=function(){var a=this.getTree();a&&a.setSelectedItem(this)};goog.ui.tree.BaseNode.prototype.deselect=goog.nullFunction;\n  786  goog.ui.tree.BaseNode.prototype.setSelectedInternal=function(a){if(this.selected_!=a){this.selected_=a;this.updateRow();var b=this.getElement();b&&(goog.a11y.aria.setState(b,\"selected\",a),a&&(a=this.getTree().getElement(),goog.asserts.assert(a,\"The DOM element for the tree cannot be null\"),goog.a11y.aria.setState(a,\"activedescendant\",this.getId())))}};goog.ui.tree.BaseNode.prototype.getExpanded=function(){return this.expanded_};\n  787: goog.ui.tree.BaseNode.prototype.setExpandedInternal=function(a){this.expanded_=a};\n  788: goog.ui.tree.BaseNode.prototype.setExpanded=function(a){var b=a!=this.expanded_;if(!b||this.dispatchEvent(a?goog.ui.tree.BaseNode.EventType.BEFORE_EXPAND:goog.ui.tree.BaseNode.EventType.BEFORE_COLLAPSE)){var c;this.expanded_=a;c=this.getTree();var d=this.getElement();if(this.hasChildren()){if(!a&&c&&this.contains(c.getSelectedItem())&&this.select(),d){if(c=this.getChildrenElement())if(goog.style.setElementShown(c,a),a&&this.isInDocument()&&!c.hasChildNodes()){var e=[];this.forEachChild(function(a){e.push(a.toSafeHtml())});\n  789: goog.dom.safe.setInnerHtml(c,goog.html.SafeHtml.concat(e));this.forEachChild(function(a){a.enterDocument()})}this.updateExpandIcon()}}else(c=this.getChildrenElement())&&goog.style.setElementShown(c,!1);d&&(this.updateIcon_(),goog.a11y.aria.setState(d,\"expanded\",a));b&&this.dispatchEvent(a?goog.ui.tree.BaseNode.EventType.EXPAND:goog.ui.tree.BaseNode.EventType.COLLAPSE)}};goog.ui.tree.BaseNode.prototype.toggle=function(){this.setExpanded(!this.getExpanded())};\n  790: goog.ui.tree.BaseNode.prototype.expand=function(){this.setExpanded(!0)};goog.ui.tree.BaseNode.prototype.collapse=function(){this.setExpanded(!1)};goog.ui.tree.BaseNode.prototype.collapseChildren=function(){this.forEachChild(function(a){a.collapseAll()})};goog.ui.tree.BaseNode.prototype.collapseAll=function(){this.collapseChildren();this.collapse()};goog.ui.tree.BaseNode.prototype.expandChildren=function(){this.forEachChild(function(a){a.expandAll()})};\n  791: goog.ui.tree.BaseNode.prototype.expandAll=function(){this.expandChildren();this.expand()};goog.ui.tree.BaseNode.prototype.reveal=function(){var a=this.getParent();a&&(a.setExpanded(!0),a.reveal())};goog.ui.tree.BaseNode.prototype.setIsUserCollapsible=function(a){(this.isUserCollapsible_=a)||this.expand();this.getElement()&&this.updateExpandIcon()};goog.ui.tree.BaseNode.prototype.isUserCollapsible=function(){return this.isUserCollapsible_};\n  792  goog.ui.tree.BaseNode.prototype.toSafeHtml=function(){var a=this.getTree(),b=!a.getShowLines()||a==this.getParent()&&!a.getShowRootLines()?this.config_.cssChildrenNoLines:this.config_.cssChildren,a=this.getExpanded()&&this.hasChildren(),b={\"class\":b,style:this.getLineStyle()},c=[];a&&this.forEachChild(function(a){c.push(a.toSafeHtml())});a=goog.html.SafeHtml.create(\"div\",b,c);return goog.html.SafeHtml.create(\"div\",{\"class\":this.config_.cssItem,id:this.getId()},[this.getRowSafeHtml(),a])};\n  793  goog.ui.tree.BaseNode.prototype.getPixelIndent_=function(){return Math.max(0,(this.getDepth()-1)*this.config_.indentWidth)};goog.ui.tree.BaseNode.prototype.getRowSafeHtml=function(){var a={};a[\"padding-\"+(this.isRightToLeft()?\"right\":\"left\")]=this.getPixelIndent_()+\"px\";var a={\"class\":this.getRowClassName(),style:a},b=[this.getExpandIconSafeHtml(),this.getIconSafeHtml(),this.getLabelSafeHtml()];return goog.html.SafeHtml.create(\"div\",a,b)};\n  ...\n  800  goog.ui.tree.BaseNode.prototype.getElement=function(){var a=goog.ui.tree.BaseNode.superClass_.getElement.call(this);a||(a=this.getDomHelper().getElement(this.getId()),this.setElementInternal(a));return a};goog.ui.tree.BaseNode.prototype.getRowElement=function(){var a=this.getElement();return a?a.firstChild:null};goog.ui.tree.BaseNode.prototype.getExpandIconElement=function(){var a=this.getRowElement();return a?a.firstChild:null};\n  801  goog.ui.tree.BaseNode.prototype.getIconElement=function(){var a=this.getRowElement();return a?a.childNodes[1]:null};goog.ui.tree.BaseNode.prototype.getLabelElement=function(){var a=this.getRowElement();return a&&a.lastChild?a.lastChild.previousSibling:null};goog.ui.tree.BaseNode.prototype.getAfterLabelElement=function(){var a=this.getRowElement();return a?a.lastChild:null};goog.ui.tree.BaseNode.prototype.getChildrenElement=function(){var a=this.getElement();return a?a.lastChild:null};\n  802: goog.ui.tree.BaseNode.prototype.setIconClass=function(a){this.iconClass_=a;this.isInDocument()&&this.updateIcon_()};goog.ui.tree.BaseNode.prototype.getIconClass=function(){return this.iconClass_};goog.ui.tree.BaseNode.prototype.setExpandedIconClass=function(a){this.expandedIconClass_=a;this.isInDocument()&&this.updateIcon_()};goog.ui.tree.BaseNode.prototype.getExpandedIconClass=function(){return this.expandedIconClass_};goog.ui.tree.BaseNode.prototype.setText=function(a){this.setSafeHtml(goog.html.SafeHtml.htmlEscape(a))};\n  803  goog.ui.tree.BaseNode.prototype.getText=function(){return goog.string.unescapeEntities(goog.html.SafeHtml.unwrap(this.html_))};goog.ui.tree.BaseNode.prototype.setHtml=function(a){this.setSafeHtml(goog.html.legacyconversions.safeHtmlFromString(a))};goog.ui.tree.BaseNode.prototype.setSafeHtml=function(a){this.html_=a;var b=this.getLabelElement();b&&goog.dom.safe.setInnerHtml(b,a);(a=this.getTree())&&a.setNode(this)};goog.ui.tree.BaseNode.prototype.getHtml=function(){return goog.html.SafeHtml.unwrap(this.getSafeHtml())};\n  804  goog.ui.tree.BaseNode.prototype.getSafeHtml=function(){return this.html_};goog.ui.tree.BaseNode.prototype.setToolTip=function(a){this.toolTip_=a;var b=this.getLabelElement();b&&(b.title=a)};goog.ui.tree.BaseNode.prototype.getToolTip=function(){return this.toolTip_};goog.ui.tree.BaseNode.prototype.updateRow=function(){var a=this.getRowElement();a&&(a.className=this.getRowClassName())};\n  805  goog.ui.tree.BaseNode.prototype.updateExpandIcon=function(){var a=this.getExpandIconElement();a&&(a.className=this.getExpandIconClass());if(a=this.getChildrenElement())a.style.backgroundPosition=this.getBackgroundPosition()};goog.ui.tree.BaseNode.prototype.updateIcon_=function(){this.getIconElement().className=this.getCalculatedIconClass()};\n  806  goog.ui.tree.BaseNode.prototype.onMouseDown=function(a){\"expand\"==a.target.getAttribute(\"type\")&&this.hasChildren()?this.isUserCollapsible_&&this.toggle():(this.select(),this.updateRow())};goog.ui.tree.BaseNode.prototype.onClick_=goog.events.Event.preventDefault;goog.ui.tree.BaseNode.prototype.onDoubleClick_=function(a){\"expand\"==a.target.getAttribute(\"type\")&&this.hasChildren()||this.isUserCollapsible_&&this.toggle()};\n  807: goog.ui.tree.BaseNode.prototype.onKeyDown=function(a){var b=!0;switch(a.keyCode){case goog.events.KeyCodes.RIGHT:if(a.altKey)break;this.hasChildren()&&(this.getExpanded()?this.getFirstChild().select():this.setExpanded(!0));break;case goog.events.KeyCodes.LEFT:if(a.altKey)break;if(this.hasChildren()&&this.getExpanded()&&this.isUserCollapsible_)this.setExpanded(!1);else{var c=this.getParent(),d=this.getTree();c&&(d.getShowRootNode()||c!=d)&&c.select()}break;case goog.events.KeyCodes.DOWN:(c=this.getNextShownNode())&&\n  808  c.select();break;case goog.events.KeyCodes.UP:(c=this.getPreviousShownNode())&&c.select();break;default:b=!1}b&&(a.preventDefault(),(d=this.getTree())&&d.clearTypeAhead());return b};goog.ui.tree.BaseNode.prototype.getLastShownDescendant=function(){return this.getExpanded()&&this.hasChildren()?this.getLastChild().getLastShownDescendant():this};\n  809  goog.ui.tree.BaseNode.prototype.getNextShownNode=function(){if(this.hasChildren()&&this.getExpanded())return this.getFirstChild();for(var a=this,b;a!=this.getTree();){b=a.getNextSibling();if(null!=b)return b;a=a.getParent()}return null};goog.ui.tree.BaseNode.prototype.getPreviousShownNode=function(){var a=this.getPreviousSibling();if(null!=a)return a.getLastShownDescendant();var a=this.getParent(),b=this.getTree();return!b.getShowRootNode()&&a==b||this==b?null:a};\n  ...\n  825  goog.ui.tree.TypeAhead.prototype.jumpToLabel_=function(a){var b=!1;(a=this.nodeMap_.getKeys(a))&&a.length&&(this.matchingLabelIndex_=this.matchingNodeIndex_=0,b=this.nodeMap_.get(a[0]),b=this.selectMatchingNode_(b))&&(this.matchingLabels_=a);return b};\n  826  goog.ui.tree.TypeAhead.prototype.jumpTo_=function(a){var b=!1,c=this.matchingLabels_;if(c){var b=null,d=!1;if(this.matchingNodes_){var e=this.matchingNodeIndex_+a;0<=e&&e<this.matchingNodes_.length?(this.matchingNodeIndex_=e,b=this.matchingNodes_):d=!0}b||(e=this.matchingLabelIndex_+a,0<=e&&e<c.length&&(this.matchingLabelIndex_=e),c.length>this.matchingLabelIndex_&&(b=this.nodeMap_.get(c[this.matchingLabelIndex_])),b&&b.length&&d&&(this.matchingNodeIndex_=a==goog.ui.tree.TypeAhead.Offset.UP?b.length-\n  827: 1:0));if(b=this.selectMatchingNode_(b))this.matchingLabels_=c}return b};goog.ui.tree.TypeAhead.prototype.selectMatchingNode_=function(a){var b;a&&(this.matchingNodeIndex_<a.length&&(b=a[this.matchingNodeIndex_],this.matchingNodes_=a),b&&(b.reveal(),b.select()));return!!b};goog.ui.tree.TypeAhead.prototype.clear=function(){this.buffer_=\"\"};goog.ui.tree.TreeControl=function(a,b,c){goog.ui.tree.BaseNode.call(this,a,b,c);this.setExpandedInternal(!0);this.setSelectedInternal(!0);this.selectedItem_=this;this.typeAhead_=new goog.ui.tree.TypeAhead;if(goog.userAgent.IE)try{document.execCommand(\"BackgroundImageCache\",!1,!0)}catch(d){goog.log.warning(this.logger_,\"Failed to enable background image cache\")}};goog.inherits(goog.ui.tree.TreeControl,goog.ui.tree.BaseNode);goog.ui.tree.TreeControl.prototype.keyHandler_=null;\n  828  goog.ui.tree.TreeControl.prototype.focusHandler_=null;goog.ui.tree.TreeControl.prototype.logger_=goog.log.getLogger(\"goog.ui.tree.TreeControl\");goog.ui.tree.TreeControl.prototype.focused_=!1;goog.ui.tree.TreeControl.prototype.focusedNode_=null;goog.ui.tree.TreeControl.prototype.showLines_=!0;goog.ui.tree.TreeControl.prototype.showExpandIcons_=!0;goog.ui.tree.TreeControl.prototype.showRootNode_=!0;goog.ui.tree.TreeControl.prototype.showRootLines_=!0;goog.ui.tree.TreeControl.prototype.getTree=function(){return this};\n  829  goog.ui.tree.TreeControl.prototype.getDepth=function(){return 0};goog.ui.tree.TreeControl.prototype.reveal=function(){};goog.ui.tree.TreeControl.prototype.handleFocus_=function(a){this.focused_=!0;goog.dom.classlist.add(goog.asserts.assert(this.getElement()),\"focused\");this.selectedItem_&&this.selectedItem_.select()};goog.ui.tree.TreeControl.prototype.handleBlur_=function(a){this.focused_=!1;goog.dom.classlist.remove(goog.asserts.assert(this.getElement()),\"focused\")};\n  830: goog.ui.tree.TreeControl.prototype.hasFocus=function(){return this.focused_};goog.ui.tree.TreeControl.prototype.getExpanded=function(){return!this.showRootNode_||goog.ui.tree.TreeControl.superClass_.getExpanded.call(this)};goog.ui.tree.TreeControl.prototype.setExpanded=function(a){this.showRootNode_?goog.ui.tree.TreeControl.superClass_.setExpanded.call(this,a):this.setExpandedInternal(a)};goog.ui.tree.TreeControl.prototype.getExpandIconSafeHtml=function(){return goog.html.SafeHtml.EMPTY};\n  831  goog.ui.tree.TreeControl.prototype.getIconElement=function(){var a=this.getRowElement();return a?a.firstChild:null};goog.ui.tree.TreeControl.prototype.getExpandIconElement=function(){return null};goog.ui.tree.TreeControl.prototype.updateExpandIcon=function(){};goog.ui.tree.TreeControl.prototype.getRowClassName=function(){return goog.ui.tree.TreeControl.superClass_.getRowClassName.call(this)+(this.showRootNode_?\"\":\" \"+this.getConfig().cssHideRoot)};\n  832  goog.ui.tree.TreeControl.prototype.getCalculatedIconClass=function(){var a=this.getExpanded(),b=this.getExpandedIconClass();if(a&&b)return b;b=this.getIconClass();if(!a&&b)return b;b=this.getConfig();return a&&b.cssExpandedRootIcon?b.cssTreeIcon+\" \"+b.cssExpandedRootIcon:!a&&b.cssCollapsedRootIcon?b.cssTreeIcon+\" \"+b.cssCollapsedRootIcon:\"\"};\n  ...\n 1232  Blockly.Toolbox.prototype.dispose=function(){this.flyout_.dispose();this.tree_.dispose();goog.dom.removeNode(this.HtmlDiv);this.lastCategory_=this.workspace_=null};\n 1233  Blockly.Toolbox.prototype.position=function(){var a=this.HtmlDiv;if(a){var b=this.workspace_.options.svg,c=goog.style.getPageOffset(b),b=Blockly.svgSize(b);a.style.left=this.workspace_.RTL?c.x+b.width-a.offsetWidth+\"px\":c.x+\"px\";a.style.height=b.height+\"px\";a.style.top=c.y+\"px\";this.width=a.offsetWidth;this.workspace_.RTL||--this.width;this.flyout_.position()}};\n 1234: Blockly.Toolbox.prototype.populate_=function(a){function b(a,f){for(var g=0,h;h=a.childNodes[g];g++)if(h.tagName)switch(h.tagName.toUpperCase()){case \"CATEGORY\":var k=c.createNode(h.getAttribute(\"name\"));k.blocks=[];f.add(k);var l=h.getAttribute(\"custom\");l?k.blocks=l:b(h,k);l=h.getAttribute(\"colour\");goog.isString(l)?(k.hexColour=Blockly.makeColour(l),d=!0):k.hexColour=\"\";\"true\"==h.getAttribute(\"expanded\")?(k.blocks.length&&c.setSelectedItem(k),k.setExpanded(!0)):k.setExpanded(!1);break;case \"SEP\":f.add(new Blockly.Toolbox.TreeSeparator);\n 1235  break;case \"BLOCK\":case \"SHADOW\":f.blocks.push(h)}}var c=this.tree_;c.removeChildren();c.blocks=[];var d=!1;b(a,this.tree_);this.hasColours_=d;if(c.blocks.length)throw\"Toolbox cannot have both blocks and categories in the root level.\";Blockly.fireUiEvent(window,\"resize\")};\n 1236  Blockly.Toolbox.prototype.addColour_=function(a){a=(a||this.tree_).getChildren();for(var b=0,c;c=a[b];b++){var d=c.getRowElement();if(d){var e=this.hasColours_?\"8px solid \"+(c.hexColour||\"#ddd\"):\"none\";this.workspace_.RTL?d.style.borderRight=e:d.style.borderLeft=e}this.addColour_(c)}};Blockly.Toolbox.prototype.clearSelection=function(){this.tree_.setSelectedItem(null)};\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/BlocklyObjects.js:\n  134              async = null;\n  135              setEX(null);\n  136:             if (type === \"oncompute\") OWN.getObj().setExpression(\"NaN\");\n  137          } else {\n  138              sync = _sync.replace(/^\\s*var\\s*\\w+\\s*;/gm, \"\").trim();\n  ...\n  143              cod += \"\\n};\\n\" + fname + \"()\";\n  144              if (type === \"oncompute\") {\n  145:                 OWN.getObj().setExpression(cod);\n  146                  OWN.getObj().computeChilds();\n  147                  setEX(null);\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/Circle1Object.js:\n   16      };\n   17      // setExp pour les widgets :\n   18:     me.setExp = me.setRX = function(ex) {\n   19          if (isStr(ex)) {\n   20              // Si ex et ey sont des expressions :\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/ConstructionObject.js:\n   69      // le code sync et le code async de blockly :\n   70      this.blocks = new BlocklyObjects(this, Cn);\n   71:     this.setExpression = function() {};\n   72  \n   73      // **************************************************\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/ExpressionObject.js:\n  586  \n  587      // setExp pour les widgets et pour blockly :\n  588:     parent.setExpression = me.setExp = me.setE1 = function(_t) {\n  589          E1 = Expression.delete(E1);\n  590          E1 = new Expression(me, _t);\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/FixedAngleObject.js:\n   86  \n   87      // setExp pour les widgets :\n   88:     me.setExp = me.setE1 = function(_t) {\n   89          E1 = Expression.delete(E1);\n   90          E1 = new Expression(me, _t);\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/PointObject.js:\n  410      // point 2d ou 3d.\n  411      // setExp pour les widgets, setExpression pour Blockly :\n  412:     parent.setExpression = this.setExp = this.setEXY = function(exy, ey) {\n  413          if (isStr(exy)) {\n  414              // Si ex et ey sont des expressions :\n\n/home/erichake/Gdrive/dgpad/scripts/Text/TextObject.js:\n  116                                      break;\n  117                              }\n  118:                             obj.setExp(val);\n  119                              obj.compute();\n  120                              obj.computeChilds();\n\n29 matches across 10 files\n\n\nSearching 312 files for \".setE1\" (case sensitive)\n\n/home/erichake/Gdrive/dgpad/scripts/Calc/MainCalcPanel.js:\n  123  \n  124          if ((OBJ) && (OBJ.getE1) && (OBJ.getE1().isDxyztFunc())) {\n  125:             OBJ.setE1(OBJ.getE1().get() + \"(\" + OBJ.getE1().value().getVars() + \")\");\n  126          }\n  127          if (OBJ)\n  ...\n  375          E1.setLabel(OBJ.getVarName() + \" =\");\n  376          E2.setText(OBJ.getText());\n  377:         E1.setChangedFilter(cFilter(OBJ.setE1));\n  378          E2.setChangedFilter(cFilter(OBJ.setT));\n  379          MIN.setChangedFilter(cFilter(OBJ.setMin));\n  ...\n  397                  case \"expression\":\n  398                      txtman.setFirst(false);\n  399:                     editObj = [editFilter(OBJ.setE1, OBJ.getE1().getSource().replace(/\\\\\\\"/g, \"\\\"\")),\n  400                          editFilter(OBJ.setT, OBJ.getText()),\n  401                          editFilter(OBJ.setMin, OBJ.getMinSource()),\n  ...\n  412                      MIN.show();\n  413                      MAX.show();\n  414:                     E1.setChangedFilter(cFilter(OBJ.setE1));\n  415                      MIN.setChangedFilter(cFilter(OBJ.setMin));\n  416                      MAX.setChangedFilter(cFilter(OBJ.setMax));\n  ...\n  429                  case \"function\":\n  430                      txtman.setFirst(false);\n  431:                     editObj = [editFilter(OBJ.setE1, OBJ.getE1().getSource()),\n  432                          editFilter(OBJ.setMin, OBJ.getMinSource()),\n  433                          editFilter(OBJ.setMax, OBJ.getMaxSource())\n  ...\n  441                      MIN.show();\n  442                      MAX.show();\n  443:                     E1.setChangedFilter(cFilter(OBJ.setE1));\n  444                      MIN.setChangedFilter(cFilter(OBJ.setMin));\n  445                      MAX.setChangedFilter(cFilter(OBJ.setMax));\n  ...\n  451                      txtman.setFirst(false);\n  452                      var ex = OBJ.getExp();\n  453:                     editObj = [editFilter(OBJ.setE1, ex)];\n  454                      E2.setPreferredKB(0);\n  455                      E1.show();\n  ...\n  458                      MAX.hide();\n  459                      E1.setText(ex);\n  460:                     E1.setChangedFilter(cFilter(OBJ.setE1));\n  461                      E1.setLabel(OBJ.getName() + \" =\");\n  462                      txtman.activate(E1);\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/ConstructionObject.js:\n  421      // être édité avec la \"calculatrice\" (point, cercle, expression, fonction, etc...) :\n  422  \n  423:     this.setE1 = function(_t) {};\n  424      this.setE2 = function(_t) {};\n  425      this.setT = function(_t) {};\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/CurvusObject.js:\n  278      };\n  279  \n  280:     me.setE1 = function(_f) {\n  281          E1 = Expression.delete(E1);\n  282          E1 = new Expression(me, _f);\n  ...\n  330  \n  331      if (_f1 !== \"\")\n  332:         me.setE1(_f1);\n  333      if (_a !== \"\")\n  334          me.setMin(_a);\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/ExpressionObject.js:\n  582      //         cod += me.blocks.oncompute.sync;\n  583      //         cod += \"\\n};\\n\" + fname + \"()\";\n  584:     //         me.setE1(cod);\n  585      //     }\n  586      // };\n  ...\n  588  \n  589      // setExp pour les widgets et pour blockly :\n  590:     parent.setExpression = me.setExp = me.setE1 = function(_t) {\n  591          E1 = Expression.delete(E1);\n  592          E1 = new Expression(me, _t);\n  ...\n  656  \n  657      if (_exp !== \"\")\n  658:         me.setE1(_exp);\n  659      if (_min !== \"\")\n  660          me.setMin(_min);\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/FixedAngleObject.js:\n   86  \n   87      // setExp pour les widgets :\n   88:     me.setExp = me.setE1 = function(_t) {\n   89          E1 = Expression.delete(E1);\n   90          E1 = new Expression(me, _t);\n\n15 matches across 5 files\n\n\nSearching 312 files for \".refreshNames\" (case sensitive)\n\n/home/erichake/Gdrive/dgpad/scripts/Expression.js:\n  191      // Methode appelée lorsqu'on change le nom d'un objet (dans le panneau de prop.)\n  192      // et que cet objet est impliqué dans l'expression :\n  193:     me.refreshNames = function() {\n  194          me.refresh();\n  195          me.compute();\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/Circle1Object.js:\n  118      this.compute = computeGeom;\n  119  \n  120:     this.refreshNames = function() {\n  121          if (RX)\n  122:             RX.refreshNames();\n  123      };\n  124  \n\n/home/erichake/Gdrive/dgpad/scripts/Objects/ConstructionObject.js:\n  312          Cn.doOrder(childList);\n  313          for (var i = 0; i < childList.length; i++) {\n  314:             childList[i].refreshNames();\n  315          }\n  316      };\n  ...\n  318      // Uniquement pour les objets contenant une expression\n  319      // Il s'agit de rafraîchir les noms utilisés dans l'expression :\n  320:     this.refreshNames = function() {};\n  321  \n  322      this.setParentList = function(_p) {\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/CurvusObject.js:\n  319      };\n  320  \n  321:     me.refreshNames = function() {\n  322          if (E1)\n  323:             E1.refreshNames();\n  324          if (min)\n  325:             min.refreshNames();\n  326          if (max)\n  327:             max.refreshNames();\n  328      };\n  329  \n\n/home/erichake/Gdrive/dgpad/scripts/Objects/ExpressionObject.js:\n  631  \n  632      // Refait à neuf la liste des parents :\n  633:     me.refreshNames = function() {\n  634          if (E1)\n  635:             E1.refreshNames();\n  636          if (min)\n  637:             min.refreshNames();\n  638          if (max)\n  639:             max.refreshNames();\n  640      };\n  641  \n\n/home/erichake/Gdrive/dgpad/scripts/Objects/PointObject.js:\n  595      this.compute = computeGeom;\n  596  \n  597:     this.refreshNames = function() {\n  598          if (EXY)\n  599:             EXY.refreshNames();\n  600      };\n  601  \n\n15 matches across 6 files\n",
+			"settings":
+			{
+				"buffer_size": 25832,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "scripts/Calc/MainCalcPanel.js",
+			"settings":
+			{
+				"buffer_size": 17935,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "scripts/Objects/ExpressionObject.js",
+			"settings":
+			{
+				"buffer_size": 20086,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "scripts/Objects/ConstructionObject.js",
+			"settings":
+			{
+				"buffer_size": 33396,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "scripts/Blockly/BlocklyManager.js",
+			"settings":
+			{
+				"buffer_size": 10493,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "scripts/Text/PrintPanel.js",
+			"settings":
+			{
+				"buffer_size": 2396,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -278,22 +392,83 @@
 	"expanded_folders":
 	[
 		"/home/erichake/Gdrive/dgpad/scripts",
-		"/home/erichake/Gdrive/dgpad/scripts/Docs"
+		"/home/erichake/Gdrive/dgpad/scripts/Text"
 	],
 	"file_history":
 	[
-		"/home/erichake/Gdrive/dgpad/scripts/Utils.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Docs/Preferences.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/ConstructionObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Construction.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Canvas.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/BlocklyObjects.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Properties/PropertiesPanel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/DGPad.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/styles.css",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyManager.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/FixedAngleObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/CurvusObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/Circle1Object.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/expressions.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/ConstructionObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/SourceWriter.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/ExpressionObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Expression.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/PointObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Utils.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyPanel.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/lists.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/ListObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Main.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Canvas.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_toolbox.xml",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/expressions.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Text/TextObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/BlocklyObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/core.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Docs/Preferences.js",
+		"/home/erichake/Gdrive/dgpad/scripts/GUI/panels/BubblePanel.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/styles.css",
+		"/home/erichake/Gdrive/dgpad/scripts/Longpress/LongpressManager.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Coincidence/CoincidenceManager.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Calc/MainCalcPanel.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Names/NamesPanel.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/geometry.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/matrices.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/matrices.js",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/blocks/math.js",
+		"/home/erichake/Bureau/matrices/matrices.html",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/sylvester.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/geometry.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/lists.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/matrices.js",
+		"/home/erichake/Bureau/bloquement/Sofus_Blockly.html",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/media/sprites.svg",
+		"/home/erichake/Gdrive/dgpad/scripts/GUI/panels/BubblePanelCopy.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Macros/MacroPanel.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_dgpad.js",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/procedures.js",
+		"/home/erichake/Gdrive/dgpad/scripts/GUI/elements/iPadList.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Coincidence/CoincidencePanel.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Longpress/LongpressPanel.js",
+		"/home/erichake/Gdrive/dgpad/scripts/GUI/elements/GUIElement.js",
+		"/home/erichake/Bureau/aaaa.dgp",
+		"/home/erichake/Dropbox/Public/DGPad/fun/EditExpressionWidget.txt",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_dgpad_JS.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Names/NamesManager.js",
+		"/home/erichake/Bureau/Sierpinski2.dgp",
+		"/home/erichake/Gdrive/dgpad/scripts/Longpress/LongpressManager.is",
+		"/home/erichake/Gdrive/dgpad/scripts/Construction.js",
 		"/home/erichake/Bureau/aa.dgp",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/blocks/lists.js",
+		"/home/erichake/Bureau/Big/BigBlockly.html",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/blocks/variables.js",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/xml.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Constructors/BlocklyConstructor.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Calc/DigitCalcPanel.js",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/generators/javascript/loops.js",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/generator.js",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/block.js",
+		"/home/erichake/Bureau/addcube.js",
+		"/home/erichake/Gdrive/dgpad/scripts/DGPad.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings_ES.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Properties/PropertiesPanel.js",
 		"/home/erichake/Bureau/Sierpinski/pourCaRMetal.js",
 		"/home/erichake/Dropbox/Public/DGPad/Sierpinski/Sierpinski1.dgp",
 		"/home/erichake/Dropbox/Public/DGPad/Sierpinski/Sierpinski2.dgp",
@@ -308,8 +483,6 @@
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/AreaObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/RayObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/AngleBisectorObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/FixedAngleObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/PointObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/PrimitiveLineObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/LocusObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/ParallelLineObject.js",
@@ -317,32 +490,22 @@
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/TwoPointsLineObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/SegmentObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/PrimitiveCircleObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/CurvusObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/Circle3ptsObject_3D.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Constructors/SpringConstructor.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/plug-ins.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/ExpressionObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Names/NamesManager.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Constructors/LineConstructor.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Main.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Constructors/PointConstructor.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/worker.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Animations/Animations.js",
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/field_textinput.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyManager.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Names/NamesPanel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_dgpad.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_dgpad_JS.js",
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/Objects/ConstructionObject.js",
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js",
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/lang/LocalStrings.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyPanel.js",
 		"/home/erichake/Gdrive/dgpad/scripts/ControlPanel/ControlPanel.js",
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/ControlPanel/ControlPanel.js",
 		"/home/erichake/Gdrive/dgpad/index.php",
 		"/home/erichake/Gdrive/dgpad/scripts/MainTheLot.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/CenterObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Calc/MainCalcPanel.js",
 		"/home/erichake/Dropbox/toto.dgp",
 		"/home/erichake/Gdrive/dgpad/scripts/GUI/elements/Checkbox.js",
 		"/home/erichake/Gdrive/dgpad/dgpad.html",
@@ -355,71 +518,29 @@
 		"/home/erichake/Gdrive/dgpad/scripts/Blockly/Blockly_Manager.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/utils.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/blockly.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_toolbox.xml",
 		"/home/erichake/Gdrive/dgpad/scripts/Blockly/Blockly_Panel.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/generator.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/realtime.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/block.js",
 		"/home/erichake/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
-		"/home/erichake/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/generators/javascript/colour.js",
-		"/home/erichake/.config/sublime-text-3/Packages/Origami/Default (Linux).sublime-keymap",
-		"/home/erichake/.config/sublime-text-3/Packages/Origami/Origami.sublime-settings",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/demos/generator/index.html",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/base32.js",
-		"/home/erichake/Gdrive/dgpad/bloquement/index.html",
-		"/home/erichake/Gdrive/dgpad/bloquement/javascript/blocks_complements.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/base32.js",
-		"/home/erichake/Téléchargements/bloquement/bloquement_sophus.html",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/blocks/math.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Blockly/Blockly_toolbox.xml",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/demos/fixed/index.html",
-		"/home/erichake/Gdrive/dgpad/scripts/Blockly/Blockly_dgpad.js",
-		"/home/erichake/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
-		"/home/erichake/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/demos/resizable/overlay.html",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/demos/resizable/index.html",
-		"/home/erichake/Téléchargements/google-blockly-a77788d/demos/fixed/index.html",
-		"/home/erichake/Téléchargements/google-blockly-a77788d/generators/javascript/math.js",
-		"/home/erichake/Téléchargements/google-blockly-a77788d/demos/generator/index.html",
-		"/home/erichake/Gdrive/dgpad/scripts/GUI/elements/slider.js",
-		"/home/erichake/Gdrive/dgpad/scripts/DGBlocks.js",
-		"/home/erichake/Téléchargements/google-blockly-a77788d/javascript_compressed.js",
-		"/home/erichake/Téléchargements/google-blockly-a77788d/generators/javascript.js",
-		"/home/erichake/Téléchargements/google-blockly-a77788d/demos/blockfactory/index.html",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/AngleObject.js",
-		"/home/erichake/.config/sublime-text-3/Packages/GitGutter/GitGutter.sublime-settings",
-		"/home/erichake/.config/sublime-text-3/Packages/GitGutter/Default (Linux).sublime-keymap",
-		"/home/erichake/.config/sublime-text-3/Packages/User/GitGutter.sublime-settings",
-		"/home/erichake/Gdrive/dgpad/scripts/Tools/ToolsManager_1.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Properties/PropertiesManager.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Text/PrintPanel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Text/TextManager.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Text/TextObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Text/TextPanel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Tools/Tool.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Tools/ToolBtn.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Tools/ToolsManager.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Undo/UndoManager.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Color.js",
-		"/home/erichake/Gdrive/dgpad/scripts/CoordsSystem.js",
-		"/home/erichake/Gdrive/dgpad/scripts/DeleteAll.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Expression.js",
-		"/home/erichake/Gdrive/dgpad/scripts/FilePicker_org.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Ghost.js",
-		"/home/erichake/Gdrive/dgpad/scripts/SourceWriter.js",
-		"/home/erichake/Gdrive/dgpad/scripts/SymbolicCompute.js",
-		"/home/erichake/Gdrive/dgpad/scripts/TrackManager.js"
+		"/home/erichake/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap"
 	],
 	"find":
 	{
-		"height": 38.0
+		"height": 39.0
 	},
 	"find_in_files":
 	{
 		"height": 93.0,
 		"where_history":
 		[
+			"/home/erichake/Gdrive/dgpad/scripts",
+			"/home/erichake/Gdrive/dgpad/scripts/Blockly",
+			"/home/erichake/Gdrive/dgpad/scripts",
+			"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly",
+			"/home/erichake/Gdrive/dgpad/scripts",
+			"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly",
+			"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core",
 			"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core,/home/erichake/Téléchargements/geogebra-dc38301728dd99860dca4172bd4b1c2491bcd530",
 			"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core",
 			"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly",
@@ -435,9 +556,118 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
+			"print",
+			"doOrder",
+			"doOrder(V)",
+			"doOrder",
+			"getChildList",
+			"EXP",
+			"_EXP",
+			"refresh",
+			".refreshNames",
+			".setE1",
+			"\\\"",
+			".compute",
+			".setExp",
+			"blocks.setSource",
+			"setSource",
+			".refresh",
+			".InterpretExpression",
+			".getExpression",
+			"min = null",
+			"E1 = null",
+			"RX = null",
+			"E1 = null",
+			"EXY = null;",
+			"new Expression(",
+			"Expression.ALL",
+			"actualisé",
+			"setExp",
+			"OBJ",
+			"_object",
+			"setXY",
+			"VARS",
+			"getAssociatedTools",
+			"JSON.stringify",
+			"EXPS",
+			"parent",
+			"setParent",
+			"MODE",
+			"currentTabCallBack",
+			"showCurrentTab",
+			".blocks",
+			"ssssss",
+			"_obj",
+			"$caller",
+			"InterpretScript",
+			"setCaller",
+			"setCallee",
+			".InterpretScript",
+			"me.InterpretScript",
+			".setCaller",
+			"$caller",
+			"setObjBlocks",
+			"null",
+			"_Cn",
+			"E1.value()",
+			"localStorage.",
+			"_showsettings",
+			"longpressList",
+			"me.compute",
+			".compute()",
+			"compute",
+			".blockChanged",
+			"return cPT",
+			"cPT",
+			"compute",
+			"setParent",
+			"getParent",
+			".dragTo",
+			"compute",
+			"computeAll2D",
+			"setE1",
+			"blockChanged",
+			"setBlockObj",
+			"content",
+			"empty",
+			".blocks",
+			".blockDrag",
+			"230",
+			"blockChanged",
+			".sync",
+			"blocks.sync",
+			"o",
+			"$L",
+			"lists_create_with",
+			"PROCEDURE",
+			"_mngr",
+			"mousedown",
+			"iPadList",
+			"Interpret",
+			"setOutput",
+			"setIncrement",
+			"color",
+			"5",
+			"_exp",
+			"new ExpressionObject",
+			"Coincidence",
+			"coincidenceList",
+			"compute",
+			"selected",
+			"\\\"",
+			"lists_setIndex",
+			"VARIABLE",
+			"domToWorkspace",
+			"workspace",
+			"toolbox",
+			"digitCalcPanel",
+			"1",
+			"controls_whileUntil",
+			"statementToCode",
+			"statements_name",
 			"degree",
 			"SetGeneral",
 			"carmetal.org/index.php/fr/",
@@ -456,116 +686,7 @@
 			"e",
 			"c",
 			"e",
-			"b",
-			"d",
-			"a",
-			"realDY",
-			"realDX",
-			"setDXDY",
-			"DX",
-			"DY",
-			"DX =",
-			"setDX",
-			"NDX",
-			"NDY",
-			"degree",
-			"message",
-			"me",
-			"ar",
-			"canvas.getConstruction()",
-			"coordsSystem",
-			"canvas.getConstruction().",
-			"canvas.getConstruction()",
-			"coordsSystem",
-			"canvas.getConstruction().",
-			"canvas.getConstruction()",
-			"Cn",
-			"sInc",
-			"fce_cir_rad",
-			"fce_cir_deg",
-			"fce_exp",
-			"fce_seg",
-			"resizeWindow",
-			"resize",
-			"_an",
-			"isCursor",
-			"b[1]",
-			"Alpha",
-			"b[0]",
-			"b",
-			"0",
-			"isCursor",
-			"numéro",
-			"getConstruction",
-			"dx",
-			"unit",
-			"doOrder",
-			"me.delete",
-			"animate",
-			"yp1",
-			"xp1",
-			"_i",
-			"paint=",
-			"paint",
-			"webworker",
-			"size",
-			"FONTSIZE",
-			"FieldTextInput",
-			"Blockly.dgpad_",
-			"Cn",
-			"Blockly.dgpad_",
-			"getNames",
-			"Blockly.dgpad_names",
-			"namesManager",
-			"manager",
-			"font-family",
-			"OpenFile",
-			"manager",
-			"NameDialog",
-			"leaveaccent",
-			"getUnusedName",
-			"filepicker",
-			"windowOpenIFrame",
-			"FilePickerDIV",
-			"leaveAccents",
-			"font-size",
-			"CheckBox",
-			"_E",
-			"nameDialog",
-			"mainpanel",
-			"refreshKeyboard",
-			"nameDialog",
-			"NameDialog",
-			"nameDialog",
-			"NameDialog",
-			"nameDialog",
-			"manager",
-			"mm_proc",
-			"AO",
-			"keys",
-			"i",
-			"ct",
-			"createmods",
-			"mods",
-			"_i",
-			"pi utf-8",
-			"utf-8",
-			"computeIncrement",
-			"computeDrag",
-			"onclick",
-			"domToWorkspace",
-			"Blockly.addEventListener",
-			"Blockly.Xml.add",
-			"Blockly.Xml",
-			"svgDoc",
-			"Blockly.onMouseDown",
-			"Blockly.onMouseDown_",
-			"onMouseDown",
-			"bindEvent_ =",
-			"bindEvent",
-			"addChangeListener",
-			"_s",
-			"getSurroundParent"
+			"b"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -573,6 +694,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"\""
 		],
 		"reverse": false,
 		"show_context": true,
@@ -583,8 +705,498 @@
 	"groups":
 	[
 		{
+			"selected": 7,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "scripts/Objects/BlocklyObjects.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4593,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3885,
+								3885
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2898.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "scripts/Construction.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 48088,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								22969,
+								22969
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 18187.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 25832,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										347,
+										354
+									],
+									[
+										581,
+										588
+									],
+									[
+										782,
+										789
+									],
+									[
+										2054,
+										2061
+									],
+									[
+										4378,
+										4385
+									],
+									[
+										4468,
+										4475
+									],
+									[
+										5400,
+										5407
+									],
+									[
+										5497,
+										5504
+									],
+									[
+										5571,
+										5578
+									],
+									[
+										6075,
+										6082
+									],
+									[
+										8481,
+										8488
+									],
+									[
+										10703,
+										10710
+									],
+									[
+										10847,
+										10854
+									],
+									[
+										13058,
+										13065
+									],
+									[
+										14726,
+										14733
+									],
+									[
+										14806,
+										14813
+									],
+									[
+										14836,
+										14843
+									],
+									[
+										16783,
+										16790
+									],
+									[
+										16802,
+										16809
+									],
+									[
+										17725,
+										17732
+									],
+									[
+										17986,
+										17993
+									],
+									[
+										18226,
+										18233
+									],
+									[
+										18546,
+										18553
+									],
+									[
+										18798,
+										18805
+									],
+									[
+										18817,
+										18824
+									],
+									[
+										19067,
+										19074
+									],
+									[
+										19366,
+										19373
+									],
+									[
+										19387,
+										19394
+									],
+									[
+										19703,
+										19710
+									],
+									[
+										20067,
+										20073
+									],
+									[
+										20326,
+										20332
+									],
+									[
+										20600,
+										20606
+									],
+									[
+										20942,
+										20948
+									],
+									[
+										21241,
+										21247
+									],
+									[
+										21566,
+										21572
+									],
+									[
+										21875,
+										21881
+									],
+									[
+										22122,
+										22128
+									],
+									[
+										22429,
+										22435
+									],
+									[
+										22633,
+										22639
+									],
+									[
+										22802,
+										22808
+									],
+									[
+										23070,
+										23076
+									],
+									[
+										23238,
+										23244
+									],
+									[
+										23408,
+										23414
+									],
+									[
+										23621,
+										23627
+									],
+									[
+										24039,
+										24052
+									],
+									[
+										24251,
+										24264
+									],
+									[
+										24324,
+										24337
+									],
+									[
+										24560,
+										24573
+									],
+									[
+										24771,
+										24784
+									],
+									[
+										24954,
+										24967
+									],
+									[
+										25027,
+										25040
+									],
+									[
+										25090,
+										25103
+									],
+									[
+										25153,
+										25166
+									],
+									[
+										25330,
+										25343
+									],
+									[
+										25403,
+										25416
+									],
+									[
+										25466,
+										25479
+									],
+									[
+										25529,
+										25542
+									],
+									[
+										25691,
+										25704
+									],
+									[
+										25766,
+										25779
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								24760,
+								24760
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 3,
+							"result_base_dir": "",
+							"result_file_regex": "^([^ 	].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 7199.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "scripts/Calc/MainCalcPanel.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17935,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13834,
+								13834
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 8898.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "scripts/Objects/ExpressionObject.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 20086,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								972,
+								972
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "scripts/Objects/ConstructionObject.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 33396,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8379,
+								8379
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5621.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "scripts/Blockly/BlocklyManager.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10493,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1577,
+								1577
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 759.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "scripts/Text/PrintPanel.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2396,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1011,
+								1011
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -621,7 +1233,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 201.0
+		"height": 202.0
 	},
 	"output.find_results":
 	{
@@ -631,7 +1243,7 @@
 	"project": "dgpad.sublime-project",
 	"replace":
 	{
-		"height": 56.0
+		"height": 72.0
 	},
 	"save_all_on_build": true,
 	"select_file":

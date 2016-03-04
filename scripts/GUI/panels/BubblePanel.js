@@ -1,42 +1,35 @@
-function CoincidencePanel(_canvas, _ev, _t) {
+function BubblePanel(_canvas, _exec, _close, _ev, _t, _title, _w, _h, _titleheight) {
     $U.extend(this, new Panel(_canvas.getDocObject()));
     var me = this;
     var canvas = _canvas;
     var x = canvas.mouseX(_ev) + 5;
     var y = canvas.mouseY(_ev) - 45;
-    var width = 270;
-    var height = 190;
+    var width = _w;
+    var height = _h;
 
     me.setAttr("className", "coincidencePanel");
-    me.transition("scale", 0.2);
+    me.transition("scale", 0.15);
 
-    var exec = function(_o) {
-        me.close();
-        var cn = canvas.getConstruction();
-        cn.clearIndicated();
-        cn.clearSelected();
-        cn.addSelected(_o);
-        canvas.paint(_ev);
-        canvas.initTools(_ev, _o);
-    }
-
-    var coincidenceList = new CoincidenceListPanel(me, _t, exec);
+    var bubbleList = new BubbleListPanel(me, _t, width, height, _titleheight, _title);
 
     var closeIfNeeded = function(ev) {
         var x0 = canvas.mouseX(ev);
         var y0 = canvas.mouseY(ev);
         if (x0 < x || y0 < y || x0 > (x + width) || y0 > (y + height)) {
             me.close();
-            canvas.stopChrono();
         }
+    };
+
+    me.isVisible = function() {
+        return (me.getDocObject().parentNode !== null);
     }
 
-    this.show = function() {
+    me.show = function() {
         canvas.getDocObject().parentNode.appendChild(me.getDocObject());
         me.applyTransitionIN();
     };
 
-    this.close = function() {
+    me.close = function() {
         me.applyTransitionOUT();
         setTimeout(function() {
             if (me.getDocObject().parentNode !== null) {
@@ -44,11 +37,17 @@ function CoincidencePanel(_canvas, _ev, _t) {
             }
             var action = ($U.isMobile.any()) ? 'touchstart' : 'mousedown';
             window.removeEventListener(action, closeIfNeeded, false);
+            _close();
         }, 300);
     };
 
+    me.exec = function(_any) {
+        _exec(_any);
+        me.close();
+    };
+
     me.init = function() {
-        var t = me.getOwnerBounds();
+        // var t = me.getOwnerBounds();
         me.setBounds(x, y, width, height);
         var action = ($U.isMobile.any()) ? 'touchstart' : 'mousedown';
         window.addEventListener(action, closeIfNeeded, false);
@@ -60,40 +59,40 @@ function CoincidencePanel(_canvas, _ev, _t) {
 }
 
 
-function CoincidenceListPanel(_panel, _t, _exec) {
+function BubbleListPanel(_panel, _t, _w, _h, _titleheight, _title) {
     var me = this;
     $U.extend(this, new Panel(_panel.getDocObject()));
     me.setAttr("className", "coincidenceListDIV bulle");
+    me.setBounds(10, 10, _w - 20, _h - 20);
 
     var viewportmask = new Panel(me);
     viewportmask.setAttr("className", "coincidenceListViewportMask");
+    viewportmask.setBounds(10, _titleheight, _w - 40, _h - (_titleheight + 35));
 
     var viewport = new Panel(me);
     viewport.setAttr("className", "coincidenceListViewport");
+    viewport.setBounds(-1, -1, _w + 10, _h - (_titleheight + 35));
 
     var title = new Label(me);
-    title.setText($L.coincidence_message + " : " + $L.coincidence_select.replace("$1", _t.length));
-    title.setBounds(10, 10, 230, 40);
+    title.setText(_title);
+    title.setBounds(10, 10, _w - 40, _titleheight);
 
-    var mousedown = function(ev) {
+    var exec = function(ev) {
         ev.preventDefault();
         setTimeout(function() {
+            _panel.close();
             ev.target.className = "coincidenceLIclassSel";
-            _exec(ev.target.obj);
+            _panel.exec(ev.target.obj);
         }, 1);
     };
 
-    for (var i = 0, len = _t.length; i < len; i++) {
-        var p = new GUIElement(me, "p");
-        if (_t[i].isHidden())
-            p.setStyle("color", "#777");
-        else
-            p.setStyle("color", _t[i].getColor().getHEX());
-        p.setAttr("obj", _t[i]);
-        var txt = _t[i].getName() + ": " + $L.object[_t[i].getCode()];
-        p.setAttr("innerHTML", txt);
-        var action = ($U.isMobile.any()) ? 'ontouchstart' : 'onmousedown';
-        p.setAttr(action, mousedown);
+    var col = "#333";
+    for (var i = 0; i < _t.length; i++) {
+        var p = new GUIElement(me, "div");
+        p.setAttr("obj", _t[i][1]);
+        p.setAttr("innerHTML", _t[i][0]);
+        p.setStyle("color", (_t[i].length > 1) ? _t[i][2] : col);
+        p.getDocObject().addEventListener('click', exec, false);
         viewport.addContent(p);
     }
 
@@ -101,5 +100,7 @@ function CoincidenceListPanel(_panel, _t, _exec) {
     me.addContent(title);
     me.addContent(viewportmask);
 
+
     me.show();
+
 }

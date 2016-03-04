@@ -86,8 +86,7 @@ function FixedAngleObject(_construction, _name, _P1, _P2, _trigo) {
 
     // setExp pour les widgets :
     me.setExp = me.setE1 = function(_t) {
-        if (E1)
-            delete E1;
+        E1 = Expression.delete(E1);
         E1 = new Expression(me, _t);
     };
     me.getExp = function() {

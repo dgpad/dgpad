@@ -10,6 +10,7 @@ function ListObject(_construction, _name, _EXP) {
     var EXP = _EXP; // Expression contenant la liste de points (ou points3D)
     var Ptab = []; // Tableau de points
     var initPtab = function() {
+        // console.log("initPtab !!!!");
         var lst = EXP.getValue();
         Ptab.length = 0;
         if (!$U.isArray(lst))
@@ -28,24 +29,32 @@ function ListObject(_construction, _name, _EXP) {
                     y: yy
                 });
             } else if (lst[i].length === 3) {
-                // Il s'agit d'un point 3D :
-                if (ORG3D === null) {
-                    ORG3D = Cn.get3DOrigin(me);
+                if (isNaN(lst[i][0]) && isNaN(lst[i][1]) && isNaN(lst[i][2])) {
+                    Ptab.push({
+                        x: NaN,
+                        y: NaN
+                    });
+                } else {
+                    // Il s'agit d'un point 3D :
                     if (ORG3D === null) {
-                        // Aucune origine 3D n'est détectée (erreur) :
-                        Ptab.length = 0;
-                        return;
+                        ORG3D = Cn.get3DOrigin(me);
+                        if (ORG3D === null) {
+                            // Aucune origine 3D n'est détectée (erreur) :
+                            Ptab.length = 0;
+                            return;
+                        }
                     }
+
+                    //                me.set3D(true);
+                    var c2d = pt3D([Cn.coordsSystem.x(ORG3D.getX()), Cn.coordsSystem.y(ORG3D.getY())], lst[i]);
+                    var xx = Cn.coordsSystem.px(c2d[0]);
+                    var yy = Cn.coordsSystem.py(c2d[1]);
+                    Ptab.push({
+                        x: xx,
+                        y: yy
+                    });
                 }
 
-                //                me.set3D(true);
-                var c2d = pt3D([Cn.coordsSystem.x(ORG3D.getX()), Cn.coordsSystem.y(ORG3D.getY())], lst[i]);
-                var xx = Cn.coordsSystem.px(c2d[0]);
-                var yy = Cn.coordsSystem.py(c2d[1]);
-                Ptab.push({
-                    x: xx,
-                    y: yy
-                });
             } else {
                 // Sinon il y a erreur dans l'expression:
                 Ptab.length = 0;

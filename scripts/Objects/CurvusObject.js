@@ -22,7 +22,7 @@ function CurvusObject(_construction, _name, _a, _b, _f1) {
         Ptab.push({
             x: 0,
             y: 0,
-            d: false 
+            d: false
         });
     }
 
@@ -278,8 +278,7 @@ function CurvusObject(_construction, _name, _a, _b, _f1) {
     };
 
     me.setE1 = function(_f) {
-        if (E1)
-            delete E1;
+        E1 = Expression.delete(E1);
         E1 = new Expression(me, _f);
         me.dx = E1.dx;
         me.dy = E1.dy;
@@ -295,8 +294,7 @@ function CurvusObject(_construction, _name, _a, _b, _f1) {
         return E1;
     };
     me.setMin = function(_t) {
-        if (min)
-            delete min;
+        min = Expression.delete(min);
         min = new Expression(me, _t);
         me.compute();
     };
@@ -306,8 +304,7 @@ function CurvusObject(_construction, _name, _a, _b, _f1) {
         return "";
     };
     me.setMax = function(_t) {
-        if (max)
-            delete max;
+        max = Expression.delete(max);
         max = new Expression(me, _t);
         me.compute();
     };

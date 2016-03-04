@@ -1,6 +1,6 @@
 Blockly.JavaScript['dgpad_construction'] = function(block) {
-    var statements_name = Blockly.JavaScript.statementToCode(block, 'CONTENT');
-    return "@CONST@" + statements_name + "@CONST@"
+    var statements = Blockly.JavaScript.statementToCode(block, 'CONTENT');
+    return "@CONST@" + statements + "@CONST@"
 }
 
 Blockly.JavaScript['dgpad_point'] = function(block) {
@@ -70,3 +70,8 @@ Blockly.JavaScript['dgpad_circle'] = function(block) {
     var cod = A + "=Circle(\"" + A + "\"," + B + "," + C + ");\n";
     return cod;
 }
+
+
+
+
+

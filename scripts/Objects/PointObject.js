@@ -2,7 +2,7 @@
 //*************** POINT OBJECT *******************
 //************************************************
 function PointObject(_construction, _name, _x, _y) {
-    $U.extend(this, new ConstructionObject(_construction, _name)); // Héritage
+    var parent = $U.extend(this, new ConstructionObject(_construction, _name)); // Héritage
     $U.extend(this, new MoveableObject(_construction)); // Héritage
 
 
@@ -186,6 +186,7 @@ function PointObject(_construction, _name, _x, _y) {
             at += ",@noanchor";
         if ((this.getEXY()) || ((this.getParentLength() === 0) && (!this.getFloat())))
             at += ",@callcalc";
+        if (this.getParentLength() < 2) at += ",@blockly";
         if (this.isMoveable()) {
             at += ",@pushpin";
             at += ",@magnet";
@@ -407,11 +408,12 @@ function PointObject(_construction, _name, _x, _y) {
     // param, celui-ci est un booléen qui indique s'il s'agit ou non d'un point 3D.
     // S'il n'y a pas de second param, le logiciel détermine s'il s'agit d'un
     // point 2d ou 3d.
-    // setExp pour les widgets :
-    this.setExp = this.setEXY = function(exy, ey) {
+    // setExp pour les widgets, setExpression pour Blockly :
+    parent.setExpression = this.setExp = this.setEXY = function(exy, ey) {
         if (isStr(exy)) {
             // Si ex et ey sont des expressions :
             me.setParent();
+            EXY = Expression.delete(EXY);
             EXY = new Expression(me, exy);
             fillStyle = me.prefs.color.point_fixed;
             me.isMoveable = function() {
@@ -427,7 +429,7 @@ function PointObject(_construction, _name, _x, _y) {
 
         } else {
             // Si ex et ey sont des nombres :
-            EXY = null;
+            EXY = Expression.delete(EXY);
             X = exy;
             Y = ey;
             fillStyle = me.prefs.color.point_free;
@@ -453,7 +455,6 @@ function PointObject(_construction, _name, _x, _y) {
     }
 
     this.dragObject = function(_x, _y) {
-
         this.computeIncrement(_x, _y);
         if (this.getParentLength() === 1) {
             this.getParentAt(0).project(this);

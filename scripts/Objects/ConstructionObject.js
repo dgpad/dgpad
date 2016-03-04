@@ -35,6 +35,8 @@ function ConstructionObject(_construction, _name) {
     var magnets = []; // Tableau multidimentionnel des objets magnétiques 
     // a[i][0] : objet et a[i][1] : rayon
 
+    var blocklies = {}; // Objet contenant tous les programmes graphiques liés à l'objet
+
 
     var parentList = []; // Tableau des objets parents
     var childList = []; // Tableau des objets enfants
@@ -49,18 +51,34 @@ function ConstructionObject(_construction, _name) {
 
     var timestamp = 0;
 
-    var blockObj = null; // Blocky object
+    // var blockObj = null; // Blocky object
 
+
+    // Pour un essai sur l'introspection dans les expressions :
     this.me = function() {
         return this;
     }
+    // this.getMe=function(){
+    //     return this;
+    // }
 
-    this.setBlockObj = function(_b) { // Set Blocky object
-        blockObj = _b;
-    }
-    this.blockDrag = function(_x, _y) {
-        if ((blockObj) && (blockObj.dragto)) blockObj.dragto(_x, _y);
-    }
+
+
+    // **************************************************
+    // ***************** BLOCKLY PART *******************
+    // **************************************************
+
+    // objet contenant la représentation xml,
+    // le code sync et le code async de blockly :
+    this.blocks = new BlocklyObjects(this, Cn);
+    this.setExpression = function() {};
+
+    // **************************************************
+    // *************** END BLOCKLY PART *****************
+    // **************************************************
+
+
+
 
     this.newTimeStamp = function() {
         var d = new Date()
@@ -191,7 +209,7 @@ function ConstructionObject(_construction, _name) {
                 freeDragPts[i].checkMagnets();
                 dragCoords[i].x += freeDragPts[i].getX() - oldX;
                 dragCoords[i].y += freeDragPts[i].getY() - oldY;
-                freeDragPts[i].blockDrag(freeDragPts[i].getX(), freeDragPts[i].getY());
+                // freeDragPts[i].blockDrag(freeDragPts[i].getX(), freeDragPts[i].getY());
             }
         } else {
             Cn.translate(_x - dragCoords[0].x, _y - dragCoords[0].y);
@@ -199,7 +217,8 @@ function ConstructionObject(_construction, _name) {
             dragCoords[0].y = _y;
             Cn.computeAll();
         }
-
+        // if (this.ondrag) this.ondrag.value();
+        // console.log(this.getName());
     };
 
 
@@ -280,7 +299,8 @@ function ConstructionObject(_construction, _name) {
     };
 
     this.computeChilds = function() {
-        //        if (childList.length) console.log("****** "+childList.length);
+        // console.log(this.getName());
+        // if (childList.length) console.log("****** "+childList.length);
         for (var i = 0; i < childList.length; i++) {
             //            console.log(childList[i].getName());
             childList[i].compute();
@@ -1092,6 +1112,10 @@ function ConstructionObject(_construction, _name) {
 
     this.getStyle = function(src) {
         src.styleWrite(true, name, "STL", this.getStyleString());
+    };
+
+    this.getBlock = function(src) {
+        if (!this.blocks.isEmpty()) src.blockWrite(name, this.blocks.getSource(), "BLK");
     };
 
 

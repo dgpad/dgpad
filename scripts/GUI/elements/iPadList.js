@@ -13,7 +13,7 @@ function iPadList(_own, _proc, _nme, _l, _t, _w, _h) {
     var backBtn = new iPadDOMElt("a");
     backBtn.attr("className", "iPadBtnBack");
     backBtn.settxt("Back");
-
+ 
 
     // Un item (pas un répertoire) a été tapé :
     var touchItem = function(_li) {

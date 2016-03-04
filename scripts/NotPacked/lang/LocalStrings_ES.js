@@ -182,6 +182,9 @@ $L.props_text_console = "Consola de scripts";
 // Mercredi 9 décembre 2015
 $L.props_general_degree = "ángulo en grados";
 
+// Dimanche 24 janvier 2016
+$L.props_general_dragall="Arrastrar todos los objetos";
+
 $L.number = function(_n) {
     return _n.toString().replace(".", ",")
 };

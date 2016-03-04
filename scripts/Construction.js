@@ -33,6 +33,14 @@ function Construction(_canvas) {
     // User can drag all types of objects or only moveable objects :
     var DragOnlyMoveable = true;
 
+    me.getObjectsFromType = function(_t) {
+        var tab = [];
+        for (var i = 0; i < V.length; i++) {
+            if (V[i].getCode() === _t) tab.push(V[i])
+        };
+        return tab
+    };
+
 
     me.isDragOnlyMoveable = function() {
         return DragOnlyMoveable;
@@ -809,6 +817,9 @@ function Construction(_canvas) {
         _tab.sort(doOrderSortFilter);
     };
 
+
+
+
     var countTail = function(o) {
         if (o.Flag) {
             return o.Scratch;
@@ -832,6 +843,10 @@ function Construction(_canvas) {
             o.Scratch = max + 1;
         }
         return o.Scratch;
+    };
+
+    me.orderObjects = function() {
+        me.doOrder(V);
     };
 
     //    var rawValidate = function(ev) {
@@ -1092,17 +1107,20 @@ function Construction(_canvas) {
             for (var i = 0; i < len; i++) {
                 V[i].getSource(src);
                 V[i].getStyle(src);
+                V[i].getBlock(src);
             }
             var txt = "// Coordinates System :\n";
             txt += me.coordsSystem.getSource();
-            txt += "\n\n";
-            txt += "// Geometry :\n";
+            txt += "\n\n// Geometry :\n";
             txt += src.getGeom();
-            txt += "\n\n";
-            txt += "// Styles :\n";
+            txt += "\n\n// Styles :\n";
             txt += src.getStyle();
             txt += me.coordsSystem.getStyle();
             txt += canvas.getStyle();
+            if (src.getBlock() !== "") {
+                txt += "\n\n// Blockly :\n";
+                txt += src.getBlock();
+            };
             //            if (me.isAxisUsed()) txt+=me.coordsSystem.getStyle();
             return txt;
         }
@@ -1641,5 +1659,15 @@ function Construction(_canvas) {
         me.showAnimations(true);
     };
 
+
+    // **********************************************************
+    // **********************************************************
+    // ******************** BLOCKLY PART ************************
+    // **********************************************************
+    // **********************************************************
+
+    function PRGM() {
+
+    }
 
 }

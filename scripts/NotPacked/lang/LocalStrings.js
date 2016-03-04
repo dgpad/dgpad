@@ -214,6 +214,7 @@ $L.blockly = {};
 $L.blockly.geometry = "Geometry";
 $L.blockly.logic = "Logic";
 $L.blockly.loops = "Loops";
+$L.blockly.expression = "Expressions";
 $L.blockly.math = "Math";
 $L.blockly.lists = "Lists";
 $L.blockly.variables = "Variables";
@@ -230,8 +231,54 @@ $L.blockly.pt_andof = "and";
 $L.blockly.pt_and = "and";
 
 // Lundi 11 janvier 2016
-$L.animation_without="None";
-$L.animation_label="Animation";
+$L.animation_without = "None";
+$L.animation_label = "Animation";
 
 // Dimanche 24 janvier 2016
-$L.props_general_dragall="Drag all objects"
+$L.props_general_dragall = "Drag all objects";
+
+// Lundi 22 février 2016
+$L.blockly.var_return = "Return";
+$L.blockly.push_add = "Append";
+$L.blockly.push_end = "at the end of list";
+$L.blockly.list_new = "Create new empty list";
+
+// Mardi 23 février 2016
+$L.blockly.value = "Value";
+$L.blockly.o = {};
+$L.blockly.o.expression = "of expression";
+$L.blockly.o.point = "of point";
+$L.blockly.o.circle1 = "of circle";
+$L.blockly.o.segment = "of segment";
+$L.blockly.o.fixedangle = "of fixed angle";
+$L.blockly.o.angle = "of angle";
+$L.blockly.o.area = "of polygon";
+$L.blockly.o2 = {};
+$L.blockly.o2.expression = "expression";
+$L.blockly.o2.point = "point";
+$L.blockly.o2.circle1 = "circle";
+$L.blockly.o2.segment = "segment";
+$L.blockly.o2.fixedangle = "fixed angle";
+$L.blockly.o2.angle = "angle";
+$L.blockly.o2.area = "polygon";
+$L.blockly.stop_list = "Break the list";
+$L.longpress_message = "What do you want to do ?";
+$L.create_exp = "Create an expression";
+$L.create_exp_pts = "Create a points list";
+$L.create_exp_segs = "Create a segments list";
+$L.create_cursor_int = "Create integer cursor";
+$L.create_cursor_cont = "Create continuous cursor";
+$L.create_widget_edit = "Create edition widget";
+$L.edit_widget_name = "Name of object to edit";
+$L.edit_widget_edit = "Edit object";
+$L.blockly.fixvalue = "Fix";
+$L.blockly.copyall = "Copy all blocks";
+$L.blockly.copyselected = "Copy selected blocks";
+$L.blockly.paste = "Paste blocks";
+$L.blockly.displaySource = "Display source code";
+$L.blockly.print="Print";
+$L.blockly.withlf="with line feed";
+$L.blockly.withoutlf="without line feed";
+$L.blockly.tab_exp="Expression";
+$L.blockly.tab_drag="On drag";
+$L.blockly.tab_mouseup="On mouse up";

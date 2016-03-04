@@ -21,6 +21,8 @@ function Expression(_obj, _s, _oneDX) {
 
     var parseInit = function() {
 
+        // console.log(interpreter.getEXPS());
+
         //        console.log(init.js);
 
         // Remplacement dans le init.js de toute partie d'expression contenant des dx par la dérivée :
@@ -137,6 +139,11 @@ function Expression(_obj, _s, _oneDX) {
         DT = null;
     };
 
+    // Pour Blockly :
+    me.forcevalue = function(x, y, z, t) {
+        return f(x, y, z, t);
+    }
+
     me.value = function(x, y, z, t) {
         if (VALUE)
             return VALUE;
@@ -173,9 +180,6 @@ function Expression(_obj, _s, _oneDX) {
             return DT;
         return DT.value(x, y, z, t);
     };
-
-
-
 
 
     // Methode appelée pour la réinitialisation des parents (voir ExpressionObject) :
@@ -313,4 +317,17 @@ Expression.fixAll = function() {
     for (var i = 0; i < Expression.ALL.length; i++) {
         Expression.ALL[i].fix();
     }
+}
+
+// Méthode de classe devant être appelée chaque fois qu'on veut supprimer
+// une expression. Elle devrait théoriquement être appelée aussi chaque 
+// fois qu'on veut en créer une nouvelle qui en écrase une autre :
+Expression.delete = function(_ex) {
+    if (_ex) {
+        var i = Expression.ALL.indexOf(_ex);
+        if (i != -1) {
+            Expression.ALL.splice(i, 1);
+        }
+    }
+    return null;
 }

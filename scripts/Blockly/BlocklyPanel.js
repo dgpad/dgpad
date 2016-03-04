@@ -1,17 +1,36 @@
-function BlocklyPanel(_owner,_height) {
+function BlocklyPanel(_owner, _showsettings, _closeCallback, _currentTabCallBack, _height) {
     var me = this;
     var cb_src = $APP_PATH + "NotPacked/images/dialog/closebox.svg"; // Closebox image
-    // var tl_str = "DG-Blocks"; // Window title
-    var tl_height = 0; // Title bar height
-    var cb_width = 25; // Close box width
-    var cb_margin=10; // Margins from top
-    var p_margin=0; // Panel margin from top and bottom
-    var tb_height = 0; // Bottom toolbar height
-    var rl_width = 5; // Resize vertical line width
+    var mn_src = $APP_PATH + "NotPacked/images/dialog/settings.svg"; // Closebox image
+    var rz_src = $APP_PATH + "NotPacked/images/dialog/resize.svg"; // Closebox image
+    var tl_str = "DG-Blocks"; // Window title
+    var tl_height = 28; // Title bar height
+    var cb_width = 20; // Close box width
+    var cb_margin_top = 3; // Margins from top
+    var cb_margin_right = 5; // Margins from right
+    var mn_width = 20; // Close box width
+    var mn_margin_top = 3; // Margins from top
+    var mn_margin_left = 5; // Margins from left
+    var rz_width = 20; // Resize box width
+    var rz_margin = 3; // Resize box margin
+    var p_margin = 20; // Panel margin from top and bottom
+    var tb_height = 30; // Bottom toolbar height
     var left = 0,
         top = 0,
         width = 0,
         height = 0;
+
+    var tabs = []; // tab set
+    var tab_width = 80; // tab width
+    var tab_height = 20; // tab height
+    var tab_gap = 5; // gap between tabs
+    var tab_left_margin = 124; // space before tabs
+    var current_tab = -1; // Current selected tab
+
+
+    me.getMode = function() {
+        return current_tab;
+    }
 
 
     me.setbounds = function(l, t, w, h) {
@@ -20,12 +39,14 @@ function BlocklyPanel(_owner,_height) {
         width = w;
         height = h;
         wp.bnds(l, t, w, h);
-        tl.bnds(0, 0, w-rl_width, tl_height);
+        tl.bnds(0, 0, w, tl_height);
         tl.stl("line-height", tl_height + "px");
-        cb.bnds(w - cb_width-rl_width, tl_height+cb_margin, cb_width, cb_width);
-        ct.bnds(0, tl_height, w - rl_width, h - tl_height - tb_height);
-        rl.bnds(w - rl_width, 0, rl_width, h);
+        cb.bnds(w - cb_width - cb_margin_right, cb_margin_top, cb_width, cb_width);
+        mn.bnds(mn_margin_left, mn_margin_top, mn_width, mn_width);
+        ct.bnds(0, tl_height, w, h - tl_height - tb_height);
+        // rl.bnds(w - rl_width, 0, rl_width, h);
         tb.bnds(0, h - tb_height, w, tb_height);
+        rz.bnds(w - rz_width - rz_margin, h - rz_width - rz_margin, rz_width, rz_width);
         if (typeof Blockly !== 'undefined') Blockly.fireUiEvent(window, 'resize');
     }
 
@@ -38,15 +59,19 @@ function BlocklyPanel(_owner,_height) {
         }
     }
 
-    me.hide = function() {
-        window.prompt(Blockly.JavaScript.workspaceToCode(Blockly.mainWorkspace))
-            // Blockly.mainWorkspace.updateToolbox('<xml id="toolbox" style="display: none"><block type="dgpad_point"></block></xml>');
-            // setTimeout(function() {
-            //     wp.stls("transform:scale(0)");
-            // }, 1);
-            // setTimeout(function() {
-            //     _owner.removeChild(wp);
-            // }, 210);
+    me.hide = function(_ev) {
+        // window.prompt(Blockly.JavaScript.workspaceToCode(Blockly.mainWorkspace))
+        // Blockly.mainWorkspace.updateToolbox('<xml id="toolbox" style="display: none"><block type="dgpad_point"></block></xml>');
+        _closeCallback();
+        // _ev.stopPropagation();
+        _ev.preventDefault();
+        setTimeout(function() {
+            wp.stls("transform:scale(0)");
+        }, 1);
+        setTimeout(function() {
+            if (typeof Blockly !== 'undefined') Blockly.fireUiEvent(window, 'resize');
+            _owner.removeChild(wp);
+        }, 210);
     };
 
     me.show = function() {
@@ -54,7 +79,19 @@ function BlocklyPanel(_owner,_height) {
         setTimeout(function() {
             wp.stls("transform:scale(1)");
         }, 1);
+        setTimeout(function() {
+            me.setbounds(left, top, width, height)
+        }, 310);
     };
+
+    me.isHidden = function() {
+        return (wp.parentNode === null);
+    }
+
+    me.setTitle = function(name) {
+        tl.innerHTML = tl_str + " : " + name;
+    }
+
 
     var xx = 0;
     var yy = 0;
@@ -87,13 +124,16 @@ function BlocklyPanel(_owner,_height) {
     var resizemove = function(ev) {
         ev.preventDefault();
         var w = (width + ev.pageX - xx < 100) ? width : (width + ev.pageX - xx);
-        me.setbounds(left, top, w, height);
+        var h = (height + ev.pageY - yy < 100) ? height : (height + ev.pageY - yy);
+        me.setbounds(left, top, w, h);
         xx = ev.pageX;
+        yy = ev.pageY;
     }
 
     var resizedown = function(ev) {
         ev.preventDefault();
         xx = ev.pageX;
+        yy = ev.pageY;
         window.addEventListener('touchmove', resizemove, false);
         window.addEventListener('touchend', resizeup, false);
         window.addEventListener('mousemove', resizemove, false);
@@ -145,42 +185,83 @@ function BlocklyPanel(_owner,_height) {
         return el;
     };
 
+    var select_tab = function(_s) {
+        // console.log(_s);
+        if (_s !== current_tab) {
+            current_tab = _s;
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].stls("background-color:rgba(90,90,90,1);color:rgba(230,230,230,1)");
+            };
+            tabs[_s].stls("background-color:rgba(245,245,245,1);color:rgba(30,30,30,1)");
+        }
+    }
+
+    me.selectTab = function(_i) {
+        select_tab(_i);
+    }
+
+    var createtab = function(_n, _c) {
+        var t = createDiv();
+        var i = tabs.length;
+        t.md(function(ev) {
+            ev.preventDefault();
+            select_tab(i);
+            _currentTabCallBack();
+        });
+        t.stls("cursor:pointer;border-left: 1px solid #b4b4b4;border-bottom: 1px solid #b4b4b4;border-right: 1px solid #b4b4b4;background-color:rgba(90,90,90,1);color:rgba(230,230,230,1);position:absolute;border-bottom-right-radius:10px;width:" + tab_width + "px;height:" + tab_height + "px;font-size: 14px;font-weight:normal;font-family: Helvetica, Arial, sans-serif;text-align: center;white-space: pre-wrap;margin: 0px;line-height:" + tab_height + "px;vertical-align:middle;top:" + (-1) + "px;left:" + (tab_left_margin + tabs.length * (tab_width + tab_gap)) + "px");
+        t.innerHTML = _n;
+        tb.add(t);
+        tabs.push(t);
+    }
+
     var wp = createDiv(); // main div wrapper
     var tl = createDiv(); // title bar div
+    var mn = createDiv(); // Contextual menu div
     var cb = createDiv(); // close box div
     var ct = createDiv(); // content div
-    // var rz = createDiv(); // resize box div
-    var rl = createDiv(); // resize vertical line div
+    var rz = createDiv(); // resize box div
     var tb = createDiv(); // bottom toolbar div
     var xml = createDiv(); // div for loading Blockly categories
-    xml.att("id", "dgpad_xml");
+    // xml.att("id", "dgpad_xml");
     xml.bnds(0, 0, 0, 0);
 
-    wp.stls("position:absolute;border-top-right-radius:0px;border-bottom-right-radius:0px;overflow:hidden;border: 1px solid #b4b4b4;transition:transform 0.2s linear;transform:scale(0)");
-    tl.stls("background-color:rgba(210,210,210,1);position:absolute;font-size: 16px;font-family: Helvetica, Arial, sans-serif;text-shadow: 1px 1px 5px #777;text-align: center;white-space: pre-wrap;margin: 0px;vertical-align:middle");
+    wp.stls("position:absolute;border-bottom-left-radius:10px;border-bottom-right-radius:10px;overflow:hidden;border: 1px solid #b4b4b4;transition:transform 0.2s linear;transform:scale(0);z-index:1");
+    tl.stls("cursor:all-scroll;background-color:rgba(210,210,210,1);position:absolute;font-size: 16px;font-family: Helvetica, Arial, sans-serif;text-shadow: 1px 1px 5px #777;text-align: center;white-space: pre-wrap;margin: 0px;vertical-align:middle");
+    mn.stls("background-color:rgba(0,0,0,0);position:absolute;background-position:center;background-repeat:no-repeat;background-size:100% 100%");
+    mn.stl("background-image", "url(" + mn_src + ")");
     cb.stls("background-color:rgba(0,0,0,0);position:absolute;background-position:center;background-repeat:no-repeat;background-size:100% 100%");
     cb.stl("background-image", "url(" + cb_src + ")");
-    ct.stls("background-color:rgba(230, 230, 230, 0.9);position:absolute")
-    rl.stls("position:absolute;background-color:rgba(230,230,230,0.5);border: 0px;cursor:ew-resize")
+    rz.stls("background-color:rgba(0,0,0,0);position:absolute;background-position:center;background-repeat:no-repeat;background-size:100% 100%;cursor:se-resize");
+    rz.stl("background-image", "url(" + rz_src + ")");
+    ct.stls("background-color:rgba(230, 230, 230, 0.5);position:absolute")
+        // rl.stls("position:absolute;background-color:rgba(230,230,230,0.5);border: 0px;cursor:ew-resize")
     tb.stls("background-color:rgba(200, 200, 200, 0.9);position:absolute")
-    // tl.innerHTML = tl_str;
+    tl.innerHTML = tl_str;
 
     cb.md(me.hide);
+    mn.md(_showsettings);
     tl.md(dragdown);
     tl.mu(dragup);
-    rl.md(resizedown);
-    rl.mu(resizeup);
+    rz.md(resizedown);
+    rz.mu(resizeup);
 
-    me.setbounds(-1, p_margin-1, 500, _height-2*p_margin);
+    me.setbounds(-1, p_margin - 1, 500, _height - 2 * p_margin);
 
     wp.add(xml);
     wp.add(tl);
     wp.add(ct);
     wp.add(tb);
     wp.add(cb);
-    wp.add(rl);
+    wp.add(mn);
+    wp.add(rz);
+    createtab($L.blockly.tab_exp);
+    createtab($L.blockly.tab_drag);
+    createtab($L.blockly.tab_mouseup);
+    select_tab(0);
+    
 
     me.show();
 
     me.DIV = ct;
+    me.XML = xml;
 }

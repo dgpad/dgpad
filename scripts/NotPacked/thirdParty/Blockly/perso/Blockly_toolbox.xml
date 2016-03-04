@@ -1,26 +1,54 @@
 <xml id="toolbox" style="display: none">
-  <category name="$L.blockly.geometry">
-    <block type="dgpad_point"></block>
-    <block type="dgpad_segment"></block>
-    <block type="dgpad_droite"></block>
-    <block type="dgpad_anglebiss"></block>
-    <block type="dgpad_plumb"></block>
-    <block type="dgpad_circle"></block>
-  </category>
-    <category name="$L.blockly.logic">
-            <block type="controls_if"></block>
-            <block type="controls_if">
-                <mutation else="1"></mutation>
+    <!-- <category name="$L.blockly.geometry">
+        <category name="DIVERS">
+            <block type="dgpad_return">
+                <value name="NAME">
+                    <block type="variables_get">
+                        <field name="VAR">i</field>
+                    </block>
+                </value>
             </block>
-            <block type="logic_compare"></block>
-            <block type="logic_operation"></block>
-            <block type="logic_negate"></block>
-            <block type="logic_boolean"></block>
-            <block type="logic_null"></block>
-            <block type="logic_ternary"></block>
-        
+        </category>
+        <category name="CREATION">
+            <block type="dgpad_point"></block>
+            <block type="dgpad_segment"></block>
+            <block type="dgpad_droite"></block>
+            <block type="dgpad_anglebiss"></block>
+            <block type="dgpad_plumb"></block>
+            <block type="dgpad_circle"></block>
+        </category>
+    </category> -->
+    <category name="$L.blockly.logic" colour="210">
+        <block type="controls_if"></block>
+        <block type="controls_if">
+            <mutation else="1"></mutation>
+        </block>
+        <block type="logic_compare"></block>
+        <block type="logic_operation"></block>
+        <block type="logic_negate"></block>
+        <block type="logic_boolean"></block>
+        <block type="logic_null"></block>
+        <block type="logic_ternary"></block>
     </category>
-    <category name="$L.blockly.loops">
+    <category name="$L.blockly.loops" colour="120">
+        <block type="controls_for" id="Q])V6nf~C#6}]v=lB.Vy" x="63" y="113">
+            <field name="VAR">i</field>
+            <value name="FROM">
+                <shadow type="math_number" id="9dE4T-Uu?w6vL#l}cGaB">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+            <value name="TO">
+                <shadow type="math_number" id="%0_xV~-o4pe:)MB,ek,0">
+                    <field name="NUM">10</field>
+                </shadow>
+            </value>
+            <value name="BY">
+                <shadow type="math_number" id="y[1B~v(CIy7[%sWCDKqB">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+        </block>
         <block type="controls_repeat_ext">
             <value name="TIMES">
                 <block type="math_number">
@@ -31,7 +59,19 @@
         <block type="controls_whileUntil"></block>
         <block type="controls_flow_statements"></block>
     </category>
-    <category name="$L.blockly.math">
+    <sep></sep>
+    <category name="$L.blockly.expression" colour="20">
+        <block type="dgpad_get_object"></block>
+        <block type="dgpad_set_object"></block>
+        <block type="dgpad_expression_input"></block>
+        <block type="dgpad_print"></block>
+        <block type="dgpad_return"></block>
+    </category>
+
+
+
+
+    <category name="$L.blockly.math" colour="230">
         <block type="math_number"></block>
         <block type="math_arithmetic"></block>
         <block type="math_single"></block>
@@ -74,8 +114,10 @@
         </block>
         <block type="math_random_float"></block>
     </category>
-    <category name="$L.blockly.lists">
-        <block type="lists_create_empty"></block>
+    <category name="$L.blockly.lists" colour="260">
+        <block type="dgpad_create_list"></block>
+        <block type="dgpad_stop_list"></block>
+        <block type="dgpad_push"></block>
         <block type="lists_create_with"></block>
         <block type="lists_repeat">
             <value name="NUM">
@@ -90,11 +132,10 @@
         <block type="lists_getIndex"></block>
         <block type="lists_setIndex"></block>
     </category>
-    <category name="$L.blockly.variables" custom="VARIABLE"></category>
-    <category name="$L.blockly.functions" custom="PROCEDURE"></category>
     <sep></sep>
+    <category name="$L.blockly.variables" custom="VARIABLE" colour="330"></category>
+    <category name="$L.blockly.functions" custom="PROCEDURE" colour="290">
+    </category>
 </xml>
-
- <xml id="startBlocks" style="display: none">
-    <block type="dgpad_construction" x="20" y="20"></block>
-  </xml>
+<xml id="startBlocks" style="display: none">
+</xml>

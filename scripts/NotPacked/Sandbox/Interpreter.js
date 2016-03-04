@@ -5,6 +5,7 @@ function Interpreter(_win, _canvas) {
     var $macromode = false;
     var $caller = null; // Objet qui appelle le script par bouton
     var namespace = {};
+    var blockly_namespace = {};
 
 
     me.W = _win;
@@ -269,6 +270,25 @@ function Interpreter(_win, _canvas) {
     };
 
 
+    // Blockly part :
+
+    var SET = function(_var, _val) {
+        blockly_namespace[_var] = _val;
+    }
+
+    var GET = function(_var, _val) {
+        // if (_var.lastIndexOf("dgpad_var_", 0) === 0) {
+        //     var obj = me.C.find(_var.replace(/dgpad_var_/g, ""));
+        //     if (obj && obj.getValue) return (obj.getValue());
+        //     // if (obj && obj.getValue) return JSON.stringify(obj.getValue());
+        //     else return NaN;
+        // } else {
+        //     return blockly_namespace[_var];
+        // }
+        return blockly_namespace[_var];
+    }
+
+
     // Methode obsolete, maintenue pour la 
     // compatibilité des figures 3D d'avant
     // le 22 novembre 2013 :
@@ -292,13 +312,13 @@ function Interpreter(_win, _canvas) {
 
     var Print = function(_m) {
         if ($caller)
-            $caller.print(_m);
+            $caller.print(JSON.stringify(_m));
         return null;
     };
 
     var Println = function(_m) {
         if ($caller)
-            $caller.print(_m + "\n");
+            $caller.print(JSON.stringify(_m) + "\n");
         return null;
     };
 
@@ -309,7 +329,7 @@ function Interpreter(_win, _canvas) {
 
     var SetExpressionValue = function(_e, _m) {
         var o = me.f(_e);
-        o.setExp(_m);
+        o.setExp(JSON.stringify(_m).replace(/null/g,"NaN"));
     };
 
     var Find = function(_n) {
@@ -732,6 +752,12 @@ function Interpreter(_win, _canvas) {
 
     var parseBoolean = function(val) {
         return !!JSON.parse(String(val).toLowerCase());
+    }
+
+    var BLK = function(_n, _s) {
+        var o = me.f(_n);
+        // console.log(_s);
+        o.blocks.setSource(_s);
     }
 
     var STL = function(_n, _s) {

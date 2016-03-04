@@ -19,6 +19,16 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     var cOffsetY = 20; // Décalage du curseur sous l'expression
     var anchor = null; // PointObject auquel l'expression est rattachée
     var cPT = new PointObject(Cn, me.getName() + ".cursor", 0, 0);
+
+    this.blocks.setCurrent("oncompute");
+
+
+
+    // this.getMe = function() {
+    //     return me;
+    // };
+
+
     //    cPT.setParent(me);
     cPT.getCode = function() {
         return "expression_cursor";
@@ -94,6 +104,9 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     };
     me.getcPTName = function() {
         return cPT.getName();
+    };
+    me.getcPT = function() {
+        return cPT;
     };
     me.setH = me.setHidden;
     me.setHidden = function(_sel) {
@@ -263,6 +276,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
             s = "@callproperty,@calltrash,@objectmover,@noanchor,@callcalc";
         // if (me.isCursor())
         if ((E1 !== null) && (E1.isNum())) s += ",@spring";
+        s += ",@blockly";
         return s;
     };
 
@@ -284,7 +298,6 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         if (anchor) {
             this.setXY(anchor.getX() + Alpha[0], anchor.getY() + Alpha[1]);
         }
-
     };
 
     var agrandirCursor = false;
@@ -562,13 +575,24 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         }
     };
 
+    // me.blockChanged = function() {
+    //     if ((me.blocks) && (me.blocks.oncompute)) {
+    //         var fname = "bl_" + $U.number2letter(Date.now().toString());
+    //         var cod = "var " + fname + "=function(){\n";
+    //         cod += me.blocks.oncompute.sync;
+    //         cod += "\n};\n" + fname + "()";
+    //         me.setE1(cod);
+    //     }
+    // };
 
-    // setExp pour les widgets :
-    me.setExp = me.setE1 = function(_t) {
-        if (E1)
-            delete E1;
+
+    // setExp pour les widgets et pour blockly :
+    parent.setExpression = me.setExp = me.setE1 = function(_t) {
+        E1 = Expression.delete(E1);
         E1 = new Expression(me, _t);
+        // console.log("before:"+me.getParent().length);
         setMethods();
+        // console.log("after:"+me.getParent().length);
         //        me.computeChilds();
     };
     me.getExp = function() {
@@ -585,8 +609,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         return T;
     };
     me.setMin = function(_t) {
-        if (min)
-            delete min;
+        min = Expression.delete(min);
         min = new Expression(me, _t);
         setMethods();
     };
@@ -596,8 +619,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         return "";
     };
     me.setMax = function(_t) {
-        if (max)
-            delete max;
+        max = Expression.delete(max);
         max = new Expression(me, _t);
         setMethods();
     };
@@ -620,6 +642,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
 
     // Refait à neuf la liste des parents :
     me.refresh = function() {
+        // console.log("before:"+me.getParent().length);
         me.setParentList((me.isCursor()) ? [cPT] : []);
         if (E1)
             E1.refresh();
@@ -627,6 +650,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
             min.refresh();
         if (max)
             max.refresh();
+        // console.log("after:"+me.getParent().length);
     };
 
 

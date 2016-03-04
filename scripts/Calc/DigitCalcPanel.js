@@ -32,16 +32,16 @@ function DigitCalcPanel(_man, _canvas) {
     };
     (function() {
         var t = me.getOwnerBounds();
-        me.setBounds(0, t.height - canvas.prefs.controlpanel.size - 240 * scl, width, 240 * scl);
+        me.setBounds(0, t.height - canvas.prefs.controlpanel.size - 190  * scl, width, 190 * scl);
     })();
 
 
 
-    var gap = 12 * scl;
-    var bgap = 20 * scl;
+    var gap = 10 * scl;
+    var bgap = 10 * scl;
 
-    var btnW = 45 * scl;
-    var btnH = 45 * scl;
+    var btnW = 35 * scl;
+    var btnH = 35 * scl;
     var numBtnW = btnW * scl;
     // Pavé numérique :
     var numspad = new GUIElement(me, "div");
@@ -72,8 +72,8 @@ function DigitCalcPanel(_man, _canvas) {
     var wNum = btnW * 7 + gap * 6;
     numspad.setBounds(me.getBounds().width - wNum - gap, gap, wNum, g);
 
-    btnW = 45 * scl;
-    btnH = 45 * scl;
+    btnW = 35 * scl;
+    btnH = 35 * scl;
     var funcpad = new GUIElement(me, "div");
     funcpad.setAbsolute();
     //    funcpad.setStyles("background-color:green");
@@ -95,7 +95,7 @@ function DigitCalcPanel(_man, _canvas) {
     }
     var lim = 5;
     btnW = 64 * scl;
-    var smallBtnW = 45 * scl;
+    var smallBtnW = 35 * scl;
     h += btnH + gap;
 
     for (var i = 0; i < fcts.length; i++) {
@@ -128,7 +128,7 @@ function DigitCalcPanel(_man, _canvas) {
 
 
     btnW = 80 * scl;
-    btnH = 45 * scl;
+    btnH = 35 * scl;
     var cmdpad = new GUIElement(me, "div");
     cmdpad.setAbsolute();
     var cmds = "DEL|CLR_◀|▶".split("_");

@@ -9,6 +9,7 @@ function SourceWriter(_Cn) {
     var Cn = _Cn;
     var geom = "";
     var style = "";
+    var block = "";
 
     var vars = {};
     var names = {};
@@ -38,6 +39,9 @@ function SourceWriter(_Cn) {
     };
     me.getStyle = function() {
         return style;
+    };
+    me.getBlock = function() {
+        return block;
     };
 
     //    me.geomWrite = function(_withquotes, _name, _code) {
@@ -85,4 +89,10 @@ function SourceWriter(_Cn) {
         var args = params.join(",");
         style += _code + "(" + Cn.getVarName(_name) + "," + args + ");\n";
     };
+
+    me.blockWrite = function(_name, _src, _code) {
+        block += _code + "(" + Cn.getVarName(_name) + "," + _src + ");\n";
+    };
+
+
 }

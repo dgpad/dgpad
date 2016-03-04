@@ -12,7 +12,7 @@ function PrintPanel(_canvas, _closeProc) {
     me.addContent(lbl);
 
     var editBox = new GUIElement(_canvas, "textarea");
-    editBox.setStyles("position:absolute;-webkit-box-sizing: border-box;box-sizing: border-box;-moz-box-sizing: border-box;font-family:'Lucida Console';resize:none;font-size:13px;line-height:20px");
+    editBox.setStyles("position:absolute;-webkit-box-sizing: border-box;box-sizing: border-box;-moz-box-sizing: border-box;font-family:'Lucida Console';resize:none;font-size:18px;line-height:20px");
     editBox.setStyle("max-width", (www - 20) + "px");
     editBox.setStyle("min-width", (www - 20) + "px");
     editBox.setBounds(10, 40, (www - 20), (hhh - 50));
@@ -29,7 +29,8 @@ function PrintPanel(_canvas, _closeProc) {
     new CloseBox(me, close);
 
     me.setText = function(_m) {
-        editBox.getDocObject().value += _m
+        editBox.getDocObject().value += _m;
+        editBox.getDocObject().scrollTop = editBox.getDocObject().scrollHeight;
     };
 
     var xx = 0,

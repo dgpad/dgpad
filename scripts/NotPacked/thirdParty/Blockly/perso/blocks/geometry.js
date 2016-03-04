@@ -140,7 +140,7 @@ Blockly.Blocks['dgpad_point'] = {
         if (this.isInConstruction()) {
             var obj = Blockly.dgpad.CN.find(this.name());
             if (obj) {
-                obj.setBlockObj(this);
+                // obj.setBlockObj(this);
             };
             if (this.firstadd) {
                 Blockly.dgpad.addName(this.name());
