@@ -402,14 +402,24 @@ function PointObject(_construction, _name, _x, _y) {
         return EXY;
     };
 
+    // Pour Blockly :
+    parent.setExpression = this.setExpression = function(exy) {
+        var elt = JSON.parse(exy);
+        if ((elt.constructor === Array) && (elt.length === 2)) {
+            me.setExp(Cn.coordsSystem.px(elt[0]), Cn.coordsSystem.py(elt[1]));
+        } else {
+            me.setExp(exy);
+        }
+    }
+
     // exy est soit une formule (string), soit un nombre. S'il s'agit
     // d'un nombre, c'est l'abscisse et le second param
     // est l'ordonnée. S'il s'agit d'une formule, et s'il y a un second
     // param, celui-ci est un booléen qui indique s'il s'agit ou non d'un point 3D.
     // S'il n'y a pas de second param, le logiciel détermine s'il s'agit d'un
     // point 2d ou 3d.
-    // setExp pour les widgets, setExpression pour Blockly :
-    parent.setExpression = this.setExp = this.setEXY = function(exy, ey) {
+    // setExp pour les widgets  :
+    this.setExp = this.setEXY = function(exy, ey) {
         // console.log(exy);
         if (isStr(exy)) {
             // Si ex et ey sont des expressions :
@@ -426,7 +436,6 @@ function PointObject(_construction, _name, _x, _y) {
 
             var t = EXY.value();
             me.set3D((isArray(t)) && (t.length === 3));
-            me.compute();
 
         } else {
             // Si ex et ey sont des nombres :

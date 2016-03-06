@@ -274,24 +274,21 @@ function Interpreter(_win, _canvas) {
 
     var SET = function(_var, _val) {
         blockly_namespace[_var] = _val;
-    }
+    };
 
     var GET = function(_var, _val) {
-        // if (_var.lastIndexOf("dgpad_var_", 0) === 0) {
-        //     var obj = me.C.find(_var.replace(/dgpad_var_/g, ""));
-        //     if (obj && obj.getValue) return (obj.getValue());
-        //     // if (obj && obj.getValue) return JSON.stringify(obj.getValue());
-        //     else return NaN;
-        // } else {
-        //     return blockly_namespace[_var];
-        // }
         return blockly_namespace[_var];
-    }
+    };
+
+    var SET_EXP = function(_e, _m) {
+        var o = me.f(_e);
+        o.setExpression(JSON.stringify(_m).replace(/null/g, "NaN"));
+    };
 
     var INC = function(_var, _val) {
         var v = (_val === undefined) ? 1 : _val;
         blockly_namespace[_var] = blockly_namespace[_var] + v;
-    }
+    };
 
 
     // Methode obsolete, maintenue pour la 

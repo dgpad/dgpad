@@ -585,9 +585,14 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     //     }
     // };
 
+    // Pour Blockly :
+    parent.setExpression = this.setExpression = function(exy) {
+        me.setExp(exy);
+    }
+
 
     // setExp pour les widgets et pour blockly :
-    parent.setExpression = me.setExp = me.setE1 = function(_t) {
+    me.setExp = me.setE1 = function(_t) {
         E1 = Expression.delete(E1);
         E1 = new Expression(me, _t);
         // console.log("before:"+me.getParent().length);

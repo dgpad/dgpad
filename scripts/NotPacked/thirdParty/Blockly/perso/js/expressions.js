@@ -11,7 +11,8 @@ Blockly.JavaScript['dgpad_set_object'] = function(block) {
     var arg0 = Blockly.JavaScript.valueToCode(block, 'obj_val') || '0';
     Blockly.dgpad.VARS.push(name);
     var code = "SET(\"blockly_temp_var\"," + arg0 + ");\n";
-    code += 'SetExpressionValue("' + name + '",GET(\"blockly_temp_var\"));\n';
+    // code += 'SetExpressionValue("' + name + '",GET(\"blockly_temp_var\"));\n';
+    code += 'SET_EXP("' + name + '",GET(\"blockly_temp_var\"));\n';
     return code;
 };
 

@@ -96,7 +96,6 @@ Blockly.JavaScript['controls_repeat_ext'] = function(block) {
     branch = Blockly.JavaScript.addLoopTrap(branch, block.id);
     var loopVar = 'blockly_var_' + Blockly.JavaScript.variableDB_.getDistinctName(
         'count', Blockly.Variables.NAME_TYPE);
-
     var code = 'SET("' + loopVar + '",1);\n'
     code += 'while(GET("' + loopVar + '")<=' + repeats + '){\n';
     code += branch;
