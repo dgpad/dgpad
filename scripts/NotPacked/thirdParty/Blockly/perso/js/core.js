@@ -80,3 +80,27 @@ Blockly.JavaScript['controls_for'] = function(block) {
     code += '};\n';
     return code;
 };
+
+
+Blockly.JavaScript['controls_repeat_ext'] = function(block) {
+    // Repeat n times.
+    if (block.getField('TIMES')) {
+        // Internal number.
+        var repeats = String(Number(block.getFieldValue('TIMES')));
+    } else {
+        // External number.
+        var repeats = Blockly.JavaScript.valueToCode(block, 'TIMES',
+            Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+    }
+    var branch = Blockly.JavaScript.statementToCode(block, 'DO');
+    branch = Blockly.JavaScript.addLoopTrap(branch, block.id);
+    var loopVar = 'blockly_var_' + Blockly.JavaScript.variableDB_.getDistinctName(
+        'count', Blockly.Variables.NAME_TYPE);
+
+    var code = 'SET("' + loopVar + '",1);\n'
+    code += 'while(GET("' + loopVar + '")<=' + repeats + '){\n';
+    code += branch;
+    code += 'INC("' + loopVar + '",1);\n'
+    code += '};\n';
+    return code;
+};
