@@ -410,6 +410,7 @@ function PointObject(_construction, _name, _x, _y) {
     // point 2d ou 3d.
     // setExp pour les widgets, setExpression pour Blockly :
     parent.setExpression = this.setExp = this.setEXY = function(exy, ey) {
+        // console.log(exy);
         if (isStr(exy)) {
             // Si ex et ey sont des expressions :
             me.setParent();
@@ -425,7 +426,7 @@ function PointObject(_construction, _name, _x, _y) {
 
             var t = EXY.value();
             me.set3D((isArray(t)) && (t.length === 3));
-
+            me.compute();
 
         } else {
             // Si ex et ey sont des nombres :

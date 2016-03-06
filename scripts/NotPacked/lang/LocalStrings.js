@@ -255,6 +255,7 @@ $L.blockly.o.angle = "of angle";
 $L.blockly.o.area = "of polygon";
 $L.blockly.o2 = {};
 $L.blockly.o2.expression = "expression";
+$L.blockly.o2.list="list";
 $L.blockly.o2.point = "point";
 $L.blockly.o2.circle1 = "circle";
 $L.blockly.o2.segment = "segment";

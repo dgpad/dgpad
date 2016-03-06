@@ -288,6 +288,11 @@ function Interpreter(_win, _canvas) {
         return blockly_namespace[_var];
     }
 
+    var INC = function(_var, _val) {
+        var v = (_val === undefined) ? 1 : _val;
+        blockly_namespace[_var] = blockly_namespace[_var] + v;
+    }
+
 
     // Methode obsolete, maintenue pour la 
     // compatibilité des figures 3D d'avant
@@ -329,7 +334,7 @@ function Interpreter(_win, _canvas) {
 
     var SetExpressionValue = function(_e, _m) {
         var o = me.f(_e);
-        o.setExp(JSON.stringify(_m).replace(/null/g,"NaN"));
+        o.setExp(JSON.stringify(_m).replace(/null/g, "NaN"));
     };
 
     var Find = function(_n) {

@@ -36,10 +36,12 @@ function Construction(_canvas) {
     me.getObjectsFromType = function(_t) {
         var tab = [];
         for (var i = 0; i < V.length; i++) {
-            if (V[i].getCode() === _t) tab.push(V[i])
+            if (V[i].getCode() === "expression_cursor") continue;
+            if ((V[i].getCode() === _t) || ((V[i].getFamilyCode() === _t))) tab.push(V[i])
         };
         return tab
     };
+
 
 
     me.isDragOnlyMoveable = function() {

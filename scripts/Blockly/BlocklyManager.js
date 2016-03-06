@@ -69,6 +69,7 @@ function BlocklyManager(_canvas) {
 
 
     var displaySource = function() {
+        // me.print(Blockly.JavaScript.workspaceToCode(workspace) + "\n");
         me.print(Blockly.JavaScript.workspaceToCode(workspace).replace(/^\s*var\s*\w+\s*;/gm, "").replace(/blockly_var_/g, "").trim() + "\n");
     };
 
@@ -140,6 +141,18 @@ function BlocklyManager(_canvas) {
             me.addName = function(_n) {
                 NMS.push(_n);
             };
+            me.objectPopup = function(_t) {
+                // console.log("objectPopup :"+_t);
+                var props = me.CN.getObjectsFromType(_t);
+                var tab = [];
+                for (var i = 0; i < props.length; i++) {
+                    // On doit absolument empécher l'autoréférence en mode Expression :
+                    if ((MODE[panel.getMode()] !== "oncompute") || (OBJ != props[i]))
+                        tab.push([props[i].getName(), props[i].getName()]);
+                };
+                if (tab.length === 0) tab.push(["? ", null]);
+                return (new Blockly.FieldDropdown(tab));
+            };
             me.getName = canvas.namesManager.getName;
             me.refresh = canvas.namesManager.refresh;
         };
@@ -186,7 +199,7 @@ function BlocklyManager(_canvas) {
     // Appelée chaque fois que quelque chose change
     // dans le workspace de Blockly :
     var onchanged = function() {
-        console.log("onchanged : " + OBJ.getName());
+        // console.log("onchanged : " + OBJ.getName());
         // Bloquer l'évenement "onchanged" quand on vient d'éditer un objet :
         if (from_edit) {
             from_edit = false;
@@ -262,7 +275,7 @@ function BlocklyManager(_canvas) {
             var elt = Blockly.Xml.textToDom(xml);
             Blockly.Xml.domToWorkspace(workspace, elt);
         }
-        console.log("showCurrentTab");
+        // console.log("showCurrentTab");
     };
 
 
@@ -278,7 +291,7 @@ function BlocklyManager(_canvas) {
                 Blockly.Xml.domToWorkspace(workspace, elt);
             }
         }
-
+        from_edit = true;
     };
 
     var hideCallback = function() {

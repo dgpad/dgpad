@@ -246,6 +246,7 @@ $L.blockly.o.angle = "de l'angle";
 $L.blockly.o.area = "du polygone";
 $L.blockly.o2 = {};
 $L.blockly.o2.expression = "l'expression";
+$L.blockly.o2.list = "la liste";
 $L.blockly.o2.point = "le point";
 $L.blockly.o2.circle1 = "le cercle";
 $L.blockly.o2.segment = "le segment";

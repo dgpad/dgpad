@@ -27,7 +27,6 @@ Blockly.JavaScript['dgpad_return'] = function(block) {
     return code;
 };
 
-
 Blockly.JavaScript['dgpad_print'] = function(block) {
     var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
     var dropdown_name = block.getFieldValue('NAME');
