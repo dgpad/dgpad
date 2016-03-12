@@ -274,3 +274,5 @@ $L.blockly.withoutlf = "sans retour à la ligne";
 $L.blockly.tab_exp = "Expression";
 $L.blockly.tab_drag = "Déplacé";
 $L.blockly.tab_mouseup = "Relâché";
+$L.blockly.lang="fr.js";
+$L.blockly.aspect="Aspect";

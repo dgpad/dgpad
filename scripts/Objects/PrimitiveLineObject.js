@@ -227,16 +227,24 @@ function PrimitiveLineObject(_construction, _name, _P1) {
     };
 
     this.intersectLineLine = function(_D, _P) {
+
         var dxA = NDX,
             dyA = NDY,
             dxB = _D.getNDX(),
             dyB = _D.getNDY();
         var det = dxB * dyA - dxA * dyB;
+
         if (det !== 0) {
             var A = this.P1,
                 B = _D.P1;
             var num1 = dyA * A.getX() - dxA * A.getY();
             var num2 = dxB * B.getY() - dyB * B.getX();
+
+            // if (_P.getName() === "N") {
+            //     console.log("intersectLineLine");
+            //     console.log(((dxB * num1 + dxA * num2) / det));
+            //     console.log(((dyB * num1 + dyA * num2) / det));
+            // }
             _P.setXY((dxB * num1 + dxA * num2) / det, (dyB * num1 + dyA * num2) / det);
         }
     };

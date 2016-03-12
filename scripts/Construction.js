@@ -37,7 +37,8 @@ function Construction(_canvas) {
         var tab = [];
         for (var i = 0; i < V.length; i++) {
             if (V[i].getCode() === "expression_cursor") continue;
-            if ((V[i].getCode() === _t) || ((V[i].getFamilyCode() === _t))) tab.push(V[i])
+            if (_t==="any") tab.push(V[i])
+            else if ((V[i].getCode() === _t) || ((V[i].getFamilyCode() === _t))) tab.push(V[i])
         };
         return tab
     };

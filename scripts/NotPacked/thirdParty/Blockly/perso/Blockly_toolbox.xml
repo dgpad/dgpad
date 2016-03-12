@@ -60,17 +60,50 @@
         <block type="controls_flow_statements"></block>
     </category>
     <sep></sep>
+    <category name="$L.blockly.aspect" colour="65">
+        <block type="dgpad_style_fix"></block>
+        <block type="dgpad_style_color"></block>
+        <block type="dgpad_style_visibility"></block>
+        <block type="dgpad_style_size"></block>
+        <block type="dgpad_style_layer"></block>
+    </category>
     <category name="$L.blockly.expression" colour="20">
+        <block type="dgpad_return"></block>
+        <block type="dgpad_coordinate"></block>
         <block type="dgpad_get_object"></block>
         <block type="dgpad_set_object"></block>
         <block type="dgpad_expression_input"></block>
         <block type="dgpad_print"></block>
-        <block type="dgpad_return"></block>
+        <block type="dgpad_pt2d">
+            <value name="a0">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+            <value name="a1">
+                <shadow type="math_number">
+                    <field name="NUM">2</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="dgpad_pt3d">
+            <value name="a0">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+            <value name="a1">
+                <shadow type="math_number">
+                    <field name="NUM">2</field>
+                </shadow>
+            </value>
+            <value name="a2">
+                <shadow type="math_number">
+                    <field name="NUM">3</field>
+                </shadow>
+            </value>
+        </block>
     </category>
-
-
-
-
     <category name="$L.blockly.math" colour="230">
         <block type="math_number"></block>
         <block type="math_arithmetic"></block>

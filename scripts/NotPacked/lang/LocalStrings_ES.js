@@ -18,15 +18,15 @@ $L.object.family.circle = "Círculos";
 $L.object.family.point = "Puntos";
 $L.object.family.locus = "Lugares";
 $L.object.family.area = "Polígonos";
-$L.object.family.angle = "ángulos";
+$L.object.family.angle = "Ángulos";
 $L.macro_plugins = "Biblioteca";
 $L.macro_tools = "Macros Personales";
 $L.macroname = "Macro sin título";
 $L.props_grid_message = "Hacer clic sobre un objeto o sobre un eje para modificar sus propiedades.";
-$L.props_grid_title = "Propiedades cuadrícula ";
-$L.props_grid_show = "Mostrar cuadrícula ";
-$L.props_axis_size = "Tamaño ejes ";
-$L.props_grid_size = "Tamaño cuadrícula ";
+$L.props_grid_title = "Propiedades cuadrícula";
+$L.props_grid_show = "Mostrar cuadrícula";
+$L.props_axis_size = "Tamaño ejes";
+$L.props_grid_size = "Tamaño cuadrícula";
 $L.props_ox_show = "Mostrar el eje  (Ox)";
 $L.props_oy_show = "Mostrar el eje (Oy)";
 $L.props_ox_lock = "Bloquear el eje  (Ox)";
@@ -43,9 +43,9 @@ $L.props_inc_free = "Libre";
 $L.props_length_none = "Sin";
 $L.props_applyall = "Aplicar a todos: ";
 $L.export_button = "Abrir la figura DGPad";
-$L.export_standardcomment = "Haga clic en los botones para ver el codigo que debe copiar/pegar.";
-$L.export_htmljscomment = "Idoia este código en su sitio: O figura debería aparecer inmediatamente (En caso contrario utilizar el siguiente botón!).";
-$L.export_htmlcomment = 'Algunos servidores podrían impedir que la figuras se abra automáticamente. Este código sólo contiene  HTML, Y la figura sólo se abrirá cuando el usuario haga clic sobre un botón.';
+$L.export_standardcomment = "Haga clic en los botones para ver el código que debe copiar/pegar.";
+$L.export_htmljscomment = "Pegue este código en su sitio: la figura debería aparecer inmediatamente (En caso contrario utilizar el siguiente botón!).";
+$L.export_htmlcomment = 'Algunos servidores podrían impedir que la figura se abra automáticamente. Este código sólo contiene  HTML, Y la figura sólo se abrirá cuando el usuario haga clic sobre un botón.';
 $L.export_sourcecomment = 'Código fuente de la figura  (Como estaba registrada en la nube).';
 $L.export_htmlstandalonecomment = 'Página HTML Que contiene la figura.';
 $L.export_istools = 'Ocultar el tablero de comandos';
@@ -81,7 +81,7 @@ $L.erase_ckb_show_hidden = "Mostrar los objetos ocultos";
 $L.props_track = "Activar la traza";
 
 // Mercredi 28 août 2013 :
-$L.calc_value = "Valo=";
+$L.calc_value = "Valor=";
 $L.calc_text = "Texto:";
 
 // Dimanche 8 septembre 2013 :
@@ -112,7 +112,7 @@ $L.macros.equilateral_triangle = "Polígonos/Triángulos/Triángulo equilátero"
 $L.macros.translation = "Transformaciones/Traslación";
 $L.macros.inversion = "Transformaciones/Inversión";
 $L.macros.pt3Dwithdialog = "3D/Puntos 3D/con diálogo";
-$L.macros.pt3Dwithoutdialog = "3D/Puntos 3D/Sin diálogo";
+$L.macros.pt3Dwithoutdialog = "3D/Puntos 3D/sin diálogo";
 $L.macros.repere = "3D/sistema 3D";
 $L.macros.pingpong = "Utilidades/Ping-pong";
 $L.macros.edge = "3D/Arista 3D";
@@ -125,7 +125,7 @@ $L.macros.carre = "Polígonos/Cuadriláteros/Cuadrado";
 $L.macros.conic5pts = "Cónicas/Cónica por 5 pts";
 $L.macros.testalign = "Tests/Alineación";
 $L.macros.displayground = "3D/Mostrar el piso";
-$L.macros.displayground_m = "Mstrar el piso";
+$L.macros.displayground_m = "Mostrar el piso";
 $L.macros.coords3D = "3D/Geometría/Coordenadas 3D";
 $L.macros.perp3D = "3D/Geometría/Perpendicular";
 $L.macros.norm3D = "3D/Geometría/Normal";
@@ -179,11 +179,99 @@ $L.props_text_js = "Lanzar el script";
 // Lundi 29 décembre 2014
 $L.props_text_console = "Consola de scripts";
 
+// Dimanche 28 juin 2015
+$L.export_ibook = "Widget par publicar la figura en un iBook Author:";
+$L.export_ibook2 = "Clic derecho sobre el enlace para descargar el widget en formato zip.";
+
+// Dimanche 18 octobre 2015
+$L.history_save = "Guardar la figura actual en el histórico";
+
+// Samedi 5 décembre 2015
+$L.macros.rotation5 = "Transformaciones/Rotación/5 pts";
+$L.macros.rotationD = "Transformaciones/Rotación/Con diálogo";
+
 // Mercredi 9 décembre 2015
 $L.props_general_degree = "ángulo en grados";
 
+// Mercredi 16 décembre 2015
+$L.props_trigo = "Sentido trigonométrico";
+
+// Lundi 21 décembre 2015
+$L.blockly.geometry = "Geometría";
+$L.blockly.logic = "Lógica";
+$L.blockly.loops = "Bucles";
+$L.blockly.expression = "Expresiones";
+$L.blockly.math = "Math";
+$L.blockly.lists = "Listas";
+$L.blockly.variables = "Variables";
+$L.blockly.functions = "Funciones";
+$L.blockly.construction = "Construcción";
+$L.blockly.cn_auto = "auto";
+$L.blockly.pt_type = "Punto";
+$L.blockly.pt_base = "de base";
+$L.blockly.pt_on = "punto sobre";
+$L.blockly.pt_inter = "de intersección de";
+$L.blockly.pt_coords = "de coordenadas";
+$L.blockly.pt_exp = "de expresión";
+$L.blockly.pt_andof = "y de";
+$L.blockly.pt_and = "y";
+
+// Lundi 11 janvier 2016
+$L.animation_without = "Sin";
+$L.animation_label = "Animación";
+
+
+
+
+
 // Dimanche 24 janvier 2016
 $L.props_general_dragall="Arrastrar todos los objetos";
+
+// Lundi 22 février 2016
+$L.blockly.var_return = "Enter (fin de línea)";
+$L.blockly.push_add = "Añadir";
+$L.blockly.push_end = "al final de la lista";
+$L.blockly.list_new = "Crar una lista vacía";
+
+// Mardi 23 février 2016
+$L.blockly.value = "Valor";
+$L.blockly.o = {};
+$L.blockly.o.expression = "de la expresión";
+$L.blockly.o.point = "del punto";
+$L.blockly.o.circle1 = "del círculo";
+$L.blockly.o.segment = "del segmento";
+$L.blockly.o.fixedangle = "del ángulo fijo";
+$L.blockly.o.angle = "del ángulo";
+$L.blockly.o.area = "del polígono";
+$L.blockly.o2 = {};
+$L.blockly.o2.expression = "la expresión";
+$L.blockly.o2.point = "el punto";
+$L.blockly.o2.circle1 = "el círculo";
+$L.blockly.o2.segment = "el segmento";
+$L.blockly.o2.fixedangle = "el ángulo fijo";
+$L.blockly.o2.angle = "el ángulo";
+$L.blockly.o2.area = "el polígono";
+$L.blockly.stop_list = "Romper la lista";
+$L.longpress_message = "¿Qué quiere hacer?";
+$L.create_exp = "Crear una expresión";
+$L.create_exp_pts = "Crear una lista de puntos";
+$L.create_exp_segs = "Crear una lista de segmentos";
+$L.create_cursor_int = "Crear un cursor entero";
+$L.create_cursor_cont = "Crear un cursor continuo";
+$L.create_widget_edit = "Crear el widget de edición";
+$L.edit_widget_name = "Nombre del objeto por editar";
+$L.edit_widget_edit = "Editar el objeto";
+$L.blockly.fixvalue = "Fijar";
+$L.blockly.copyall = "Copiar todos los bloques";
+$L.blockly.copyselected = "Copiar los bloques seleccionados";
+$L.blockly.paste = "Pegar los bloques";
+$L.blockly.displaySource = "Mostrar el código fuente";
+$L.blockly.print = "Mostrar";
+$L.blockly.withlf = "con fin de línea";
+$L.blockly.withoutlf = "sin fin de línea";
+$L.blockly.tab_exp = "Expresión";
+$L.blockly.tab_drag = "al arrastrar";
+$L.blockly.tab_mouseup = "al soltar";
 
 $L.number = function(_n) {
     return _n.toString().replace(".", ",")

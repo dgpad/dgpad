@@ -404,7 +404,12 @@ function PointObject(_construction, _name, _x, _y) {
 
     // Pour Blockly :
     parent.setExpression = this.setExpression = function(exy) {
-        var elt = JSON.parse(exy);
+        var elt;
+        try {
+            elt = JSON.parse(exy);
+        } catch (e) {
+            elt = exy;
+        }
         if ((elt.constructor === Array) && (elt.length === 2)) {
             me.setExp(Cn.coordsSystem.px(elt[0]), Cn.coordsSystem.py(elt[1]));
         } else {
@@ -571,6 +576,7 @@ function PointObject(_construction, _name, _x, _y) {
             this.getParentAt(1).checkIfValid(this);
         }
     };
+
 
     var computeFixed = function() {
         EXY.compute();

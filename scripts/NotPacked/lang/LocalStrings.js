@@ -283,3 +283,5 @@ $L.blockly.withoutlf="without line feed";
 $L.blockly.tab_exp="Expression";
 $L.blockly.tab_drag="On drag";
 $L.blockly.tab_mouseup="On mouse up";
+$L.blockly.lang="en.js";
+$L.blockly.aspect="Appearance";

@@ -108,15 +108,14 @@ function VectorObject(_construction, _name, _P1, _P2) {
         return ((_c === "line") || (_c === "segment"));
     };
 
+
     // see if point inside 2 border points
     this.checkIfValid = function(_P) {
-        var xA = Math.min(this.P1.getX(), this.P2.getX());
-        var yA = Math.min(this.P1.getY(), this.P2.getY());
-        var xB = Math.max(this.P1.getX(), this.P2.getX());
-        var yB = Math.max(this.P1.getY(), this.P2.getY());
-        var xp = _P.getX();
-        var yp = _P.getY();
-        if ((xp < xA) || (xp > xB) || (yp < yA) || (yp > yB)) {
+        var xPA = this.P1.getX() - _P.getX();
+        var yPA = this.P1.getY() - _P.getY();
+        var xPB = this.P2.getX() - _P.getX();
+        var yPB = this.P2.getY() - _P.getY();
+        if ((xPA * xPB + yPA * yPB) > 0) {
             _P.setXY(NaN, NaN);
         }
     };

@@ -1,3 +1,43 @@
+Blockly.Blocks['dgpad_coordinate'] = {
+    init: function() {
+        this.appendDummyInput('obj_type')
+            .appendField(new Blockly.FieldDropdown([
+                ["abscisse", "0"],
+                ["ordonnée", "1"],
+                ["hauteur", "2"]
+            ]), "type");
+        this.appendDummyInput()
+            .appendField("du point");
+        this.appendDummyInput('obj_name')
+            .appendField(Blockly.dgpad.objectPopup("point"), "NAME");
+        this.setInputsInline(true);
+        this.setOutput(true);
+        this.setColour(20);
+        this.setTooltip('');
+        this.setHelpUrl('');
+    },
+    getName: function(_o) {
+        if (o.getCode() === "point") {
+            this.getInput('obj_type').fieldRow[0].setValue(0);
+            this.getInput('obj_name').fieldRow[0].setValue(_o.getName());
+        }
+    }
+};
+
+
+Blockly.Blocks['dgpad_return'] = {
+    init: function() {
+        this.appendValueInput("NAME")
+            .appendField($L.blockly.var_return);
+        this.setPreviousStatement(true);
+        // this.setInputsInline(true);
+        this.setColour(20);
+        this.setTooltip('');
+        this.setHelpUrl('');
+    }
+};
+
+
 Blockly.Blocks['dgpad_set_object'] = {
     init: function() {
         var types = [];
@@ -99,10 +139,6 @@ Blockly.Blocks['dgpad_get_object'] = {
         this.setTooltip('');
         this.setHelpUrl('');
 
-
-
-
-
         // Le menu déroulant des objets n'est pas le bon dans la plupart
         // des cas. Ce sparadrap règle le problème :
         setTimeout(function() {
@@ -143,18 +179,36 @@ Blockly.Blocks['dgpad_expression_input'] = {
     }
 };
 
-
-Blockly.Blocks['dgpad_return'] = {
+Blockly.Blocks['dgpad_pt2d'] = {
     init: function() {
-        this.appendValueInput("NAME")
-            .appendField($L.blockly.var_return);
-        this.setPreviousStatement(true);
-        // this.setInputsInline(true);
+        this.appendValueInput("a0")
+            .setCheck(null);
+        this.appendValueInput("a1")
+            .setCheck(null);
+        this.setOutput(true);
         this.setColour(20);
         this.setTooltip('');
         this.setHelpUrl('');
     }
 };
+
+Blockly.Blocks['dgpad_pt3d'] = {
+    init: function() {
+        this.appendValueInput("a0")
+            .setCheck(null);
+        this.appendValueInput("a1")
+            .setCheck(null);
+        this.appendValueInput("a2")
+            .setCheck(null);
+        this.setOutput(true);
+        this.setColour(20);
+        this.setTooltip('');
+        this.setHelpUrl('');
+    }
+};
+
+
+
 
 
 Blockly.Blocks['dgpad_print'] = {
