@@ -150,7 +150,7 @@ function BlocklyObject(_owner, _construction) {
                 setEX(null);
             } else {
                 setEX(cod);
-                if (EX) EX.forcevalue();
+                // if (EX) EX.forcevalue();
             }
         }
     };

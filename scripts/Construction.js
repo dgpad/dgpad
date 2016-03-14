@@ -37,7 +37,8 @@ function Construction(_canvas) {
         var tab = [];
         for (var i = 0; i < V.length; i++) {
             if (V[i].getCode() === "expression_cursor") continue;
-            if (_t==="any") tab.push(V[i])
+            if (V[i].isHidden()) continue;
+            if (_t === "any") tab.push(V[i])
             else if ((V[i].getCode() === _t) || ((V[i].getFamilyCode() === _t))) tab.push(V[i])
         };
         return tab
@@ -803,7 +804,6 @@ function Construction(_canvas) {
     };
 
 
-
     me.doOrder = function(_tab) {
         var n = _tab.length;
         if (n === 0) {
@@ -850,6 +850,9 @@ function Construction(_canvas) {
 
     me.orderObjects = function() {
         me.doOrder(V);
+        for (var i = 0, len = V.length; i < len; i++) {
+            V[i].orderChildList();
+        }
     };
 
     //    var rawValidate = function(ev) {

@@ -56,11 +56,11 @@ function ConstructionObject(_construction, _name) {
 
     // Pour un essai sur l'introspection dans les expressions :
     this.me = function() {
-        return this;
-    }
-    // this.getMe=function(){
-    //     return this;
-    // }
+            return this;
+        }
+        // this.getMe=function(){
+        //     return this;
+        // }
 
 
 
@@ -250,8 +250,12 @@ function ConstructionObject(_construction, _name) {
     };
 
     var addAsChild = function(_child, _parent) {
-        if (!_parent.addChild || (_child.isChild(_parent)))
+        if (!_parent.addChild ||
+            (_child.isChild(_parent)) ||
+            (_child === _parent) ||
+            (_parent.isChild(_child)))
             return;
+        // console.log("parent :" + _parent.getName() + "  enfant :" + _child.getName());
         _parent.addChild(_child);
         // On ajoute tous les enfants de _child à la liste des enfants de _parent :
         for (var i = 0, len = _child.getChildLength(); i < len; i++) {
@@ -265,6 +269,21 @@ function ConstructionObject(_construction, _name) {
 
     this.isChild = function(_o) {
         return (_o.getChildList().indexOf(this) !== -1);
+    };
+
+    this.logChildList = function() {
+        console.log("******************");
+        for (var i = 0; i < childList.length; i++) {
+            console.log("childList[" + i + "] = " + childList[i].getName());
+        }
+    };
+
+    // var childlistOrderFilter = function(a, b) {
+    //     return (b.getChildLength() - a.getChildLength());
+    // }
+
+    this.orderChildList = function() {
+        childList.sort(PtsChildSortFilter);
     };
 
     this.getChildList = function() {
@@ -321,6 +340,7 @@ function ConstructionObject(_construction, _name) {
 
     this.setParentList = function(_p) {
         parentList = _p;
+        // console.log(this.getName() + " : " + parentList);
         for (var i = 0, len = parentList.length; i < len; i++) {
             addAsChild(this, parentList[i]);
             is_3D = (is_3D) || (parentList[i].is3D());
@@ -332,6 +352,7 @@ function ConstructionObject(_construction, _name) {
 
     this.setParent = function() {
         parentList = Array.prototype.slice.call(arguments, 0);
+        // console.log(this.getName() + " : " + parentList);
         //        console.log(parentList.length+" nom:"+this.getName());
         for (var i = 0, len = parentList.length; i < len; i++) {
             //            console.log("me="+this.getName()+"  parent="+parentList[i].getName());
@@ -341,14 +362,23 @@ function ConstructionObject(_construction, _name) {
         if (parentList.length === 0 && this.getCode() === "point")
             is_3D = false;
     };
+
+    // Appelé notamment par la methode "pe" (parse expression)
+    // de l'Interpreter javascript :
     this.addParent = function(_o) {
-        //        console.log("me=" + this.getName() + "  parent=" + _o.getName());
+        // Pour éviter les références circulaires : si this
+        // est un parent de _o, _o ne peut pas être un parent
+        // de this :
+        if ((this.isParent(_o))) return;
         parentList.push(_o);
         addAsChild(this, _o);
         is_3D = (is_3D) || (_o.is3D());
     };
     this.getParent = function() {
         return parentList;
+    };
+    this.isParent = function(_o) {
+        return (_o.getParent().indexOf(this) !== -1);
     };
     this.getParentLength = function() {
         return parentList.length;

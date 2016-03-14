@@ -1207,8 +1207,10 @@ function Interpreter(_win, _canvas) {
                 o = me.fv(_n);
             if (o === undefined)
                 return _n;
-            if ((_o) && (_o.getParent) && (_o.getParent().indexOf(o) === -1))
+            if ((_o) && (_o.getParent) && (_o.getParent().indexOf(o) === -1)) {
                 _o.addParent(o);
+                // console.log("PE  :  "+_o.getName()+"   "+o.getName());
+            }
             return pushEXP(o);
         }
     };
@@ -1446,9 +1448,10 @@ function Interpreter(_win, _canvas) {
             return Math.pow(a, b);
         // Si a est un complexe et b un nombre :
         if ((!isNaN(b)) && (isArray(a)) && (a.length === 2)) {
-            var invb = (b === 0) ? 0 : 1 / b;
+            var invb = (b === 0) ? 0 : (Math.round(1e12 / b) * 1e-12);
+            // console.log("(Math.round(invb) === invb) = "+(Math.round(invb) === invb));
             // S'il s'agit d'une racine b-ième :
-            if ((Math.round(invb) === invb) && (invb > 1)) {
+            if ((invb > 1) && (Math.round(invb) === invb)) {
                 var res = [];
                 // Determination de l'argument générique :
                 var arg = Math.angleH(a[0], a[1]) * b;

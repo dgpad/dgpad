@@ -221,6 +221,7 @@ function BlocklyManager(_canvas) {
                 OBJ.blocks.setChilds(mod, Blockly.dgpad.VARS);
                 OBJ.blocks.setParents(mod, Blockly.dgpad.PARS);
             }
+            OBJ.blocks.evaluate(mod);
             Cn.computeAll();
             canvas.paint();
         }

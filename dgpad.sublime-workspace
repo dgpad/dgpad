@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"chi",
+				"childList"
+			],
+			[
+				"is",
+				"isChild"
+			],
+			[
 				"comp",
 				"computeFixed"
 			],
@@ -46,10 +54,6 @@
 			[
 				"vie",
 				"viewport"
-			],
-			[
-				"is",
-				"isVisible"
 			],
 			[
 				"lon",
@@ -268,68 +272,50 @@
 	"buffers":
 	[
 		{
-			"file": "scripts/Objects/PointObject.js",
+			"file": "scripts/Objects/ExpressionObject.js",
 			"settings":
 			{
-				"buffer_size": 22830,
+				"buffer_size": 19802,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scripts/Objects/SegmentObject.js",
+			"file": "scripts/DGPad.js",
 			"settings":
 			{
-				"buffer_size": 6244,
+				"buffer_size": 12379,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scripts/Objects/VectorObject.js",
+			"file": "scripts/Objects/BlocklyObjects.js",
 			"settings":
 			{
-				"buffer_size": 5706,
+				"buffer_size": 4596,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "Searching 314 files for \"checkIfValid\" (case sensitive)\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/AngleBisectorObject.js:\n   56  \n   57      // see if point inside ray\n   58:     this.checkIfValid = function(_P) {\n   59          var dx = this.getDX();\n   60          var dy = this.getDY();\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/Arc3ptsObject.js:\n  115  \n  116      // see if point inside 2 border points\n  117:     this.checkIfValid = function(_P) {\n  118          var a = $U.angleH(_P.getX() - this.P1.getX(), _P.getY() - this.P1.getY());\n  119          // Calcul de l'angle AOM (si sens trigo) ou COM si sens des aiguilles (dans [0;2π]):\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/ConstructionObject.js:\n  708  \n  709  \n  710:     this.checkIfValid = function(_C) {};\n  711      this.getCode = function() {\n  712          return \"\";\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/FixedAngleObject.js:\n   74  \n   75      // see if point inside ray\n   76:     this.checkIfValid = function(_P) {\n   77          var dx = this.getDX();\n   78          var dy = this.getDY();\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/PointObject.js:\n  573              // This is an intersection point :\n  574              this.getParentAt(0).intersect(this.getParentAt(1), this);\n  575:             this.getParentAt(0).checkIfValid(this);\n  576:             this.getParentAt(1).checkIfValid(this);\n  577          }\n  578      };\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/RayObject.js:\n   26  \n   27      // see if point inside ray\n   28:     this.checkIfValid = function(_P) {\n   29          var dx = this.getDX();\n   30          var dy = this.getDY();\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/SegmentObject.js:\n  145  \n  146      // see if point inside 2 border points\n  147:     this.checkIfValid = function(_P) {\n  148          var xPA = this.P1.getX() - _P.getX();\n  149          var yPA = this.P1.getY() - _P.getY();\n\n/home/erichake/Gdrive/dgpad/scripts/Objects/VectorObject.js:\n  110  \n  111      // see if point inside 2 border points\n  112:     this.checkIfValid = function(_P) {\n  113          var xA = Math.min(this.P1.getX(), this.P2.getX());\n  114          var yA = Math.min(this.P1.getY(), this.P2.getY());\n\n9 matches across 8 files\n",
+			"file": "scripts/Objects/ListObject.js",
 			"settings":
 			{
-				"buffer_size": 2246,
-				"line_ending": "Unix",
-				"name": "Find Results",
-				"scratch": true
-			}
-		},
-		{
-			"file": "scripts/Objects/RayObject.js",
-			"settings":
-			{
-				"buffer_size": 1777,
+				"buffer_size": 11014,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
+			"file": "scripts/Objects/ConstructionObject.js",
 			"settings":
 			{
-				"buffer_size": 7742,
+				"buffer_size": 34455,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/generators/javascript/math.js",
+			"file": "scripts/Construction.js",
 			"settings":
 			{
-				"buffer_size": 15279,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/Objects/PrimitiveLineObject.js",
-			"settings":
-			{
-				"buffer_size": 20831,
+				"buffer_size": 48385,
 				"line_ending": "Unix"
 			}
 		}
@@ -398,36 +384,35 @@
 		"/home/erichake/Gdrive/dgpad/scripts",
 		"/home/erichake/Gdrive/dgpad/scripts/Blockly",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/generators",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/generators/javascript"
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects"
 	],
 	"file_history":
 	[
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/ConstructionObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Expression.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/ExpressionObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Construction.js",
+		"/home/erichake/Gdrive/dgpad/scripts/DGPad.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/aspect.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/BlocklyObjects.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/core.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_toolbox.xml",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/aspect.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/PointObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/SegmentObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/VectorObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/RayObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyManager.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/PrimitiveLineObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/expressions.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/expressions.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/aspect.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/aspect.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/ConstructionObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Construction.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyManager.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_toolbox.xml",
 		"/home/erichake/Bureau/backupFTP.sh",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings_ES.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/PointObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/core.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/ExpressionObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/DGPad.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/BlocklyObjects.js",
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/generators/javascript/loops.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Calc/MainCalcPanel.js",
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/block.js",
@@ -436,7 +421,6 @@
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/CurvusObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/Circle1Object.js",
 		"/home/erichake/Gdrive/dgpad/scripts/SourceWriter.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Expression.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Utils.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyPanel.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/lists.js",
@@ -498,14 +482,11 @@
 		"/home/erichake/Bureau/Sierpinski/SierpinskiDB.dgp",
 		"/home/erichake/Bureau/Sierpinski/SierpinskiDyn.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/AreaObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/RayObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/AngleBisectorObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/PrimitiveLineObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/LocusObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/ParallelLineObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/PerpBisectorObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/TwoPointsLineObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/SegmentObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/PrimitiveCircleObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/Circle3ptsObject_3D.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Constructors/SpringConstructor.js",
@@ -535,8 +516,7 @@
 		"/home/erichake/Gdrive/dgpad/scripts/Blockly/Blockly_Manager.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/utils.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/blockly.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Blockly/Blockly_Panel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/generator.js"
+		"/home/erichake/Gdrive/dgpad/scripts/Blockly/Blockly_Panel.js"
 	],
 	"find":
 	{
@@ -547,6 +527,8 @@
 		"height": 93.0,
 		"where_history":
 		[
+			"/home/erichake/Gdrive/dgpad/scripts",
+			"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly",
 			"/home/erichake/Gdrive/dgpad/scripts",
 			"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly",
 			"/home/erichake/Gdrive/dgpad/scripts",
@@ -574,6 +556,21 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"doOrder",
+			"pe(",
+			"addParent",
+			"getChildList",
+			"orderObject",
+			"undefined",
+			".setParentList",
+			".addParent",
+			"parentList.push",
+			"addParent",
+			"getParent",
+			"doOrder",
+			"setParent",
+			"setFieldValue",
+			"math_number",
 			"math_single",
 			"checkIfValid",
 			"intersect",
@@ -686,22 +683,7 @@
 			"setIncrement",
 			"color",
 			"5",
-			"_exp",
-			"new ExpressionObject",
-			"Coincidence",
-			"coincidenceList",
-			"compute",
-			"selected",
-			"\\\"",
-			"lists_setIndex",
-			"VARIABLE",
-			"domToWorkspace",
-			"workspace",
-			"toolbox",
-			"digitCalcPanel",
-			"1",
-			"controls_whileUntil",
-			"statementToCode"
+			"_exp"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -720,24 +702,24 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "scripts/Objects/PointObject.js",
+					"file": "scripts/Objects/ExpressionObject.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 22830,
+						"buffer_size": 19802,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								16838,
-								16838
+								2492,
+								2492
 							]
 						],
 						"settings":
@@ -747,195 +729,57 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 12395.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "scripts/Objects/SegmentObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6244,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4901,
-								4901
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3057.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "scripts/Objects/VectorObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5706,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3336,
-								3336
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2045.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2246,
-						"regions":
-						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										187,
-										199
-									],
-									[
-										430,
-										442
-									],
-									[
-										750,
-										762
-									],
-									[
-										975,
-										987
-									],
-									[
-										1312,
-										1324
-									],
-									[
-										1371,
-										1383
-									],
-									[
-										1543,
-										1555
-									],
-									[
-										1786,
-										1798
-									],
-									[
-										2058,
-										2070
-									]
-								],
-								"scope": ""
-							}
-						},
-						"selection":
-						[
-							[
-								1531,
-								1531
-							]
-						],
-						"settings":
-						{
-							"detect_indentation": false,
-							"line_numbers": false,
-							"output_tag": 1,
-							"result_base_dir": "",
-							"result_file_regex": "^([^ 	].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 483.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "scripts/Objects/RayObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1777,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								987,
-								987
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 195.0,
+						"translation.y": 1311.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
+					"buffer": 0,
+					"file": "scripts/Objects/ExpressionObject.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7742,
+						"buffer_size": 19802,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7742,
-								7742
+								17962,
+								17962
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 12579.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "scripts/DGPad.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12379,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								311,
+								311
 							]
 						],
 						"settings":
@@ -952,50 +796,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/generators/javascript/math.js",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 15279,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7752,
-								7752
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 4728.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "scripts/Objects/PrimitiveLineObject.js",
+					"buffer": 2,
+					"file": "scripts/Objects/BlocklyObjects.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 20831,
+						"buffer_size": 4596,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6978,
-								6978
+								3742,
+								3742
 							]
 						],
 						"settings":
@@ -1005,10 +819,130 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 5220.0,
+						"translation.y": 2760.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "scripts/Objects/ListObject.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11014,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								632,
+								632
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "scripts/Objects/ListObject.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11014,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5973,
+								5973
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3793.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "scripts/Objects/ConstructionObject.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 34455,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9052,
+								9052
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5823.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "scripts/Construction.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 48385,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								23312,
+								23312
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 19088.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
 					"type": "text"
 				}
 			]

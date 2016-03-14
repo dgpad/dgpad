@@ -10,8 +10,10 @@ function ListObject(_construction, _name, _EXP) {
     var EXP = _EXP; // Expression contenant la liste de points (ou points3D)
     var Ptab = []; // Tableau de points
     var initPtab = function() {
-        // console.log("initPtab !!!!");
-        var lst = EXP.getValue();
+        // var lst = EXP.getValue();
+        var lst = EXP.getE1().forcevalue();
+        // console.log(lst[0]);
+        // console.log("initPtab : "+me.getName()+"  "+lst.length);
         Ptab.length = 0;
         if (!$U.isArray(lst))
             return;
@@ -118,6 +120,7 @@ function ListObject(_construction, _name, _EXP) {
 
 
     this.projectXY = function(x, y) {
+        // console.log("Ptab="+Ptab);
         var p = Ptab[0];
         var x1 = p.x,
             y1 = p.y;
@@ -155,6 +158,7 @@ function ListObject(_construction, _name, _EXP) {
             x1 = x2;
             y1 = y2;
         }
+
         return [xmin, ymin];
     };
 
@@ -164,7 +168,7 @@ function ListObject(_construction, _name, _EXP) {
         p.setXY(coords[0], coords[1]);
     };
     this.projectAlpha = function(p) {
-        //        console.log("projectAlpha");
+
         if ((Ptab.length < 2) || (segSize === -1))
             return;
         var alp = p.getAlpha();
@@ -187,6 +191,7 @@ function ListObject(_construction, _name, _EXP) {
             p.setXY(Ptab[nb].x + k * (Ptab[nb + 1].x - Ptab[nb].x), Ptab[nb].y + k * (Ptab[nb + 1].y - Ptab[nb].y));
         else
             p.setXY(Ptab[nb].x, Ptab[nb].y);
+        // console.log("projectAlpha :" + Ptab[nb].x + "  " + Ptab[nb].y);
     };
     this.setAlpha = function(p) {
         if (Ptab.length < 2)

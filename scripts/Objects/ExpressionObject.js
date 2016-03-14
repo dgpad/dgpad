@@ -575,16 +575,6 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         }
     };
 
-    // me.blockChanged = function() {
-    //     if ((me.blocks) && (me.blocks.oncompute)) {
-    //         var fname = "bl_" + $U.number2letter(Date.now().toString());
-    //         var cod = "var " + fname + "=function(){\n";
-    //         cod += me.blocks.oncompute.sync;
-    //         cod += "\n};\n" + fname + "()";
-    //         me.setE1(cod);
-    //     }
-    // };
-
     // Pour Blockly :
     parent.setExpression = this.setExpression = function(exy) {
         me.setExp(exy);
