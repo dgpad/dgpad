@@ -55,12 +55,13 @@ function ConstructionObject(_construction, _name) {
 
 
     // Pour un essai sur l'introspection dans les expressions :
-    this.me = function() {
-            return this;
-        }
-        // this.getMe=function(){
-        //     return this;
-        // }
+    // this.getObject = function() {
+    //     return this;
+    // }
+
+    // this.getMe=function(){
+    //     return this;
+    // }
 
 
 
@@ -574,6 +575,7 @@ function ConstructionObject(_construction, _name) {
         return selected;
     };
     this.setHidden = function(_sel) {
+        console.log("setHidden : "+_sel);
         _sel = Math.abs(_sel * 1);
         hidden = (isNaN(_sel)) ? 1 : parseInt(_sel) % 3;
         this.paint = paintTab[hidden];

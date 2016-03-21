@@ -8,7 +8,7 @@ function BlocklyManager(_canvas) {
     var scripts = [path1 + "blockly_compressed.js",
         path1 + "blocks_compressed.js",
         path1 + "javascript_compressed.js",
-        path1 + "msg/js/"+$L.blockly.lang,
+        path1 + "msg/js/" + $L.blockly.lang,
         path1 + "perso/blocks/core.js",
         path1 + "perso/blocks/aspect.js",
         path1 + "perso/blocks/geometry.js",
@@ -46,9 +46,16 @@ function BlocklyManager(_canvas) {
     };
 
     var copySel = function() {
-
+        if (Blockly.selected) {
+            var xml = goog.dom.createDom('xml');
+            var blks = Blockly.Xml.blockToDom_(Blockly.selected);
+            var xy = Blockly.selected.getRelativeToSurfaceXY();
+            blks.setAttribute('x', Math.round(xy.x) + 5);
+            blks.setAttribute('y', Math.round(xy.y) + 5);
+            xml.appendChild(blks);
+            localStorage.setItem("blockly_clipboard", Blockly.Xml.domToText(xml));
+        }
     };
-
 
     var pasteAll = function() {
         from_edit = false;
@@ -71,7 +78,6 @@ function BlocklyManager(_canvas) {
 
 
     var displaySource = function() {
-        // me.print(Blockly.JavaScript.workspaceToCode(workspace) + "\n");
         me.print(Blockly.JavaScript.workspaceToCode(workspace).replace(/^\s*var\s*\w+\s*;/gm, "").replace(/blockly_var_/g, "").trim() + "\n");
     };
 
@@ -221,6 +227,7 @@ function BlocklyManager(_canvas) {
                 OBJ.blocks.setChilds(mod, Blockly.dgpad.VARS);
                 OBJ.blocks.setParents(mod, Blockly.dgpad.PARS);
             }
+            Cn.orderObjects();
             OBJ.blocks.evaluate(mod);
             Cn.computeAll();
             canvas.paint();
@@ -248,7 +255,7 @@ function BlocklyManager(_canvas) {
 
 
     var loadBlockly = function() {
-        panel = new BlocklyPanel(window.document.body, showSettings, hideCallback, currentTabCallBack, (canvas.getHeight() - canvas.prefs.controlpanel.size) / 2);
+        panel = new BlocklyPanel(window.document.body, canvas, showSettings, hideCallback, currentTabCallBack, (canvas.getHeight() - canvas.prefs.controlpanel.size) / 2);
         // Load xml formatted toolbox :
         var request = new XMLHttpRequest();
         request.open("GET", path1 + "perso/Blockly_toolbox.xml", true);
@@ -299,8 +306,9 @@ function BlocklyManager(_canvas) {
 
     var hideCallback = function() {
         changeCSS("blocklyToolboxDiv", "visibility", "hidden");
-        // clearOBJ();
+        Blockly.ContextMenu.hide();
     };
+
     var showCallback = function() {
         setTimeout(function() {
             changeCSS("blocklyToolboxDiv", "visibility", "visible");

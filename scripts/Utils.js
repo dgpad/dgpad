@@ -354,7 +354,10 @@ $U.isNearToSegment = function(xA, yA, xB, yB, xM, yM, d) {
     var a = xM * (yB - yA) + xB * (yA - yM) + xA * (yM - yB);
     var xab = xB - xA;
     var yab = yB - yA;
-    var MH2 = (a * a) / (xab * xab + yab * yab);
+    var dab = xab * xab + yab * yab;
+    if (dab<1e-13)
+        return false;
+    var MH2 = (a * a) / dab;
     // Le point est loin de la droite :
     if (MH2 > (d * d))
         return false;
@@ -372,7 +375,10 @@ $U.isNearToRay = function(xA, yA, xB, yB, xM, yM, d) {
     var a = xM * (yB - yA) + xB * (yA - yM) + xA * (yM - yB);
     var xab = xB - xA;
     var yab = yB - yA;
-    var MH2 = (a * a) / (xab * xab + yab * yab);
+    var dab = xab * xab + yab * yab;
+    if (dab<1e-13)
+        return false;
+    var MH2 = (a * a) / dab;
     // Le point est loin de la droite :
     if (MH2 > (d * d))
         return false;

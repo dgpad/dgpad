@@ -34,19 +34,19 @@
         <block type="controls_for" id="Q])V6nf~C#6}]v=lB.Vy" x="63" y="113">
             <field name="VAR">i</field>
             <value name="FROM">
-                <shadow type="math_number" id="9dE4T-Uu?w6vL#l}cGaB">
+                <block type="math_number" id="9dE4T-Uu?w6vL#l}cGaB">
                     <field name="NUM">1</field>
-                </shadow>
+                </block>
             </value>
             <value name="TO">
-                <shadow type="math_number" id="%0_xV~-o4pe:)MB,ek,0">
+                <block type="math_number" id="%0_xV~-o4pe:)MB,ek,0">
                     <field name="NUM">10</field>
-                </shadow>
+                </block>
             </value>
             <value name="BY">
-                <shadow type="math_number" id="y[1B~v(CIy7[%sWCDKqB">
+                <block type="math_number" id="y[1B~v(CIy7[%sWCDKqB">
                     <field name="NUM">1</field>
-                </shadow>
+                </block>
             </value>
         </block>
         <block type="controls_repeat_ext">
@@ -62,62 +62,133 @@
     <sep></sep>
     <category name="$L.blockly.aspect" colour="65">
         <block type="dgpad_style_fix"></block>
-        <block type="dgpad_style_color"></block>
         <block type="dgpad_style_color_rgb">
             <value name="R">
-                <shadow type="math_number">
+                <block type="math_number">
                     <field name="NUM">200</field>
-                </shadow>
+                </block>
             </value>
             <value name="G">
-                <shadow type="math_number">
+                <block type="math_number">
                     <field name="NUM">150</field>
-                </shadow>
+                </block>
             </value>
             <value name="B">
-                <shadow type="math_number">
+                <block type="math_number">
                     <field name="NUM">25</field>
-                </shadow>
+                </block>
             </value>
         </block>
-        <block type="dgpad_style_visibility"></block>
-        <block type="dgpad_style_size"></block>
-        <block type="dgpad_style_layer"></block>
+        <block type="dgpad_style_opacity">
+            <value name="NAME">
+                <block type="math_number">
+                    <field name="NUM">0.2</field>
+                </block>
+            </value>
+        </block>
+        <block type="dgpad_style_visibility">
+            <value name="NAME">
+                <block type="math_number">
+                    <field name="NUM">1</field>
+                </block>
+            </value>
+        </block>
+        <block type="dgpad_style_size">
+            <value name="NAME">
+                <block type="math_number">
+                    <field name="NUM">6</field>
+                </block>
+            </value>
+        </block>
+        <block type="dgpad_style_layer">
+            <value name="NAME">
+                <block type="math_number">
+                    <field name="NUM">0</field>
+                </block>
+            </value>
+        </block>
+        <block type="dgpad_style_font">
+            <value name="NAME">
+                <block type="math_number">
+                    <field name="NUM">18</field>
+                </block>
+            </value>
+        </block>
+        <block type="dgpad_style_precision">
+            <value name="NAME">
+                <block type="math_number">
+                    <field name="NUM">2</field>
+                </block>
+            </value>
+        </block>
+        <block type="dgpad_style_increment">
+            <value name="NAME">
+                <block type="math_number">
+                    <field name="NUM">1</field>
+                </block>
+            </value>
+        </block>
+        <block type="dgpad_style_dash">
+            <value name="NAME">
+                <block type="math_number">
+                    <field name="NUM">1</field>
+                </block>
+            </value>
+        </block>
+        <block type="dgpad_style_nomouse">
+            <value name="NAME">
+                <block type="math_number">
+                    <field name="NUM">1</field>
+                </block>
+            </value>
+        </block>
     </category>
     <category name="$L.blockly.expression" colour="20">
         <block type="dgpad_return"></block>
-        <block type="dgpad_coordinate"></block>
-        <block type="dgpad_get_object"></block>
         <block type="dgpad_set_object"></block>
+        <block type="dgpad_get_object_short"></block>
+        <block type="dgpad_get_object"></block>
         <block type="dgpad_expression_input"></block>
+        <block type="dgpad_coordinate"></block>
+        <block type="dgpad_distance">
+            <value name="FROM">
+                <block type="dgpad_get_point_short">
+                </block>
+            </value>
+            <value name="TO">
+                <block type="dgpad_get_point_short">
+                </block>
+            </value>
+        </block>
+        <block type="dgpad_window_props"></block>
         <block type="dgpad_print"></block>
         <block type="dgpad_pt2d">
             <value name="a0">
-                <shadow type="math_number">
+                <block type="math_number">
                     <field name="NUM">1</field>
-                </shadow>
+                </block>
             </value>
             <value name="a1">
-                <shadow type="math_number">
+                <block type="math_number">
                     <field name="NUM">2</field>
-                </shadow>
+                </block>
             </value>
         </block>
         <block type="dgpad_pt3d">
             <value name="a0">
-                <shadow type="math_number">
+                <block type="math_number">
                     <field name="NUM">1</field>
-                </shadow>
+                </block>
             </value>
             <value name="a1">
-                <shadow type="math_number">
+                <block type="math_number">
                     <field name="NUM">2</field>
-                </shadow>
+                </block>
             </value>
             <value name="a2">
-                <shadow type="math_number">
+                <block type="math_number">
                     <field name="NUM">3</field>
-                </shadow>
+                </block>
             </value>
         </block>
     </category>

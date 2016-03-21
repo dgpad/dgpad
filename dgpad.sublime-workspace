@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"col",
+				"ColStops"
+			],
+			[
+				"fill",
+				"fillStyle"
+			],
+			[
+				"va",
+				"value_name"
+			],
+			[
+				"setT",
+				"setTimeout"
+			],
+			[
 				"chi",
 				"childList"
 			],
@@ -272,51 +288,55 @@
 	"buffers":
 	[
 		{
-			"file": "scripts/Objects/ExpressionObject.js",
+			"file": "/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/atelier/index.html",
 			"settings":
 			{
-				"buffer_size": 19802,
+				"buffer_size": 6380,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scripts/DGPad.js",
+			"file": "/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/index.html",
 			"settings":
 			{
-				"buffer_size": 12379,
+				"buffer_size": 2206,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scripts/Objects/BlocklyObjects.js",
+			"contents": "<html><head><meta content=\"text/html; charset=UTF-8\" http-equiv=\"content-type\"><style type=\"text/css\">ol{margin:0;padding:0}table td,table th{padding:0}.c4{background-color:#ffffff;max-width:451.4pt;padding:72pt 72pt 72pt 72pt}.c0{orphans:2;widows:2;height:11pt}.c3{color:#1155cc;text-decoration:underline}.c1{color:inherit;text-decoration:inherit}.c2{orphans:2;widows:2}.title{padding-top:0pt;color:#666666;font-size:21pt;padding-bottom:0pt;font-family:\"Trebuchet MS\";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:justify}.subtitle{padding-top:0pt;color:#666666;font-size:13pt;padding-bottom:10pt;font-family:\"Trebuchet MS\";line-height:1.0;page-break-after:avoid;font-style:italic;orphans:2;widows:2;text-align:justify}li{color:#666666;font-size:11pt;font-family:\"Arial\"}p{margin:0;color:#666666;font-size:11pt;font-family:\"Arial\"}h1{padding-top:0pt;color:#666666;font-weight:bold;font-size:14pt;padding-bottom:0pt;font-family:\"Arial\";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:justify}h2{padding-top:0pt;color:#434343;font-weight:bold;font-size:13pt;padding-bottom:0pt;font-family:\"Trebuchet MS\";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:justify}h3{padding-top:0pt;color:#0e4f5d;font-weight:bold;font-size:11pt;padding-bottom:0pt;font-family:\"Arial\";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:justify}h4{padding-top:0pt;color:#670000;font-weight:bold;font-size:11pt;padding-bottom:0pt;font-family:\"Arial\";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:justify}h5{padding-top:0pt;color:#0e4f5d;font-weight:bold;font-size:11pt;padding-bottom:0pt;font-family:\"Arial\";line-height:1.0;page-break-after:avoid;orphans:2;widows:2;text-align:justify}h6{padding-top:8pt;color:#666666;font-size:11pt;padding-bottom:0pt;font-family:\"Trebuchet MS\";line-height:1.0;page-break-after:avoid;font-style:italic;orphans:2;widows:2;text-align:justify}</style></head><body class=\"c4\"><p class=\"c0\"><span></span></p><p class=\"c0\"><span></span></p><p class=\"c0\"><span></span></p><p class=\"c2\"><span>Ceci </span><span class=\"c3\"><a class=\"c1\" href=\"\">EST UN LIEN</a></span><span>&nbsp;pour essaye.</span></p></body></html>",
+			"file": "/home/erichake/Téléchargements/Documentsanstitre.html",
+			"file_size": 2223,
+			"file_write_time": 131029330700000000,
 			"settings":
 			{
-				"buffer_size": 4596,
+				"buffer_size": 2223,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scripts/Objects/ListObject.js",
+			"file": "/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/conference/index.html",
 			"settings":
 			{
-				"buffer_size": 11014,
+				"buffer_size": 3950,
+				"line_ending": "CR"
+			}
+		},
+		{
+			"file": "scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
+			"settings":
+			{
+				"buffer_size": 11627,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scripts/Objects/ConstructionObject.js",
+			"contents": "var bl_befifgbjaijii=function(){\nfunction recursif(blockly_local_a,blockly_local_b,blockly_local_c,blockly_local_N) {\n  if (blockly_local_N == 0) {\n    GET(\"blockly_var_tab\").push(blockly_local_a);\n    GET(\"blockly_var_tab\").push(blockly_local_b);\n    GET(\"blockly_var_tab\").push(blockly_local_c);\n    GET(\"blockly_var_tab\").push(blockly_local_a);\n    GET(\"blockly_var_tab\").push([NaN,NaN,NaN]);\n  } else {\n    SET(\"blockly_var_ap\",quotient(plus(blockly_local_b,blockly_local_c),2));\n    SET(\"blockly_var_bp\",quotient(plus(blockly_local_a,blockly_local_c),2));\n    SET(\"blockly_var_cp\",quotient(plus(blockly_local_a,blockly_local_b),2));\n    recursif(blockly_local_a, GET('blockly_var_bp'), GET('blockly_var_cp'), minus(blockly_local_N,1));\n    recursif(GET('blockly_var_ap'), blockly_local_b, GET('blockly_var_cp'), minus(blockly_local_N,1));\n    recursif(GET('blockly_var_ap'), GET('blockly_var_bp'), blockly_local_c, minus(blockly_local_N,1));\n  }\n}\n\n\nSET(\"blockly_var_tab\",[]);\nrecursif((A), (B), (C), (n));\nreturn (GET('blockly_var_tab'));\n};\nbl_befifgbjaijii()",
 			"settings":
 			{
-				"buffer_size": 34455,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/Construction.js",
-			"settings":
-			{
-				"buffer_size": 48385,
-				"line_ending": "Unix"
+				"buffer_size": 1066,
+				"line_ending": "Unix",
+				"name": "var bl_befifgbjaijii=function(){"
 			}
 		}
 	],
@@ -385,30 +405,61 @@
 		"/home/erichake/Gdrive/dgpad/scripts/Blockly",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects"
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core"
 	],
 	"file_history":
 	[
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/ConstructionObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Expression.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/ExpressionObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Construction.js",
-		"/home/erichake/Gdrive/dgpad/scripts/DGPad.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/aspect.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/BlocklyObjects.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/core.js",
+		"/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/conference/index2.html",
+		"/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/atelier/index2.html",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/expressions.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/expressions.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_toolbox.xml",
+		"/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/conference/index.html",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/ListObject.js",
+		"/home/erichake/Gdrive/dgpad/scripts/DGPad.js",
+		"/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/index.html",
+		"/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/atelier/index.html",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/aspect.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/ConstructionObject.js",
+		"/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/irem/index.html",
+		"/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/start iMac server.sh",
+		"/home/erichake/Bureau/ListObjectCopy.js",
+		"/home/erichake/Bureau/bon.js",
+		"/home/erichake/Bureau/mauvais.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Utils.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/ExpressionObject.js",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/blocks/logic.js",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/field_colour.js",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/blocks/loops.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyManager.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/aspect.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/lists.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/css.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Canvas.js",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/flyout.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/styles.css",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/xml.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyPanel.js",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/workspace_svg.js",
+		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/utils.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Objects/BlocklyObjects.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Construction.js",
+		"/home/erichake/Gdrive/dgpad/scripts/Expression.js",
+		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/core.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/PointObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/SegmentObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/VectorObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/RayObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyManager.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/PrimitiveLineObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/expressions.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/expressions.js",
 		"/home/erichake/Bureau/backupFTP.sh",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings.js",
 		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js",
@@ -421,17 +472,11 @@
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/CurvusObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/Circle1Object.js",
 		"/home/erichake/Gdrive/dgpad/scripts/SourceWriter.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Utils.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyPanel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/lists.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/ListObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Main.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Canvas.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Text/TextObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Objects/BlocklyObject.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Docs/Preferences.js",
 		"/home/erichake/Gdrive/dgpad/scripts/GUI/panels/BubblePanel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/styles.css",
 		"/home/erichake/Gdrive/dgpad/scripts/Longpress/LongpressManager.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Coincidence/CoincidenceManager.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Names/NamesPanel.js",
@@ -464,7 +509,6 @@
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/blocks/lists.js",
 		"/home/erichake/Bureau/Big/BigBlockly.html",
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/blocks/variables.js",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/xml.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Constructors/BlocklyConstructor.js",
 		"/home/erichake/Gdrive/dgpad/scripts/Calc/DigitCalcPanel.js",
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/generator.js",
@@ -499,24 +543,7 @@
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/Objects/ConstructionObject.js",
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js",
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/lang/LocalStrings.js",
-		"/home/erichake/Gdrive/dgpad/scripts/ControlPanel/ControlPanel.js",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/ControlPanel/ControlPanel.js",
-		"/home/erichake/Gdrive/dgpad/index.php",
-		"/home/erichake/Gdrive/dgpad/scripts/MainTheLot.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/CenterObject.js",
-		"/home/erichake/Dropbox/toto.dgp",
-		"/home/erichake/Gdrive/dgpad/scripts/GUI/elements/Checkbox.js",
-		"/home/erichake/Gdrive/dgpad/dgpad.html",
-		"/home/erichake/Gdrive/dgpad/scripts/Constructors/MidPointConstructor.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Constructors/SymaConstructor.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Constructors/SymcConstructor.js",
-		"/home/erichake/Gdrive/dgpad/scripts/GUI/elements/NameDialog.js",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/Blockly/Blockly_Panel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/xml.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Blockly/Blockly_Manager.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/utils.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/core/blockly.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Blockly/Blockly_Panel.js"
+		"/home/erichake/Gdrive/dgpad/scripts/ControlPanel/ControlPanel.js"
 	],
 	"find":
 	{
@@ -527,6 +554,12 @@
 		"height": 93.0,
 		"where_history":
 		[
+			"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly",
+			"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks",
+			"/home/erichake/Gdrive/dgpad/scripts",
+			"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly",
+			"/home/erichake/Gdrive/dgpad/scripts",
+			"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly",
 			"/home/erichake/Gdrive/dgpad/scripts",
 			"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly",
 			"/home/erichake/Gdrive/dgpad/scripts",
@@ -553,9 +586,61 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": true,
+		"case_sensitive": false,
 		"find_history":
 		[
+			"\\\"",
+			"shadow",
+			"url=reunion/irem/",
+			"../../index.php",
+			"?url=reunion/cocon/",
+			"../../index.php",
+			"fillcolor",
+			"i",
+			"points",
+			"initContext",
+			"paintObject",
+			"\\n",
+			"\\\"",
+			"\\n",
+			"frompopup",
+			"onchange",
+			"event",
+			"onchange",
+			"UIEvent",
+			".frompopup",
+			"();\n",
+			"Blockly.selected",
+			"blockToDom_",
+			"p_margin",
+			"_height",
+			"_owner",
+			"mouseWheel",
+			"wheel_",
+			"mouseWheel",
+			"blocklyScrollbarKnob",
+			"blocklyFlyout",
+			"blocklyMainBackground",
+			"changeCSS",
+			"-webkit-overflow-scrolling",
+			"setField",
+			".getObject()",
+			".me()",
+			"setTrack",
+			"dgpad_style_hidden",
+			"Blockly.ContextMenu",
+			"fireUiEvent",
+			"blocklyToolboxDiv",
+			"'resize'",
+			"fireUiEventNow",
+			"fireUiEvent",
+			"\\\"",
+			"ch",
+			"openFile",
+			".PARS",
+			".VARS",
+			"VARS",
+			"getChildLength",
 			"doOrder",
 			"pe(",
 			"addParent",
@@ -631,59 +716,7 @@
 			"currentTabCallBack",
 			"showCurrentTab",
 			".blocks",
-			"ssssss",
-			"_obj",
-			"$caller",
-			"InterpretScript",
-			"setCaller",
-			"setCallee",
-			".InterpretScript",
-			"me.InterpretScript",
-			".setCaller",
-			"$caller",
-			"setObjBlocks",
-			"null",
-			"_Cn",
-			"E1.value()",
-			"localStorage.",
-			"_showsettings",
-			"longpressList",
-			"me.compute",
-			".compute()",
-			"compute",
-			".blockChanged",
-			"return cPT",
-			"cPT",
-			"compute",
-			"setParent",
-			"getParent",
-			".dragTo",
-			"compute",
-			"computeAll2D",
-			"setE1",
-			"blockChanged",
-			"setBlockObj",
-			"content",
-			"empty",
-			".blocks",
-			".blockDrag",
-			"230",
-			"blockChanged",
-			".sync",
-			"blocks.sync",
-			"o",
-			"$L",
-			"lists_create_with",
-			"PROCEDURE",
-			"_mngr",
-			"mousedown",
-			"iPadList",
-			"Interpret",
-			"setOutput",
-			"setIncrement",
-			"color",
-			"5",
-			"_exp"
+			"ssssss"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -691,6 +724,15 @@
 		"regex": false,
 		"replace_history":
 		[
+			"\"",
+			"block",
+			"url=../irem/",
+			"../dgpad/index.php",
+			"?url=../conference/",
+			"../dgpad/index.php",
+			"",
+			"\"",
+			"",
 			"\""
 		],
 		"reverse": false,
@@ -702,54 +744,138 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 5,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "scripts/Objects/ExpressionObject.js",
+					"file": "/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/atelier/index.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 19802,
+						"buffer_size": 6380,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2492,
-								2492
+								3694,
+								3694
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2208.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2206,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1311.0,
+						"translation.y": 2001.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/erichake/Téléchargements/Documentsanstitre.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2223,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/conference/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3950,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3420,
+								3420
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1794.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 0,
-					"file": "scripts/Objects/ExpressionObject.js",
+					"buffer": 4,
+					"file": "scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 19802,
+						"buffer_size": 11627,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								17962,
-								17962
+								9586,
+								9586
 							]
 						],
 						"settings":
@@ -759,33 +885,33 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 12579.0,
+						"translation.y": 4772.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "scripts/DGPad.js",
+					"buffer": 5,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12379,
+						"buffer_size": 1066,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								311,
-								311
+								1011,
+								1011
 							]
 						],
 						"settings":
 						{
+							"auto_name": "var bl_befifgbjaijii=function(){",
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
@@ -793,156 +919,6 @@
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "scripts/Objects/BlocklyObjects.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4596,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3742,
-								3742
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2760.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "scripts/Objects/ListObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 11014,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								632,
-								632
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "scripts/Objects/ListObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 11014,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5973,
-								5973
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3793.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "scripts/Objects/ConstructionObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 34455,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								9052,
-								9052
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 5823.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "scripts/Construction.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 48385,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								23312,
-								23312
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 19088.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -981,7 +957,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 202.0
+		"height": 201.0
 	},
 	"output.find_results":
 	{
@@ -1033,7 +1009,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 355.0,
+	"side_bar_width": 214.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

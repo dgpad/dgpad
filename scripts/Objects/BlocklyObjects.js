@@ -83,6 +83,10 @@ function BlocklyObjects(_object, _construction) {
                 src[m] = {};
                 src[m]["xml"] = obj[m].getXML();
                 src[m]["sync"] = obj[m].getSNC();
+                var tab = obj[m].getChilds();
+                if (tab.length > 0) src[m]["childs"] = tab;
+                tab = obj[m].getParents();
+                if (tab.length > 0) src[m]["parents"] = tab;
             }
         };
         src["current"] = current;
@@ -94,6 +98,8 @@ function BlocklyObjects(_object, _construction) {
             if (_src.hasOwnProperty(MODE[i])) {
                 var m = MODE[i];
                 obj[m].setBehavior(m, _src[m]["xml"], _src[m]["sync"], null);
+                if (_src[m].hasOwnProperty("childs")) obj[m].setChilds(_src[m]["childs"]);
+                if (_src[m].hasOwnProperty("parents")) obj[m].setParents(_src[m]["parents"]);
             }
         };
         current = _src["current"];
@@ -143,10 +149,6 @@ function BlocklyObject(_owner, _construction) {
             cod += "\n};\n" + fname + "()";
             if (type === "oncompute") {
                 OWN.getObj().setExpression(cod);
-                // Ceci est d'une necessité absolue et m'a valu une journée
-                // de recherche, l'affichage des listes étaient incorrecte
-                // sans cela :
-                Cn.orderObjects();
                 setEX(null);
             } else {
                 setEX(cod);
@@ -169,18 +171,36 @@ function BlocklyObject(_owner, _construction) {
         childs = {};
         for (var i = 0; i < _childs.length; i++) {
             var o = Cn.find(_childs[i]);
-            if (o !== undefined)
-                childs[o.getVarName()] = o;
+            if ((o === undefined) ||
+                (o.getVarName() === OWN.getObj().getVarName())) continue;
+            childs[o.getVarName()] = o;
         }
+    };
+
+    this.getChilds = function() {
+        var ch = [];
+        for (var o in childs) {
+            ch.push(o);
+        }
+        return ch;
     };
 
     this.setParents = function(_parents) {
         parents = {};
         for (var i = 0; i < _parents.length; i++) {
             var o = Cn.find(_parents[i]);
-            if (o !== undefined)
-                parents[o.getVarName()] = o;
+            if ((o === undefined) ||
+                (o.getVarName() === OWN.getObj().getVarName())) continue;
+            parents[o.getVarName()] = o;
         }
+    };
+
+    this.getParents = function() {
+        var ch = [];
+        for (var o in parents) {
+            ch.push(o);
+        }
+        return ch;
     };
 
 

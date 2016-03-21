@@ -20,8 +20,8 @@ Blockly.JavaScript['dgpad_stop_list'] = function(block) {
 Blockly.JavaScript['dgpad_push'] = function(block) {
     var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
     var variable_varname = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('VARNAME'), Blockly.Variables.NAME_TYPE);
-    // TODO: Assemble JavaScript into code variable.
     value_name = value_name.replace(/^\((.*)\)$/, "$1");
+    value_name=value_name.replace(/^"setRGBColor",\[(\d*),(\d*),(\d*)\]$/,"[0,$1,$2,$3]");
     var code = 'GET("blockly_var_' + variable_varname + '").push(' + value_name + ');\n';
     // var code = variable_varname + '.push(' + value_name + ');\n';
     return code;

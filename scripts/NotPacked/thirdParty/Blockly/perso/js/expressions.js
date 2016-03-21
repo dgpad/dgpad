@@ -1,3 +1,20 @@
+Blockly.JavaScript['dgpad_window_props'] = function(block) {
+    var dropdown_name = block.getFieldValue('NAME');
+    // TODO: Assemble JavaScript into code variable.
+    var code = dropdown_name + '()';
+    // TODO: Change ORDER_NONE to the correct strength.
+    return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['dgpad_distance'] = function(block) {
+    var value_from = Blockly.JavaScript.valueToCode(block, 'FROM', Blockly.JavaScript.ORDER_ATOMIC);
+    var value_to = Blockly.JavaScript.valueToCode(block, 'TO', Blockly.JavaScript.ORDER_ATOMIC);
+    if ((value_from === "") || (value_to === "")) return "";
+    var code = 'd(' + value_from + ',' + value_to + ')';
+    return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+
 Blockly.JavaScript['dgpad_coordinate'] = function(block) {
     var dropdown_type = block.getFieldValue('type');
     var dropdown_name = block.getFieldValue('NAME');
@@ -11,6 +28,14 @@ Blockly.JavaScript['dgpad_return'] = function(block) {
     return code;
 };
 
+Blockly.JavaScript['dgpad_get_object_short'] = function(block) {
+    var dropdown_name = block.getFieldValue('NAME');
+    Blockly.dgpad.PARS.push(dropdown_name);
+    var code = dropdown_name;
+    return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['dgpad_get_point_short'] = Blockly.JavaScript['dgpad_get_object_short'];
 
 Blockly.JavaScript['dgpad_get_object'] = function(block) {
     var dropdown_type = block.getFieldValue('TYPE');

@@ -3,6 +3,7 @@ function ListObject(_construction, _name, _EXP) {
     $U.extend(this, new ConstructionObject(_construction, _name)); // Héritage
     $U.extend(this, new MoveableObject(_construction)); // Héritage
 
+
     var me = this;
     var Cn = _construction;
     var ORG3D = null;
@@ -12,9 +13,16 @@ function ListObject(_construction, _name, _EXP) {
     var initPtab = function() {
         // var lst = EXP.getValue();
         var lst = EXP.getE1().forcevalue();
-        // console.log(lst[0]);
-        // console.log("initPtab : "+me.getName()+"  "+lst.length);
+        //         console.log(lst[0]);
+        // console.log("initPtab : " + me.getName() + "  " + lst.length);
         Ptab.length = 0;
+
+        var rr = me.getColor().getR();
+        var gg = me.getColor().getG();
+        var bb = me.getColor().getB();
+        // var points = 0;
+        var oldColStop = 0;
+
         if (!$U.isArray(lst))
             return;
         for (var i = 0, len = lst.length; i < len; i++) {
@@ -26,15 +34,24 @@ function ListObject(_construction, _name, _EXP) {
                 // Il s'agit d'un point 2D :
                 var xx = Cn.coordsSystem.px(lst[i][0]);
                 var yy = Cn.coordsSystem.py(lst[i][1]);
+                // points++;
                 Ptab.push({
                     x: xx,
-                    y: yy
+                    y: yy,
+                    r: rr,
+                    g: gg,
+                    b: bb,
+                    rgb: "rgb(" + rr + "," + gg + "," + bb + ")"
                 });
             } else if (lst[i].length === 3) {
                 if (isNaN(lst[i][0]) && isNaN(lst[i][1]) && isNaN(lst[i][2])) {
                     Ptab.push({
                         x: NaN,
-                        y: NaN
+                        y: NaN,
+                        r: rr,
+                        g: gg,
+                        b: bb,
+                        rgb: "rgb(" + rr + "," + gg + "," + bb + ")"
                     });
                 } else {
                     // Il s'agit d'un point 3D :
@@ -51,23 +68,58 @@ function ListObject(_construction, _name, _EXP) {
                     var c2d = pt3D([Cn.coordsSystem.x(ORG3D.getX()), Cn.coordsSystem.y(ORG3D.getY())], lst[i]);
                     var xx = Cn.coordsSystem.px(c2d[0]);
                     var yy = Cn.coordsSystem.py(c2d[1]);
+                    // points++;
                     Ptab.push({
                         x: xx,
-                        y: yy
+                        y: yy,
+                        r: rr,
+                        g: gg,
+                        b: bb,
+                        rgb: "rgb(" + rr + "," + gg + "," + bb + ")"
                     });
                 }
 
+            } else if (lst[i].length === 4) {
+                // Un élément de longueur 4 signale un breakpoint
+                // de couleur [0,r,g,b] :
+                // console.log("*********** : Ptab.length=" + Ptab.length + "  oldColStop=" + oldColStop);
+                if (Ptab.length > oldColStop) {
+                    var iR = (lst[i][1] - rr) / (Ptab.length - oldColStop);
+                    var iG = (lst[i][2] - gg) / (Ptab.length - oldColStop);
+                    var iB = (lst[i][3] - bb) / (Ptab.length - oldColStop);
+                    for (var j = oldColStop + 1; j < Ptab.length; j++) {
+                        var k = j - oldColStop;
+                        var nr = Math.round(rr + k * iR);
+                        var ng = Math.round(gg + k * iG);
+                        var nb = Math.round(bb + k * iB);
+                        Ptab[j].r = nr;
+                        Ptab[j].g = ng;
+                        Ptab[j].b = nb;
+                        Ptab[j].rgb = "rgb(" + nr + "," + ng + "," + nb + ")";
+                    }
+                }
+                rr = lst[i][1];
+                gg = lst[i][2];
+                bb = lst[i][3];
+                oldColStop = Ptab.length;
             } else {
                 // Sinon il y a erreur dans l'expression:
                 Ptab.length = 0;
                 return;
             }
         }
+        // console.log("*********");
+        // for (var i = 0; i < Ptab.length; i++) {
+        //     console.log("Ptab[" + i + "].r=" + Ptab[i].r);
+        //     console.log("Ptab[" + i + "].g=" + Ptab[i].g);
+        //     console.log("Ptab[" + i + "].b=" + Ptab[i].b);
+        // }
     };
     initPtab();
     var fillStyle = this.prefs.color.point_free;
     var segSize = -1; // Taille des segments
     var shape = 0; // Apparence des points
+
 
     this.getEXP = function() {
         return EXP;
@@ -304,20 +356,37 @@ function ListObject(_construction, _name, _EXP) {
             // dessin des segments :
             ctx.beginPath();
             ctx.lineWidth = segSize;
+
+
+            // ctx.fillStyle = fillStyle;
             ctx.moveTo(Ptab[0].x, Ptab[0].y);
-            for (var i = 1, len = Ptab.length; i < len; i++) {
-                if (isNaN(Ptab[i].x) || isNaN(Ptab[i].y)) {
+            for (var aa = 1, len = Ptab.length; aa < len; aa++) {
+                if (isNaN(Ptab[aa].x) || isNaN(Ptab[aa].y)) {
                     ctx.fill();
-                    ctx.stroke();
                     ctx.beginPath();
-                    i++
-                    if (i < len)
-                        ctx.moveTo(Ptab[i].x, Ptab[i].y);
-                } else
-                    ctx.lineTo(Ptab[i].x, Ptab[i].y);
+                    aa++
+                    if (aa < len)
+                        ctx.moveTo(Ptab[aa].x, Ptab[aa].y);
+                } else {
+                    ctx.lineTo(Ptab[aa].x, Ptab[aa].y);
+                }
             }
             ctx.fill();
-            ctx.stroke();
+            ctx.beginPath();
+            ctx.lineWidth = segSize;
+
+
+            for (var i = 1, len = Ptab.length; i < len; i++) {
+                if (isNaN(Ptab[i].x) || isNaN(Ptab[i].y)) {
+                    i++
+                } else {
+                    ctx.beginPath();
+                    ctx.moveTo(Ptab[i - 1].x, Ptab[i - 1].y);
+                    ctx.strokeStyle = Ptab[i - 1].rgb;
+                    ctx.lineTo(Ptab[i].x, Ptab[i].y);
+                    ctx.stroke();
+                }
+            }
             ctx.lineCap = "butt";
             ctx.lineJoin = "miter";
         }
@@ -328,15 +397,12 @@ function ListObject(_construction, _name, _EXP) {
         ctx.lineWidth = me.prefs.size.pointborder;
         for (var i = 0, len = Ptab.length; i < len; i++) {
             ctx.beginPath();
+            ctx.strokeStyle = Ptab[i].rgb;
             paintPoint(i, ctx);
             ctx.fill();
             ctx.stroke();
         }
     };
-
-
-
-
 
     this.getSource = function(src) {
         src.geomWrite(false, this.getName(), "List", EXP.getVarName());

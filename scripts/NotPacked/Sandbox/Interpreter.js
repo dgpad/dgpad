@@ -290,6 +290,10 @@ function Interpreter(_win, _canvas) {
         blockly_namespace[_var] = blockly_namespace[_var] + v;
     };
 
+    var BLK_STL = function(_n, _cmd, _tab) {
+        var o = me.f(_n);
+        o[_cmd].apply(o, _tab);
+    };
 
     // Methode obsolete, maintenue pour la 
     // compatibilité des figures 3D d'avant
@@ -1316,7 +1320,7 @@ function Interpreter(_win, _canvas) {
         //     console.log("***user result = " + s);
         //     console.log("pseudo result = " + s3);
         //     console.log("main result = " + s2);
-        //     console.log("name : " + _o.getName());
+        //     // console.log("name : " + _o.getName());
         // }
 
 

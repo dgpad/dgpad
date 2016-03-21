@@ -1,3 +1,36 @@
+Blockly.Blocks['dgpad_window_props'] = {
+    init: function() {
+        this.appendDummyInput()
+            .appendField(new Blockly.FieldDropdown([
+                ["Largeur de la fenêtre", "windoww"],
+                ["Hauteur de la fenêtre", "windowh"],
+                ["Abscisse du centre", "windowcx"],
+                ["Ordonnée du centre", "windowcy"],
+                ["Angle phi (3D)", "phi"],
+                ["Angle theta (3D)", "theta"]
+            ]), "NAME");
+        this.setOutput(true);
+        this.setColour(20);
+        this.setTooltip('');
+        this.setHelpUrl('');
+        this.count = 0;
+    }
+};
+
+Blockly.Blocks['dgpad_distance'] = {
+    init: function() {
+        this.appendValueInput("FROM")
+            .appendField("distance");
+        this.appendValueInput("TO");
+        this.setInputsInline(true);
+        this.setOutput(true);
+        this.setColour(20);
+        this.setTooltip('');
+        this.setHelpUrl('');
+    }
+};
+
+
 Blockly.Blocks['dgpad_coordinate'] = {
     init: function() {
         this.appendDummyInput('obj_type')
@@ -110,6 +143,54 @@ Blockly.Blocks['dgpad_set_object'] = {
         this.getInput('obj_name').fieldRow[0].setValue(_o.getName());
     }
 };
+
+
+Blockly.dgpad_get_short = function(_v) {
+    return ({
+        init: function() {
+            this.appendDummyInput('obj_name')
+                .appendField(Blockly.dgpad.objectPopup(_v), "NAME")
+            this.setOutput(true, null);
+            this.setColour(20);
+            this.setTooltip('');
+            this.setHelpUrl('');
+        },
+        getName: function(_o) {
+            this.setFieldValue(_o.getName(), "NAME");
+        }
+    });
+};
+
+Blockly.Blocks['dgpad_get_object_short'] = Blockly.dgpad_get_short("any");
+Blockly.Blocks['dgpad_get_point_short'] = Blockly.dgpad_get_short("point");
+
+// Blockly.Blocks['dgpad_get_object_short'] = {
+//     init: function() {
+//         this.appendDummyInput('obj_name')
+//             .appendField(Blockly.dgpad.objectPopup("any"), "NAME")
+//         this.setOutput(true, null);
+//         this.setColour(20);
+//         this.setTooltip('');
+//         this.setHelpUrl('');
+//     },
+//     getName: function(_o) {
+//         this.setFieldValue(_o.getName(), "NAME");
+//     }
+// };
+
+// Blockly.Blocks['dgpad_get_point_short'] = {
+//     init: function() {
+//         this.appendDummyInput('obj_name')
+//             .appendField(Blockly.dgpad.objectPopup("point"), "NAME")
+//         this.setOutput(true, null);
+//         this.setColour(20);
+//         this.setTooltip('');
+//         this.setHelpUrl('');
+//     },
+//     getName: function(_o) {
+//         this.setFieldValue(_o.getName(), "NAME");
+//     }
+// };
 
 
 

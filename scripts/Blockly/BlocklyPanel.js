@@ -1,5 +1,6 @@
-function BlocklyPanel(_owner, _showsettings, _closeCallback, _currentTabCallBack, _height) {
+function BlocklyPanel(_owner, _canvas, _showsettings, _closeCallback, _currentTabCallBack, _height) {
     var me = this;
+    var canvas = _canvas;
     var cb_src = $APP_PATH + "NotPacked/images/dialog/closebox.svg"; // Closebox image
     var mn_src = $APP_PATH + "NotPacked/images/dialog/settings.svg"; // Closebox image
     var rz_src = $APP_PATH + "NotPacked/images/dialog/resize.svg"; // Closebox image
@@ -34,8 +35,11 @@ function BlocklyPanel(_owner, _showsettings, _closeCallback, _currentTabCallBack
 
 
     me.setbounds = function(l, t, w, h) {
-        left = l;
-        top = t;
+
+        var ch = canvas.getHeight() - tl_height;
+        var cw = canvas.getWidth();
+        left = (l + w < 20) ? 20 - w : ((l > cw - 20) ? cw - 20 : l);
+        top = (t < 0) ? 0 : ((t > ch) ? ch : t);
         width = w;
         height = h;
         wp.bnds(l, t, w, h);
@@ -47,7 +51,14 @@ function BlocklyPanel(_owner, _showsettings, _closeCallback, _currentTabCallBack
         // rl.bnds(w - rl_width, 0, rl_width, h);
         tb.bnds(0, h - tb_height, w, tb_height);
         rz.bnds(w - rz_width - rz_margin, h - rz_width - rz_margin, rz_width, rz_width);
-        if (typeof Blockly !== 'undefined') Blockly.fireUiEvent(window, 'resize');
+        var toolbox = document.getElementsByClassName('blocklyToolboxDiv')[0];
+
+        if (toolbox !== undefined) {
+            toolbox.style["left"] = (l + 1) + "px";
+            toolbox.style["top"] = (t + tl_height + 1) + "px";
+            toolbox.style["height"] = (h - tl_height - tb_height - 1) + "px";
+        };
+        // if (typeof Blockly !== 'undefined') Blockly.fireUiEvent(window, 'resize');
     }
 
     me.getBounds = function() {
@@ -69,7 +80,7 @@ function BlocklyPanel(_owner, _showsettings, _closeCallback, _currentTabCallBack
             wp.stls("transform:scale(0)");
         }, 1);
         setTimeout(function() {
-            if (typeof Blockly !== 'undefined') Blockly.fireUiEvent(window, 'resize');
+            // if (typeof Blockly !== 'undefined') Blockly.fireUiEvent(window, 'resize');
             _owner.removeChild(wp);
         }, 210);
     };
@@ -101,6 +112,7 @@ function BlocklyPanel(_owner, _showsettings, _closeCallback, _currentTabCallBack
         me.setbounds(left + ev.pageX - xx, top + ev.pageY - yy, width, height);
         xx = ev.pageX;
         yy = ev.pageY;
+
     }
 
     var dragdown = function(ev) {
@@ -128,6 +140,7 @@ function BlocklyPanel(_owner, _showsettings, _closeCallback, _currentTabCallBack
         me.setbounds(left, top, w, h);
         xx = ev.pageX;
         yy = ev.pageY;
+        if (typeof Blockly !== 'undefined') Blockly.fireUiEvent(window, 'resize');
     }
 
     var resizedown = function(ev) {
@@ -258,7 +271,7 @@ function BlocklyPanel(_owner, _showsettings, _closeCallback, _currentTabCallBack
     createtab($L.blockly.tab_drag);
     createtab($L.blockly.tab_mouseup);
     select_tab(0);
-    
+
 
     me.show();
 

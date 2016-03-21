@@ -107,105 +107,180 @@ Blockly.JavaScript['controls_repeat_ext'] = function(block) {
 
 
 Blockly.JavaScript['math_constant'] = function(block) {
-  // Constants: PI, E, the Golden Ratio, sqrt(2), 1/sqrt(2), INFINITY.
-  var CONSTANTS = {
-    'PI': ['Math.PI', Blockly.JavaScript.ORDER_MEMBER],
-    'E': ['Math.E', Blockly.JavaScript.ORDER_MEMBER],
-    'CPLX': ['[0,1]', Blockly.JavaScript.ORDER_MEMBER],
-    'GOLDEN_RATIO':
-        ['(1 + Math.sqrt(5)) / 2', Blockly.JavaScript.ORDER_DIVISION],
-    'SQRT2': ['Math.SQRT2', Blockly.JavaScript.ORDER_MEMBER],
-    'SQRT1_2': ['Math.SQRT1_2', Blockly.JavaScript.ORDER_MEMBER],
-    'INFINITY': ['Infinity', Blockly.JavaScript.ORDER_ATOMIC]
-  };
-  return CONSTANTS[block.getFieldValue('CONSTANT')];
+    // Constants: PI, E, the Golden Ratio, sqrt(2), 1/sqrt(2), INFINITY.
+    var CONSTANTS = {
+        'PI': ['Math.PI', Blockly.JavaScript.ORDER_MEMBER],
+        'E': ['Math.E', Blockly.JavaScript.ORDER_MEMBER],
+        'CPLX': ['[0,1]', Blockly.JavaScript.ORDER_MEMBER],
+        'GOLDEN_RATIO': ['(1 + Math.sqrt(5)) / 2', Blockly.JavaScript.ORDER_DIVISION],
+        'SQRT2': ['Math.SQRT2', Blockly.JavaScript.ORDER_MEMBER],
+        'SQRT1_2': ['Math.SQRT1_2', Blockly.JavaScript.ORDER_MEMBER],
+        'INFINITY': ['Infinity', Blockly.JavaScript.ORDER_ATOMIC]
+    };
+    return CONSTANTS[block.getFieldValue('CONSTANT')];
 };
 
 Blockly.JavaScript['math_single'] = function(block) {
-  // Math operators with single operand.
-  var operator = block.getFieldValue('OP');
-  var code;
-  var arg;
-  if (operator == 'NEG') {
-    // Negation is a special case given its different operator precedence.
-    arg = Blockly.JavaScript.valueToCode(block, 'NUM',
-        Blockly.JavaScript.ORDER_UNARY_NEGATION) || '0';
-    if (arg[0] == '-') {
-      // --3 is not legal in JS.
-      arg = ' ' + arg;
+    // Math operators with single operand.
+    var operator = block.getFieldValue('OP');
+    var code;
+    var arg;
+    if (operator == 'NEG') {
+        // Negation is a special case given its different operator precedence.
+        arg = Blockly.JavaScript.valueToCode(block, 'NUM',
+            Blockly.JavaScript.ORDER_UNARY_NEGATION) || '0';
+        if (arg[0] == '-') {
+            // --3 is not legal in JS.
+            arg = ' ' + arg;
+        }
+        code = '-' + arg;
+        return [code, Blockly.JavaScript.ORDER_UNARY_NEGATION];
     }
-    code = '-' + arg;
-    return [code, Blockly.JavaScript.ORDER_UNARY_NEGATION];
-  }
-  if (operator == 'SIN' || operator == 'COS' || operator == 'TAN') {
-    arg = Blockly.JavaScript.valueToCode(block, 'NUM',
-        Blockly.JavaScript.ORDER_DIVISION) || '0';
-  } else {
-    arg = Blockly.JavaScript.valueToCode(block, 'NUM',
-        Blockly.JavaScript.ORDER_NONE) || '0';
-  }
-  // First, handle cases which generate values that don't need parentheses
-  // wrapping the code.
-  switch (operator) {
-    case 'ABS':
-      code = 'Math.abs(' + arg + ')';
-      break;
-    case 'ROOT':
-      code = 'Math.sqrt(' + arg + ')';
-      break;
-    case 'LN':
-      code = 'Math.log(' + arg + ')';
-      break;
-    case 'EXP':
-      code = 'Math.exp(' + arg + ')';
-      break;
-    case 'POW10':
-      code = 'Math.pow(10,' + arg + ')';
-      break;
-    case 'ROUND':
-      code = 'Math.round(' + arg + ')';
-      break;
-    case 'ROUNDUP':
-      code = 'Math.ceil(' + arg + ')';
-      break;
-    case 'ROUNDDOWN':
-      code = 'Math.floor(' + arg + ')';
-      break;
-    case 'SIN':
-      code = 'Math.sin(' + arg + ')';
-      break;
-    case 'COS':
-      code = 'Math.cos(' + arg + ')';
-      break;
-    case 'TAN':
-      code = 'Math.tan(' + arg + ')';
-      break;
-  }
-  if (code) {
-    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
-  }
-  // Second, handle cases which generate values that may need parentheses
-  // wrapping the code.
-  switch (operator) {
-    case 'LOG10':
-      code = 'Math.log(' + arg + ') / Math.log(10)';
-      break;
-    case 'ASIN':
-      code = 'Math.asin(' + arg + ')';
-      break;
-    case 'ACOS':
-      code = 'Math.acos(' + arg + ')';
-      break;
-    case 'ATAN':
-      code = 'Math.atan(' + arg + ')';
-      break;
-    default:
-      throw 'Unknown math operator: ' + operator;
-  }
-  return [code, Blockly.JavaScript.ORDER_DIVISION];
+    if (operator == 'SIN' || operator == 'COS' || operator == 'TAN') {
+        arg = Blockly.JavaScript.valueToCode(block, 'NUM',
+            Blockly.JavaScript.ORDER_DIVISION) || '0';
+    } else {
+        arg = Blockly.JavaScript.valueToCode(block, 'NUM',
+            Blockly.JavaScript.ORDER_NONE) || '0';
+    }
+    // First, handle cases which generate values that don't need parentheses
+    // wrapping the code.
+    switch (operator) {
+        case 'ABS':
+            code = 'Math.abs(' + arg + ')';
+            break;
+        case 'ROOT':
+            code = 'Math.sqrt(' + arg + ')';
+            break;
+        case 'LN':
+            code = 'Math.log(' + arg + ')';
+            break;
+        case 'EXP':
+            code = 'Math.exp(' + arg + ')';
+            break;
+        case 'POW10':
+            code = 'Math.pow(10,' + arg + ')';
+            break;
+        case 'ROUND':
+            code = 'Math.round(' + arg + ')';
+            break;
+        case 'ROUNDUP':
+            code = 'Math.ceil(' + arg + ')';
+            break;
+        case 'ROUNDDOWN':
+            code = 'Math.floor(' + arg + ')';
+            break;
+        case 'SIN':
+            code = 'Math.sin(' + arg + ')';
+            break;
+        case 'COS':
+            code = 'Math.cos(' + arg + ')';
+            break;
+        case 'TAN':
+            code = 'Math.tan(' + arg + ')';
+            break;
+    }
+    if (code) {
+        return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+    }
+    // Second, handle cases which generate values that may need parentheses
+    // wrapping the code.
+    switch (operator) {
+        case 'LOG10':
+            code = 'Math.log(' + arg + ') / Math.log(10)';
+            break;
+        case 'ASIN':
+            code = 'Math.asin(' + arg + ')';
+            break;
+        case 'ACOS':
+            code = 'Math.acos(' + arg + ')';
+            break;
+        case 'ATAN':
+            code = 'Math.atan(' + arg + ')';
+            break;
+        default:
+            throw 'Unknown math operator: ' + operator;
+    }
+    return [code, Blockly.JavaScript.ORDER_DIVISION];
 };
 
 // Rounding functions have a single operand.
 Blockly.JavaScript['math_round'] = Blockly.JavaScript['math_single'];
 // Trigonometry functions have a single operand.
 Blockly.JavaScript['math_trig'] = Blockly.JavaScript['math_single'];
+
+Blockly.JavaScript['procedures_defreturn'] = function(block) {
+    // Define a procedure with a return value.
+    var funcName = Blockly.JavaScript.variableDB_.getName(
+        block.getFieldValue('NAME'), Blockly.Procedures.NAME_TYPE);
+    var branch = Blockly.JavaScript.statementToCode(block, 'STACK');
+    if (Blockly.JavaScript.STATEMENT_PREFIX) {
+        branch = Blockly.JavaScript.prefixLines(
+            Blockly.JavaScript.STATEMENT_PREFIX.replace(/%1/g,
+                '\'' + block.id + '\''), Blockly.JavaScript.INDENT) + branch;
+    }
+    if (Blockly.JavaScript.INFINITE_LOOP_TRAP) {
+        branch = Blockly.JavaScript.INFINITE_LOOP_TRAP.replace(/%1/g,
+            '\'' + block.id + '\'') + branch;
+    }
+    var returnValue = Blockly.JavaScript.valueToCode(block, 'RETURN',
+        Blockly.JavaScript.ORDER_NONE) || '';
+    if (returnValue) {
+        returnValue = '  return ' + returnValue + ';\n';
+    }
+    // var defs = "";
+    var args = [];
+    for (var x = 0; x < block.arguments_.length; x++) {
+        args.push(Blockly.JavaScript.variableDB_.getName(block.arguments_[x],
+            Blockly.Variables.NAME_TYPE));
+        var re = new RegExp("GET\\('blockly_var_" + args[x] + "'\\)", "gm");
+        branch = branch.replace(re, "blockly_local_" + args[x]);
+        var re = new RegExp('GET\\("blockly_var_' + args[x] + '"\\)', "gm");
+        branch = branch.replace(re, "blockly_local_" + args[x]);
+        args[x]="blockly_local_"+args[x];
+
+        // defs += 'var blockly_local_'+args[x]+' = '+'arguments[' + x + '];\n';
+    }
+    var code = 'function ' + funcName + '('+args.join(',')+') {\n' + branch + returnValue + '}';
+    code = Blockly.JavaScript.scrub_(block, code);
+    Blockly.JavaScript.definitions_[funcName] = code;
+    return null;
+};
+
+
+// Blockly.JavaScript['procedures_defreturn'] = function(block) {
+//     // Define a procedure with a return value.
+//     var funcName = Blockly.JavaScript.variableDB_.getName(
+//         block.getFieldValue('NAME'), Blockly.Procedures.NAME_TYPE);
+//     var branch = Blockly.JavaScript.statementToCode(block, 'STACK');
+//     if (Blockly.JavaScript.STATEMENT_PREFIX) {
+//         branch = Blockly.JavaScript.prefixLines(
+//             Blockly.JavaScript.STATEMENT_PREFIX.replace(/%1/g,
+//                 '\'' + block.id + '\''), Blockly.JavaScript.INDENT) + branch;
+//     }
+//     if (Blockly.JavaScript.INFINITE_LOOP_TRAP) {
+//         branch = Blockly.JavaScript.INFINITE_LOOP_TRAP.replace(/%1/g,
+//             '\'' + block.id + '\'') + branch;
+//     }
+//     var returnValue = Blockly.JavaScript.valueToCode(block, 'RETURN',
+//         Blockly.JavaScript.ORDER_NONE) || '';
+//     if (returnValue) {
+//         returnValue = '  return ' + returnValue + ';\n';
+//     }
+//     var defs = "";
+//     var args = [];
+//     for (var x = 0; x < block.arguments_.length; x++) {
+//         args[x] = Blockly.JavaScript.variableDB_.getName(block.arguments_[x],
+//             Blockly.Variables.NAME_TYPE);
+//         defs += 'SET("blockly_var_' + args[x] + '",arguments[' + x + ']);\n'
+//     }
+//     var code = 'function ' + funcName + '() {\n' + defs + branch + returnValue + '}';
+//     code = Blockly.JavaScript.scrub_(block, code);
+//     Blockly.JavaScript.definitions_[funcName] = code;
+//     return null;
+// };
+
+// Defining a procedure without a return value uses the same generator as
+// a procedure with a return value.
+Blockly.JavaScript['procedures_defnoreturn'] =
+    Blockly.JavaScript['procedures_defreturn'];
