@@ -40,6 +40,8 @@ function PointObject(_construction, _name, _x, _y) {
     var currentMagnet = null; // Pour gérer les changements de magnétisme : utilise pour
     // les traces d'objets.
 
+    this.blocks.setMode(["oncompute", "onmousedown","ondrag", "onmouseup"], "ondrag");
+
     // ****************************************
     // **** Uniquement pour les animations ****
     // ****************************************

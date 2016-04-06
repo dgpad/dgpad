@@ -171,7 +171,7 @@ function GUIElement(_owner, _type) {
     };
 
     var PadToMouseEvent = function(_touch) {
-        var ev = document.createEvent("MouseEvent");
+        var ev = document.createEvent("MouseEvent"); 
         ev.initMouseEvent("mouseup", true, true, window, 1,
             _touch.screenX, _touch.screenY,
             _touch.clientX, _touch.clientY, false,

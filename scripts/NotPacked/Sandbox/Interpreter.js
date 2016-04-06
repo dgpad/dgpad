@@ -854,6 +854,9 @@ function Interpreter(_win, _canvas) {
                     var t = eval("[" + e[1] + "]");
                     me.C.addAnimation(o, t[0][0], t[0][1], t[0][2]);
                     break;
+                case "ar": // Flèches pour les listes
+                    o.setArrow(JSON.parse(e[1]));
+                    break;
                 case "dp": // Dépendance des objets
                     var t = e[1].substring(1, e[1].length - 1).split(",");
                     for (var k = 0; k < t.length; k++) {

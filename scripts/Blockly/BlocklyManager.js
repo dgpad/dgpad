@@ -9,6 +9,7 @@ function BlocklyManager(_canvas) {
         path1 + "blocks_compressed.js",
         path1 + "javascript_compressed.js",
         path1 + "msg/js/" + $L.blockly.lang,
+        path1 + "perso/hacks.js",
         path1 + "perso/blocks/core.js",
         path1 + "perso/blocks/aspect.js",
         path1 + "perso/blocks/geometry.js",
@@ -30,7 +31,7 @@ function BlocklyManager(_canvas) {
 
 
     // Mode correspondant à l'onglet actuel du panel :
-    var MODE = ["oncompute", "ondrag", "onmouseup"];
+
 
 
     // *******************************************************
@@ -153,9 +154,10 @@ function BlocklyManager(_canvas) {
                 // console.log("objectPopup :"+_t);
                 var props = me.CN.getObjectsFromType(_t);
                 var tab = [];
+                var mod = OBJ.blocks.getMode()[panel.getMode()];
                 for (var i = 0; i < props.length; i++) {
                     // On doit absolument empécher l'autoréférence en mode Expression :
-                    if ((MODE[panel.getMode()] !== "oncompute") || (OBJ != props[i]))
+                    if ((mod !== "oncompute") || (OBJ != props[i]))
                         tab.push([props[i].getName(), props[i].getName()]);
                 };
                 if (tab.length === 0) tab.push(["? ", null]);
@@ -175,21 +177,56 @@ function BlocklyManager(_canvas) {
         }
     }
 
+    var modifyCSSRule = function(className, property, value) {
+        var ss = document.styleSheets;
+        for (var i = 0; i < ss.length; i++) {
+            var ss = document.styleSheets;
+            var rules = ss[i].cssRules || ss[i].rules;
+            for (var j = 0; j < rules.length; j++) {
+                if (rules[j].selectorText === className) {
+                    rules[j].style[property] = value;
+                }
+            }
+        }
+    }
+
     var onload = function() {
         setTimeout(function() {
             // Blockly.FieldTextInput.FONTSIZE = 36;
             workspace = Blockly.inject(panel.DIV, {
                 media: $APP_PATH + "NotPacked/thirdParty/Blockly/media/",
-                toolbox: panel.XML.firstChild
+                toolbox: panel.XML.firstChild,
+                zoom: {
+                    controls: true,
+                    wheel: true,
+                    startScale: 1.0,
+                    maxScale: 3,
+                    minScale: 0.3,
+                    scaleSpeed: 1.1
+                },
+                trashcan: true
                     // toolbox: document.getElementById('toolbox')
             });
             // Blockly.Xml.domToWorkspace(workspace, document.getElementById('startBlocks'));
             initBlockly();
             workspace.addChangeListener(onchanged);
-            changeCSS("blocklyToolboxDiv", "z-index", "2");
+            changeCSS("blocklyToolboxDiv", "z-index", "9001");
+            // changeCSS("blocklyToolboxDiv", "background", "#FEFEFE");
             changeCSS("blocklyMainBackground", "fill", "#FEFEFE");
-            changeCSS("blocklyMainBackground", "fill-opacity", "0.4");
+            changeCSS("blocklyMainBackground", "fill-opacity", "0.0");
             changeCSS("blocklySvg", "background-color", "rgba(0,0,0,0)");
+            modifyCSSRule(".blocklyText", "font-family", "Verdana, Geneva, sans-serif");
+            changeCSS("blocklyTreeLabel", "font-family", "Verdana, Geneva, sans-serif");
+            modifyCSSRule(".blocklyWidgetDiv", "z-index", "9002");
+            modifyCSSRule(".blocklyWidgetDiv .goog-menu", "border-radius", "10px");
+            modifyCSSRule(".blocklyWidgetDiv .goog-menu", "border", "1px solid gray");
+            modifyCSSRule(".blocklyWidgetDiv .goog-menu", "background", "rgba(250,250,250,0.9)");
+            modifyCSSRule(".blocklyWidgetDiv .goog-menuitem-content", "font", "normal 16px Verdana, Geneva, sans-serif");
+            modifyCSSRule(".blocklyWidgetDiv .goog-menuitem-hover", "padding-bottom", "4px");
+            modifyCSSRule(".blocklyWidgetDiv .goog-menuitem-hover", "padding-top", "4px");
+            modifyCSSRule(".blocklyWidgetDiv .goog-menuitem-content", "padding-bottom", "4px");
+            modifyCSSRule(".blocklyWidgetDiv .goog-menuitem-content", "padding-top", "4px");
+
             showCallback();
         }, 200);
     };
@@ -215,7 +252,7 @@ function BlocklyManager(_canvas) {
         }
         if (OBJ) {
             var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-            var mod = MODE[panel.getMode()];
+            var mod = OBJ.blocks.getMode()[panel.getMode()];
             if (xml.innerHTML === "") {
                 OBJ.blocks.setBehavior(mod, null, null, null);
             } else {
@@ -255,7 +292,7 @@ function BlocklyManager(_canvas) {
 
 
     var loadBlockly = function() {
-        panel = new BlocklyPanel(window.document.body, canvas, showSettings, hideCallback, currentTabCallBack, (canvas.getHeight() - canvas.prefs.controlpanel.size) / 2);
+        panel = new BlocklyPanel(window.document.body, canvas, showSettings, hideCallback, currentTabCallBack, (canvas.getHeight() - canvas.prefs.controlpanel.size));
         // Load xml formatted toolbox :
         var request = new XMLHttpRequest();
         request.open("GET", path1 + "perso/Blockly_toolbox.xml", true);
@@ -273,13 +310,15 @@ function BlocklyManager(_canvas) {
             // var xml=parser.parseFromString(request.responseText, "application/xml");
             // panel.DIV.parentNode.appendChild(xml.firstChild);
             // Load scripts synchroniously :
+
             addScript(0);
         }
     };
 
     var showCurrentTab = function() {
         Blockly.mainWorkspace.clear();
-        panel.selectTab(MODE.indexOf(OBJ.blocks.getCurrent()));
+        panel.setMode(OBJ.blocks.getMode(), OBJ.blocks.getCurrent());
+        // panel.selectTab(OBJ.blocks.getMode().indexOf(OBJ.blocks.getCurrent()));
         var xml = OBJ.blocks.getCurrentXML();
         if (xml) {
             var elt = Blockly.Xml.textToDom(xml);
@@ -293,7 +332,7 @@ function BlocklyManager(_canvas) {
     var currentTabCallBack = function() {
         Blockly.mainWorkspace.clear();
         if (OBJ) {
-            var mod = MODE[panel.getMode()];
+            var mod = OBJ.blocks.getMode()[panel.getMode()];
             OBJ.blocks.setCurrent(mod);
             var xml = OBJ.blocks.getXML(mod);
             if (xml) {

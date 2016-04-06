@@ -878,6 +878,7 @@ function Canvas(_id) {
             };
             return;
         }
+        if (draggedObject) draggedObject.blocks.evaluate("onmousedown"); // blockly
         me.paint(ev);
     };
 
@@ -1056,6 +1057,7 @@ function Canvas(_id) {
                 _proc($U.PadToMouseEvent(_tch.changedTouches[0]));
             }
         } else {
+            clearTimeout(longPressTimeout);
             var t0 = _tch.touches[0];
             var t1 = _tch.touches[1];
             var x0 = me.mouseX(t0),

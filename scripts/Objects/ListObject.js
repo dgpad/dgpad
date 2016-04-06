@@ -10,6 +10,18 @@ function ListObject(_construction, _name, _EXP) {
     var pt3D = Cn.getInterpreter().getEX().EX_point3D; // Pour les points3D
     var EXP = _EXP; // Expression contenant la liste de points (ou points3D)
     var Ptab = []; // Tableau de points
+    var arrow = null; // Flèches en bout de segments
+
+    me.setArrow = function(_t) {
+        arrow = (_t && (_t.length === 2) && (_t[0]) && (_t[1])) ? _t : null;
+    }
+    me.getArrow = function() {
+        return arrow;
+    }
+
+    // me.setArrow(16,5);
+
+
     var initPtab = function() {
         // var lst = EXP.getValue();
         var lst = EXP.getE1().forcevalue();
@@ -312,6 +324,7 @@ function ListObject(_construction, _name, _EXP) {
                 if ((segSize > 0) &&
                     ($U.isNearToSegment(Ptab[i - 1].x, Ptab[i - 1].y, Ptab[i].x, Ptab[i].y, mx, my, this.getOversize())))
                     return true;
+
             }
         }
         return false;
@@ -344,21 +357,33 @@ function ListObject(_construction, _name, _EXP) {
         ctx.lineTo(Ptab[i].x + sz, Ptab[i].y);
         ctx.lineTo(Ptab[i].x, Ptab[i].y - sz);
     };
+    var paintArrow = function(x1, y1, x2, y2, ctx) {
+        var rot = -Math.atan2(x2 - x1, y2 - y1);
+        ctx.save();
+        ctx.fillStyle = ctx.strokeStyle;
+        ctx.translate(x2, y2);
+        ctx.rotate(rot);
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(-arrow[1], -arrow[0]);
+        ctx.lineTo(arrow[1], -arrow[0]);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    }
 
     var paintPoint = paintCircle;
 
 
     this.paintObject = function(ctx) {
-
+        var hilite = (ctx.strokeStyle === this.prefs.color.hilite);
         if ((segSize > 0) && (Ptab.length > 0)) {
             ctx.lineCap = "round";
             ctx.lineJoin = "round";
+
             // dessin des segments :
             ctx.beginPath();
             ctx.lineWidth = segSize;
-
-
-            // ctx.fillStyle = fillStyle;
             ctx.moveTo(Ptab[0].x, Ptab[0].y);
             for (var aa = 1, len = Ptab.length; aa < len; aa++) {
                 if (isNaN(Ptab[aa].x) || isNaN(Ptab[aa].y)) {
@@ -374,17 +399,29 @@ function ListObject(_construction, _name, _EXP) {
             ctx.fill();
             ctx.beginPath();
             ctx.lineWidth = segSize;
-
-
-            for (var i = 1, len = Ptab.length; i < len; i++) {
-                if (isNaN(Ptab[i].x) || isNaN(Ptab[i].y)) {
-                    i++
-                } else {
-                    ctx.beginPath();
-                    ctx.moveTo(Ptab[i - 1].x, Ptab[i - 1].y);
-                    ctx.strokeStyle = Ptab[i - 1].rgb;
-                    ctx.lineTo(Ptab[i].x, Ptab[i].y);
-                    ctx.stroke();
+            if (hilite) {
+                for (var i = 1, len = Ptab.length; i < len; i++) {
+                    if (isNaN(Ptab[i].x) || isNaN(Ptab[i].y)) {
+                        i++
+                    } else {
+                        ctx.beginPath();
+                        ctx.moveTo(Ptab[i - 1].x, Ptab[i - 1].y);
+                        ctx.lineTo(Ptab[i].x, Ptab[i].y);
+                        ctx.stroke();
+                    }
+                }
+            } else {
+                for (var i = 1, len = Ptab.length; i < len; i++) {
+                    if (isNaN(Ptab[i].x) || isNaN(Ptab[i].y)) {
+                        i++
+                    } else {
+                        ctx.beginPath();
+                        ctx.moveTo(Ptab[i - 1].x, Ptab[i - 1].y);
+                        ctx.strokeStyle = Ptab[i - 1].rgb;
+                        ctx.lineTo(Ptab[i].x, Ptab[i].y);
+                        ctx.stroke();
+                        if (arrow) paintArrow(Ptab[i - 1].x, Ptab[i - 1].y, Ptab[i].x, Ptab[i].y, ctx);
+                    }
                 }
             }
             ctx.lineCap = "butt";
@@ -392,16 +429,41 @@ function ListObject(_construction, _name, _EXP) {
         }
 
         // dessin des points :
-        if (me.getOpacity() === 0)
-            ctx.fillStyle = fillStyle;
+        var opaque = (me.getOpacity() > 0);
+        if (!opaque) ctx.fillStyle = fillStyle;
         ctx.lineWidth = me.prefs.size.pointborder;
-        for (var i = 0, len = Ptab.length; i < len; i++) {
-            ctx.beginPath();
-            ctx.strokeStyle = Ptab[i].rgb;
-            paintPoint(i, ctx);
-            ctx.fill();
-            ctx.stroke();
+        if (hilite) {
+            for (var i = 0, len = Ptab.length; i < len; i++) {
+                ctx.beginPath();
+                paintPoint(i, ctx);
+                ctx.fill();
+                ctx.stroke();
+            }
+        } else {
+            if (opaque) {
+                var glob_alpha = ctx.globalAlpha;
+                for (var i = 0, len = Ptab.length; i < len; i++) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = Ptab[i].rgb;
+                    ctx.fillStyle = Ptab[i].rgb;
+                    ctx.globalAlpha = me.getOpacity();
+                    paintPoint(i, ctx);
+                    ctx.fill();
+                    ctx.globalAlpha = glob_alpha;
+                    ctx.stroke();
+                }
+            } else {
+                for (var i = 0, len = Ptab.length; i < len; i++) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = Ptab[i].rgb;
+                    paintPoint(i, ctx);
+                    ctx.fill();
+                    ctx.stroke();
+                }
+            }
+
         }
+
     };
 
     this.getSource = function(src) {

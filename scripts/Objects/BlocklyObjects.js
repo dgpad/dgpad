@@ -1,12 +1,23 @@
 function BlocklyObjects(_object, _construction) {
     var Cn = _construction;
     var OBJ = _object;
-    var MODE = ["oncompute", "ondrag", "onmouseup"];
-    var current = MODE[1];
+    var MODE = [];
+    var current;
 
     var obj = {};
-    for (var i = 0; i < MODE.length; i++) {
-        obj[MODE[i]] = new BlocklyObject(this, Cn);
+
+
+    this.setMode = function(_tab, _cur) {
+        MODE = _tab;
+        obj = {};
+        for (var i = 0; i < MODE.length; i++) {
+            obj[MODE[i]] = new BlocklyObject(this, Cn);
+        };
+        current = _cur;
+    };
+
+    this.getMode = function() {
+        return MODE;
     };
 
     this.isEmpty = function() {
@@ -67,7 +78,7 @@ function BlocklyObjects(_object, _construction) {
     };
 
     this.evaluate = function(_m) {
-        obj[_m].evaluate()
+        if (obj[_m]) obj[_m].evaluate()
     };
 
     // Called on each workspace change (and load time) :
@@ -142,6 +153,7 @@ function BlocklyObject(_owner, _construction) {
             if (type === "oncompute") OWN.getObj().setExpression("NaN");
         } else {
             sync = _sync.replace(/^\s*var\s*\w+\s*;/gm, "").trim();
+            // console.log(sync);
             async = _async;
             var fname = "bl_" + $U.number2letter(Date.now().toString());
             var cod = "var " + fname + "=function(){\n";
@@ -161,7 +173,9 @@ function BlocklyObject(_owner, _construction) {
     this.evaluate = function() {
         if (EX) {
             EX.forcevalue();
+            console.log(childs);
             for (var o in childs) {
+                childs[o].compute();
                 childs[o].computeChilds();
             }
         }

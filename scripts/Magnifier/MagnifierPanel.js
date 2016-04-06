@@ -4,8 +4,9 @@ function MagnifierPanel(_canvas) {
     var _l = $P.MagnifierBounds.l,
         _t = $P.MagnifierBounds.t,
         _w = $P.MagnifierBounds.w,
-        _h = $P.MagnifierBounds.h;
-    me.setStyles("position:absolute;overflow:hidden;z-index:8");
+        _h = $P.MagnifierBounds.w;
+    var cW = $P.MagnifierBounds.captureWidth;
+    me.setStyles("position:absolute;overflow:hidden;z-index:8;background-size:" + _w + "px " + _h + "px");
     me.setStyle("background-image", "url('" + $APP_PATH + "NotPacked/images/tools/loupe5.svg')");
     me.transition("scale", 0.2);
 
@@ -61,11 +62,11 @@ function MagnifierPanel(_canvas) {
 
     me.magnifierPaint = function(coords) {
         ctx.beginPath();
-        ctx.clearRect(0, 0, 200, 200);
+        ctx.clearRect(0, 0, _w, _h);
         if ((coords) && (!isNaN(coords.x)) && (!isNaN(coords.y)))
             if ((coords) && (!isNaN(coords.x)) && (!isNaN(coords.y)))
                 ctx.drawImage(_canvas.getDocObject(),
-                    coords.x - 50, coords.y - 50, 98, 98, 3, 3, 98, 98);
+                    coords.x - cW/2, coords.y - cW/2, cW, cW, 0, 0, _w, _h);
     };
 
 

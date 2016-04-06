@@ -43,7 +43,7 @@ Blockly.Blocks['dgpad_style_color_rgb'] = {
                             me.getInputTargetBlock('R').setFieldValue(r, 'NUM');
                             me.getInputTargetBlock('G').setFieldValue(g, 'NUM');
                             me.getInputTargetBlock('B').setFieldValue(b, 'NUM');
-                            
+
                         }), "RGB_col");
                 }
                 r = parseInt(r);
@@ -60,7 +60,7 @@ Blockly.Blocks['dgpad_style_color_rgb'] = {
                 me.removeInput('rgb');
             }
         };
-        
+
         this.appendDummyInput()
             .appendField("RGB");
         this.appendValueInput("R")
@@ -78,7 +78,7 @@ Blockly.Blocks['dgpad_style_color_rgb'] = {
                 me.getInputTargetBlock('R').setFieldValue(r, 'NUM');
                 me.getInputTargetBlock('G').setFieldValue(g, 'NUM');
                 me.getInputTargetBlock('B').setFieldValue(b, 'NUM');
-               
+
             }), "RGB_col");
         this.setInputsInline(true);
         this.setOutput(true, "style");
@@ -134,3 +134,19 @@ Blockly.Blocks['dgpad_style_increment'] = Blockly.dgpad_style_block("incrément"
 Blockly.Blocks['dgpad_style_dash'] = Blockly.dgpad_style_block("pointillé");
 Blockly.Blocks['dgpad_style_nomouse'] = Blockly.dgpad_style_block("inerte");
 Blockly.Blocks['dgpad_style_opacity'] = Blockly.dgpad_style_block("opacité");
+
+Blockly.Blocks['dgpad_style_arrow'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("flèches");
+    this.appendValueInput("w")
+        .setCheck(null);
+    this.appendValueInput("h")
+        .setCheck(null);
+    this.setInputsInline(true);
+    this.setOutput(true, "style");
+    this.setColour(65);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};

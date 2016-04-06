@@ -223,7 +223,7 @@ $L.animation_label = "Animación";
 
 
 
-
+ 
 // Dimanche 24 janvier 2016
 $L.props_general_dragall="Arrastrar todos los objetos";
 
@@ -269,9 +269,15 @@ $L.blockly.displaySource = "Mostrar el código fuente";
 $L.blockly.print = "Mostrar";
 $L.blockly.withlf = "con fin de línea";
 $L.blockly.withoutlf = "sin fin de línea";
-$L.blockly.tab_exp = "Expresión";
-$L.blockly.tab_drag = "al arrastrar";
-$L.blockly.tab_mouseup = "al soltar";
+$L.blockly.lang = "es.js";
+
+// Mercredi 30 mars 2016
+$L.blockly.tabs = {};
+$L.blockly.tabs.oncompute = "Expresión";
+$L.blockly.tabs.onmousedown = "Appuyé";
+$L.blockly.tabs.ondrag = "al arrastrar";
+$L.blockly.tabs.onmouseup = "al soltar";
+
 
 $L.number = function(_n) {
     return _n.toString().replace(".", ",")

@@ -10,10 +10,17 @@ function Circle1Object(_construction, _name, _P1, _R) {
     var RX = null;
     var isStr = $U.isStr;
     this.setParent(this.P1);
+    this.blocks.setMode(["oncompute"], "oncompute");
 
     me.getRX = function() {
         return RX;
     };
+
+    // Pour Blockly :
+    this.getRoot().setExpression = this.setExpression = function(exy) {
+        me.setExp(exy);
+    }
+
     // setExp pour les widgets :
     me.setExp = me.setRX = function(ex) {
         if (isStr(ex)) {
@@ -66,7 +73,7 @@ function Circle1Object(_construction, _name, _P1, _R) {
             at += ",locus";
         if (this.isMoveable())
             at += ",@objectmover";
-        at += ",@callcalc";
+        at += ",@callcalc,@blockly";
         return at;
     };
 
@@ -127,7 +134,8 @@ function Circle1Object(_construction, _name, _P1, _R) {
     };
 
     var getSourceFixed = function(src) {
-        src.geomWrite(false, me.getName(), "Circle1", me.P1.getVarName(), "\"" + RX.getSource() + "\"");
+        var _ex = "\"" + RX.getUnicodeSource().replace(/\n/g, "\\n") + "\"";
+        src.geomWrite(false, me.getName(), "Circle1", me.P1.getVarName(), _ex);
     };
 
 

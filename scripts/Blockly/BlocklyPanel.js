@@ -14,7 +14,8 @@ function BlocklyPanel(_owner, _canvas, _showsettings, _closeCallback, _currentTa
     var mn_margin_left = 5; // Margins from left
     var rz_width = 20; // Resize box width
     var rz_margin = 3; // Resize box margin
-    var p_margin = 20; // Panel margin from top and bottom
+    var ph_margin = 10; // Panel margin from top and bottom
+    var pl_margin = 10; // Panel margin from left
     var tb_height = 30; // Bottom toolbar height
     var left = 0,
         top = 0,
@@ -25,7 +26,7 @@ function BlocklyPanel(_owner, _canvas, _showsettings, _closeCallback, _currentTa
     var tab_width = 80; // tab width
     var tab_height = 20; // tab height
     var tab_gap = 5; // gap between tabs
-    var tab_left_margin = 124; // space before tabs
+    var tab_left_margin = 133; // space before tabs
     var current_tab = -1; // Current selected tab
 
 
@@ -47,7 +48,7 @@ function BlocklyPanel(_owner, _canvas, _showsettings, _closeCallback, _currentTa
         tl.stl("line-height", tl_height + "px");
         cb.bnds(w - cb_width - cb_margin_right, cb_margin_top, cb_width, cb_width);
         mn.bnds(mn_margin_left, mn_margin_top, mn_width, mn_width);
-        ct.bnds(0, tl_height, w, h - tl_height - tb_height);
+        ct.bnds(0, tl_height + 1, w, h - tl_height - tb_height - 2);
         // rl.bnds(w - rl_width, 0, rl_width, h);
         tb.bnds(0, h - tb_height, w, tb_height);
         rz.bnds(w - rz_width - rz_margin, h - rz_width - rz_margin, rz_width, rz_width);
@@ -55,8 +56,8 @@ function BlocklyPanel(_owner, _canvas, _showsettings, _closeCallback, _currentTa
 
         if (toolbox !== undefined) {
             toolbox.style["left"] = (l + 1) + "px";
-            toolbox.style["top"] = (t + tl_height + 1) + "px";
-            toolbox.style["height"] = (h - tl_height - tb_height - 1) + "px";
+            toolbox.style["top"] = (t + tl_height + 2) + "px";
+            toolbox.style["height"] = (h - tl_height - tb_height - 3) + "px";
         };
         // if (typeof Blockly !== 'undefined') Blockly.fireUiEvent(window, 'resize');
     }
@@ -161,43 +162,6 @@ function BlocklyPanel(_owner, _canvas, _showsettings, _closeCallback, _currentTa
         window.removeEventListener('mouseup', resizeup, false);
     }
 
-
-    var createDiv = function() {
-        var el = document.createElement("div");
-        el.stl = function(_p, _v) {
-            el.style.setProperty(_p, _v);
-        };
-        el.att = function(_a, _v) {
-            el[_a] = _v;
-        };
-        el.stls = function(_st) {
-            var t = _st.split(";");
-            for (var i = 0, len = t.length; i < len; i++) {
-                var a = t[i].split(":");
-                el.stl(a[0].replace(/^\s+|\s+$/g, ''), a[1].replace(/^\s+|\s+$/g, ''));
-            }
-        }
-        el.bnds = function(l, t, w, h) {
-            el.stls("left:" + l + "px;top:" + t + "px;width:" + w + "px;height:" + h + "px");
-        }
-        el.add = function(_ch) {
-            el.appendChild(_ch);
-        }
-        el.md = function(_p) {
-            el.addEventListener('touchstart', _p, false);
-            el.addEventListener('mousedown', _p, false);
-        }
-        el.mm = function(_p) {
-            el.addEventListener('touchmove', _p, false);
-            el.addEventListener('mousemove', _p, false);
-        }
-        el.mu = function(_p) {
-            el.addEventListener('touchend', _p, false);
-            el.addEventListener('mouseup', _p, false);
-        }
-        return el;
-    };
-
     var select_tab = function(_s) {
         // console.log(_s);
         if (_s !== current_tab) {
@@ -209,12 +173,12 @@ function BlocklyPanel(_owner, _canvas, _showsettings, _closeCallback, _currentTa
         }
     }
 
-    me.selectTab = function(_i) {
-        select_tab(_i);
-    }
+    // me.selectTab = function(_i) {
+    //     select_tab(_i);
+    // }
 
-    var createtab = function(_n, _c) {
-        var t = createDiv();
+    var createtab = function(_n) {
+        var t = $U.createDiv();
         var i = tabs.length;
         t.md(function(ev) {
             ev.preventDefault();
@@ -227,18 +191,30 @@ function BlocklyPanel(_owner, _canvas, _showsettings, _closeCallback, _currentTa
         tabs.push(t);
     }
 
-    var wp = createDiv(); // main div wrapper
-    var tl = createDiv(); // title bar div
-    var mn = createDiv(); // Contextual menu div
-    var cb = createDiv(); // close box div
-    var ct = createDiv(); // content div
-    var rz = createDiv(); // resize box div
-    var tb = createDiv(); // bottom toolbar div
-    var xml = createDiv(); // div for loading Blockly categories
+    me.setMode = function(_tab, _c) {
+        for (var i = 0; i < tabs.length; i++) {
+            tb.rmv(tabs[i]);
+        }
+        tabs = [];
+        current_tab = -1;
+        for (var i = 0; i < _tab.length; i++) {
+            createtab($L.blockly.tabs[_tab[i]]);
+        }
+        select_tab(_tab.indexOf(_c))
+    }
+
+    var wp = $U.createDiv(); // main div wrapper
+    var tl = $U.createDiv(); // title bar div
+    var mn = $U.createDiv(); // Contextual menu div
+    var cb = $U.createDiv(); // close box div
+    var ct = $U.createDiv(); // content div
+    var rz = $U.createDiv(); // resize box div
+    var tb = $U.createDiv(); // bottom toolbar div
+    var xml = $U.createDiv(); // div for loading Blockly categories
     // xml.att("id", "dgpad_xml");
     xml.bnds(0, 0, 0, 0);
 
-    wp.stls("position:absolute;border-bottom-left-radius:10px;border-bottom-right-radius:10px;overflow:hidden;border: 1px solid #b4b4b4;transition:transform 0.2s linear;transform:scale(0);z-index:1");
+    wp.stls("position:absolute;border-bottom-left-radius:10px;border-bottom-right-radius:10px;overflow:hidden;border: 1px solid #b4b4b4;transition:transform 0.2s linear;transform:scale(0);z-index:9000");
     tl.stls("cursor:all-scroll;background-color:rgba(210,210,210,1);position:absolute;font-size: 16px;font-family: Helvetica, Arial, sans-serif;text-shadow: 1px 1px 5px #777;text-align: center;white-space: pre-wrap;margin: 0px;vertical-align:middle");
     mn.stls("background-color:rgba(0,0,0,0);position:absolute;background-position:center;background-repeat:no-repeat;background-size:100% 100%");
     mn.stl("background-image", "url(" + mn_src + ")");
@@ -246,7 +222,7 @@ function BlocklyPanel(_owner, _canvas, _showsettings, _closeCallback, _currentTa
     cb.stl("background-image", "url(" + cb_src + ")");
     rz.stls("background-color:rgba(0,0,0,0);position:absolute;background-position:center;background-repeat:no-repeat;background-size:100% 100%;cursor:se-resize");
     rz.stl("background-image", "url(" + rz_src + ")");
-    ct.stls("background-color:rgba(230, 230, 230, 0.5);position:absolute")
+    ct.stls("background-color:rgba(230, 230, 230, 0.4);position:absolute")
         // rl.stls("position:absolute;background-color:rgba(230,230,230,0.5);border: 0px;cursor:ew-resize")
     tb.stls("background-color:rgba(200, 200, 200, 0.9);position:absolute")
     tl.innerHTML = tl_str;
@@ -258,7 +234,7 @@ function BlocklyPanel(_owner, _canvas, _showsettings, _closeCallback, _currentTa
     rz.md(resizedown);
     rz.mu(resizeup);
 
-    me.setbounds(-1, p_margin - 1, 500, _height - 2 * p_margin);
+    me.setbounds(pl_margin, ph_margin - 1, 500, _height - 2 * ph_margin);
 
     wp.add(xml);
     wp.add(tl);
@@ -267,11 +243,6 @@ function BlocklyPanel(_owner, _canvas, _showsettings, _closeCallback, _currentTa
     wp.add(cb);
     wp.add(mn);
     wp.add(rz);
-    createtab($L.blockly.tab_exp);
-    createtab($L.blockly.tab_drag);
-    createtab($L.blockly.tab_mouseup);
-    select_tab(0);
-
 
     me.show();
 

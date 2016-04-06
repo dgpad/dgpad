@@ -16,7 +16,7 @@ function PointConstructor() {
         if (a.isInstanceType("line")) return -1;
         else return 1;
     };
-
+ 
     this.selectCreatePoint = function(zc, ev) {};
 
     this.createObj = function(zc, ev) {

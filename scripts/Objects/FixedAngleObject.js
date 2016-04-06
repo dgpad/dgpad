@@ -18,7 +18,10 @@ function FixedAngleObject(_construction, _name, _P1, _P2, _trigo) {
     var trigo = _trigo; // Sens de l'angle
     var sel_arc, sel_ray = true;
 
+
+
     this.setParent(A, O);
+    this.blocks.setMode(["oncompute"], "oncompute");
 
     this.redefine = function(_old, _new) {
         if (_old === A) {
@@ -54,7 +57,7 @@ function FixedAngleObject(_construction, _name, _P1, _P2, _trigo) {
 
     this.getAssociatedTools = function() {
         var at = superObject.getAssociatedTools();
-        at += ",@callcalc";
+        at += ",@callcalc,@blockly";
         return at;
     };
 
@@ -83,6 +86,10 @@ function FixedAngleObject(_construction, _name, _P1, _P2, _trigo) {
         }
     };
 
+    // Pour Blockly :
+    this.getRoot().setExpression = this.setExpression = function(exy) {
+        me.setExp(exy);
+    }
 
     // setExp pour les widgets :
     me.setExp = me.setE1 = function(_t) {

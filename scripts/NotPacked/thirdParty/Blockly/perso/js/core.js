@@ -13,56 +13,6 @@
 //     return cod;
 // }
 
-Blockly.JavaScript['math_arithmetic'] = function(block) {
-    // Basic arithmetic operators, and power.
-    var OPERATORS = {
-        'ADD': ['plus', Blockly.JavaScript.ORDER_ADDITION],
-        'MINUS': ['minus', Blockly.JavaScript.ORDER_SUBTRACTION],
-        'MULTIPLY': ['times', Blockly.JavaScript.ORDER_MULTIPLICATION],
-        'DIVIDE': ['quotient', Blockly.JavaScript.ORDER_DIVISION],
-        'POWER': ['power', Blockly.JavaScript.ORDER_COMMA] // Handle power separately.
-    };
-    var tuple = OPERATORS[block.getFieldValue('OP')];
-    var operator = tuple[0];
-    var order = tuple[1];
-    var argument0 = Blockly.JavaScript.valueToCode(block, 'A', order) || '0';
-    var argument1 = Blockly.JavaScript.valueToCode(block, 'B', order) || '0';
-    var code = operator + "(" + argument0 + "," + argument1 + ")";
-    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
-};
-
-
-Blockly.JavaScript['variables_get'] = function(block) {
-    // Variable getter.
-    var code = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('VAR'),
-        Blockly.Variables.NAME_TYPE);
-    code = "GET('blockly_var_" + code + "')";
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
-};
-
-
-Blockly.JavaScript['variables_set'] = function(block) {
-    // Variable setter.
-    var argument0 = Blockly.JavaScript.valueToCode(block, 'VALUE',
-        Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-    var varName = Blockly.JavaScript.variableDB_.getName(
-        block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
-    return 'SET("blockly_var_' + varName + '",' + argument0 + ');\n';
-    // return varName + ' = ' + argument0 + ';\n';
-};
-
-
-// Incrémentation :
-Blockly.JavaScript['math_change'] = function(block) {
-    // Add to a variable in place.
-    var argument0 = Blockly.JavaScript.valueToCode(block, 'DELTA',
-        Blockly.JavaScript.ORDER_ADDITION) || '0';
-    var varName = Blockly.JavaScript.variableDB_.getName(
-        block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
-    return 'INC("blockly_var_' + varName + '",' + argument0 + ');\n';
-};
-
-
 Blockly.JavaScript['controls_for'] = function(block) {
     var variable0 = "blockly_var_" + Blockly.JavaScript.variableDB_.getName(
         block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
@@ -74,11 +24,10 @@ Blockly.JavaScript['controls_for'] = function(block) {
         Blockly.JavaScript.ORDER_ASSIGNMENT) || '1';
     var branch = Blockly.JavaScript.statementToCode(block, 'DO');
     branch = Blockly.JavaScript.addLoopTrap(branch, block.id);
-    var code = 'SET("' + variable0 + '",' + argument0 + ');\n'
-    code += 'while(GET("' + variable0 + '")<=' + argument1 + '){\n';
+    // console.log(branch);
+    var code = "for (var " + variable0 + " = " + argument0 + " ; " + variable0 + " <= " + argument1 + " ; " + variable0 + " = " + variable0 + " + " + increment + "){\n";
     code += branch;
-    code += 'INC("' + variable0 + '",' + increment + ');\n'
-    code += '};\n';
+    code += "};\n";
     return code;
 };
 
@@ -97,13 +46,119 @@ Blockly.JavaScript['controls_repeat_ext'] = function(block) {
     branch = Blockly.JavaScript.addLoopTrap(branch, block.id);
     var loopVar = 'blockly_var_' + Blockly.JavaScript.variableDB_.getDistinctName(
         'count', Blockly.Variables.NAME_TYPE);
-    var code = 'SET("' + loopVar + '",1);\n'
-    code += 'while(GET("' + loopVar + '")<=' + repeats + '){\n';
+
+    var code = "for (var " + loopVar + " = 1 ; " + loopVar + " <= " + repeats + " ; " + loopVar + "++){\n";
     code += branch;
-    code += 'INC("' + loopVar + '",1);\n'
-    code += '};\n';
+    code += "};\n";
     return code;
 };
+
+Blockly.JavaScript['controls_repeat'] =
+    Blockly.JavaScript['controls_repeat_ext'];
+
+Blockly.JavaScript['controls_whileUntil'] = function(block) {
+    // Do while/until loop.
+    var until = block.getFieldValue('MODE') == 'UNTIL';
+    var argument0 = Blockly.JavaScript.valueToCode(block, 'BOOL',
+        until ? Blockly.JavaScript.ORDER_LOGICAL_NOT : Blockly.JavaScript.ORDER_NONE);
+    var branch = Blockly.JavaScript.statementToCode(block, 'DO');
+    if ((branch === "") || (argument0 === "")) return "";
+    branch = Blockly.JavaScript.addLoopTrap(branch, block.id);
+    if (until) {
+        argument0 = '!' + argument0;
+    }
+    return 'while (' + argument0 + ') {\n' + branch + '}\n';
+};
+
+
+Blockly.JavaScript['controls_repeatuntil'] = function(block) {
+    var until = block.getFieldValue('MODE') == 'until';
+    var argument0 = Blockly.JavaScript.valueToCode(block, 'BOOL',
+        until ? Blockly.JavaScript.ORDER_LOGICAL_NOT : Blockly.JavaScript.ORDER_NONE);
+    var branch = Blockly.JavaScript.statementToCode(block, 'DO');
+    if ((branch === "") || (argument0 === "")) return "";
+    if (until) {
+        argument0 = '!' + argument0;
+    }
+    return 'do {\n' + branch + '} while (' + argument0 + ')\n';
+};
+
+
+Blockly.JavaScript['math_arithmetic'] = function(block) {
+    // Basic arithmetic operators, and power.
+    var OPERATORS = {
+        'ADD': ['plus', Blockly.JavaScript.ORDER_ADDITION],
+        'MINUS': ['minus', Blockly.JavaScript.ORDER_SUBTRACTION],
+        'MULTIPLY': ['times', Blockly.JavaScript.ORDER_MULTIPLICATION],
+        'DIVIDE': ['quotient', Blockly.JavaScript.ORDER_DIVISION],
+        'POWER': ['power', Blockly.JavaScript.ORDER_COMMA] // Handle power separately.
+    };
+    var tuple = OPERATORS[block.getFieldValue('OP')];
+    var operator = tuple[0];
+    var order = tuple[1];
+    var argument0 = Blockly.JavaScript.valueToCode(block, 'A', order) || '0';
+    var argument1 = Blockly.JavaScript.valueToCode(block, 'B', order) || '0';
+    var code = operator + "(" + argument0 + "," + argument1 + ")";
+    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.JavaScript['math_random_int'] = function(block) {
+    // Random integer between [X] and [Y].
+    var a0 = Blockly.JavaScript.valueToCode(block, 'FROM',
+        Blockly.JavaScript.ORDER_COMMA) || '0';
+    var b0 = Blockly.JavaScript.valueToCode(block, 'TO',
+        Blockly.JavaScript.ORDER_COMMA) || '0';
+    var code = 'Math.floor(Math.random()*(Math.abs(' + a0 + '-' + b0 + ')+1)+(' + a0 + '+' + b0 + '-Math.abs(' + a0 + '-' + b0 + '))/2)';
+    // var functionName = Blockly.JavaScript.provideFunction_(
+    //     'math_random_int',
+    //     [ 'function ' + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ +
+    //         '(a, b) {',
+    //       '  if (a > b) {',
+    //       '    // Swap a and b to ensure a is smaller.',
+    //       '    var c = a;',
+    //       '    a = b;',
+    //       '    b = c;',
+    //       '  }',
+    //       '  return Math.floor(Math.random() * (b - a + 1) + a);',
+    //       '}']);
+    // var code = functionName + '(' + argument0 + ', ' + argument1 + ')';
+    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+
+Blockly.JavaScript['variables_get'] = function(block) {
+    // Variable getter.
+    var code = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('VAR'),
+        Blockly.Variables.NAME_TYPE);
+    code = "blockly_var_" + code;
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+
+Blockly.JavaScript['variables_set'] = function(block) {
+    // Variable setter.
+    var argument0 = Blockly.JavaScript.valueToCode(block, 'VALUE',
+        Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+    var varName = Blockly.JavaScript.variableDB_.getName(
+        block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
+    // console.log('blockly_var_' + varName + ' = ' + argument0 + ';\n');
+    return 'blockly_var_' + varName + ' = ' + argument0 + ';\n';
+    // return varName + ' = ' + argument0 + ';\n';
+};
+
+
+// Incrémentation :
+Blockly.JavaScript['math_change'] = function(block) {
+    // Add to a variable in place.
+    var argument0 = Blockly.JavaScript.valueToCode(block, 'DELTA',
+        Blockly.JavaScript.ORDER_ADDITION) || '0';
+    var varName = Blockly.JavaScript.variableDB_.getName(
+        block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
+    return 'blockly_var_' + varName + ' = ' + 'blockly_var_' + varName + ' + ' + argument0 + ';\n';
+};
+
+
+
 
 
 Blockly.JavaScript['math_constant'] = function(block) {
@@ -228,57 +283,42 @@ Blockly.JavaScript['procedures_defreturn'] = function(block) {
     if (returnValue) {
         returnValue = '  return ' + returnValue + ';\n';
     }
-    // var defs = "";
     var args = [];
+    console.log
     for (var x = 0; x < block.arguments_.length; x++) {
         args.push(Blockly.JavaScript.variableDB_.getName(block.arguments_[x],
             Blockly.Variables.NAME_TYPE));
-        var re = new RegExp("GET\\('blockly_var_" + args[x] + "'\\)", "gm");
-        branch = branch.replace(re, "blockly_local_" + args[x]);
-        var re = new RegExp('GET\\("blockly_var_' + args[x] + '"\\)', "gm");
-        branch = branch.replace(re, "blockly_local_" + args[x]);
-        args[x]="blockly_local_"+args[x];
-
-        // defs += 'var blockly_local_'+args[x]+' = '+'arguments[' + x + '];\n';
+        var re = new RegExp("blockly_var_" + args[x] + "([^\\w]+)", "g");
+        branch = branch.replace(re, "blockly_local_" + args[x] + "$1");
+        if (returnValue) returnValue = returnValue.replace(re, "blockly_local_" + args[x] + "$1");
+        args[x] = "blockly_local_" + args[x];
     }
-    var code = 'function ' + funcName + '('+args.join(',')+') {\n' + branch + returnValue + '}';
+
+    // Recherche dans le corps de la fonction de toutes les variables
+    // susceptibles d'être locale. Une première affectation "myvar = 2"
+    // sera ainsi remplacée par "var myvar = 2" :
+    var rg = new RegExp("(^\\s*)(blockly_var_\\w+)(\\s*=\\s*)", "gm");
+    var m;
+    var myvars = [];
+    while ((m = rg.exec(branch)) !== null) {
+        if (m.index === re.lastIndex) {
+            re.lastIndex++;
+        }
+        if (myvars.indexOf(m[2]) === -1) {
+            myvars.push(m[2]);
+        }
+    }
+    for (var i = 0; i < myvars.length; i++) {
+        var reg = new RegExp("(^\\s*)(" + myvars[i] + ")(\\s*=\\s*)", "m");
+        branch = branch.replace(reg, "$1 var $2$3");
+    }
+
+
+    var code = 'function ' + funcName + '(' + args.join(',') + ') {\n' + branch + returnValue + '}';
     code = Blockly.JavaScript.scrub_(block, code);
     Blockly.JavaScript.definitions_[funcName] = code;
     return null;
 };
-
-
-// Blockly.JavaScript['procedures_defreturn'] = function(block) {
-//     // Define a procedure with a return value.
-//     var funcName = Blockly.JavaScript.variableDB_.getName(
-//         block.getFieldValue('NAME'), Blockly.Procedures.NAME_TYPE);
-//     var branch = Blockly.JavaScript.statementToCode(block, 'STACK');
-//     if (Blockly.JavaScript.STATEMENT_PREFIX) {
-//         branch = Blockly.JavaScript.prefixLines(
-//             Blockly.JavaScript.STATEMENT_PREFIX.replace(/%1/g,
-//                 '\'' + block.id + '\''), Blockly.JavaScript.INDENT) + branch;
-//     }
-//     if (Blockly.JavaScript.INFINITE_LOOP_TRAP) {
-//         branch = Blockly.JavaScript.INFINITE_LOOP_TRAP.replace(/%1/g,
-//             '\'' + block.id + '\'') + branch;
-//     }
-//     var returnValue = Blockly.JavaScript.valueToCode(block, 'RETURN',
-//         Blockly.JavaScript.ORDER_NONE) || '';
-//     if (returnValue) {
-//         returnValue = '  return ' + returnValue + ';\n';
-//     }
-//     var defs = "";
-//     var args = [];
-//     for (var x = 0; x < block.arguments_.length; x++) {
-//         args[x] = Blockly.JavaScript.variableDB_.getName(block.arguments_[x],
-//             Blockly.Variables.NAME_TYPE);
-//         defs += 'SET("blockly_var_' + args[x] + '",arguments[' + x + ']);\n'
-//     }
-//     var code = 'function ' + funcName + '() {\n' + defs + branch + returnValue + '}';
-//     code = Blockly.JavaScript.scrub_(block, code);
-//     Blockly.JavaScript.definitions_[funcName] = code;
-//     return null;
-// };
 
 // Defining a procedure without a return value uses the same generator as
 // a procedure with a return value.

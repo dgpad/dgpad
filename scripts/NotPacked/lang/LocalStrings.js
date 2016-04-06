@@ -255,7 +255,7 @@ $L.blockly.o.angle = "of angle";
 $L.blockly.o.area = "of polygon";
 $L.blockly.o2 = {};
 $L.blockly.o2.expression = "expression";
-$L.blockly.o2.list="list";
+$L.blockly.o2.list = "list";
 $L.blockly.o2.point = "point";
 $L.blockly.o2.circle1 = "circle";
 $L.blockly.o2.segment = "segment";
@@ -277,11 +277,23 @@ $L.blockly.copyall = "Copy all blocks";
 $L.blockly.copyselected = "Copy selected blocks";
 $L.blockly.paste = "Paste blocks";
 $L.blockly.displaySource = "Display source code";
-$L.blockly.print="Print";
-$L.blockly.withlf="with line feed";
-$L.blockly.withoutlf="without line feed";
-$L.blockly.tab_exp="Expression";
-$L.blockly.tab_drag="On drag";
-$L.blockly.tab_mouseup="On mouse up";
-$L.blockly.lang="en.js";
-$L.blockly.aspect="Appearance";
+$L.blockly.print = "Print";
+$L.blockly.withlf = "with line feed";
+$L.blockly.withoutlf = "without line feed";
+$L.blockly.lang = "en.js";
+
+
+// Mercredi 30 mars 2016
+$L.blockly.tabs = {};
+$L.blockly.tabs.oncompute = "Expression";
+$L.blockly.tabs.onmousedown = "Mouse down";
+$L.blockly.tabs.ondrag = "Drag";
+$L.blockly.tabs.onmouseup = "Mouse up";
+$L.blockly.aspect = "Appearance";
+$L.expression_item = "items";
+$L.blockly.do = "do";
+$L.blockly.while = "while";
+$L.blockly.until = "until";
+$L.blockly.prompt_ok = "Ok";
+$L.blockly.prompt_cancel = "Cancel";
+

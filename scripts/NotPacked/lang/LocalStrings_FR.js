@@ -271,8 +271,19 @@ $L.blockly.displaySource = "Afficher le code source";
 $L.blockly.print = "Afficher";
 $L.blockly.withlf = "avec retour à la ligne";
 $L.blockly.withoutlf = "sans retour à la ligne";
-$L.blockly.tab_exp = "Expression";
-$L.blockly.tab_drag = "Déplacé";
-$L.blockly.tab_mouseup = "Relâché";
-$L.blockly.lang="fr.js";
-$L.blockly.aspect="Aspect";
+$L.blockly.lang = "fr.js";
+
+
+// Mercredi 30 mars 2016
+$L.blockly.tabs = {};
+$L.blockly.tabs.oncompute = "Expression";
+$L.blockly.tabs.onmousedown = "Appuyé";
+$L.blockly.tabs.ondrag = "Déplacé";
+$L.blockly.tabs.onmouseup = "Relâché";
+$L.blockly.aspect = "Aspect";
+$L.expression_item = "éléments";
+$L.blockly.do = "faire";
+$L.blockly.while = "tant que";
+$L.blockly.until = "jusqu'à";
+$L.blockly.prompt_ok = "Ok";
+$L.blockly.prompt_cancel = "Annuler";

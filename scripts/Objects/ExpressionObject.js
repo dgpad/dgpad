@@ -20,8 +20,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     var anchor = null; // PointObject auquel l'expression est rattachée
     var cPT = new PointObject(Cn, me.getName() + ".cursor", 0, 0);
 
-    this.blocks.setCurrent("oncompute");
-
+    this.blocks.setMode(["oncompute"], "oncompute");
 
 
     // this.getMe = function() {
@@ -434,7 +433,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         ctx.textAlign = "left";
         var prec = me.getPrecision();
         var t = (T === "") ? me.getName() + " = " : T;
-        var val = (prec > -1) ? t + $U.parseArray(E1.value(), prec) : t;
+        var val = (prec > -1) ? t + $U.parseList(E1.value(), prec) : t;
         W = ctx.measureText(val).width;
         ctx.fillText(val, X, Y);
     };

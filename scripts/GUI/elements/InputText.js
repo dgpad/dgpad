@@ -36,7 +36,7 @@ function InputText(_owner) {
         inp.setSelectionRange(0, 9999);
         if (Object.touchpad)
             window.scrollTo(0, 0);
-    };
+    }; 
     inp.onkeyup = function(e) {
         e.preventDefault();
         me.keyup_callback(name.getAttr("value"));

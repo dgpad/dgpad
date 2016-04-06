@@ -37,6 +37,29 @@ $U.isStr = function(_x) {
 $U.isArray = function(_x) {
     return (Object.prototype.toString.call(_x) === '[object Array]');
 };
+$U.parseList = function(tab, prec) {
+    if ($U.isArray(tab)) {
+        var elts = [];
+        var len = tab.length;
+        var maxlen = (len < 3) ? len : 3;
+        var sep = "[???" + $L.comma + "???" + $L.comma + "???]";
+        var elt;
+        for (var i = 0; i < maxlen; i++) {
+            elt = $U.parseArray(tab[i], prec);
+            if (elt === sep) elts.push("\u2702")
+            else elts.push(elt);
+        }
+        if (len > maxlen) {
+            elts.push("... (" + len + " " + $L.expression_item + ")")
+        }
+        return "[" + elts.join(" " + $L.comma + " ") + "]";
+    } else {
+        if (isNaN(tab))
+            return "???";
+        else
+            return ($L.number(Math.round(tab * prec) / prec));
+    }
+};
 $U.parseArray = function(tab, prec) {
     if ($U.isArray(tab)) {
         var elts = [];
@@ -355,7 +378,7 @@ $U.isNearToSegment = function(xA, yA, xB, yB, xM, yM, d) {
     var xab = xB - xA;
     var yab = yB - yA;
     var dab = xab * xab + yab * yab;
-    if (dab<1e-13)
+    if (dab < 1e-13)
         return false;
     var MH2 = (a * a) / dab;
     // Le point est loin de la droite :
@@ -376,7 +399,7 @@ $U.isNearToRay = function(xA, yA, xB, yB, xM, yM, d) {
     var xab = xB - xA;
     var yab = yB - yA;
     var dab = xab * xab + yab * yab;
-    if (dab<1e-13)
+    if (dab < 1e-13)
         return false;
     var MH2 = (a * a) / dab;
     // Le point est loin de la droite :
@@ -736,8 +759,7 @@ $U.isFullLocalStorage = function() {
     return (n >= ($P.localstorage.max - 1));
 };
 
-$U.createDiv = function() {
-    var el = document.createElement("div");
+$U.addDomUtils = function(el) {
     el.event_proc = [];
     el.stl = function(_p, _v) {
         el.style.setProperty(_p, _v);
@@ -751,28 +773,44 @@ $U.createDiv = function() {
             var a = t[i].split(":");
             el.stl(a[0].replace(/^\s+|\s+$/g, ''), a[1].replace(/^\s+|\s+$/g, ''));
         }
-    }
+    };
     el.bnds = function(l, t, w, h) {
         el.stls("left:" + l + "px;top:" + t + "px;width:" + w + "px;height:" + h + "px");
-    }
+    };
+    el.center = function(w, h) {
+        var winW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        var winH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        el.bnds((winW - w) / 2, (winH - h) / 2, w, h);
+    };
     el.add = function(_ch) {
         el.appendChild(_ch);
-    }
+    };
+    el.rmv = function(_ch) {
+        el.removeChild(_ch);
+    };
     el.md = function(_p) {
         el.addEventListener('touchstart', _p, false);
         el.addEventListener('mousedown', _p, false);
         el.event_proc.push(_p);
-    }
+    };
     el.mm = function(_p) {
         el.addEventListener('touchmove', _p, false);
         el.addEventListener('mousemove', _p, false);
         el.event_proc.push(_p);
-    }
+    };
     el.mu = function(_p) {
         el.addEventListener('touchend', _p, false);
         el.addEventListener('mouseup', _p, false);
         el.event_proc.push(_p);
-    }
+    };
+    el.kd = function(_p) {
+        el.addEventListener('keydown', _p, false);
+        el.event_proc.push(_p);
+    };
+    el.ku = function(_p) {
+        el.addEventListener('keyup', _p, false);
+        el.event_proc.push(_p);
+    };
     el.rmevt = function() {
         for (var i = 0; i < el.event_proc.length; i++) {
             el.removeEventListener('touchstart', el.event_proc[i], false);
@@ -781,11 +819,121 @@ $U.createDiv = function() {
             el.removeEventListener('mousemove', el.event_proc[i], false);
             el.removeEventListener('touchend', el.event_proc[i], false);
             el.removeEventListener('mouseup', el.event_proc[i], false);
+            el.removeEventListener('keydown', el.event_proc[i], false);
+            el.removeEventListener('keyup', el.event_proc[i], false);
         }
-    }
+        el.event_proc = [];
+    };
     return el;
+}
+
+$U.createDiv = function(_otherType) {
+    var el = document.createElement((_otherType === undefined) ? "div" : _otherType);
+    return $U.addDomUtils(el);
 };
 
+$U.prompt = function(_mess, _default, _type, _proc) {
+    var w = 350;
+    var h = 165;
+    var t = 40;
+    var msg_height = 50; // Message height
+    var msg_width = 300; // Message width
+    var msg_top = 0; // Distance from message to top
+    var inp_height = 36; // Input height
+    var inp_width = 300; // Input width
+    var inp_top = 55; // Distance from input to top
+    var ok_top = 120; // Ok btn top
+    var ok_width = 80; // Ok btn width
+    var ok_height = 30; // Ok btn height
+    var ok_right = 23; // Ok btn right margin
+    var cancel_left = 23; // Cancel btn left margin
+
+    var scrn = $U.createDiv();
+    var wp = $U.createDiv();
+    var msg = $U.createDiv();
+    var inw = $U.createDiv(); // Input wrapper div
+    var inp = null; // Real input
+    var ok = $U.createDiv();
+    var cancel = $U.createDiv();
+
+    scrn.stls("position:absolute;z-index:10000;overflow:hidden;background-color:rgba(50,50,50,0.7)");
+    wp.stls("position:absolute;border-radius:5px;font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight: 300;letter-spacing: 1.2px;overflow:hidden;border: 1px solid #b4b4b4;transition:transform 0.2s linear;transform:translate(0px,-200px);background-color:rgba(255,255,255,1)");
+    msg.stls("position:relative;text-align:center;display:table-cell;vertical-align:bottom;color:#797979;font-size:16px;white-space: pre-wrap;margin:0px;overflow:hidden");
+    inw.stls("position:absolute;border: 0px;border: 1px solid #555");
+    ok.stls("position:absolute;text-align:center;vertical-align:middle;background-color:#8CD4F5;color:white;border:none;box-shadow:none;font-size:17px;font-weight:500;-webkit-border-radius:4px;border-radius:5px;cursor: pointer");
+    cancel.stls("position:absolute;text-align:center;vertical-align:middle;background-color:#C1C1C1;color:white;border:none;box-shadow:none;font-size:17px;font-weight:500;-webkit-border-radius:4px;border-radius:5px;cursor: pointer");
+    inw.stl("line-height", inp_height + "px");
+    var winW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    var winH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    scrn.bnds(0, 0, winW, winH);
+    wp.bnds((winW - w) / 2, t, w, h);
+    msg.bnds((w - msg_width) / 2, msg_top, msg_width, msg_height);
+    msg.innerHTML = _mess;
+    inw.bnds((w - inp_width) / 2, inp_top, inp_width, inp_height);
+    ok.bnds(w - ok_width - ok_right, ok_top, ok_width, ok_height);
+    ok.innerHTML = $L.blockly.prompt_ok;
+    ok.stl("line-height", ok_height + "px");
+    cancel.bnds(cancel_left, ok_top, ok_width, ok_height);
+    cancel.innerHTML = $L.blockly.prompt_cancel;
+    cancel.stl("line-height", ok_height + "px");
+
+    var valid = function() {
+        scrn.innerHTML = "";
+        window.document.body.removeChild(scrn);
+        if (inp.value !== "")
+            _proc(_default, inp.value);
+    };
+    var fixOkColor = function() {
+        if (inp.value === "") ok.stl("background-color", "#8CD4F5")
+        else ok.stl("background-color", "#4BB6DB")
+    };
+    scrn.kd(function(ev) {
+        if (ev.keyCode === 13) valid();
+    });
+    scrn.ku(function(ev) {
+        fixOkColor()
+    });
+    ok.mu(valid);
+    ok.mm(function(ev) {
+        ok.stl("background-color", "#1EAAD0");
+        ev.stopPropagation();
+    });
+    cancel.mm(function(ev) {
+        cancel.stl("background-color", "#b9b9b9");
+        ev.stopPropagation();
+    });
+    cancel.mu(function() {
+        window.document.body.removeChild(scrn);
+    });
+    wp.mm(function() {
+        fixOkColor();
+        cancel.stl("background-color", "#C1C1C1");
+    });
+    wp.add(msg);
+    wp.add(inw);
+    wp.add(ok);
+    wp.add(cancel);
+    scrn.add(wp);
+    window.document.body.appendChild(scrn);
+    setTimeout(function() {
+        wp.stls("transform:translate(0px,0px)");
+    }, 1);
+    setTimeout(function() {
+        // Tout ceci pour changer le clavier iOS : sans correcteur ortho, sans capitales en standard, etc...
+        inw.innerHTML = '<input type="' + _type + '" id="dgpad_prompt_area" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">';
+        inp = $U.addDomUtils(document.getElementById("dgpad_prompt_area"));
+        inp.stls("position:absolute;padding:0px;margin:0px;-webkit-appearance: none;border-radius: 0;-webkit-user-select: text;user-select: text;overflow: hidden;font-weight: 600;border: 0px solid #555;font-size: 24px;text-align: center;white-space: pre-wrap;margin: 0px;vertical-align:middle;color: rgb(50,50,50);outline:none");
+        inp.bnds(0, 0, inp_width, inp_height);
+        inp.value = _default;
+        inp.onfocus = function(e) {
+            e.preventDefault();
+            setTimeout(function() {
+                inp.setSelectionRange(0, 9999);
+            }, 0)
+        };
+        if (!Object.touchpad) inp.focus();
+    }, 200);
+}
 
 
 $U.clearOneLocalStorage = function() {

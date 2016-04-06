@@ -392,7 +392,7 @@ function props_namePanel(_owner) {
         show.setValue(true);
         me.obj.refreshChildsNames();
         me.repaint();
-    };
+    }; 
 
 
     this.focus = function() {

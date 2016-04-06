@@ -50,8 +50,10 @@ Blockly.JavaScript['dgpad_set_object'] = function(block) {
     var arg0 = Blockly.JavaScript.valueToCode(block, 'obj_val');
     if (arg0 === "") return "";
     Blockly.dgpad.VARS.push(name);
-    var code = "SET(\"blockly_temp_var\"," + arg0 + ");\n";
-    code += 'SET_EXP("' + name + '",GET(\"blockly_temp_var\"));\n';
+    var loopVar = 'blockly_var_' + Blockly.JavaScript.variableDB_.getDistinctName(
+        'temp_var', Blockly.Variables.NAME_TYPE);
+    var code = "var " + loopVar + " = " + arg0 + " ;\n";
+    code += 'SET_EXP("' + name + '",' + loopVar + ');\n';
     return code;
 };
 

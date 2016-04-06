@@ -33,3 +33,11 @@ Blockly.JavaScript['dgpad_style_increment'] = Blockly.dgpad_style_block_js("setI
 Blockly.JavaScript['dgpad_style_dash'] = Blockly.dgpad_style_block_js("setDash");
 Blockly.JavaScript['dgpad_style_nomouse'] = Blockly.dgpad_style_block_js("setNoMouseInside");
 Blockly.JavaScript['dgpad_style_opacity'] = Blockly.dgpad_style_block_js("setOpacity");
+
+
+Blockly.JavaScript['dgpad_style_arrow'] = function(block) {
+  var value_w = Blockly.JavaScript.valueToCode(block, 'w', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_h = Blockly.JavaScript.valueToCode(block, 'h', Blockly.JavaScript.ORDER_ATOMIC);
+  var code = '"setArrow",[[' + value_w + ',' + value_h + ']]';
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};

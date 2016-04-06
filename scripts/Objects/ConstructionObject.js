@@ -73,6 +73,9 @@ function ConstructionObject(_construction, _name) {
     // le code sync et le code async de blockly :
     this.blocks = new BlocklyObjects(this, Cn);
     this.setExpression = function() {};
+    this.getRoot = function() {
+        return me;
+    };
 
     // **************************************************
     // *************** END BLOCKLY PART *****************
@@ -575,7 +578,6 @@ function ConstructionObject(_construction, _name) {
         return selected;
     };
     this.setHidden = function(_sel) {
-        console.log("setHidden : "+_sel);
         _sel = Math.abs(_sel * 1);
         hidden = (isNaN(_sel)) ? 1 : parseInt(_sel) % 3;
         this.paint = paintTab[hidden];
@@ -1081,6 +1083,10 @@ function ConstructionObject(_construction, _name) {
         ctx.setLineDash(dash);
     };
 
+    this.getArrow = function() {
+        return null;
+    };
+
 
     this.getSource = function(src) {};
 
@@ -1107,6 +1113,8 @@ function ConstructionObject(_construction, _name) {
             s += ";sp:" + this.getShape();
         if (this.isDash())
             s += ";dh:" + this.isDash();
+        if (this.getArrow())
+            s += ";ar:" + JSON.stringify(this.getArrow());
         if (this.isNoMouseInside())
             s += ";nmi:" + this.isNoMouseInside();
         if (this.getNamePosition())

@@ -388,7 +388,7 @@ x:-o-prefocus,
 .coincidencePanel {
     position: absolute;
     border-radius: 10px;
-    z-index: 1000;
+    z-index: 10000;
 }
 
 .coincidenceListDIV {

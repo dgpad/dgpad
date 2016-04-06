@@ -9,7 +9,7 @@ $P.background.color = "#F8F8F8";
 //$P.background.position = "0px 0px";
 
 $P.color = {};
-$P.color.hilite = "rgb(255,204,0)";
+$P.color.hilite = "#ffbb00"; // Attention : minuscules importantes...
 $P.color.selected = "#FF0000";
 $P.color.point = "rgb(0,0,178)";
 $P.color.list = "rgb(0,0,178)";
@@ -26,6 +26,11 @@ $P.color.point_free = "rgba(255,255,255,1)";
 $P.color.point_on = "rgba(255,255,255,1)";
 $P.color.point_inter = "#ccc";
 $P.color.point_fixed = "#ccc";
+
+$P.opacity = {};
+$P.opacity.point = 0;
+$P.opacity.area = 0.2;
+$P.opacity.vector = 0.2;
 
 $P.grid = {};
 $P.grid.limitinf = 15;
@@ -52,7 +57,7 @@ $P.size.expression = 7 * $SCALE;
 $P.size.expression_cursor = 10 * $SCALE;
 $P.size.dash = [6, 10];
 $P.size.partiallines = 100;
-$P.size.vectorhead = 30;
+$P.size.vectorhead = 20;
 
 
 $P.sizefactor = {};
@@ -84,7 +89,7 @@ $P.precision.vector = -1;
 $P.precision.area = -1;
 $P.precision.angle = 1;
 $P.precision.fixedangle = 1;
-$P.precision.expression = 4;
+$P.precision.expression = 2;
 
 
 $P.precision.over = {};
@@ -133,8 +138,8 @@ $P.CalcPanelHeight = 72;
 $P.MagnifierBounds = {};
 $P.MagnifierBounds.l = 10;
 $P.MagnifierBounds.t = 10;
-$P.MagnifierBounds.w = 120;
-$P.MagnifierBounds.h = 120;
+$P.MagnifierBounds.w = 75;
+$P.MagnifierBounds.captureWidth = 75;
 
 $P.clone = function() {
     return JSON.parse(JSON.stringify($P));

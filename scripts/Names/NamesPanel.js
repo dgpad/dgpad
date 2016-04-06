@@ -150,63 +150,63 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
     }
 
 
-    var createDiv = function() {
-        var el = document.createElement("div");
-        el.event_proc = [];
-        el.stl = function(_p, _v) {
-            el.style.setProperty(_p, _v);
-        };
-        el.att = function(_a, _v) {
-            el[_a] = _v;
-        };
-        el.stls = function(_st) {
-            var t = _st.split(";");
-            for (var i = 0, len = t.length; i < len; i++) {
-                var a = t[i].split(":");
-                el.stl(a[0].replace(/^\s+|\s+$/g, ''), a[1].replace(/^\s+|\s+$/g, ''));
-            }
-        }
-        el.bnds = function(l, t, w, h) {
-            el.stls("left:" + l + "px;top:" + t + "px;width:" + w + "px;height:" + h + "px");
-        }
-        el.add = function(_ch) {
-            el.appendChild(_ch);
-        }
-        el.md = function(_p) {
-            el.addEventListener('touchstart', _p, false);
-            el.addEventListener('mousedown', _p, false);
-            el.event_proc.push(_p);
-        }
-        el.mm = function(_p) {
-            el.addEventListener('touchmove', _p, false);
-            el.addEventListener('mousemove', _p, false);
-            el.event_proc.push(_p);
-        }
-        el.mu = function(_p) {
-            el.addEventListener('touchend', _p, false);
-            el.addEventListener('mouseup', _p, false);
-            el.event_proc.push(_p);
-        }
-        el.rmevt = function() {
-            for (var i = 0; i < el.event_proc.length; i++) {
-                el.removeEventListener('touchstart', el.event_proc[i], false);
-                el.removeEventListener('mousedown', el.event_proc[i], false);
-                el.removeEventListener('touchmove', el.event_proc[i], false);
-                el.removeEventListener('mousemove', el.event_proc[i], false);
-                el.removeEventListener('touchend', el.event_proc[i], false);
-                el.removeEventListener('mouseup', el.event_proc[i], false);
-            }
-        }
-        return el;
-    };
+    // var createDiv = function() {
+    //     var el = document.createElement("div");
+    //     el.event_proc = [];
+    //     el.stl = function(_p, _v) {
+    //         el.style.setProperty(_p, _v);
+    //     };
+    //     el.att = function(_a, _v) {
+    //         el[_a] = _v;
+    //     };
+    //     el.stls = function(_st) {
+    //         var t = _st.split(";");
+    //         for (var i = 0, len = t.length; i < len; i++) {
+    //             var a = t[i].split(":");
+    //             el.stl(a[0].replace(/^\s+|\s+$/g, ''), a[1].replace(/^\s+|\s+$/g, ''));
+    //         }
+    //     }
+    //     el.bnds = function(l, t, w, h) {
+    //         el.stls("left:" + l + "px;top:" + t + "px;width:" + w + "px;height:" + h + "px");
+    //     }
+    //     el.add = function(_ch) {
+    //         el.appendChild(_ch);
+    //     }
+    //     el.md = function(_p) {
+    //         el.addEventListener('touchstart', _p, false);
+    //         el.addEventListener('mousedown', _p, false);
+    //         el.event_proc.push(_p);
+    //     }
+    //     el.mm = function(_p) {
+    //         el.addEventListener('touchmove', _p, false);
+    //         el.addEventListener('mousemove', _p, false);
+    //         el.event_proc.push(_p);
+    //     }
+    //     el.mu = function(_p) {
+    //         el.addEventListener('touchend', _p, false);
+    //         el.addEventListener('mouseup', _p, false);
+    //         el.event_proc.push(_p);
+    //     }
+    //     el.rmevt = function() {
+    //         for (var i = 0; i < el.event_proc.length; i++) {
+    //             el.removeEventListener('touchstart', el.event_proc[i], false);
+    //             el.removeEventListener('mousedown', el.event_proc[i], false);
+    //             el.removeEventListener('touchmove', el.event_proc[i], false);
+    //             el.removeEventListener('mousemove', el.event_proc[i], false);
+    //             el.removeEventListener('touchend', el.event_proc[i], false);
+    //             el.removeEventListener('mouseup', el.event_proc[i], false);
+    //         }
+    //     }
+    //     return el;
+    // };
 
-    var wp = createDiv(); // main div wrapper
-    var tl = createDiv(); // title bar div
-    var cb = createDiv(); // close box div
-    var md = createDiv(); // modifiers div
-    var kb = createDiv(); // Keyboard div
-    var rl = createDiv(); // resize vertical line div
-    var tb = createDiv(); // bottom toolbar div
+    var wp = $U.createDiv(); // main div wrapper
+    var tl = $U.createDiv(); // title bar div
+    var cb = $U.createDiv(); // close box div
+    var md = $U.createDiv(); // modifiers div
+    var kb = $U.createDiv(); // Keyboard div
+    var rl = $U.createDiv(); // resize vertical line div
+    var tb = $U.createDiv(); // bottom toolbar div
 
 
 
@@ -272,7 +272,7 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
 
 
     var createkey = function(_s, _x, _y) {
-        var t = createDiv();
+        var t = $U.createDiv();
         var i = keys.length;
         t.md(function() {
             selectkey(i);
@@ -314,7 +314,7 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
     };
 
     var createmod = function(_c, _m) {
-        var t = createDiv();
+        var t = $U.createDiv();
         var h = (height - tl_height - tb_height);
         var gap = (h - _m.length * mod_height) / (_m.length + 1);
         var i = mods.length;
@@ -352,7 +352,7 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
 
 
     var createtab = function(_n, _c) {
-        var t = createDiv();
+        var t = $U.createDiv();
         var i = tabs.length;
         t.md(function() {
             select_tab(i)

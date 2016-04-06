@@ -26,7 +26,7 @@ function AreaConstructor() {
 
     this.newObj = function(_zc, _C) {
         var a = new AreaObject(_zc.getConstruction(), "_Poly", _C);
-        a.setOpacity(0.2);
+        a.setOpacity(_zc.prefs.opacity.area);
         return (a);
     };
 
@@ -34,7 +34,7 @@ function AreaConstructor() {
 
         var ctx = zc.getContext();
         col.set(zc.prefs.color.area);
-        col.setOpacity(0.2);
+        col.setOpacity(zc.prefs.opacity.area);
         ctx.strokeStyle = zc.prefs.color.hilite;
         ctx.fillStyle = col.getRGBA();
         ctx.lineWidth = zc.prefs.size.line;

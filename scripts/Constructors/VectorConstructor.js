@@ -13,7 +13,9 @@ function VectorConstructor() {
     };
 
     this.newObj = function(_zc, _C) {
-        return new VectorObject(_zc.getConstruction(), "_V", _C[0], _C[1]);
+        var a = new VectorObject(_zc.getConstruction(), "_V", _C[0], _C[1]);
+        a.setOpacity(_zc.prefs.opacity.vector);
+        return a;
     };
 
     this.preview = function(ev, zc) {
