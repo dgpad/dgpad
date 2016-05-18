@@ -8,6 +8,7 @@ Blockly.JavaScript['dgpad_style_fix'] = function(block) {
 };
 
 
+
 Blockly.JavaScript['dgpad_style_color_rgb'] = function(block) {
     var value_r = Blockly.JavaScript.valueToCode(block, 'R', Blockly.JavaScript.ORDER_ATOMIC);
     var value_g = Blockly.JavaScript.valueToCode(block, 'G', Blockly.JavaScript.ORDER_ATOMIC);

@@ -41,6 +41,9 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
     this.set360 = function(_360) {
         mode360 = _360;
     };
+    this.getAOC = function() {
+        return AOC;
+    };
     this.getValue = function() {
         var a = mode360 ? AOC : AOC180;
         return (Cn.isDEG()) ? (a * deg_coef) : a;

@@ -510,6 +510,46 @@ $U.hexToRGB = function(h) {
     }
 };
 
+$U.hexToHSV = function(h) {
+    var rgb = $U.hexToRGB(h);
+    var rr, gg, bb,
+        r = rgb.r / 255,
+        g = rgb.g / 255,
+        b = rgb.b / 255,
+        h, s,
+        v = Math.max(r, g, b),
+        diff = v - Math.min(r, g, b),
+        diffc = function(c) {
+            return (v - c) / 6 / diff + 1 / 2;
+        };
+    if (diff == 0) {
+        h = s = 0;
+    } else {
+        s = diff / v;
+        rr = diffc(r);
+        gg = diffc(g);
+        bb = diffc(b);
+
+        if (r === v) {
+            h = bb - gg;
+        } else if (g === v) {
+            h = (1 / 3) + rr - bb;
+        } else if (b === v) {
+            h = (2 / 3) + gg - rr;
+        }
+        if (h < 0) {
+            h += 1;
+        } else if (h > 1) {
+            h -= 1;
+        }
+    }
+    return {
+        h: Math.round(h * 360),
+        s: Math.round(s * 100),
+        v: Math.round(v * 100)
+    };
+}
+
 // Associe une liste de styles (séparés par ;) à un élément DOM :
 $U.STL = function(_dom, _st) {
     var t = _st.split(";");
@@ -832,15 +872,15 @@ $U.createDiv = function(_otherType) {
     return $U.addDomUtils(el);
 };
 
-$U.prompt = function(_mess, _default, _type, _proc) {
-    var w = 350;
-    var h = 165;
+$U.prompt = function(_mess, _default, _type, _proc, _w, _h, _inp_w) {
+    var w = _w ? _w : 350;
+    var h = _h ? _h : 165;
     var t = 40;
     var msg_height = 50; // Message height
     var msg_width = 300; // Message width
     var msg_top = 0; // Distance from message to top
     var inp_height = 36; // Input height
-    var inp_width = 300; // Input width
+    var inp_width = _inp_w ? _inp_w : 300; // Input width
     var inp_top = 55; // Distance from input to top
     var ok_top = 120; // Ok btn top
     var ok_width = 80; // Ok btn width
@@ -1181,6 +1221,8 @@ $U.initEvents = function(ZC, cTag) {
     cTag.addEventListener('dragover', ZC.dragOver, false);
     cTag.addEventListener('drop', ZC.drop, false);
 
+
+
     // if (!Object.touchpad) {
     //     window.addEventListener("keypress", ZC.keypress, false);
     //     window.addEventListener("keydown", ZC.keydown, false);
@@ -1250,6 +1292,7 @@ $U.initCanvas = function(_id) {
     ZC.addTool(new VectorConstructor());
     ZC.addTool(new SpringConstructor());
     ZC.addTool(new BlocklyConstructor());
+    ZC.addTool(new DGScriptNameConstructor());
     ZC.clearBackground();
 
 

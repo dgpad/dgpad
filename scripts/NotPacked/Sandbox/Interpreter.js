@@ -149,6 +149,7 @@ function Interpreter(_win, _canvas) {
     };
 
     me.InterpretMacro = function(_s) {
+        // console.log("source :"+_s);
         clearNameSpace();
         $macromode = true;
         $macroFinals = [];
@@ -158,7 +159,10 @@ function Interpreter(_win, _canvas) {
             // regexp des paramètres et le placement des affectations
             // à l'intérieur du block fonction. Ceci est uniquement utile
             // pour le parsevariable (voir methode me.p)
-            var match = _s.match(/([\s\S]*)function.*\((.*)\).*{([\s\S]*)/m);
+
+            var match = _s.match(/(myexecutefunc=)function.*\((.*)\).*{([\s\S]*)/m);
+
+            // var match = _s.match(/([\s\S]*)function.*\((.*)\).*{([\s\S]*)/m);
             var s = match[1] + "function(" + match[2] + "){";
             var params = match[2].replace(/\s*/g, "").split(",");
             for (var i = 0, len = params.length; i < len; i++) {
@@ -293,6 +297,189 @@ function Interpreter(_win, _canvas) {
     var BLK_STL = function(_n, _cmd, _tab) {
         var o = me.f(_n);
         o[_cmd].apply(o, _tab);
+    };
+
+    // UNIQUEMENT POUR LA TORTUE :
+
+    var TURTLE_VARS = {
+        U: [1, 0, 0],
+        V: [0, 1, 0],
+        W: [0, 0, 1],
+        LAST: null,
+        D3: false,
+        PENUP: false,
+        TAB: [],
+        NAME: null
+    };
+
+    var TURTLE_INIT = function(_name, _pt) {
+        var t = TURTLE_VARS;
+        t.U = [1, 0, 0];
+        t.V = [0, 1, 0];
+        t.W = [0, 0, 1];
+        t.LAST = _pt;
+        t.D3 = (_pt.length === 3);
+        t.PENUP = false;
+        t.TAB = [
+            [10, 0, 0, 1], // Taille du crayon
+            [12, 0, 0, 1e-13], // Taille des points
+            [2, 0, 0, 55], // Couleur choisie
+            _pt
+        ];
+        t.NAME = _name;
+        me.Z.blocklyManager.resetTurtle(t.NAME);
+    };
+
+    var TURTLE_RESULT = function() {
+        return TURTLE_VARS.TAB;
+    };
+
+    var TURTLE_POS = function() {
+        return TURTLE_VARS.LAST
+    };
+
+    var TURTLE_RESET = function() {
+        var t = TURTLE_VARS;
+        t.U = [1, 0, 0];
+        t.V = [0, 1, 0];
+        t.W = [0, 0, 1];
+        me.Z.blocklyManager.changeTurtleUVW(t.NAME, t.U, t.V, t.W);
+    };
+
+    var TURTLE_MV = function(_val, _px) {
+        var value = (_px) ? Math.quotient(_val, me.C.coordsSystem.getUnit()) : _val;
+        var t = TURTLE_VARS;
+        var dir = t.U.slice();
+        if (!t.D3) dir.pop();
+        t.LAST = Math.plus(t.LAST, Math.times(value, dir));
+        if (t.PENUP) t.TAB.push([NaN, NaN, NaN]);
+        t.TAB.push(t.LAST);
+        me.Z.blocklyManager.changeTurtlePT(t.NAME, t.LAST);
+    };
+
+    var TURTLE_TURN = function(_angle) {
+        var c = Math.cos(_angle);
+        var s = Math.sin(_angle);
+        var t = TURTLE_VARS;
+        var up = [c * t.U[0] + s * t.V[0], c * t.U[1] + s * t.V[1], c * t.U[2] + s * t.V[2]];
+        var vp = [c * t.V[0] - s * t.U[0], c * t.V[1] - s * t.U[1], c * t.V[2] - s * t.U[2]];
+        t.U = up;
+        t.V = vp;
+        me.Z.blocklyManager.changeTurtleUVW(t.NAME, t.U, t.V, t.W);
+    };
+
+    var TURTLE_ROTATE = function(_angle, _istop) {
+        var c = Math.cos(_angle);
+        var s = Math.sin(_angle);
+        var t = TURTLE_VARS;
+        if (_istop) {
+            var up = [c * t.U[0] + s * t.W[0], c * t.U[1] + s * t.W[1], c * t.U[2] + s * t.W[2]];
+            var wp = [c * t.W[0] - s * t.U[0], c * t.W[1] - s * t.U[1], c * t.W[2] - s * t.U[2]];
+            t.U = up;
+            t.W = wp;
+        } else {
+            var vp = [c * t.V[0] + s * t.W[0], c * t.V[1] + s * t.W[1], c * t.V[2] + s * t.W[2]];
+            var wp = [c * t.W[0] - s * t.V[0], c * t.W[1] - s * t.V[1], c * t.W[2] - s * t.V[2]];
+            t.V = vp;
+            t.W = wp;
+        };
+        me.Z.blocklyManager.changeTurtleUVW(t.NAME, t.U, t.V, t.W);
+    };
+
+    var TURTLE_UP = function(_isup) {
+        TURTLE_VARS.PENUP = _isup;
+    };
+
+    var TURTLE_COLOUR = function(_n) {
+        var t = TURTLE_VARS;
+        var last = t.TAB.pop();
+        t.TAB.push([2, 0, 0, _n]);
+        t.TAB.push(last);
+    };
+
+
+
+    var TURTLE_COLOUR_INCREMENT = function(_w) {
+        var t = TURTLE_VARS;
+        var last = t.TAB.pop();
+        t.TAB.push([3, 0, 0, _w]);
+        t.TAB.push(last);
+    };
+
+    var TURTLE_FILL = function(_op) {
+        var t = TURTLE_VARS;
+        t.TAB.push([4, 0, 0, _op]);
+    };
+
+    var TURTLE_WIDTH = function(_w) {
+        var t = TURTLE_VARS;
+        var last = t.TAB.pop();
+        t.TAB.push([10, 0, 0, _w]);
+        t.TAB.push(last);
+    };
+
+    var TURTLE_POINTS_WIDTH = function(_w) {
+        var t = TURTLE_VARS;
+        var last = t.TAB.pop();
+        t.TAB.push([12, 0, 0, _w]);
+        t.TAB.push(last);
+    };
+
+    var TURTLE_WIDTH_INCREMENT = function(_w) {
+        var t = TURTLE_VARS;
+        var last = t.TAB.pop();
+        t.TAB.push([11, 0, 0, _w]);
+        t.TAB.push(last);
+    };
+
+    var TURTLE_POINTS_WIDTH_INCREMENT = function(_w) {
+        var t = TURTLE_VARS;
+        var last = t.TAB.pop();
+        t.TAB.push([13, 0, 0, _w]);
+        t.TAB.push(last);
+    };
+
+    var TURTLE_ROTATE_PT = function(_pt) {
+        var c, s;
+        var t = TURTLE_VARS;
+        var last = t.LAST.slice();
+        var p = Math.minus(_pt, last); // translation
+        if (t.D3) {
+            // Changement de repère :
+            var pp = [p[0] * t.U[0] + p[1] * t.U[1] + p[2] * t.U[2], p[0] * t.V[0] + p[1] * t.V[1] + p[2] * t.V[2], p[0] * t.W[0] + p[1] * t.W[1] + p[2] * t.W[2]];
+            var d1 = Math.sqrt(pp[0] * pp[0] + pp[1] * pp[1]);
+            if (d1 > 1e-13) {
+                c = pp[0] / d1; // cosinus
+                s = pp[1] / d1; // sinus
+                var up = [c * t.U[0] + s * t.V[0], c * t.U[1] + s * t.V[1], c * t.U[2] + s * t.V[2]];
+                var vp = [c * t.V[0] - s * t.U[0], c * t.V[1] - s * t.U[1], c * t.V[2] - s * t.U[2]];
+                t.U = up;
+                t.V = vp;
+            }
+            var d3D = Math.sqrt(pp[0] * pp[0] + pp[1] * pp[1] + pp[2] * pp[2]);
+            c = d1 / d3D;
+            s = pp[2] / d3D;
+            up = [c * t.U[0] + s * t.W[0], c * t.U[1] + s * t.W[1], c * t.U[2] + s * t.W[2]];
+            var wp = [c * t.W[0] - s * t.U[0], c * t.W[1] - s * t.U[1], c * t.W[2] - s * t.U[2]];
+            t.U = up;
+            t.W = wp;
+        } else {
+            // Changement de repère :
+            var pp = [p[0] * t.U[0] + p[1] * t.U[1], p[0] * t.V[0] + p[1] * t.V[1]];
+            var d1 = Math.sqrt(pp[0] * pp[0] + pp[1] * pp[1]);
+            c = pp[0] / d1; // cosinus
+            s = pp[1] / d1; // sinus
+            var up = [c * t.U[0] + s * t.V[0], c * t.U[1] + s * t.V[1], c * t.U[2] + s * t.V[2]];
+            var vp = [c * t.V[0] - s * t.U[0], c * t.V[1] - s * t.U[1], c * t.V[2] - s * t.U[2]];
+            t.U = up;
+            t.V = vp;
+        };
+        me.Z.blocklyManager.changeTurtleUVW(t.NAME, t.U, t.V, t.W);
+    };
+
+    var TURTLE_JOIN_PT = function(_pt) {
+        TURTLE_ROTATE_PT(_pt);
+        TURTLE_MV(Math.distance(TURTLE_VARS.LAST, _pt), false);
     };
 
     // Methode obsolete, maintenue pour la 
@@ -728,6 +915,14 @@ function Interpreter(_win, _canvas) {
         if (me.t(5))
             return me.a("f");
         return me.o("CurvusObject", _n, _a, _b, _t1, _t2);
+    };
+
+    var BlocklyButton = function(_n, _m, _x, _y) {
+        if (me.t(4))
+            return me.a("blk_btn");
+        var px = me.C.coordsSystem.px(_x);
+        var py = me.C.coordsSystem.py(_y);
+        return me.o("BlocklyButtonObject", _n, _m, px, py);
     };
 
     var Expression = function(_n, _t, _min, _max, _e, _x, _y) {

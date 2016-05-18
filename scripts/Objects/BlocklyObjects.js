@@ -131,7 +131,10 @@ function BlocklyObject(_owner, _construction) {
 
     var setEX = function(_cod) {
         EX = Expression.delete(EX);
-        if (_cod) EX = new Expression(OWN, _cod);
+        if (_cod) {
+            EX = new Expression(OWN, _cod);
+            Expression.delete(EX);
+        }
     }
 
 
@@ -151,20 +154,41 @@ function BlocklyObject(_owner, _construction) {
             async = null;
             setEX(null);
             if (type === "oncompute") OWN.getObj().setExpression("NaN");
+            if (type === "onlogo") Cn.removeTurtleExpression(OWN.getObj().getVarName());
         } else {
             sync = _sync.replace(/^\s*var\s*\w+\s*;/gm, "").trim();
             // console.log(sync);
             async = _async;
-            var fname = "bl_" + $U.number2letter(Date.now().toString());
-            var cod = "var " + fname + "=function(){\n";
-            cod += sync;
-            cod += "\n};\n" + fname + "()";
-            if (type === "oncompute") {
-                OWN.getObj().setExpression(cod);
-                setEX(null);
+            var cod = "";
+            if (type === "onlogo") {
+                Cn.setDEG(true);
+                var startpt = OWN.getObj().getVarName();
+                var ex = Cn.createTurtleExpression(startpt);
+
+                // Entier aléatoire entre 1 et 1 000 000 000 :
+                var rand=(Math.floor(Math.random()*(Math.abs(1-1000000000)+1)+(1+1000000000-Math.abs(1-1000000000))/2));
+
+                var fname = "bl_" + $U.number2letter(rand.toString());
+                cod += "var " + fname + "=function(){\n";
+
+                cod += "TURTLE_INIT(\"" + startpt + "\"," + startpt + ");\n";
+                cod += sync;
+                cod += "\nreturn TURTLE_RESULT()";
+
+                cod += "\n};\n" + fname + "()";
+
+                ex.setExpression(cod);
             } else {
-                setEX(cod);
-                // if (EX) EX.forcevalue();
+                var fname = "bl_" + $U.number2letter(Date.now().toString());
+                cod = "var " + fname + "=function(){\n";
+                cod += sync;
+                cod += "\n};\n" + fname + "()";
+                if (type === "oncompute") {
+                    OWN.getObj().setExpression(cod);
+                    setEX(null);
+                } else {
+                    setEX(cod);
+                }
             }
         }
     };
@@ -173,7 +197,6 @@ function BlocklyObject(_owner, _construction) {
     this.evaluate = function() {
         if (EX) {
             EX.forcevalue();
-            console.log(childs);
             for (var o in childs) {
                 childs[o].compute();
                 childs[o].computeChilds();

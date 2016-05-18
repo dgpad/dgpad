@@ -87,11 +87,11 @@ Blockly.JavaScript['controls_repeatuntil'] = function(block) {
 Blockly.JavaScript['math_arithmetic'] = function(block) {
     // Basic arithmetic operators, and power.
     var OPERATORS = {
-        'ADD': ['plus', Blockly.JavaScript.ORDER_ADDITION],
-        'MINUS': ['minus', Blockly.JavaScript.ORDER_SUBTRACTION],
-        'MULTIPLY': ['times', Blockly.JavaScript.ORDER_MULTIPLICATION],
-        'DIVIDE': ['quotient', Blockly.JavaScript.ORDER_DIVISION],
-        'POWER': ['power', Blockly.JavaScript.ORDER_COMMA] // Handle power separately.
+        'ADD': ['Math.plus', Blockly.JavaScript.ORDER_ADDITION],
+        'MINUS': ['Math.minus', Blockly.JavaScript.ORDER_SUBTRACTION],
+        'MULTIPLY': ['Math.times', Blockly.JavaScript.ORDER_MULTIPLICATION],
+        'DIVIDE': ['Math.quotient', Blockly.JavaScript.ORDER_DIVISION],
+        'POWER': ['Math.power', Blockly.JavaScript.ORDER_COMMA] // Handle power separately.
     };
     var tuple = OPERATORS[block.getFieldValue('OP')];
     var operator = tuple[0];
@@ -301,7 +301,7 @@ Blockly.JavaScript['procedures_defreturn'] = function(block) {
     var m;
     var myvars = [];
     while ((m = rg.exec(branch)) !== null) {
-        if (m.index === re.lastIndex) {
+        if ((re) && (m.index === re.lastIndex)) {
             re.lastIndex++;
         }
         if (myvars.indexOf(m[2]) === -1) {

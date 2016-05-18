@@ -1,4 +1,4 @@
-function Expression(_obj, _s, _oneDX) {
+function Expression(_obj, _s) {
     var me = this;
 
     var obj = _obj;
@@ -20,11 +20,6 @@ function Expression(_obj, _s, _oneDX) {
     Expression.ALL.push(me);
 
     var parseInit = function() {
-
-        // console.log(interpreter.getEXPS());
-
-        //        console.log(init.js);
-
         // Remplacement dans le init.js de toute partie d'expression contenant des dx par la dérivée :
         init.js = init.jsbackup.replace(/(EX_getObj\(\d+\))((\.d[xyzt]{1}\(\))*)((\.d[xyzt]{1})\(([xyzt]{1}(,[xyzt]{1})*)\))+/g, function(_m, _e1, _e2, _e3, _e4, _e5, _e6) {
             if (_e2 === undefined)
@@ -44,10 +39,6 @@ function Expression(_obj, _s, _oneDX) {
         });
 
         isFuncCall = (init.js !== init.jsbackup);
-
-
-
-
 
         // Si la chaine contient des dx (exemple : E1.dx.dy(x,y,z)), on réactualise les variables
         // comme étant celles de l'expression ciblée (E1 dans l'exemple) :
@@ -101,6 +92,7 @@ function Expression(_obj, _s, _oneDX) {
         //        console.log("avant : "+obj.getName());
         init = interpreter.ExpressionInit(obj, _src + "");
         parseInit();
+        if (obj.blocks) obj.blocks.evaluate("onchange");
         //        console.log("après : "+obj.getName());
     };
 
@@ -199,11 +191,14 @@ function Expression(_obj, _s, _oneDX) {
 
     // setValue pour les curseurs d'expressions :
     me.setValue = function(_val) {
-        init = interpreter.ExpressionInit(obj, _val + "");
-        lastInstruction = _val + "";
-        vnames = "";
-        f = interpreter.CreateFunctionFromExpression(init.js, vnames);
-        VALUE = _val;
+        if (VALUE !== _val) {
+            init = interpreter.ExpressionInit(obj, _val + "");
+            lastInstruction = _val + "";
+            vnames = "";
+            f = interpreter.CreateFunctionFromExpression(init.js, vnames);
+            VALUE = _val;
+            if (obj.blocks) obj.blocks.evaluate("onchange");
+        }
     };
 
 
@@ -279,6 +274,7 @@ function Expression(_obj, _s, _oneDX) {
     };
 
     me.fix = function() {
+        // console.log("FIX : "+f(1, 2, 3, 4));
         if (f(1, 2, 3, 4) === undefined) {
             me.setText(_s);
             //            init = interpreter.ExpressionInit(obj, _s + "");

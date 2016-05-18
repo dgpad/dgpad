@@ -2,12 +2,12 @@ Blockly.Blocks['dgpad_window_props'] = {
     init: function() {
         this.appendDummyInput()
             .appendField(new Blockly.FieldDropdown([
-                ["Largeur de la fenêtre", "windoww"],
-                ["Hauteur de la fenêtre", "windowh"],
-                ["Abscisse du centre", "windowcx"],
-                ["Ordonnée du centre", "windowcy"],
-                ["Angle phi (3D)", "phi"],
-                ["Angle theta (3D)", "theta"]
+                [$L.blockly.turtle.windoww, "windoww"],
+                [$L.blockly.turtle.windowh, "windowh"],
+                [$L.blockly.turtle.centerx, "windowcx"],
+                [$L.blockly.turtle.centery, "windowcy"],
+                [$L.blockly.turtle.phiangle, "phi"],
+                [$L.blockly.turtle.thetaangle, "theta"]
             ]), "NAME");
         this.setOutput(true);
         this.setColour(20);
@@ -20,7 +20,7 @@ Blockly.Blocks['dgpad_window_props'] = {
 Blockly.Blocks['dgpad_distance'] = {
     init: function() {
         this.appendValueInput("FROM")
-            .appendField("distance");
+            .appendField($L.blockly.turtle.distance);
         this.appendValueInput("TO");
         this.setInputsInline(true);
         this.setOutput(true);
@@ -35,12 +35,12 @@ Blockly.Blocks['dgpad_coordinate'] = {
     init: function() {
         this.appendDummyInput('obj_type')
             .appendField(new Blockly.FieldDropdown([
-                ["abscisse", "0"],
-                ["ordonnée", "1"],
-                ["hauteur", "2"]
+                [$L.blockly.turtle.xcoord, "0"],
+                [$L.blockly.turtle.ycoord, "1"],
+                [$L.blockly.turtle.zcoord, "2"]
             ]), "type");
         this.appendDummyInput()
-            .appendField("du point");
+            .appendField($L.blockly.turtle.ofpoint);
         this.appendDummyInput('obj_name')
             .appendField(Blockly.dgpad.objectPopup("point"), "NAME");
         this.setInputsInline(true);
@@ -145,13 +145,13 @@ Blockly.Blocks['dgpad_set_object'] = {
 };
 
 
-Blockly.dgpad_get_short = function(_v) {
+Blockly.dgpad_get_short = function(_v, _col) {
     return ({
         init: function() {
             this.appendDummyInput('obj_name')
                 .appendField(Blockly.dgpad.objectPopup(_v), "NAME")
             this.setOutput(true, null);
-            this.setColour(20);
+            this.setColour(_col);
             this.setTooltip('');
             this.setHelpUrl('');
         },
@@ -161,8 +161,9 @@ Blockly.dgpad_get_short = function(_v) {
     });
 };
 
-Blockly.Blocks['dgpad_get_object_short'] = Blockly.dgpad_get_short("any");
-Blockly.Blocks['dgpad_get_point_short'] = Blockly.dgpad_get_short("point");
+Blockly.Blocks['dgpad_get_object_short'] = Blockly.dgpad_get_short("any", 20);
+Blockly.Blocks['dgpad_get_point_short'] = Blockly.dgpad_get_short("point", 20);
+Blockly.Blocks['dgpad_get_point_short_turtle'] = Blockly.dgpad_get_short("point", 180);
 
 // Blockly.Blocks['dgpad_get_object_short'] = {
 //     init: function() {

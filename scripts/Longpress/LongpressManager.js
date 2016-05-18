@@ -99,8 +99,21 @@ function LongpressManager(_canvas) {
         canvas.addText($L.edit_widget_name + " : <input id=\"exp_name\" interactiveinput=\"replace\">\n\n\u00a7  name=\"" + $L.edit_widget_edit + "\" style=\"font-size:18px;padding: 5px 10px;background: #4479BA;color: #FFF;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;border: solid 1px #20538D;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);\"\nvar exp_n=Find(\"exp_name\");\nvar exp_e=Find(\"exp_edit\");\nexp_e.setAttribute(\"target\",exp_n.value);\nRefreshInputs();\n\n\u00a7\n\n<textarea id=\"exp_edit\" target=\"aa\" style=\"width:500px;height:400px\"></textarea>\n", x, y, 550, 530, "c:rgba(59,79,115,0.18);s:3;r:15;p:4");
     };
 
-    
+    var createBlocklyButton = function() {
+        $U.prompt($L.create_blockly_program_change_message, $L.create_blockly_program_name, "text", function(_old, _new) {
+            if (_new === "") _new = _old;
+            var OBJ = new BlocklyButtonObject(Cn, "blk_btn", _new, x, y);
+            OBJ.setOpacity(canvas.prefs.opacity.blockly_button);
+            canvas.addObject(OBJ);
+            Cn.compute();
+            canvas.paint();
+            canvas.blocklyManager.edit(OBJ);
+        }, 450, 165, 430);
+    };
+
+
     var tab = [
+        [$L.create_blockly_button, createBlocklyButton],
         [$L.create_exp, createExp],
         [$L.create_exp_pts, createExpPts],
         [$L.create_exp_segs, createExpSegs],
@@ -126,7 +139,7 @@ function LongpressManager(_canvas) {
         y = canvas.mouseY(ev);
         x = Math.round(x / 10) * 10;
         y = Math.round(y / 10) * 10;
-        panel = new BubblePanel(canvas, exec,close, ev, tab, $L.longpress_message, 270, 240, 30);
+        panel = new BubblePanel(canvas, exec, close, ev, tab, $L.longpress_message, 270, 240, 30);
     };
 
 

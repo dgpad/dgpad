@@ -497,6 +497,9 @@ function Canvas(_id) {
     me.blocklyManager = new BlocklyManager(me);
     me.longpressManager = new LongpressManager(me);
 
+
+
+
     me.addText = function(_m, _l, _t, _w, _h, _stl) {
         me.textManager.addTeXElement(_m, _l, _t, _w, _h, _stl);
     };
@@ -601,6 +604,10 @@ function Canvas(_id) {
         var inter = document.activeElement.getAttribute("interactiveinput");
         if (inter !== null) {
             $U.addTextToInput(document.activeElement, obj.getName(), inter);
+            return;
+        };
+        if ((obj.getCode() === "blockly_button") && (obj.insideButton(ev))) {
+            obj.run();
             return;
         };
         if (me.namesManager.replaceName(obj)) return;
@@ -822,7 +829,7 @@ function Canvas(_id) {
         }
         if (me.longpressManager.isVisible()) return;
         if (me.coincidenceManager.isVisible()) return;
-        if (me.blocklyManager.isSettingsVisible()) return;
+        // if (me.blocklyManager.isSettingsVisible()) return;
         draggedObject = null;
         dragCoords = null;
         actualCoords.x = me.mouseX(ev);
@@ -885,6 +892,7 @@ function Canvas(_id) {
     me.translate = function(x, y) {
         Cn.translate(x, y);
         Cn.computeAll();
+        // me.blocklyManager.computeTurtle();
         me.paint();
     }
 
@@ -1133,8 +1141,10 @@ function Canvas(_id) {
     //    };
 
     me.dragOver = function(ev) {
-        ev.stopPropagation();
         ev.preventDefault();
+        ev.stopPropagation();
+        ev.dataTransfer.dropEffect = 'copy';
+        return false;
     };
 
     me.drop = function(ev) {
@@ -1263,7 +1273,7 @@ function Canvas(_id) {
             interpreter = new window.frames[ID].Interpreter(window, me);
             interpreter.owner = el.contentWindow;
             interpreter.copyNameSpace();
-
+            interpreter.setCaller(me.blocklyManager); // For print purpose
 
             var request = new XMLHttpRequest();
             request.open("GET", $APP_PATH + "NotPacked/plug-ins.js", true);

@@ -36,6 +36,7 @@ Blockly.JavaScript['dgpad_get_object_short'] = function(block) {
 };
 
 Blockly.JavaScript['dgpad_get_point_short'] = Blockly.JavaScript['dgpad_get_object_short'];
+Blockly.JavaScript['dgpad_get_point_short_turtle'] = Blockly.JavaScript['dgpad_get_object_short'];
 
 Blockly.JavaScript['dgpad_get_object'] = function(block) {
     var dropdown_type = block.getFieldValue('TYPE');

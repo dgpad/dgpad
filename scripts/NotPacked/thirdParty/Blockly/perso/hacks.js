@@ -108,6 +108,109 @@
 // };
 
 
+// Blockly.Blocks['procedures_defnoreturn'].init = function() {
+//     var nameField = new Blockly.FieldTextInput(
+//         Blockly.Msg.PROCEDURES_DEFNORETURN_PROCEDURE,
+//         Blockly.Procedures.rename);
+//     nameField.setSpellcheck(false);
+//     this.appendDummyInput()
+//         .appendField(Blockly.Msg.PROCEDURES_DEFNORETURN_TITLE)
+//         .appendField(nameField, 'NAME')
+//         .appendField('', 'PARAMS');
+//     this.setMutator(new Blockly.Mutator(['procedures_mutatorarg']));
+//     if (Blockly.Msg.PROCEDURES_DEFNORETURN_COMMENT) {
+//         this.setCommentText(Blockly.Msg.PROCEDURES_DEFNORETURN_COMMENT);
+//     }
+//     this.setColour(Blockly.Blocks.procedures.HUE);
+//     this.setTooltip(Blockly.Msg.PROCEDURES_DEFNORETURN_TOOLTIP);
+//     this.setHelpUrl(Blockly.Msg.PROCEDURES_DEFNORETURN_HELPURL);
+//     this.arguments_ = [];
+//     this.setStatements_(true);
+//     this.statementConnection_ = null;
+// }
+
+// Blockly.Blocks['procedures_defnoreturn'].setStatements_ = function(hasStatements) {
+//     if (this.hasStatements_ === hasStatements) {
+//         return;
+//     }
+//     if (hasStatements) {
+
+
+//         this.appendStatementInput('STACK')
+//             .appendField(Blockly.Msg.PROCEDURES_DEFNORETURN_DO);
+//         this.appendDummyInput('GLOBAL')
+//             .appendField("global")
+//             .appendField(new Blockly.FieldCheckbox("TRUE"), "GLOB");
+//         if (this.getInput('RETURN')) {
+//             this.moveInputBefore('STACK', 'RETURN');
+//             this.moveInputBefore('GLOBAL', 'RETURN');
+//         }
+
+
+//     } else {
+//         this.removeInput('STACK', true);
+//     }
+//     this.hasStatements_ = hasStatements;
+// }
+
+// Blockly.Blocks['procedures_defreturn'].setStatements_ = Blockly.Blocks['procedures_defnoreturn'].setStatements_;
+
+
+// Blockly.Procedures.allProcedures = function(root) {
+//   var blocks = root.getAllBlocks();
+//   var proceduresReturn = [];
+//   var proceduresNoReturn = [];
+//   for (var i = 0; i < blocks.length; i++) {
+//     if (blocks[i].getProcedureDef) {
+//       var tuple = blocks[i].getProcedureDef();
+//       if (tuple) {
+//         if (tuple[2]) {
+//           proceduresReturn.push(tuple);
+//         } else {
+//           proceduresNoReturn.push(tuple);
+//         }
+//       }
+//     }
+//   }
+//   // proceduresNoReturn.push(["blabla",["aa","bb"],false]);
+//   proceduresNoReturn.sort(Blockly.Procedures.procTupleComparator_);
+//   proceduresReturn.sort(Blockly.Procedures.procTupleComparator_);
+//   console.log(proceduresNoReturn);
+//   return [proceduresNoReturn, proceduresReturn];
+// };
+
+
+Blockly.ContextMenu.origin_show = Blockly.ContextMenu.show;
+
+
+Blockly.ContextMenu.show = function(e, options, rtl) {
+    options.unshift({
+        text: $L.blockly.paste,
+        enabled: true,
+        callback: Blockly.custom_menu_paste
+    });
+    // Si on a cliqué-droit sur le background ;
+    if (e.target.className.baseVal === "blocklyMainBackground") {
+        options.unshift({
+            text: $L.blockly.copyall,
+            enabled: true,
+            callback: Blockly.custom_menu_copyAll
+        });
+        options.push({
+            text: $L.blockly.displaySource,
+            enabled: true,
+            callback: Blockly.custom_menu_printSource
+        });
+    } else {
+        options.unshift({
+            text: $L.blockly.copyselected,
+            enabled: true,
+            callback: Blockly.custom_menu_copySel
+        });
+    };
+    Blockly.ContextMenu.origin_show(e, options, rtl);
+}
+
 
 Blockly.FieldTextInput.prototype.showEditor_ = function(opt_quietInput) {
     var me = this;

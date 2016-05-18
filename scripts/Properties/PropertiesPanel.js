@@ -469,6 +469,8 @@ function props_colorPanel(_owner) {
                 segSize.setValue(0.1);
             }
             me.obj.setSize(_val);
+            me.obj.compute();
+            me.obj.computeChilds();
         }
         me.repaint();
     };
@@ -481,6 +483,7 @@ function props_colorPanel(_owner) {
                 sSize.setValue(0.1);
             }
             me.obj.setSegmentsSize(_val);
+            me.obj.compute();
             me.obj.computeChilds();
         }
         me.repaint();

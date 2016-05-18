@@ -223,19 +223,19 @@ $L.animation_label = "Animación";
 
 
 
- 
+
 // Dimanche 24 janvier 2016
-$L.props_general_dragall="Arrastrar todos los objetos";
+$L.props_general_dragall = "Arrastrar todos los objetos";
 
 // Lundi 22 février 2016
-$L.blockly.var_return = "Enter (fin de línea)";
+$L.blockly.var_return = "Retorno";
 $L.blockly.push_add = "Añadir";
 $L.blockly.push_end = "al final de la lista";
 $L.blockly.list_new = "Crar una lista vacía";
 
 // Mardi 23 février 2016
 $L.blockly.value = "Valor";
-$L.blockly.o = {};
+// $L.blockly.o = {};
 $L.blockly.o.expression = "de la expresión";
 $L.blockly.o.point = "del punto";
 $L.blockly.o.circle1 = "del círculo";
@@ -243,7 +243,7 @@ $L.blockly.o.segment = "del segmento";
 $L.blockly.o.fixedangle = "del ángulo fijo";
 $L.blockly.o.angle = "del ángulo";
 $L.blockly.o.area = "del polígono";
-$L.blockly.o2 = {};
+// $L.blockly.o2 = {};
 $L.blockly.o2.expression = "la expresión";
 $L.blockly.o2.point = "el punto";
 $L.blockly.o2.circle1 = "el círculo";
@@ -272,11 +272,42 @@ $L.blockly.withoutlf = "sin fin de línea";
 $L.blockly.lang = "es.js";
 
 // Mercredi 30 mars 2016
-$L.blockly.tabs = {};
+// $L.blockly.tabs = {};
 $L.blockly.tabs.oncompute = "Expresión";
 $L.blockly.tabs.onmousedown = "Appuyé";
 $L.blockly.tabs.ondrag = "al arrastrar";
 $L.blockly.tabs.onmouseup = "al soltar";
+
+// Dimanche 17 avril 2016
+$L.blockly.turtle_category = "Tortuga";
+// $L.blockly.turtle = {};
+$L.blockly.turtle.moveTooltip = "Mueve la tortuga hacia adelante o hacia atrás en la cantidad especificada.";
+$L.blockly.turtle.moveForward = "avanzar";
+$L.blockly.turtle.moveBackward = "retroceder";
+$L.blockly.turtle.turnTooltip = "Gira la tortuga hacia la izquierda o la derecha el número especificado de grados.";
+$L.blockly.turtle.turnRight = "girar a la derecha";
+$L.blockly.turtle.turnLeft = "girar a la izquierda";
+$L.blockly.turtle.widthTooltip = "Cambia el ancho del bolígrafo.";
+$L.blockly.turtle.setWidth = "establecer el ancho a";
+$L.blockly.turtle.colourTooltip = "Cambia el color del bolígrafo.";
+$L.blockly.turtle.setColour = "establecer el color a";
+$L.blockly.turtle.penTooltip = "Levanta o baja el bolígrafo para detener o empezar a dibujar.";
+$L.blockly.turtle.penUp = "levantar el bolígrafo";
+$L.blockly.turtle.penDown = "bajar el bolígrafo";
+$L.blockly.turtle.turtleVisibilityTooltip = "Hace a la tortuga (círculo y flecha) visible o invisible.";
+$L.blockly.turtle.hideTurtle = "ocultar la tortuga";
+$L.blockly.turtle.showTurtle = "mostrar la tortuga";
+$L.blockly.turtle.printHelpUrl = "https=//es.wikipedia.org/wiki/Impresi%C3%B3n";
+$L.blockly.turtle.printTooltip = "Dibuja texto en la dirección de la tortuga en su ubicación.";
+$L.blockly.turtle.print = "imprimir";
+$L.blockly.turtle.fontHelpUrl = "https=//es.wikipedia.org/wiki/Tipo_de_letra";
+$L.blockly.turtle.fontTooltip = "Establece el tipo de letra utilizado por el bloque de impresión.";
+$L.blockly.turtle.font = "tipo de letra";
+$L.blockly.turtle.fontSize = "tamaño de letra";
+$L.blockly.turtle.fontNormal = "normal";
+$L.blockly.turtle.fontBold = "negrita";
+$L.blockly.turtle.fontItalic = "cursiva";
+
 
 
 $L.number = function(_n) {

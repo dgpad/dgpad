@@ -61,6 +61,7 @@ function SpringConstructor() {
         ctx.font = "24px Arial";
         var message = "";
         var p = this.getC(0).getAnimationParams(x1, y1);
+        
         ctx.fillText(p.message, 0, -img.h / 2);
         ctx.restore();
     };

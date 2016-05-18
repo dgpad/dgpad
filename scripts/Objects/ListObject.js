@@ -11,6 +11,7 @@ function ListObject(_construction, _name, _EXP) {
     var EXP = _EXP; // Expression contenant la liste de points (ou points3D)
     var Ptab = []; // Tableau de points
     var arrow = null; // Flèches en bout de segments
+    var colors = ["#ffffff", "#cccccc", "#c0c0c0", "#999999", "#666666", "#333333", "#000000", "#ffcccc", "#ff6666", "#ff0000", "#cc0000", "#990000", "#660000", "#330000", "#ffcc99", "#ff9966", "#ff9900", "#ff6600", "#cc6600", "#993300", "#663300", "#ffff99", "#ffff66", "#ffcc66", "#ffcc33", "#cc9933", "#996633", "#663333", "#ffffcc", "#ffff33", "#ffff00", "#ffcc00", "#999900", "#666600", "#333300", "#99ff99", "#66ff99", "#33ff33", "#33cc00", "#009900", "#006600", "#003300", "#99ffff", "#33ffff", "#66cccc", "#00cccc", "#339999", "#336666", "#003333", "#ccffff", "#66ffff", "#33ccff", "#3366ff", "#3333ff", "#000099", "#000066", "#ccccff", "#9999ff", "#6666cc", "#6633ff", "#6600cc", "#333399", "#330099", "#ffccff", "#ff99ff", "#cc66cc", "#cc33cc", "#993399", "#663366", "#330033"];
 
     me.setArrow = function(_t) {
         arrow = (_t && (_t.length === 2) && (_t[0]) && (_t[1])) ? _t : null;
@@ -32,6 +33,9 @@ function ListObject(_construction, _name, _EXP) {
         var rr = me.getColor().getR();
         var gg = me.getColor().getG();
         var bb = me.getColor().getB();
+        var ss = segSize;
+        var ps = me.getRealsize();
+        var cn = 54;
         // var points = 0;
         var oldColStop = 0;
 
@@ -53,7 +57,9 @@ function ListObject(_construction, _name, _EXP) {
                     r: rr,
                     g: gg,
                     b: bb,
-                    rgb: "rgb(" + rr + "," + gg + "," + bb + ")"
+                    rgb: "rgb(" + rr + "," + gg + "," + bb + ")",
+                    sz: ss, // segment size
+                    pz: ps // point size
                 });
             } else if (lst[i].length === 3) {
                 if (isNaN(lst[i][0]) && isNaN(lst[i][1]) && isNaN(lst[i][2])) {
@@ -63,7 +69,9 @@ function ListObject(_construction, _name, _EXP) {
                         r: rr,
                         g: gg,
                         b: bb,
-                        rgb: "rgb(" + rr + "," + gg + "," + bb + ")"
+                        rgb: "rgb(" + rr + "," + gg + "," + bb + ")",
+                        sz: ss, // segment size
+                        pz: ps // point size
                     });
                 } else {
                     // Il s'agit d'un point 3D :
@@ -87,33 +95,74 @@ function ListObject(_construction, _name, _EXP) {
                         r: rr,
                         g: gg,
                         b: bb,
-                        rgb: "rgb(" + rr + "," + gg + "," + bb + ")"
+                        rgb: "rgb(" + rr + "," + gg + "," + bb + ")",
+                        sz: ss, // segment size
+                        pz: ps // point size
                     });
                 }
 
             } else if (lst[i].length === 4) {
-                // Un élément de longueur 4 signale un breakpoint
-                // de couleur [0,r,g,b] :
-                // console.log("*********** : Ptab.length=" + Ptab.length + "  oldColStop=" + oldColStop);
-                if (Ptab.length > oldColStop) {
-                    var iR = (lst[i][1] - rr) / (Ptab.length - oldColStop);
-                    var iG = (lst[i][2] - gg) / (Ptab.length - oldColStop);
-                    var iB = (lst[i][3] - bb) / (Ptab.length - oldColStop);
-                    for (var j = oldColStop + 1; j < Ptab.length; j++) {
-                        var k = j - oldColStop;
-                        var nr = Math.round(rr + k * iR);
-                        var ng = Math.round(gg + k * iG);
-                        var nb = Math.round(bb + k * iB);
-                        Ptab[j].r = nr;
-                        Ptab[j].g = ng;
-                        Ptab[j].b = nb;
-                        Ptab[j].rgb = "rgb(" + nr + "," + ng + "," + nb + ")";
+                if (lst[i][0] === 0) {
+                    // Un élément [0,r,g,b] signale un breakpoint de dégradé de couleur :
+                    // console.log("*********** : Ptab.length=" + Ptab.length + "  oldColStop=" + oldColStop);
+                    if (Ptab.length > oldColStop) {
+                        var iR = (lst[i][1] - rr) / (Ptab.length - oldColStop);
+                        var iG = (lst[i][2] - gg) / (Ptab.length - oldColStop);
+                        var iB = (lst[i][3] - bb) / (Ptab.length - oldColStop);
+                        for (var j = oldColStop + 1; j < Ptab.length; j++) {
+                            var k = j - oldColStop;
+                            var nr = Math.round(rr + k * iR);
+                            var ng = Math.round(gg + k * iG);
+                            var nb = Math.round(bb + k * iB);
+                            Ptab[j].r = nr;
+                            Ptab[j].g = ng;
+                            Ptab[j].b = nb;
+                            Ptab[j].rgb = "rgb(" + nr + "," + ng + "," + nb + ")";
+                        }
                     }
+                    rr = lst[i][1];
+                    gg = lst[i][2];
+                    bb = lst[i][3];
+                    oldColStop = Ptab.length;
+                } else if (lst[i][0] === 1) {
+                    // Un élément [1,r,g,b] signale un breakpoint de changement de couleur :
+                    // console.log("*********** : Ptab.length=" + Ptab.length + "  oldColStop=" + oldColStop);
+                    rr = lst[i][1];
+                    gg = lst[i][2];
+                    bb = lst[i][3];
+                } else if (lst[i][0] === 2) {
+                    // Un élément [2,0,0,n] signale un breakpoint de changement de couleur
+                    // numéroté n dans la palette 7x10
+                    cn = (lst[i][3] - 1) % 70; // La couleur tortue commence à 1 et non pas à 0
+                    var _rgb = $U.hexToRGB(colors[cn]);
+                    rr = _rgb.r;
+                    gg = _rgb.g;
+                    bb = _rgb.b;
+                } else if (lst[i][0] === 3) {
+                    // Un élément [3,0,0,i] signale un incrément de couleur
+                    // (cn+i) dans la palette 7x10
+                    cn = (cn + lst[i][3]) % 70;
+                    var _rgb = $U.hexToRGB(colors[cn]);
+                    rr = _rgb.r;
+                    gg = _rgb.g;
+                    bb = _rgb.b;
+                } else if (lst[i][0] === 4) {
+                    // Un élément [4,0,0,op] signale l'ordre de remplir avec une opacité de op%
+                    Ptab[Ptab.length - 1].fill = lst[i][3] / 100;
+
+                } else if (lst[i][0] === 10) {
+                    // Un élément [10,0,0,sz] signale un breakpoint de taille de crayon :
+                    ss = lst[i][3];
+                } else if (lst[i][0] === 11) {
+                    // Un élément [11,0,0,inc] signale un incrément de taille de crayon :
+                    ss += lst[i][3];
+                } else if (lst[i][0] === 12) {
+                    // Un élément [10,0,0,sz] signale un breakpoint de taille de crayon :
+                    ps = lst[i][3];
+                } else if (lst[i][0] === 13) {
+                    // Un élément [11,0,0,inc] signale un incrément de taille de crayon :
+                    ps += lst[i][3];
                 }
-                rr = lst[i][1];
-                gg = lst[i][2];
-                bb = lst[i][3];
-                oldColStop = Ptab.length;
             } else {
                 // Sinon il y a erreur dans l'expression:
                 Ptab.length = 0;
@@ -336,21 +385,22 @@ function ListObject(_construction, _name, _EXP) {
     };
 
     var paintCircle = function(i, ctx) {
-        ctx.arc(Ptab[i].x, Ptab[i].y, me.getRealsize(), 0, Math.PI * 2, true);
+        ctx.arc(Ptab[i].x, Ptab[i].y, Ptab[i].pz, 0, Math.PI * 2, true);
+        // ctx.arc(Ptab[i].x, Ptab[i].y, me.getRealsize(), 0, Math.PI * 2, true);
     };
     var paintCross = function(i, ctx) {
-        var sz = me.getRealsize() * 0.9;
+        var sz = Ptab[i].pz * 0.9;
         ctx.moveTo(Ptab[i].x - sz, Ptab[i].y + sz);
         ctx.lineTo(Ptab[i].x + sz, Ptab[i].y - sz);
         ctx.moveTo(Ptab[i].x - sz, Ptab[i].y - sz);
         ctx.lineTo(Ptab[i].x + sz, Ptab[i].y + sz);
     };
     var paintSquare = function(i, ctx) {
-        var sz = me.getRealsize() * 1.8;
+        var sz = Ptab[i].pz * 1.8;
         ctx.rect(Ptab[i].x - sz / 2, Ptab[i].y - sz / 2, sz, sz);
     };
     var paintDiamond = function(i, ctx) {
-        var sz = me.getRealsize() * 1.3;
+        var sz = Ptab[i].pz * 1.3;
         ctx.moveTo(Ptab[i].x, Ptab[i].y - sz);
         ctx.lineTo(Ptab[i].x - sz, Ptab[i].y);
         ctx.lineTo(Ptab[i].x, Ptab[i].y + sz);
@@ -381,19 +431,30 @@ function ListObject(_construction, _name, _EXP) {
             ctx.lineCap = "round";
             ctx.lineJoin = "round";
 
-            // dessin des segments :
+            // remplissage des polygones :
             ctx.beginPath();
             ctx.lineWidth = segSize;
             ctx.moveTo(Ptab[0].x, Ptab[0].y);
             for (var aa = 1, len = Ptab.length; aa < len; aa++) {
-                if (isNaN(Ptab[aa].x) || isNaN(Ptab[aa].y)) {
+                var p = Ptab[aa];
+                if (isNaN(p.x) || isNaN(p.y) || (p.fill)) {
+                    if (p.fill) {
+                        ctx.fillStyle = "rgba(" + p.r + "," + p.g + "," + p.b + "," + p.fill + ")";
+                        ctx.lineTo(p.x, p.y);
+                        // console.log("******break******");
+                        // console.log("aa=" + aa+";lineto(" + Cn.coordsSystem.x(p.x) + "," + Cn.coordsSystem.y(p.y)+")");
+                        // console.log("*****************");
+                        aa--
+                    }
                     ctx.fill();
                     ctx.beginPath();
                     aa++
                     if (aa < len)
-                        ctx.moveTo(Ptab[aa].x, Ptab[aa].y);
+                        ctx.moveTo(p.x, p.y);
+                    // console.log("aa=" + aa+";moveto(" + Cn.coordsSystem.x(p.x) + "," + Cn.coordsSystem.y(p.y)+")");
                 } else {
-                    ctx.lineTo(Ptab[aa].x, Ptab[aa].y);
+                    ctx.lineTo(p.x, p.y);
+                    // console.log("aa=" + aa+";lineto(" + Cn.coordsSystem.x(p.x) + "," + Cn.coordsSystem.y(p.y)+")");
                 }
             }
             ctx.fill();
@@ -418,6 +479,7 @@ function ListObject(_construction, _name, _EXP) {
                         ctx.beginPath();
                         ctx.moveTo(Ptab[i - 1].x, Ptab[i - 1].y);
                         ctx.strokeStyle = Ptab[i - 1].rgb;
+                        ctx.lineWidth = Ptab[i - 1].sz;
                         ctx.lineTo(Ptab[i].x, Ptab[i].y);
                         ctx.stroke();
                         if (arrow) paintArrow(Ptab[i - 1].x, Ptab[i - 1].y, Ptab[i].x, Ptab[i].y, ctx);

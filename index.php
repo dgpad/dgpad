@@ -27,7 +27,7 @@ and open the template in the editor.
             }
         </script>
     </head>
-    <body style="-ms-touch-action: none;">
+    <body style="-ms-touch-action: none;" oncontextmenu="return false;">
 
 		<?php 
 		// mb_internal_encoding("UTF-8");

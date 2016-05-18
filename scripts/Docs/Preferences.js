@@ -31,6 +31,7 @@ $P.opacity = {};
 $P.opacity.point = 0;
 $P.opacity.area = 0.2;
 $P.opacity.vector = 0.2;
+$P.opacity.blockly_button = 0.1;
 
 $P.grid = {};
 $P.grid.limitinf = 15;
@@ -58,6 +59,7 @@ $P.size.expression_cursor = 10 * $SCALE;
 $P.size.dash = [6, 10];
 $P.size.partiallines = 100;
 $P.size.vectorhead = 20;
+$P.size.blockly_button = 3;
 
 
 $P.sizefactor = {};
@@ -74,7 +76,7 @@ $P.fontsize.segment = 24 * $SCALE;
 $P.fontsize.angle = 24 * $SCALE;
 $P.fontsize.fixedangle = 24 * $SCALE;
 $P.fontsize.expression = 24 * $SCALE;
-
+$P.fontsize.blockly_button = 24 * $SCALE;
 $P.font = "Verdana";
 $P.fontmargin = 5;
 

@@ -40,7 +40,7 @@ function PointObject(_construction, _name, _x, _y) {
     var currentMagnet = null; // Pour gérer les changements de magnétisme : utilise pour
     // les traces d'objets.
 
-    this.blocks.setMode(["oncompute", "onmousedown","ondrag", "onmouseup"], "ondrag");
+    this.blocks.setMode(["onlogo","onmousedown", "ondrag", "onmouseup"], "ondrag");
 
     // ****************************************
     // **** Uniquement pour les animations ****
@@ -68,6 +68,7 @@ function PointObject(_construction, _name, _x, _y) {
         // b[0] et b[1] indiquent l'intervalle Alpha
         // b[2] indique l'incrément
         var b = me.getParentAt(0).getAlphaBounds(anim, me);
+        // console.log(b[2]);
         if (b) {
             Alpha += b[2];
             if (Alpha < b[0]) {
@@ -89,6 +90,7 @@ function PointObject(_construction, _name, _x, _y) {
             if (Alpha < b[0]) Alpha = b[0];
             if (Alpha > b[1]) Alpha = b[1];
         }
+        me.blocks.evaluate("ondrag");
     };
 
     // ****************************************
@@ -376,12 +378,12 @@ function PointObject(_construction, _name, _x, _y) {
         }
         var phi = Cn.getPhi();
         var theta = Cn.getTheta();
-        var stheta = Math.sin(theta);
-        var ctheta = Math.cos(theta);
-        var sphi = Math.sin(phi[0]),
-            sphid = Math.sin(phi[1]);
-        var cphi = Math.cos(phi[0]),
-            cphid = Math.cos(phi[1]);
+        var stheta = Cn.sin(theta);
+        var ctheta = Cn.cos(theta);
+        var sphi = Cn.sin(phi[0]),
+            sphid = Cn.sin(phi[1]);
+        var cphi = Cn.cos(phi[0]),
+            cphid = Cn.cos(phi[1]);
         var dis = sphi * cphid - sphid * cphi;
         var xO = ORG3D.getX();
         X3D_OLD = ((X_old - xO) * cphid - (X - xO) * cphi) / dis;

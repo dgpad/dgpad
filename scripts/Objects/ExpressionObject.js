@@ -20,7 +20,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     var anchor = null; // PointObject auquel l'expression est rattachée
     var cPT = new PointObject(Cn, me.getName() + ".cursor", 0, 0);
 
-    this.blocks.setMode(["oncompute"], "oncompute");
+    this.blocks.setMode(["oncompute", "onchange"], "oncompute");
 
 
     // this.getMe = function() {
@@ -141,12 +141,29 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     // **** Uniquement pour les animations ****
     // ****************************************
 
+    // var hashtab = [];
+
+    // me.inithashtab = function(_speed) {
+    //     hashtab = [true];
+    //     var inc = 100 / _speed;
+    //     for (var i = 1; i < 100; i++) {
+    //         if (i > inc) {
+    //             hashtab.push(true);
+    //             inc += 100 / _speed;
+    //         } else {
+    //             hashtab.push(false);
+    //         }
+    //     }
+    //     console.log(hashtab)
+    // };
+
+
     me.isAnimationPossible = function() {
         return ((E1 != null) && (E1.isNum()));
     }
 
     me.getAnimationSpeedTab = function() {
-        return [0, 1, 5, 10, 20, 50, 100, 200, 500, 1000, 1500];
+        return [0, 1, 2, 3, 5, 10, 25, 50, 75, 90, 100];
     }
 
     me.getAnimationParams = function(x1, y1) {
@@ -157,25 +174,79 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         var fce = this.getAnimationSpeedTab();
         var f = Math.floor(d / (500 / fce.length));
         if (f >= fce.length) f = fce.length - 1;
-        var mess = fce[f];
+        var mess = fce[f] + "%";
         var ang = $U.angleH(x1 - x0, y1 - y0);
         var dir = ((ang > Math.PI / 2) && (ang < 3 * Math.PI / 2)) ? 1 : -1;
         var aller_retour = false;
 
         if (this.isCursor()) {
             aller_retour = ((ang > Math.PI / 4) && (ang < 3 * Math.PI / 4)) || ((ang > 5 * Math.PI / 4) && (ang < 7 * Math.PI / 4));
-            if (aller_retour) mess += " \u21C4"
-
-        } else mess += " u/s";
-
+        };
         return {
-            message: aller_retour ? fce[f] + " \u21C4" : fce[f],
+            message: aller_retour ? mess + " \u21C4" : mess,
             speed: fce[f],
             direction: dir,
             ar: aller_retour
         }
     }
 
+    // me.incrementAlpha = function(anim) {
+    //     if (hashtab[anim.loopnum]) {
+    //         var v = anim.speed;
+    //         var s = anim.direction;
+    //         var ar = anim.ar;
+    //         var d = new Date();
+    //         anim.delay = d.getTime() - anim.timestamp;
+    //         anim.timestamp = d.getTime();
+    //         var inc = s * 1;
+
+    //         // var inc = 0.1 * s;
+    //         // console.log(me.isCursor());
+    //         if (me.isCursor()) {
+    //             inc = s * (max.value() - min.value()) / 50;
+    //             var e1 = E1.value();
+    //             e1 += inc;
+
+    //             if (e1 < min.value()) {
+    //                 if (ar) {
+    //                     anim.direction *= -1;
+    //                     e1 = 2 * min.value() - e1;
+    //                 } else {
+    //                     e1 = max.value() + e1 - min.value();
+    //                 }
+    //             }
+    //             if (e1 > max.value()) {
+    //                 if (ar) {
+    //                     anim.direction *= -1;
+    //                     e1 = 2 * max.value() - e1;
+    //                 } else {
+    //                     e1 = min.value() + e1 - max.value();
+    //                 }
+    //             }
+    //             if (e1 < min.value()) e1 = min.value();
+    //             if (e1 > max.value()) e1 = max.value();
+    //             if (Math.abs(e1) < 1e-13) e1 = 0;
+
+    //             // if (cPT.increment) {
+    //             //     var inc = 1 / cPT.increment;
+    //             //     e1 = min.value() + Math.round((e1 - min.value()) * inc) / inc;
+    //             // }
+
+    //             initCursorPos();
+    //             E1.setValue(e1);
+
+    //             // initCursorPos();
+    //             // E1.setValue(e1);
+    //         } else {
+    //             var val = E1.value() + inc;
+    //             if (Math.abs(val) < 1e-13) val = 0;
+    //             E1.setValue(val);
+    //         }
+    //     }
+    //     anim.loopnum = (anim.loopnum + 1) % 100;
+
+    //     // console.log(E1.value())
+    // };
 
     me.incrementAlpha = function(anim) {
         // console.log(anim);
@@ -186,9 +257,21 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
         anim.delay = d.getTime() - anim.timestamp;
         anim.timestamp = d.getTime();
         var inc = s * (v * anim.delay / 1000);
+        // var inc=s*v;
         // console.log(me.isCursor());
         if (me.isCursor()) {
-            inc = inc * (max.value() - min.value()) / 100;
+            inc = inc * (max.value() - min.value()) / 50;
+
+            if (cPT.increment) {
+                anim.incsum += inc;
+                var inc2 = cPT.increment;
+                if (Math.abs(anim.incsum) < inc2) {
+                    return;
+                };
+                inc = s * inc2 * Math.floor(Math.abs(anim.incsum) / inc2);
+                anim.incsum = 0;
+            }
+            // console.log(inc);
             var e1 = E1.value();
             e1 += inc;
 
@@ -211,13 +294,25 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
             if (e1 < min.value()) e1 = min.value();
             if (e1 > max.value()) e1 = max.value();
             if (Math.abs(e1) < 1e-13) e1 = 0;
+
+            // if (cPT.increment) {
+            //     var inc2 = 1 / cPT.increment;
+            //     e1 = min.value() + Math.round((e1 - min.value()) * inc2) / inc2;
+            // }
+
+
+
             initCursorPos();
             E1.setValue(e1);
+
+            // initCursorPos();
+            // E1.setValue(e1);
         } else {
             var val = E1.value() + inc;
             if (Math.abs(val) < 1e-13) val = 0;
             E1.setValue(val);
         }
+        // console.log(E1.value())
     };
 
     // ****************************************
@@ -582,12 +677,11 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
 
     // setExp pour les widgets et pour blockly :
     me.setExp = me.setE1 = function(_t) {
-        E1 = Expression.delete(E1);
-        E1 = new Expression(me, _t);
-        // console.log("before:"+me.getParent().length);
-        setMethods();
-        // console.log("after:"+me.getParent().length);
-        //        me.computeChilds();
+        if (E1.getSource() !== _t) {
+            E1 = Expression.delete(E1);
+            E1 = new Expression(me, _t);
+            setMethods();
+        }
     };
     me.getExp = function() {
         return me.getE1().getSource();

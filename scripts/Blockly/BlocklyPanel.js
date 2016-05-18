@@ -1,17 +1,17 @@
-function BlocklyPanel(_owner, _canvas, _showsettings, _closeCallback, _currentTabCallBack, _height) {
+function BlocklyPanel(_owner, _canvas,  _closeCallback, _currentTabCallBack, _height) {
     var me = this;
     var canvas = _canvas;
     var cb_src = $APP_PATH + "NotPacked/images/dialog/closebox.svg"; // Closebox image
-    var mn_src = $APP_PATH + "NotPacked/images/dialog/settings.svg"; // Closebox image
+    // var mn_src = $APP_PATH + "NotPacked/images/dialog/settings.svg"; // Settings image
     var rz_src = $APP_PATH + "NotPacked/images/dialog/resize.svg"; // Closebox image
     var tl_str = "DG-Blocks"; // Window title
     var tl_height = 28; // Title bar height
     var cb_width = 20; // Close box width
     var cb_margin_top = 3; // Margins from top
     var cb_margin_right = 5; // Margins from right
-    var mn_width = 20; // Close box width
-    var mn_margin_top = 3; // Margins from top
-    var mn_margin_left = 5; // Margins from left
+    // var mn_width = 20; // Settings box width
+    // var mn_margin_top = 3; // Margins from top
+    // var mn_margin_left = 5; // Margins from left
     var rz_width = 20; // Resize box width
     var rz_margin = 3; // Resize box margin
     var ph_margin = 10; // Panel margin from top and bottom
@@ -47,7 +47,7 @@ function BlocklyPanel(_owner, _canvas, _showsettings, _closeCallback, _currentTa
         tl.bnds(0, 0, w, tl_height);
         tl.stl("line-height", tl_height + "px");
         cb.bnds(w - cb_width - cb_margin_right, cb_margin_top, cb_width, cb_width);
-        mn.bnds(mn_margin_left, mn_margin_top, mn_width, mn_width);
+        // mn.bnds(mn_margin_left, mn_margin_top, mn_width, mn_width);
         ct.bnds(0, tl_height + 1, w, h - tl_height - tb_height - 2);
         // rl.bnds(w - rl_width, 0, rl_width, h);
         tb.bnds(0, h - tb_height, w, tb_height);
@@ -216,8 +216,8 @@ function BlocklyPanel(_owner, _canvas, _showsettings, _closeCallback, _currentTa
 
     wp.stls("position:absolute;border-bottom-left-radius:10px;border-bottom-right-radius:10px;overflow:hidden;border: 1px solid #b4b4b4;transition:transform 0.2s linear;transform:scale(0);z-index:9000");
     tl.stls("cursor:all-scroll;background-color:rgba(210,210,210,1);position:absolute;font-size: 16px;font-family: Helvetica, Arial, sans-serif;text-shadow: 1px 1px 5px #777;text-align: center;white-space: pre-wrap;margin: 0px;vertical-align:middle");
-    mn.stls("background-color:rgba(0,0,0,0);position:absolute;background-position:center;background-repeat:no-repeat;background-size:100% 100%");
-    mn.stl("background-image", "url(" + mn_src + ")");
+    // mn.stls("background-color:rgba(0,0,0,0);position:absolute;background-position:center;background-repeat:no-repeat;background-size:100% 100%");
+    // mn.stl("background-image", "url(" + mn_src + ")");
     cb.stls("background-color:rgba(0,0,0,0);position:absolute;background-position:center;background-repeat:no-repeat;background-size:100% 100%");
     cb.stl("background-image", "url(" + cb_src + ")");
     rz.stls("background-color:rgba(0,0,0,0);position:absolute;background-position:center;background-repeat:no-repeat;background-size:100% 100%;cursor:se-resize");
@@ -228,7 +228,7 @@ function BlocklyPanel(_owner, _canvas, _showsettings, _closeCallback, _currentTa
     tl.innerHTML = tl_str;
 
     cb.md(me.hide);
-    mn.md(_showsettings);
+    // mn.md(_showsettings);
     tl.md(dragdown);
     tl.mu(dragup);
     rz.md(resizedown);

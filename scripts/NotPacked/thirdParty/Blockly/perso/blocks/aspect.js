@@ -1,10 +1,10 @@
 Blockly.Blocks['dgpad_style_fix'] = {
     init: function() {
         this.appendDummyInput('obj_name')
-            .appendField("fixer l'aspect de")
+            .appendField($L.blockly.turtle.fixaspect_1)
             .appendField(Blockly.dgpad.objectPopup("any"), "OBJECT")
             // .appendField(new Blockly.FieldDropdown([["moi", "OPTIONNAME"], ["option", "OPTIONNAME"], ["option", "OPTIONNAME"]]), "OBJECT")
-            .appendField("à");
+            .appendField($L.blockly.turtle.fixaspect_2);
         this.appendValueInput("NAME")
             .setCheck("style");
         this.setInputsInline(true);
@@ -125,20 +125,21 @@ Blockly.dgpad_style_block = function(_v) {
     });
 }
 
-Blockly.Blocks['dgpad_style_visibility'] = Blockly.dgpad_style_block("caché");
-Blockly.Blocks['dgpad_style_size'] = Blockly.dgpad_style_block("taille");
-Blockly.Blocks['dgpad_style_layer'] = Blockly.dgpad_style_block("calque");
-Blockly.Blocks['dgpad_style_font'] = Blockly.dgpad_style_block("police");
-Blockly.Blocks['dgpad_style_precision'] = Blockly.dgpad_style_block("précision");
-Blockly.Blocks['dgpad_style_increment'] = Blockly.dgpad_style_block("incrément");
-Blockly.Blocks['dgpad_style_dash'] = Blockly.dgpad_style_block("pointillé");
-Blockly.Blocks['dgpad_style_nomouse'] = Blockly.dgpad_style_block("inerte");
-Blockly.Blocks['dgpad_style_opacity'] = Blockly.dgpad_style_block("opacité");
+Blockly.Blocks['dgpad_style_opacity'] = Blockly.dgpad_style_block($L.blockly.turtle.opacity);
+Blockly.Blocks['dgpad_style_visibility'] = Blockly.dgpad_style_block($L.blockly.turtle.hidden);
+Blockly.Blocks['dgpad_style_size'] = Blockly.dgpad_style_block($L.blockly.turtle.size);
+Blockly.Blocks['dgpad_style_layer'] = Blockly.dgpad_style_block($L.blockly.turtle.layer);
+Blockly.Blocks['dgpad_style_font'] = Blockly.dgpad_style_block($L.blockly.turtle.font);
+Blockly.Blocks['dgpad_style_precision'] = Blockly.dgpad_style_block($L.blockly.turtle.precision);
+Blockly.Blocks['dgpad_style_increment'] = Blockly.dgpad_style_block($L.blockly.turtle.increment);
+Blockly.Blocks['dgpad_style_dash'] = Blockly.dgpad_style_block($L.blockly.turtle.dash);
+Blockly.Blocks['dgpad_style_nomouse'] = Blockly.dgpad_style_block($L.blockly.turtle.inanimate);
+
 
 Blockly.Blocks['dgpad_style_arrow'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("flèches");
+        .appendField($L.blockly.turtle.arrow);
     this.appendValueInput("w")
         .setCheck(null);
     this.appendValueInput("h")

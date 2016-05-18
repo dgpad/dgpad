@@ -33,6 +33,33 @@ function Construction(_canvas) {
     // User can drag all types of objects or only moveable objects :
     var DragOnlyMoveable = true;
 
+
+    me.createTurtleExpression = function(_startpt) {
+        var name = "blk_turtle_exp_" + _startpt;
+        var o = me.find(name);
+        if (!o) {
+            o = new ExpressionObject(me, name, "", "", "", "NaN", 50, 50);
+            o.setHidden(2);
+            me.add(o);
+            var listname = "blk_turtle_list_" + _startpt;
+            var lst = new ListObject(me, listname, o);
+            lst.setSegmentsSize(1);
+            lst.setSize(0);
+            lst.setNoMouseInside(true);
+            me.add(lst);
+        };
+        return o;
+    };
+
+    me.removeTurtleExpression = function(_startpt) {
+        var exp = me.find("blk_turtle_exp_" + _startpt);
+        var lst = me.find("blk_turtle_list_" + _startpt);
+        if (exp) {
+            me.remove(lst);
+            me.remove(exp);
+        };
+    };
+
     me.getObjectsFromType = function(_t) {
         var tab = [];
         for (var i = 0; i < V.length; i++) {
@@ -62,6 +89,16 @@ function Construction(_canvas) {
         canvas.getInterpreter().setDegreeMode(_d);
     };
 
+    me.cos = function(_a) {
+        return Math.cos(DEGmode ? _a * Math.PI / 180 : _a);
+    };
+    me.sin = function(_a) {
+        return Math.sin(DEGmode ? _a * Math.PI / 180 : _a);
+    };
+    me.tan = function(_a) {
+        return Math.tan(DEGmode ? _a * Math.PI / 180 : _a);
+    };
+
     me.getInterpreter = function() {
         return canvas.getInterpreter();
     };
@@ -69,6 +106,7 @@ function Construction(_canvas) {
     me.getTrackManager = function() {
         return canvas.trackManager;
     };
+
 
     // Crée un nom de variable JS nouveau pour l'objet de nom s (et l'ajoute au catalogue VARS) :
     var getNewVarName = function(s) {
@@ -179,6 +217,7 @@ function Construction(_canvas) {
             Objs[i].paint(ctx);
         }
         _canvas.magnifyManager.magnifierPaint(coords);
+        _canvas.blocklyManager.paintTurtle();
     };
 
     var macroPaint = function(ctx, coords) {
@@ -1497,7 +1536,7 @@ function Construction(_canvas) {
     var animations = [];
     var animations_runable = true;
     var animations_id = null;
-    var animations_delay = 20;
+    var animations_delay = 2;
     var animations_ctrl = null;
 
     var clearAnimations = function() {
@@ -1529,6 +1568,7 @@ function Construction(_canvas) {
                 var an = animations[i];
                 if (V.indexOf(an.obj) !== -1) {
                     an.obj.incrementAlpha(an);
+                    // an.obj.blocks.evaluate("ondrag"); // blockly
                     an.obj.compute();
                     an.obj.computeChilds();
                 } else {
@@ -1590,7 +1630,9 @@ function Construction(_canvas) {
             for (var i = 0; i < animations.length; i++) {
                 animations[i].timestamp = t;
                 animations[i].loopnum = 0;
+                animations[i].incsum = 0;
                 animations[i].currentstamp = t;
+                // if (animations[i].obj.inithashtab) animations[i].obj.inithashtab(animations[i].speed);
             }
         }
     }

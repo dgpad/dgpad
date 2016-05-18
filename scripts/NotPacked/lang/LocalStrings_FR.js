@@ -236,7 +236,7 @@ $L.blockly.list_new = "Créer une nouvelle liste vide";
 
 // Mardi 23 février 2016
 $L.blockly.value = "Valeur";
-$L.blockly.o = {};
+// $L.blockly.o = {};
 $L.blockly.o.expression = "de l'expression";
 $L.blockly.o.point = "du point";
 $L.blockly.o.circle1 = "du cercle";
@@ -244,7 +244,7 @@ $L.blockly.o.segment = "du segment";
 $L.blockly.o.fixedangle = "de l'angle fixe";
 $L.blockly.o.angle = "de l'angle";
 $L.blockly.o.area = "du polygone";
-$L.blockly.o2 = {};
+// $L.blockly.o2 = {};
 $L.blockly.o2.expression = "l'expression";
 $L.blockly.o2.list = "la liste";
 $L.blockly.o2.point = "le point";
@@ -275,11 +275,12 @@ $L.blockly.lang = "fr.js";
 
 
 // Mercredi 30 mars 2016
-$L.blockly.tabs = {};
+// $L.blockly.tabs = {};
 $L.blockly.tabs.oncompute = "Expression";
 $L.blockly.tabs.onmousedown = "Appuyé";
 $L.blockly.tabs.ondrag = "Déplacé";
 $L.blockly.tabs.onmouseup = "Relâché";
+$L.blockly.tabs.onchange = "Modifié";
 $L.blockly.aspect = "Aspect";
 $L.expression_item = "éléments";
 $L.blockly.do = "faire";
@@ -287,3 +288,81 @@ $L.blockly.while = "tant que";
 $L.blockly.until = "jusqu'à";
 $L.blockly.prompt_ok = "Ok";
 $L.blockly.prompt_cancel = "Annuler";
+
+// Mardi 12 avril 2016
+$L.create_blockly_button = "Créer un DGScript";
+$L.blockly.tabs.onprogram = "Programme";
+$L.create_blockly_program_change_message = "Nom du DGScript :";
+$L.create_blockly_program_name = "Mon merveilleux DGScript";
+
+// Dimanche 17 avril 2016
+$L.blockly.turtle_category = "Tortue";
+// $L.blockly.turtle = {};
+$L.blockly.turtle.moveTooltip = "Déplace la tortue en avant ou en arrière de la quantité indiquée.";
+$L.blockly.turtle.moveForward = "avancer de";
+$L.blockly.turtle.moveBackward = "reculer de";
+$L.blockly.turtle.turnTooltip = "Faire tourner la tortue à gauche ou à droite du nombre de degrés indiqué.";
+$L.blockly.turtle.turnRight = "tourner à droite de";
+$L.blockly.turtle.turnLeft = "tourner à gauche de";
+$L.blockly.turtle.widthTooltip = "Modifier la grosseur du stylo.";
+$L.blockly.turtle.setWidth = "mettre la grosseur du stylo à";
+$L.blockly.turtle.colourTooltip = "Modifier la couleur du stylo.";
+$L.blockly.turtle.setColour = "mettre la couleur à";
+$L.blockly.turtle.penTooltip = "Lever ou poser le stylo pour arrêter ou commencer de dessiner.";
+$L.blockly.turtle.penUp = "lever le stylo";
+$L.blockly.turtle.penDown = "poser le stylo";
+$L.blockly.turtle.turtleVisibilityTooltip = "Rend la tortue (cercle et flèche) visible ou non.";
+$L.blockly.turtle.hideTurtle = "cacher la tortue";
+$L.blockly.turtle.showTurtle = "afficher la tortue";
+$L.blockly.turtle.printHelpUrl = "https=//en.wikipedia.org/wiki/Printing";
+$L.blockly.turtle.printTooltip = "Dessine le texte dans la direction de la tortue à son emplacement.";
+$L.blockly.turtle.print = "écrire";
+$L.blockly.turtle.fontHelpUrl = "https=//en.wikipedia.org/wiki/Font";
+$L.blockly.turtle.fontTooltip = "Définit la police utilisée par le bloc d’écriture.";
+$L.blockly.turtle.font = "police";
+$L.blockly.turtle.fontSize = "taille de la police";
+$L.blockly.turtle.fontNormal = "normal";
+$L.blockly.turtle.fontBold = "gras";
+$L.blockly.turtle.fontItalic = "italique";
+$L.blockly.turtle.unit_px = "pixels";
+$L.blockly.turtle.unit_un = "unités";
+$L.blockly.turtle.rotate_left = "pivoter vers la gauche de";
+$L.blockly.turtle.rotate_right = "pivoter vers la droite de";
+$L.blockly.turtle.rotate_top = "pivoter vers le haut de";
+$L.blockly.turtle.rotate_bottom = "pivoter vers le bas de";
+$L.blockly.turtle.increment_1 = "ajouter";
+$L.blockly.turtle.increment_2 = "à la grosseur du stylo";
+$L.blockly.turtle.rotate_pt = "pivoter vers le point";
+$L.blockly.turtle.join_pt = "rejoindre le point";
+$L.blockly.turtle.increment_col_1 = "ajouter";
+$L.blockly.turtle.increment_col_2 = "à la couleur";
+$L.blockly.turtle.fill = "remplir avec une opacité de";
+$L.blockly.tabs.onlogo = "Tortue";
+
+// Lundi 16 mai 2016
+$L.blockly.turtle.setPointsWidth = "mettre la grosseur des points à";
+$L.blockly.turtle.increment_points_2 = "à la grosseur des points";
+$L.blockly.turtle.fixaspect_1 = "fixer l'aspect de";
+$L.blockly.turtle.fixaspect_2 = "à";
+$L.blockly.turtle.opacity = "opacité";
+$L.blockly.turtle.hidden = "caché";
+$L.blockly.turtle.size = "taille";
+$L.blockly.turtle.layer = "calque";
+$L.blockly.turtle.precision = "précision";
+$L.blockly.turtle.increment = "incrément";
+$L.blockly.turtle.dash = "pointillé";
+$L.blockly.turtle.inanimate = "inerte";
+$L.blockly.turtle.arrow = "flèches";
+$L.blockly.turtle.windoww = "largeur de la fenêtre";
+$L.blockly.turtle.windowh = "hauteur de la fenêtre";
+$L.blockly.turtle.centerx = "abscisse du centre";
+$L.blockly.turtle.centery = "ordonnée du centre";
+$L.blockly.turtle.phiangle = "angle phi (3D)";
+$L.blockly.turtle.thetaangle = "angle theta (3D)";
+$L.blockly.turtle.distance = "distance";
+$L.blockly.turtle.xcoord = "abscisse";
+$L.blockly.turtle.ycoord = "ordonnée";
+$L.blockly.turtle.zcoord = "hauteur";
+$L.blockly.turtle.ofpoint = "du point";
+$L.blockly.turtle.position = "position de la tortue";
+$L.blockly.turtle.reset = "réinitialiser les angles";
