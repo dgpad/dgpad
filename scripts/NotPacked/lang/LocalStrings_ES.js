@@ -308,6 +308,34 @@ $L.blockly.turtle.fontNormal = "normal";
 $L.blockly.turtle.fontBold = "negrita";
 $L.blockly.turtle.fontItalic = "cursiva";
 
+// Lundi 16 mai 2016
+$L.blockly.turtle.setPointsWidth = "definir el grosor de los puntos como";
+$L.blockly.turtle.increment_points_2 = "el grosor de los puntos";
+$L.blockly.turtle.fixaspect_1 = "fijar el aspecto de";
+$L.blockly.turtle.fixaspect_2 = "como";
+$L.blockly.turtle.opacity = "opacidad";
+$L.blockly.turtle.hidden = "oculto";
+$L.blockly.turtle.size = "tamaño";
+$L.blockly.turtle.layer = "capa";
+$L.blockly.turtle.precision = "precisión";
+$L.blockly.turtle.increment = "incremento";
+$L.blockly.turtle.dash = "punteado";
+$L.blockly.turtle.inanimate = "inerte";
+$L.blockly.turtle.arrow = "flechas";
+$L.blockly.turtle.windoww = "ancho de ventana";
+$L.blockly.turtle.windowh = "alto de ventana";
+$L.blockly.turtle.centerx = "abscisa del centro";
+$L.blockly.turtle.centery = "ordenada del centro";
+$L.blockly.turtle.phiangle = "ángulo phi (3D)";
+$L.blockly.turtle.thetaangle = "ángulo theta (3D)";
+$L.blockly.turtle.distance = "distancia";
+$L.blockly.turtle.xcoord = "abscisa";
+$L.blockly.turtle.ycoord = "ordenada";
+$L.blockly.turtle.zcoord = "altura";
+$L.blockly.turtle.ofpoint = "del punto";
+$L.blockly.turtle.position = "posición de la tortuga";
+$L.blockly.turtle.reset = "reinicializar los ángulos";
+
 
 
 $L.number = function(_n) {

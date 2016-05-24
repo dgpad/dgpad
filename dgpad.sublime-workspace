@@ -4,6 +4,66 @@
 		"selected_items":
 		[
 			[
+				"is",
+				"is3D"
+			],
+			[
+				"lin",
+				"lineWidth"
+			],
+			[
+				"U",
+				"U2D"
+			],
+			[
+				"res",
+				"resetTurtle"
+			],
+			[
+				"can",
+				"canvas"
+			],
+			[
+				"LA",
+				"LAST"
+			],
+			[
+				"PE",
+				"PENUP"
+			],
+			[
+				"getS",
+				"getSegmentsSize"
+			],
+			[
+				"BLK",
+				"BLK_TURTLE"
+			],
+			[
+				"blo",
+				"blocklyManager"
+			],
+			[
+				"mouse",
+				"mouseInside"
+			],
+			[
+				"l",
+				"lineTo"
+			],
+			[
+				"M",
+				"moveTo"
+			],
+			[
+				"an",
+				"anim"
+			],
+			[
+				"anim",
+				"animations"
+			],
+			[
 				"inp",
 				"inp_top"
 			],
@@ -44,10 +104,6 @@
 				"childList"
 			],
 			[
-				"is",
-				"isChild"
-			],
-			[
 				"comp",
 				"computeFixed"
 			],
@@ -58,10 +114,6 @@
 			[
 				"de",
 				"delete"
-			],
-			[
-				"blo",
-				"blockly_namespace"
 			],
 			[
 				"dra",
@@ -78,10 +130,6 @@
 			[
 				"MO",
 				"MOD_DRAG"
-			],
-			[
-				"M",
-				"MOD_ACTU"
 			],
 			[
 				"cur",
@@ -158,10 +206,6 @@
 			[
 				"getC",
 				"getCode"
-			],
-			[
-				"an",
-				"animations_ctrl"
 			],
 			[
 				"getA",
@@ -308,50 +352,26 @@
 	"buffers":
 	[
 		{
-			"file": "scripts/Objects/BlocklyObjects.js",
+			"file": "scripts/NotPacked/lang/LocalStrings_ES.js",
 			"settings":
 			{
-				"buffer_size": 5480,
+				"buffer_size": 12966,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scripts/Objects/ExpressionObject.js",
+			"file": "scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
 			"settings":
 			{
-				"buffer_size": 19812,
+				"buffer_size": 13058,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "scripts/Objects/FixedAngleObject.js",
+			"file": "/Users/erichake/Desktop/aa.dgp",
 			"settings":
 			{
-				"buffer_size": 5774,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/Objects/Circle1Object.js",
-			"settings":
-			{
-				"buffer_size": 3834,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/NotPacked/Sandbox/Interpreter.js",
-			"settings":
-			{
-				"buffer_size": 56825,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/Objects/ConstructionObject.js",
-			"settings":
-			{
-				"buffer_size": 34510,
+				"buffer_size": 6240,
 				"line_ending": "Unix"
 			}
 		}
@@ -419,72 +439,113 @@
 	[
 		"/Users/erichake/Google Drive/dgpad/scripts",
 		"/Users/erichake/Google Drive/dgpad/scripts/Blockly",
-		"/Users/erichake/Google Drive/dgpad/scripts/Docs",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/lang",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/Sandbox",
-		"/Users/erichake/Google Drive/dgpad/scripts/Objects",
-		"/Users/erichake/Documents/Programmes/blockly"
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js"
 	],
 	"file_history":
 	[
-		"/Users/erichake/Dropbox/Public/DGPad/blockly/puissancesComplexes.dgp",
-		"/Users/erichake/Google Drive/dgpad/scripts/Blockly/BlocklyManager.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Blockly/BlocklyPanel.js",
+		"/Users/erichake/Desktop/aa.dgp",
+		"/Users/erichake/Desktop/exoType.dgp",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_toolbox.xml",
+		"/Users/erichake/Google Drive/dgpad/scripts/DGPad.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Blockly/TurtleObject.js",
+		"/Users/erichake/Google Drive/dgpad/dgpad.sublime-launch-chrome.sh",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/hacks.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/expressions.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/expressions.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/turtle.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/lang/LocalStrings.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/turtle.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/olds.js",
+		"/Users/erichake/Documents/Programmes/blockly/core/field_angle.js",
+		"/Users/erichake/Documents/Programmes/blockly/core/block.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/aspect.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/lang/LocalStrings_ES.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Utils.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Objects/ConstructionObject.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Objects/ExpressionObject.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Canvas.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Objects/BlocklyObjects.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Objects/ListObject.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Properties/PropertiesPanel.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Objects/PointObject.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/DGPad.js",
+		"/Users/erichake/Desktop/adrs",
+		"/Users/erichake/Google Drive/dgpad/scripts/Objects/PerpBisectorObject.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Macros/Macro.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Construction.js",
+		"/Users/erichake/Desktop/zzee.dgp",
+		"/Users/erichake/Documents/Programmes/blockly/core/blockly.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Utils.js",
+		"/Users/erichake/Documents/Programmes/blockly/blocks/colour.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Blockly/BlocklyManager.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Constructors/AnchorConstructor.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Canvas.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Objects/AngleObject.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/plug-ins.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Main.js",
+		"/Users/erichake/Desktop/repere.dgp",
+		"/Users/erichake/Desktop/dd.dgp",
+		"/Users/erichake/Desktop/cc.dgp",
+		"/Users/erichake/Desktop/DBN_sujet0.dgp",
+		"/Users/erichake/Desktop/bb.dgp",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/aspect.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/lists.js",
+		"/Users/erichake/Dropbox/Public/DGPad/blockly/SierpinskiTortue_1.dgp",
+		"/Users/erichake/Google Drive/dgpad/scripts/Objects/ExpressionObject.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Longpress/LongpressManager.js",
+		"/Users/erichake/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/erichake/Library/Caches/Cleanup At Startup/Transmit/AF41BB6F-36B5-4107-B610-8FED9576D1E5/Main.js",
+		"/Users/erichake/Documents/Programmes/blockly-games-master/appengine/turtle/js/blocks.js",
+		"/Users/erichake/Documents/Programmes/blockly-games-master/appengine/js/lib-games.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/msg/js/fr.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Objects/BlocklyButtonObject.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/TrackManager.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Constructors/DGscriptNameConstructor.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Expression.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Docs/Preferences.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Objects/ConstructionObject.js",
+		"/Users/erichake/Downloads/aa.txt",
+		"/Users/erichake/Google Drive/dgpad/scripts/Constructors/SpringConstructor.js",
+		"/Users/erichake/Google Drive/dgpad/index.php",
+		"/Users/erichake/Documents/Programmes/blockly/blocks/procedures.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/core.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Blockly/BlocklyPanel.js",
+		"/Users/erichake/Documents/Programmes/blockly/core/contextmenu.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Objects/FixedAngleObject.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Objects/Circle1Object.js",
+		"/Users/erichake/Dropbox/Public/DGPad/blockly/puissancesComplexes.dgp",
 		"/Users/erichake/Google Drive/dgpad/scripts/GUI/elements/GUIElement.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Magnifier/MagnifierPanel.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Docs/Preferences.js",
-		"/Users/erichake/Google Drive/dgpad/index.php",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/hacks.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
 		"/Users/erichake/Documents/Programmes/blockly/generators/javascript.js",
 		"/Users/erichake/Documents/Programmes/blockly/core/generator.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/GUI/panels/BubblePanel.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/styles.css",
 		"/Users/erichake/Documents/Programmes/blockly/core/css.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/plug-ins.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/GUI/elements/InputText.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Properties/PropertiesPanel.js",
 		"/Users/erichake/Documents/Programmes/blockly/core/field_textinput.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/core.js",
 		"/Users/erichake/Documents/Programmes/blockly/blocks/math.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Magnifier/MagnifierManager.js",
 		"/Users/erichake/Documents/Programmes/blockly/core/field_variable.js",
 		"/Users/erichake/Desktop/aa.css",
 		"/Users/erichake/Google Drive/dgpad/file.htaccess",
-		"/Users/erichake/Documents/Programmes/blockly/core/block.js",
 		"/Users/erichake/Documents/Programmes/blockly/generators/javascript/text.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Names/NamesPanel.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Construction.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Objects/ListObject.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Objects/VectorObject.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Constructors/AreaConstructor.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Constructors/VectorConstructor.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Constructors/PointConstructor.js",
 		"/Users/erichake/Documents/Programmes/blockly/core/flyout.js",
-		"/Users/erichake/Documents/Programmes/blockly/core/contextmenu.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/geometry.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_toolbox.xml",
 		"/Users/erichake/Documents/Programmes/blockly/generators/javascript/math.js",
 		"/Users/erichake/Documents/Programmes/blockly/core/field_date.js",
-		"/Users/erichake/Desktop/aa.dgp",
 		"/Users/erichake/Google Drive/dgpad/scripts/aa.dgp",
 		"/Users/erichake/Desktop/essai.dgp",
 		"/Users/erichake/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
 		"/Users/erichake/Library/Application Support/Sublime Text 3/Packages/Default/Default (OSX).sublime-keymap",
 		"/Users/erichake/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
 		"/Users/erichake/Library/Application Support/Sublime Text 3/Packages/User/chrome.sublime-build",
-		"/Users/erichake/Google Drive/dgpad/dgpad.sublime-launch-chrome.sh",
 		"/Users/erichake/Google Drive/dgpad/dgpad.sublime-workspace",
 		"/Users/erichake/Google Drive/dgpad/scripts (1)/Expression.js",
 		"/Users/erichake/Google Drive/dgpad/scripts (1)/NotPacked/thirdParty/Blockly/perso/js/expressions.js",
@@ -513,49 +574,7 @@
 		"/home/erichake/Bureau/ListObjectCopy.js",
 		"/home/erichake/Bureau/bon.js",
 		"/home/erichake/Bureau/mauvais.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Utils.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/ExpressionObject.js",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/blocks/logic.js",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/field_colour.js",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/blocks/loops.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/aspect.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/css.js",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/flyout.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/styles.css",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/xml.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Blockly/BlocklyPanel.js",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/workspace_svg.js",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/utils.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Construction.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Expression.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/core.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/PointObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/SegmentObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/VectorObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/RayObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/PrimitiveLineObject.js",
-		"/home/erichake/Bureau/backupFTP.sh",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/lang/LocalStrings_ES.js",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/generators/javascript/loops.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Calc/MainCalcPanel.js",
-		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/block.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/FixedAngleObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Text/PrintPanel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/CurvusObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/Circle1Object.js",
-		"/home/erichake/Gdrive/dgpad/scripts/SourceWriter.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Main.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Text/TextObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/BlocklyObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Docs/Preferences.js",
-		"/home/erichake/Gdrive/dgpad/scripts/GUI/panels/BubblePanel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Longpress/LongpressManager.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Coincidence/CoincidenceManager.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Names/NamesPanel.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/geometry.js"
+		"/home/erichake/Gdrive/dgpad/scripts/Utils.js"
 	],
 	"find":
 	{
@@ -566,6 +585,13 @@
 		"height": 93.0,
 		"where_history":
 		[
+			"/Users/erichake/Documents/Programmes/blockly",
+			"/Users/erichake/Google Drive/dgpad/scripts",
+			"/Users/erichake/Documents/Programmes/blockly",
+			"/Users/erichake/Documents/Programmes/blockly-games-master",
+			"/Users/erichake/Documents/Programmes/blockly",
+			"/Users/erichake/Google Drive/dgpad/scripts",
+			"/Users/erichake/Documents/Programmes/blockly-games-master",
 			"/Users/erichake/Google Drive/dgpad/scripts",
 			"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly",
 			"/Users/erichake/Documents/Programmes/blockly",
@@ -616,137 +642,137 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": true,
+		"case_sensitive": false,
 		"find_history":
 		[
-			"computeChild",
-			"getSource",
-			"selectTab",
-			"_c",
-			"OBJ.blocks.getMode",
-			"OBJ.getMode",
-			"OBJ.getMode()",
-			"MODE",
-			"MagnifierBounds.h",
-			"MagnifierBounds.w",
-			"MagnifierBounds.h",
-			"_h",
-			"MagnifierBounds.w",
-			"MouseEvent",
-			"dropdownChange",
-			"scrub_",
-			"blockToCode",
-			"workspaceToCode",
-			"JavaScript.workspaceToCode",
-			"Blockly.JavaScript.workspaceToCode",
-			"prompt",
-			"BubblePanel",
-			".goog-menuitem",
-			".goog-menuitem-hover",
-			"blocklyDropdownMenu",
-			"dropdown",
-			"p_margin",
-			"_height",
-			"$U.prompt",
-			"InputText",
-			"showEditor",
-			"window.prompt",
-			"math_number",
-			"\"math_number\"",
-			"dropdownChange",
-			".magnifierPaint",
-			"MagnifierBounds.w",
-			"ok",
-			"el",
-			"inp",
-			"el",
-			"\n      ",
-			"\\n",
-			"sweet-alert",
-			"sweet - alert",
-			"tl",
-			"generateUniqueName",
-			"setValidator",
-			"Blockly.FieldVariable.dropdownChange",
-			"window.prompt",
-			"createDiv",
-			"createDiv()",
-			"createDiv",
-			"setOpacity",
-			"setFillStyle",
-			"setOpacity",
-			"vectoreheand",
-			"base.js",
-			"goog=",
-			"goog =",
-			"goog",
-			"goog = new",
-			"goog",
-			"goog = new",
-			"Blockly.Variables.flyoutCategory",
-			"Blockly.FieldVariable.dropdownChange",
-			"Blockly.Msg.NEW_VARIABLE",
-			"Blockly.ContextMenu",
-			"VARIABLES_SET_CREATE_GET",
-			"RGB",
-			"color",
-			"$P.color.hilite",
-			"hilite",
-			"$U.isNearToSegment",
-			"fr",
-			"Expressions",
-			"addLoopTrap",
-			"controls_repeat",
-			"font-weight",
-			"FONTSIZE",
-			"blocklyText",
-			"font-family",
-			"size",
-			"font",
-			"$ECHO_SOURCE",
-			"\\u",
-			"???",
-			"$INCLUDED_FILES",
-			"$ECHOSRC",
-			"ECHO_SOURCE",
-			"$U.parseArray",
-			"comment",
-			"\\\"",
+			"resetTurtle",
+			">\n",
+			"Blockly.FieldAngle.OFFSET",
+			"angle",
+			"Blockly.FieldAngle",
+			"field_angle",
+			"angle",
+			"segSize",
+			"myexecuefunc",
+			"InterpretMacro",
+			"executeMacro",
+			"myexecutefunc",
+			":\n",
+			"];\n",
+			"Ptab[aa]",
+			"70",
+			"turtle_colour_hsv",
+			"'HSV'",
+			"hsv",
+			"HSV",
+			"picker",
+			"hue",
+			"hsvToHex",
+			"rgb",
+			"hueToRgb",
+			"HSV",
+			"/",
+			" /",
+			"/ ",
+			"6",
+			"4",
+			"ctx.drawImage",
+			"new Image",
 			"canvas",
-			"reunion/atelier",
-			"../../index.php",
-			"SET",
-			"GET",
-			"SET",
-			"GET",
-			"argument",
-			"block.arguments_",
-			"Blockly.Generator",
-			".JavaScript",
-			"JavaScript",
-			"'STACK'",
-			".setBehavior",
-			"\\\"",
-			"shadow",
-			"url=reunion/irem/",
-			"../../index.php",
-			"?url=reunion/cocon/",
-			"../../index.php",
-			"fillcolor",
-			"i",
-			"points",
-			"initContext",
-			"paintObject",
+			"setBehavior",
+			"turtle",
+			"blocklyManager",
+			"translateANDzoom",
+			"me.coords3D",
+			"get3DOrigin",
+			"showCategory",
+			"paint",
+			"showCategory",
+			"getContext",
+			"AOC",
+			"Math",
+			"pt3D",
+			"is3D",
+			"Math.cos",
+			"{}",
+			"blk_wp",
+			"blk_dist3D",
+			"blk_vp",
+			"blk_up",
+			"blk_sin",
+			"blk_dist",
+			"blk_cos",
+			"blk_to_new",
+			"blk_W",
+			"blk_V",
+			"blk_U",
+			"blk_to",
+			"bsin",
+			"bcos",
+			"TURTLE_VARS",
+			"blk_W",
+			"blk_V",
+			"blk_sin",
+			"blk_cos",
+			"blk_U",
+			"blk_W",
+			"blk_sin",
+			"blk_cos",
+			"blk_W",
+			"blk_U",
+			"$L.props_nomouse",
+			"setAllSegSize",
+			"initPtab",
+			"createTurtleExpression",
+			"ORG3D",
+			"blk_turtle_angle",
+			"me.paint",
+			"showCategory",
+			".setColour\\(\\w+\\)",
+			"BlocklyGames.getMsg\\('Turtle_(\\w+)'\\)",
+			"Blockly.Turtle",
 			"\\n",
-			"\\\"",
-			"\\n",
-			"frompopup",
+			",",
+			":",
+			",",
+			"\"Turtle.(\\w*)\"",
+			":",
+			",",
+			"BlocklyGames.getMsg =",
+			"BlocklyGames.getMsg",
+			"\"Turtle.(\\w*)\"",
+			":",
+			",",
+			"BlocklyGames",
+			"Turtle_moveForward",
+			"BlocklyGames",
+			"Turtle_moveForward",
+			"trackManager",
+			"getSource",
+			"Expression",
+			"setXY",
+			"getSource",
+			"initTools",
+			"getAssociatedTools",
+			"paint",
+			"OldX",
+			"setXY",
+			"dragTo",
+			"prefs.opacity",
+			"Opacity",
+			"4",
+			"initTools",
+			"blocks.evaluate(\"ondrag\")",
+			"blocks.evaluate(\"onchange\")",
 			"onchange",
-			"event",
-			"onchange",
-			"UIEvent",
-			".frompopup",
-			"();\n"
+			"_oneDX",
+			"new Expression(",
+			"new Expression",
+			"_oneDX",
+			"setValue",
+			"timestamp",
+			"loopnum",
+			"getAnimation"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -754,6 +780,22 @@
 		"regex": false,
 		"replace_history":
 		[
+			"turtle_colour_num",
+			".setColour\\(180)",
+			"$L.blockly.turtle.$1",
+			"blockly.turtle",
+			";\\n",
+			"",
+			"=",
+			"",
+			"$L.Blockly.Turtle.$1",
+			"=",
+			"",
+			"$L.Blockly.Turtle.$1",
+			"$L.Blockly.$1",
+			"$L.Blockly.turtle",
+			"=",
+			";",
 			"",
 			"sweet_alert",
 			"$U.createDiv()",
@@ -780,24 +822,52 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "scripts/Objects/BlocklyObjects.js",
+					"file": "scripts/NotPacked/lang/LocalStrings_ES.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5480,
+						"buffer_size": 12966,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4518,
-								4518
+								12966,
+								12966
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 5946.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13058,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3116,
+								3116
 							]
 						],
 						"settings":
@@ -805,6 +875,34 @@
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 568.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Users/erichake/Desktop/aa.dgp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6240,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6240,
+								6240
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -812,163 +910,13 @@
 					},
 					"stack_index": 0,
 					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "scripts/Objects/ExpressionObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 19812,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2521,
-								2533
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1140.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "scripts/Objects/FixedAngleObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5774,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2505,
-								2505
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 897.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "scripts/Objects/Circle1Object.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3834,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								772,
-								772
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 24.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "scripts/NotPacked/Sandbox/Interpreter.js",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 56825,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								13846,
-								13853
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 9035.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "scripts/Objects/ConstructionObject.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 34510,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2582,
-								2570
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
 				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 30.0
+		"height": 37.0
 	},
 	"input":
 	{
@@ -1009,7 +957,7 @@
 	"project": "dgpad.sublime-project",
 	"replace":
 	{
-		"height": 64.0
+		"height": 68.0
 	},
 	"save_all_on_build": true,
 	"select_file":

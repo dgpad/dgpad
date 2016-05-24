@@ -217,10 +217,10 @@ function Circle3ptsObject_3D(_construction, _name, _P1, _P2, _P3) {
         var orgY = Cn.coordsSystem.y(org.getY());
         var fi = phi();
         var th = theta();
-        var cfi = Math.cos(fi),
-            sfi = Math.sin(fi);
-        var cth = Math.cos(th),
-            sth = Math.sin(th);
+        var cfi = Cn.cos(fi),
+            sfi = Cn.sin(fi);
+        var cth = Cn.cos(th),
+            sth = Cn.sin(th);
 
         var pt = function(_v) {
             return [orgX + _v[0] * (sfi) + _v[1] * (cfi), orgY + _v[0] * (-cfi * sth) + _v[1] * (sfi * sth) + _v[2] * (cth)];
