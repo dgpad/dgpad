@@ -225,9 +225,11 @@ Blockly.FieldTextInput.prototype.showEditor_ = function(opt_quietInput) {
         }
         me.setValue(_new);
     };
+    // console.log(this.sourceBlock_.type);
     if (!quietInput && (goog.userAgent.MOBILE || goog.userAgent.ANDROID ||
             goog.userAgent.IPAD)) {
-        $U.prompt(Blockly.Msg.CHANGE_VALUE_TITLE, this.text_, "number", inputCallback);
+        var tpe = (this.sourceBlock_.type === "math_number") ? "number" : "text";
+        $U.prompt(Blockly.Msg.CHANGE_VALUE_TITLE, this.text_, tpe, inputCallback);
         return;
     }
     Blockly.WidgetDiv.show(this, this.sourceBlock_.RTL, this.widgetDispose_());

@@ -1,10 +1,9 @@
-
 Blockly.JavaScript['turtle_angle_input'] = function(block) {
-  var angle_angle = block.getFieldValue('ANGLE');
-  // TODO: Assemble JavaScript into code variable.
-  var code = angle_angle;
-  // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.JavaScript.ORDER_NONE];
+    var angle_angle = block.getFieldValue('ANGLE');
+    // TODO: Assemble JavaScript into code variable.
+    var code = angle_angle;
+    // TODO: Change ORDER_NONE to the correct strength.
+    return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
 
@@ -76,7 +75,7 @@ Blockly.JavaScript['turtle_width'] = function(block) {
 
 Blockly.JavaScript['turtle_width_increment'] = function(block) {
     var what = block.getFieldValue('WHAT');
-    
+
     var value = Blockly.JavaScript.valueToCode(block, 'WIDTH', Blockly.JavaScript.ORDER_ATOMIC);
     var inst = (what === "pen") ? "TURTLE_WIDTH_INCREMENT" : "TURTLE_POINTS_WIDTH_INCREMENT";
     var cod = cod = inst + "(" + value + ");\n";
@@ -98,12 +97,21 @@ Blockly.JavaScript['turtle_join_pt'] = function(block) {
 
 
 Blockly.JavaScript['turtle_position'] = function(block) {
-  var code = 'TURTLE_POS()';
-  return [code, Blockly.JavaScript.ORDER_NONE];
+    var code = 'TURTLE_POS()';
+    return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
 Blockly.JavaScript['turtle_reset_angles'] = function(block) {
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'TURTLE_RESET();\n';
-  return code;
+    // TODO: Assemble JavaScript into code variable.
+    var code = 'TURTLE_RESET();\n';
+    return code;
+};
+
+Blockly.JavaScript['turtle_get'] = function(block) {
+    var value_num = Blockly.JavaScript.valueToCode(block, 'NUM', Blockly.JavaScript.ORDER_ATOMIC);
+    var dropdown_name = block.getFieldValue('NAME');
+    // TODO: Assemble JavaScript into code variable.
+    var code = 'TURTLE_GET("' + dropdown_name + '",' + value_num + ')';
+    // TODO: Change ORDER_NONE to the correct strength.
+    return [code, Blockly.JavaScript.ORDER_NONE];
 };

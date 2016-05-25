@@ -366,3 +366,8 @@ $L.blockly.turtle.zcoord = "hauteur";
 $L.blockly.turtle.ofpoint = "du point";
 $L.blockly.turtle.position = "position de la tortue";
 $L.blockly.turtle.reset = "réinitialiser les angles";
+
+// Mercredi 25 mai 2016
+$L.blockly.turtle.getpos1 = "Point n°";
+$L.blockly.turtle.getpos2 = "de la trace de";
+$L.blockly.turtle.pixel = "unité en pixels";

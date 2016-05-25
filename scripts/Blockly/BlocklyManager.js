@@ -88,6 +88,9 @@
                me.addName = function(_n) {
                    NMS.push(_n);
                };
+               me.getObjectsFromType = function(_t) {
+                   return me.CN.getObjectsFromType(_t);
+               };
                me.objectPopup = function(_t) {
                    // console.log("objectPopup :"+_t);
                    var props = me.CN.getObjectsFromType(_t);
@@ -141,7 +144,7 @@
        }
 
        var showCategory = function(name, bool) {
-           const cat = { "turtle": 7 };
+           var cat = { "turtle": 7 };
            var elt = document.getElementById(":" + cat[name]);
            if (bool) {
                elt.style["visibility"] = "visible";

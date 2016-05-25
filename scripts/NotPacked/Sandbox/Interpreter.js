@@ -338,6 +338,11 @@ function Interpreter(_win, _canvas) {
         return TURTLE_VARS.LAST
     };
 
+    var TURTLE_GET = function(_n, _i) {
+        var o = me.f("blk_turtle_list_"+_n);
+        return o.getPtNum(_i);
+    };
+
     var TURTLE_RESET = function() {
         var t = TURTLE_VARS;
         t.U = [1, 0, 0];

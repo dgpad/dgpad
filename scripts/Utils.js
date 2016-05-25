@@ -917,11 +917,12 @@ $U.prompt = function(_mess, _default, _type, _proc, _w, _h, _inp_w) {
     cancel.innerHTML = $L.blockly.prompt_cancel;
     cancel.stl("line-height", ok_height + "px");
 
-    var valid = function() {
+    var valid = function(ev) {
         scrn.innerHTML = "";
         window.document.body.removeChild(scrn);
         if (inp.value !== "")
             _proc(_default, inp.value);
+
     };
     var fixOkColor = function() {
         if (inp.value === "") ok.stl("background-color", "#8CD4F5")
@@ -932,6 +933,9 @@ $U.prompt = function(_mess, _default, _type, _proc, _w, _h, _inp_w) {
     });
     scrn.ku(function(ev) {
         fixOkColor()
+    });
+    scrn.md(function(ev) {
+        ev.stopPropagation();
     });
     ok.mu(valid);
     ok.mm(function(ev) {

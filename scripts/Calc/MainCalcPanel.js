@@ -363,7 +363,7 @@ function MainCalcPanel(_man, _canvas) {
     }
 
     me.createObj = function() {
-        OBJ = new ExpressionObject(Cn, "_E", "", "", "", "", 10, 120);
+        OBJ = new ExpressionObject(Cn, "_E", "", "", "", "", 50, 120);
         canvas.namesManager.setName(OBJ);
         OBJ.setT("");
         var r = Math.random() * 128;

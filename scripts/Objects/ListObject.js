@@ -54,6 +54,7 @@ function ListObject(_construction, _name, _EXP) {
                 Ptab.push({
                     x: xx,
                     y: yy,
+                    tab: lst[i],
                     r: rr,
                     g: gg,
                     b: bb,
@@ -66,6 +67,7 @@ function ListObject(_construction, _name, _EXP) {
                     Ptab.push({
                         x: NaN,
                         y: NaN,
+                        tab: lst[i],
                         r: rr,
                         g: gg,
                         b: bb,
@@ -92,6 +94,7 @@ function ListObject(_construction, _name, _EXP) {
                     Ptab.push({
                         x: xx,
                         y: yy,
+                        tab: lst[i],
                         r: rr,
                         g: gg,
                         b: bb,
@@ -230,6 +233,14 @@ function ListObject(_construction, _name, _EXP) {
         return shape;
     };
 
+    this.getPtNum = function(_i) {
+        var k = 0;
+        for (var i = 0; i < Ptab.length; i++) {
+            if (!isNaN(Ptab[i].x) || !isNaN(Ptab[i].y)) k++;
+            if (k === _i) return Ptab[i].tab;
+        }
+        return [NaN, NaN]
+    };
 
 
     this.projectXY = function(x, y) {

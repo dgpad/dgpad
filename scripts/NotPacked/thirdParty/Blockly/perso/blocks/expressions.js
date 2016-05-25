@@ -6,6 +6,7 @@ Blockly.Blocks['dgpad_window_props'] = {
                 [$L.blockly.turtle.windowh, "windowh"],
                 [$L.blockly.turtle.centerx, "windowcx"],
                 [$L.blockly.turtle.centery, "windowcy"],
+                [$L.blockly.turtle.pixel, "pixel"],
                 [$L.blockly.turtle.phiangle, "phi"],
                 [$L.blockly.turtle.thetaangle, "theta"]
             ]), "NAME");

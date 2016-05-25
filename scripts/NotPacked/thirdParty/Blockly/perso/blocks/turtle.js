@@ -325,24 +325,61 @@ Blockly.Blocks['turtle_join_pt'] = {
 };
 
 Blockly.Blocks['turtle_position'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField($L.blockly.turtle.position);
-    this.setOutput(true, null);
-    this.setColour(180);
-    this.setTooltip('');
-    this.setHelpUrl('');
-  }
+    init: function() {
+        this.appendDummyInput()
+            .appendField($L.blockly.turtle.position);
+        this.setOutput(true, null);
+        this.setColour(180);
+        this.setTooltip('');
+        this.setHelpUrl('');
+    }
 };
 
 Blockly.Blocks['turtle_reset_angles'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField($L.blockly.turtle.reset);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(180);
-    this.setTooltip('');
-    this.setHelpUrl('');
-  }
+    init: function() {
+        this.appendDummyInput()
+            .appendField($L.blockly.turtle.reset);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(180);
+        this.setTooltip('');
+        this.setHelpUrl('');
+    }
+};
+
+
+Blockly.Blocks['turtle_get'] = {
+    init: function() {
+        var lists = Blockly.dgpad.getObjectsFromType("list");
+        var drop = [];
+        for (var i = 0; i < lists.length; i++) {
+            var name = lists[i].getVarName();
+            if (name.startsWith("blk_turtle_list_")) {
+                var elt = name.replace(/^blk_turtle_list_/, "");
+                drop.push([elt, elt]);
+            }
+        }
+        if (drop.length === 0) drop.push(["? ", null]);
+        this.appendValueInput("NUM")
+            .setCheck(null)
+            .appendField($L.blockly.turtle.getpos1);
+        this.appendDummyInput()
+            .appendField($L.blockly.turtle.getpos2)
+            .appendField(new Blockly.FieldDropdown(drop), "NAME");
+        this.setInputsInline(true);
+        this.setOutput(true, null);
+        this.setColour(180);
+        this.setTooltip('');
+        this.setHelpUrl('');
+    },
+    getName: function(_o) {
+        var lists = Blockly.dgpad.getObjectsFromType("list");
+        for (var i = 0; i < lists.length; i++) {
+            var name = lists[i].getVarName();
+            if (name === ("blk_turtle_list_" + _o.getVarName())) {
+                this.setFieldValue(_o.getVarName(), "NAME");
+                return;
+            }
+        }
+    }
 };

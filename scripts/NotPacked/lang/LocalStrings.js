@@ -376,3 +376,8 @@ $L.blockly.turtle.zcoord = "z-coordinate";
 $L.blockly.turtle.ofpoint = "of point";
 $L.blockly.turtle.position = "turtle position";
 $L.blockly.turtle.reset = "reset angles";
+
+// Mercredi 25 mai 2016
+$L.blockly.turtle.getpos1 = "Point n°";
+$L.blockly.turtle.getpos2 = "from track of";
+$L.blockly.turtle.pixel = "unit in pixels";
