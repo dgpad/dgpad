@@ -1,3 +1,8 @@
+$L.number = function(_n) {
+    return _n.toString().replace(".", ",")
+};
+$L.dot = ",";
+$L.comma = ";";
 $L.object.point = "Punto";
 $L.object.line = "Recta ";
 $L.object.circle = "Círculo ";
@@ -22,7 +27,7 @@ $L.object.family.angle = "Ángulos";
 $L.macro_plugins = "Biblioteca";
 $L.macro_tools = "Macros Personales";
 $L.macroname = "Macro sin título";
-$L.props_grid_message = "Hacer clic sobre un objeto o sobre un eje para modificar sus propiedades.";
+$L.props_grid_message = "Haga clic sobre un objeto o un eje para modificar sus propiedades";
 $L.props_grid_title = "Propiedades cuadrícula";
 $L.props_grid_show = "Mostrar cuadrícula";
 $L.props_axis_size = "Tamaño ejes";
@@ -220,10 +225,6 @@ $L.blockly.pt_and = "y";
 $L.animation_without = "Sin";
 $L.animation_label = "Animación";
 
-
-
-
-
 // Dimanche 24 janvier 2016
 $L.props_general_dragall = "Arrastrar todos los objetos";
 
@@ -245,6 +246,7 @@ $L.blockly.o.angle = "del ángulo";
 $L.blockly.o.area = "del polígono";
 // $L.blockly.o2 = {};
 $L.blockly.o2.expression = "la expresión";
+$L.blockly.o2.list = "la lista";
 $L.blockly.o2.point = "el punto";
 $L.blockly.o2.circle1 = "el círculo";
 $L.blockly.o2.segment = "el segmento";
@@ -271,12 +273,27 @@ $L.blockly.withlf = "con fin de línea";
 $L.blockly.withoutlf = "sin fin de línea";
 $L.blockly.lang = "es.js";
 
+
 // Mercredi 30 mars 2016
 // $L.blockly.tabs = {};
 $L.blockly.tabs.oncompute = "Expresión";
-$L.blockly.tabs.onmousedown = "Appuyé";
+$L.blockly.tabs.onmousedown = "al tocar";
 $L.blockly.tabs.ondrag = "al arrastrar";
 $L.blockly.tabs.onmouseup = "al soltar";
+$L.blockly.tabs.onchange = "al cambiar";
+$L.blockly.aspect = "Aspecto";
+$L.expression_item = "elementos";
+$L.blockly.do = "hacer";
+$L.blockly.while = "mientras";
+$L.blockly.until = "hasta que";
+$L.blockly.prompt_ok = "Ok";
+$L.blockly.prompt_cancel = "Anular";
+
+// Mardi 12 avril 2016
+$L.create_blockly_button = "Crear un DGScript";
+$L.blockly.tabs.onprogram = "Programa";
+$L.create_blockly_program_change_message = "Nombre del DGScript :";
+$L.create_blockly_program_name = "Mi maravilloso DGScript";
 
 // Dimanche 17 avril 2016
 $L.blockly.turtle_category = "Tortuga";
@@ -307,6 +324,20 @@ $L.blockly.turtle.fontSize = "tamaño de letra";
 $L.blockly.turtle.fontNormal = "normal";
 $L.blockly.turtle.fontBold = "negrita";
 $L.blockly.turtle.fontItalic = "cursiva";
+$L.blockly.turtle.unit_px = "pixeles";
+$L.blockly.turtle.unit_un = "unidades";
+$L.blockly.turtle.rotate_left = "girar hacia la izquierda";
+$L.blockly.turtle.rotate_right = "girar hacia la derecha";
+$L.blockly.turtle.rotate_top = "girar hacia arriba";
+$L.blockly.turtle.rotate_bottom = "girar hacia abajo";
+$L.blockly.turtle.increment_1 = "añadir";
+$L.blockly.turtle.increment_2 = "al grosor de línea";
+$L.blockly.turtle.rotate_pt = "girar hacia el punto";
+$L.blockly.turtle.join_pt = "il al punto";
+$L.blockly.turtle.increment_col_1 = "añadir";
+$L.blockly.turtle.increment_col_2 = "al color";
+$L.blockly.turtle.fill = "llenar con una opacidad";
+$L.blockly.tabs.onlogo = "Tortuga";
 
 // Lundi 16 mai 2016
 $L.blockly.turtle.setPointsWidth = "definir el grosor de los puntos como";
@@ -336,8 +367,21 @@ $L.blockly.turtle.ofpoint = "del punto";
 $L.blockly.turtle.position = "posición de la tortuga";
 $L.blockly.turtle.reset = "reinicializar los ángulos";
 
+// Mercredi 25 mai 2016
+$L.blockly.turtle.getpos1 = "Punto n°";
+$L.blockly.turtle.getpos2 = "de la trayectoria de";
+$L.blockly.turtle.pixel = "unidad en pixeles";
+$L.blockly.globales = "Globales";
+$L.blockly.turtle.fontleft = "izquierda";
+$L.blockly.turtle.fontright = "derecha";
+$L.blockly.turtle.fontcenter = "centrado";
+$L.blockly.standardtext = "un texto";
+$L.blockly.texts = "Textos";
+$L.blockly.turtle.getlength = "longitud de la trayectoria de";
 
 
-$L.number = function(_n) {
-    return _n.toString().replace(".", ",")
-};
+// Mercredi 1 juin 2016
+$L.blockly.globales_fix = "establecer";
+$L.blockly.globales_to = "a";
+$L.blockly.globales_increment = "cambiar";
+$L.blockly.globales_by = "por";

@@ -110,8 +110,31 @@ Blockly.JavaScript['turtle_reset_angles'] = function(block) {
 Blockly.JavaScript['turtle_get'] = function(block) {
     var value_num = Blockly.JavaScript.valueToCode(block, 'NUM', Blockly.JavaScript.ORDER_ATOMIC);
     var dropdown_name = block.getFieldValue('NAME');
-    // TODO: Assemble JavaScript into code variable.
     var code = 'TURTLE_GET("' + dropdown_name + '",' + value_num + ')';
-    // TODO: Change ORDER_NONE to the correct strength.
     return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['turtle_length'] = function(block) {
+    var dropdown_name = block.getFieldValue('NAME');
+    var code = 'TURTLE_LENGTH("' + dropdown_name + '")';
+    return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['turtle_print'] = function(block) {
+    var txt = Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ATOMIC);
+    // if ((txt.length > 2) && (txt.charAt(0) === "'") && (txt.charAt(txt.length - 1) === "'")) {
+    //     txt = txt.substr(1, txt.length - 2);
+    // }
+    var code = "TURTLE_PRINT(" + txt + ");\n";
+    // TODO: Change ORDER_NONE to the correct strength.
+    return code;
+};
+
+Blockly.JavaScript['turtle_font'] = function(block) {
+    var font = block.getFieldValue('FONT');
+    var size = block.getFieldValue('FONTSIZE');
+    var face = block.getFieldValue('FONTSTYLE');
+    var align = block.getFieldValue('FONTALIGN');
+    var cod = "TURTLE_FONT('" + font + "'," + size + ",'" + face + "','" + align + "');\n";
+    return cod;
 };

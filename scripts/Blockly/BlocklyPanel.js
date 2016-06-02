@@ -234,7 +234,7 @@ function BlocklyPanel(_owner, _canvas,  _closeCallback, _currentTabCallBack, _he
     rz.md(resizedown);
     rz.mu(resizeup);
 
-    me.setbounds(pl_margin, ph_margin - 1, 500, _height - 2 * ph_margin);
+    me.setbounds(pl_margin, ph_margin - 1, 600, _height - 2 * ph_margin);
 
     wp.add(xml);
     wp.add(tl);

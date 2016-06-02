@@ -35,6 +35,7 @@ function ListObject(_construction, _name, _EXP) {
         var bb = me.getColor().getB();
         var ss = segSize;
         var ps = me.getRealsize();
+        var ft = ["Arial", 30, "normal", "center"];
         var cn = 54;
         // var points = 0;
         var oldColStop = 0;
@@ -60,7 +61,8 @@ function ListObject(_construction, _name, _EXP) {
                     b: bb,
                     rgb: "rgb(" + rr + "," + gg + "," + bb + ")",
                     sz: ss, // segment size
-                    pz: ps // point size
+                    pz: ps, // point size
+                    fnt: ft
                 });
             } else if (lst[i].length === 3) {
                 if (isNaN(lst[i][0]) && isNaN(lst[i][1]) && isNaN(lst[i][2])) {
@@ -73,7 +75,8 @@ function ListObject(_construction, _name, _EXP) {
                         b: bb,
                         rgb: "rgb(" + rr + "," + gg + "," + bb + ")",
                         sz: ss, // segment size
-                        pz: ps // point size
+                        pz: ps, // point size
+                        fnt: ft
                     });
                 } else {
                     // Il s'agit d'un point 3D :
@@ -100,7 +103,8 @@ function ListObject(_construction, _name, _EXP) {
                         b: bb,
                         rgb: "rgb(" + rr + "," + gg + "," + bb + ")",
                         sz: ss, // segment size
-                        pz: ps // point size
+                        pz: ps, // point size
+                        fnt: ft
                     });
                 }
 
@@ -165,6 +169,13 @@ function ListObject(_construction, _name, _EXP) {
                 } else if (lst[i][0] === 13) {
                     // Un élément [11,0,0,inc] signale un incrément de taille de crayon :
                     ps += lst[i][3];
+                } else if (lst[i][0] === 20) {
+                    // Un élément [20,0,txt,U] signale l'ordre d'écrire txt dans la direction U :
+                    Ptab[Ptab.length - 1].text = [lst[i][2], lst[i][3]];
+                } else if (lst[i][0] === 21) {
+                    // Un élément [21,0,0,tab] signale un changement de style d'écriture. tab
+                    // représente un tableau à 4 éléments [font,size,face,align] :
+                    ft = lst[i][3];
                 }
             } else {
                 // Sinon il y a erreur dans l'expression:
@@ -240,6 +251,14 @@ function ListObject(_construction, _name, _EXP) {
             if (k === _i) return Ptab[i].tab;
         }
         return [NaN, NaN]
+    };
+
+    this.getPtLength = function(_i) {
+        var k = 0;
+        for (var i = 0; i < Ptab.length; i++) {
+            if (!isNaN(Ptab[i].x) || !isNaN(Ptab[i].y)) k++;
+        }
+        return k
     };
 
 
@@ -431,7 +450,29 @@ function ListObject(_construction, _name, _EXP) {
         ctx.closePath();
         ctx.fill();
         ctx.restore();
-    }
+    };
+    var paintText = function(_p, ctx) {
+        var x0 = _p.x,
+            y0 = _p.y,
+            _t = _p.text[0],
+            _u = _p.text[1],
+            font = _p.fnt[0],
+            size = _p.fnt[1],
+            face = _p.fnt[2],
+            align = _p.fnt[3];
+
+        var rot = -Math.atan2(_u[1], _u[0]);
+        ctx.save();
+        ctx.font = face + " " + size + "px " + font;
+        ctx.textAlign = align;
+        ctx.fillStyle = ctx.strokeStyle;
+        ctx.translate(x0, y0);
+        ctx.rotate(rot);
+        // ctx.beginPath();
+        // ctx.moveTo(0, 0);
+        ctx.fillText(_t, 0, 0);
+        ctx.restore();
+    };
 
     var paintPoint = paintCircle;
 
@@ -507,31 +548,39 @@ function ListObject(_construction, _name, _EXP) {
         ctx.lineWidth = me.prefs.size.pointborder;
         if (hilite) {
             for (var i = 0, len = Ptab.length; i < len; i++) {
-                ctx.beginPath();
-                paintPoint(i, ctx);
-                ctx.fill();
-                ctx.stroke();
+                if (Ptab[i].pz > 1e-10) {
+                    ctx.beginPath();
+                    paintPoint(i, ctx);
+                    ctx.fill();
+                    ctx.stroke();
+                }
             }
         } else {
             if (opaque) {
                 var glob_alpha = ctx.globalAlpha;
                 for (var i = 0, len = Ptab.length; i < len; i++) {
-                    ctx.beginPath();
-                    ctx.strokeStyle = Ptab[i].rgb;
-                    ctx.fillStyle = Ptab[i].rgb;
-                    ctx.globalAlpha = me.getOpacity();
-                    paintPoint(i, ctx);
-                    ctx.fill();
-                    ctx.globalAlpha = glob_alpha;
-                    ctx.stroke();
+                    if (Ptab[i].pz > 1e-10) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = Ptab[i].rgb;
+                        ctx.fillStyle = Ptab[i].rgb;
+                        ctx.globalAlpha = me.getOpacity();
+                        paintPoint(i, ctx);
+                        ctx.fill();
+                        ctx.globalAlpha = glob_alpha;
+                        ctx.stroke();
+                    }
+                    if (Ptab[i].text) paintText(Ptab[i], ctx);
                 }
             } else {
                 for (var i = 0, len = Ptab.length; i < len; i++) {
-                    ctx.beginPath();
-                    ctx.strokeStyle = Ptab[i].rgb;
-                    paintPoint(i, ctx);
-                    ctx.fill();
-                    ctx.stroke();
+                    if (Ptab[i].pz > 1e-10) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = Ptab[i].rgb;
+                        paintPoint(i, ctx);
+                        ctx.fill();
+                        ctx.stroke();
+                    }
+                    if (Ptab[i].text) paintText(Ptab[i], ctx);
                 }
             }
 

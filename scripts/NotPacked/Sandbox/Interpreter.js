@@ -5,7 +5,7 @@ function Interpreter(_win, _canvas) {
     var $macromode = false;
     var $caller = null; // Objet qui appelle le script par bouton
     var namespace = {};
-    var blockly_namespace = {};
+    var blockly_namespace = {}; // Globales Blockly
 
 
     me.W = _win;
@@ -14,7 +14,34 @@ function Interpreter(_win, _canvas) {
     me.C = me.Z.getConstruction();
     me.E = document.createEvent("MouseEvent");
     me.E.initMouseEvent("mousemove", true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
+    me.BLK_GLOB_TAB = function() {
+        var list = [];
+        for (var elt in blockly_namespace) {
+            list.push(elt);
+        }
+        return list
+    };
+    me.BLK_GLOB_RENAME = function(_old, _new) {
+        if (_old === "") {
+            blockly_namespace[_new] = 0;
+        } else if (blockly_namespace.hasOwnProperty(_old)) {
+            blockly_namespace[_new] = blockly_namespace[_old];
+            delete blockly_namespace[_old];
+        }
+    };
+    me.BLK_GLOB_SRC = function() {
+        if (Object.keys(blockly_namespace).length === 0) return "";
+        var txt = "\n\n// Blockly Globals :\n";
+        txt += "BLK_GLOB_SET(" + JSON.stringify(blockly_namespace) + ");\n";
+        return txt;
+    };
+    me.BLK_GLOB_DELETE = function() {
+        blockly_namespace = {};
+    };
 
+    var BLK_GLOB_SET = function(_s) {
+        blockly_namespace = _s;
+    };
 
     var $progressBar = null;
     var $initProgress = function(_src) {
@@ -276,12 +303,17 @@ function Interpreter(_win, _canvas) {
 
     // Blockly part :
 
-    var SET = function(_var, _val) {
+    var GLOBAL_SET = function(_var, _val) {
         blockly_namespace[_var] = _val;
     };
 
-    var GET = function(_var, _val) {
+    var GLOBAL_GET = function(_var, _val) {
         return blockly_namespace[_var];
+    };
+
+    var GLOBAL_INC = function(_var, _val) {
+        var v = (_val === undefined) ? 1 : _val;
+        blockly_namespace[_var] = Math.plus(blockly_namespace[_var], v);
     };
 
     var SET_EXP = function(_e, _m) {
@@ -289,10 +321,7 @@ function Interpreter(_win, _canvas) {
         o.setExpression(JSON.stringify(_m).replace(/null/g, "NaN"));
     };
 
-    var INC = function(_var, _val) {
-        var v = (_val === undefined) ? 1 : _val;
-        blockly_namespace[_var] = blockly_namespace[_var] + v;
-    };
+
 
     var BLK_STL = function(_n, _cmd, _tab) {
         var o = me.f(_n);
@@ -339,8 +368,13 @@ function Interpreter(_win, _canvas) {
     };
 
     var TURTLE_GET = function(_n, _i) {
-        var o = me.f("blk_turtle_list_"+_n);
+        var o = me.f("blk_turtle_list_" + _n);
         return o.getPtNum(_i);
+    };
+
+    var TURTLE_LENGTH = function(_n, _i) {
+        var o = me.f("blk_turtle_list_" + _n);
+        return o.getPtLength();
     };
 
     var TURTLE_RESET = function() {
@@ -349,6 +383,19 @@ function Interpreter(_win, _canvas) {
         t.V = [0, 1, 0];
         t.W = [0, 0, 1];
         me.Z.blocklyManager.changeTurtleUVW(t.NAME, t.U, t.V, t.W);
+    };
+
+    var TURTLE_PRINT = function(_t) {
+        var t = TURTLE_VARS;
+        // _t = "'" + _t + "'";
+        t.TAB.push([20, 0, _t, t.U]);
+    };
+
+    var TURTLE_FONT = function(_f, _s, _stl, _al) {
+        var t = TURTLE_VARS;
+        var last = t.TAB.pop();
+        t.TAB.push([21, 0, 0, [_f, _s, _stl, _al]]);
+        t.TAB.push(last);
     };
 
     var TURTLE_MV = function(_val, _px) {
@@ -1056,6 +1103,9 @@ function Interpreter(_win, _canvas) {
                     break;
                 case "ar": // Flèches pour les listes
                     o.setArrow(JSON.parse(e[1]));
+                    break;
+                case "arc": // Rayon des arcs pour les angles
+                    o.setArcRay(JSON.parse(e[1]));
                     break;
                 case "dp": // Dépendance des objets
                     var t = e[1].substring(1, e[1].length - 1).split(",");

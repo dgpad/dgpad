@@ -426,6 +426,7 @@ function Construction(_canvas) {
         me.computeAll = computeAll2D;
         params = [];
         varnames = [];
+        canvas.getInterpreter().BLK_GLOB_DELETE();
     };
 
     me.setAllSize = function(_type, _sze) {
@@ -839,7 +840,7 @@ function Construction(_canvas) {
 
 
     var doOrderSortFilter = function(a, b) {
-        return a.Scratch - b.Scratch;
+        return (a.Scratch === b.Scratch) ? (a.Index - b.Index) : (a.Scratch - b.Scratch);
     };
 
 
@@ -851,6 +852,7 @@ function Construction(_canvas) {
         for (var i = 0; i < n; i++) {
             _tab[i].Scratch = 0;
             _tab[i].Flag = false;
+            _tab[i].Index = i;
         }
         // Compute tail chain length for all objects recursively :
         for (i = 0; i < n; i++) {
@@ -1166,6 +1168,8 @@ function Construction(_canvas) {
                 txt += "\n\n// Blockly :\n";
                 txt += src.getBlock();
             };
+            txt += me.getInterpreter().BLK_GLOB_SRC();
+
             //            if (me.isAxisUsed()) txt+=me.coordsSystem.getStyle();
             return txt;
         }

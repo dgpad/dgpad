@@ -1129,6 +1129,8 @@ function ConstructionObject(_construction, _name) {
         if ((this.is360) && (this.is360()))
         // Il s'agit d'un angle ou d'un angle fixe :
             s += ";am:" + this.is360();
+        if ((this.getArcRay) && (this.getArcRay() != 30))
+            s += ";arc:" + this.getArcRay();
         if (magnets.length) {
             var t = [];
             for (var k = 0; k < magnets.length; k++) {

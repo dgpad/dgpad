@@ -54,21 +54,34 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
     this.getFamilyCode = function() {
         return "angle";
     };
+
+    this.isMoveable = function() {
+        return true;
+    };
     //Obsolete :
     this.dragObject = function(_x, _y) {
+        // console.log("dragObject");
         var vx = _x - O.getX();
         var vy = _y - O.getY();
         R = Math.sqrt(vx * vx + vy * vy);
     };
     this.compute_dragPoints = function(_x, _y) {
+        // console.log("compute_dragPoints");
         var vx = _x - O.getX();
         var vy = _y - O.getY();
         R = Math.sqrt(vx * vx + vy * vy);
     };
-    this.computeDrag = function() {};
-
+    this.computeDrag = function() {
+        // console.log("computeDrag");
+    };
+    this.getArcRay = function() {
+        return R;
+    };
+    this.setArcRay = function(_r) {
+        R=_r;
+    };
     this.paintLength = function(ctx) {
-        if (valid) {
+        if (valid && (!$U.approximatelyEqual(AOC180, $U.halfPI))) {
             ctx.save();
             var r = R + this.prefs.fontmargin + this.getRealsize() / 2;
             ctx.textAlign = "left";
@@ -131,8 +144,9 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
         trigo = mode360 ? true : t.Trigo;
         AOC = t.AOC;
         AOC180 = t.AOC180;
-        valid = !isNaN(fromAngle);
-        //        console.log("fromA="+fromAngle+" toA="+toAngle+" trig="+trigo+" AOC="+AOC);
+        valid = !isNaN(AOC);
+        // valid = !isNaN(fromAngle);
+        // console.log("fromA="+fromAngle+" toA="+toAngle+" trig="+trigo+" AOC="+AOC);
     };
 
 

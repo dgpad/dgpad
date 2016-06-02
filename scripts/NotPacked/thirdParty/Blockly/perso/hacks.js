@@ -1,185 +1,3 @@
-// Blockly.JavaScript.scrub_ = function(block, code) {
-//   var commentCode = '';
-//   // Only collect comments for blocks that aren't inline.
-//   if (!block.outputConnection || !block.outputConnection.targetConnection) {
-//     // Collect comment for this block.
-//     var comment = block.getCommentText();
-//     if (comment) {
-//       commentCode += Blockly.JavaScript.prefixLines(comment, '// ') + '\n';
-//     }
-//     // Collect comments for all value arguments.
-//     // Don't collect comments for nested statements.
-//     for (var x = 0; x < block.inputList.length; x++) {
-//       if (block.inputList[x].type == Blockly.INPUT_VALUE) {
-//         var childBlock = block.inputList[x].connection.targetBlock();
-//         if (childBlock) {
-//           var comment = Blockly.JavaScript.allNestedComments(childBlock);
-//           if (comment) {
-//             commentCode += Blockly.JavaScript.prefixLines(comment, '// ');
-//           }
-//         }
-//       }
-//     }
-//   }
-//   var nextBlock = block.nextConnection && block.nextConnection.targetBlock();
-//   var nextCode = Blockly.JavaScript.blockToCode(nextBlock);
-//   console.log(code);
-//   return commentCode + code + nextCode;
-// };
-
-// Blockly.Generator.prototype.blockToCode = function(block) {
-//     if (!block) {
-//         return '';
-//     }
-//     if (block.disabled) {
-//         // Skip past this block if it is disabled.
-//         return this.blockToCode(block.getNextBlock());
-//     }
-
-//     var func = this[block.type];
-//     goog.asserts.assertFunction(func,
-//         'Language "%s" does not know how to generate code for block type "%s".',
-//         this.name_, block.type);
-//     // First argument to func.call is the value of 'this' in the generator.
-//     // Prior to 24 September 2013 'this' was the only way to access the block.
-//     // The current prefered method of accessing the block is through the second
-//     // argument to func.call, which becomes the first parameter to the generator.
-//     var code = func.call(block, block);
-
-//     // if (!goog.isArray(code)) {console.log(code)};
-
-
-//     if (goog.isArray(code)) {
-//         // Value blocks return tuples of code and operator order.
-//         goog.asserts.assert(block.outputConnection,
-//             'Expecting string from statement block "%s".', block.type);
-//         // console.log("array="+code);
-//         return [this.scrub_(block, code[0]), code[1]];
-//     } else if (goog.isString(code)) {
-//         if (this.STATEMENT_PREFIX) {
-//             code = this.STATEMENT_PREFIX.replace(/%1/g, '\'' + block.id + '\'') +
-//                 code;
-//         }
-//         // console.log("string="+code);
-//         return this.scrub_(block, code);
-//     } else if (code === null) {
-//         // Block has handled code generation itself.
-//         return '';
-//     } else {
-//         goog.asserts.fail('Invalid code generated: %s', code);
-//     }
-// };
-
-// Blockly.Generator.prototype.workspaceToCode = function(workspace) {
-//     if (!workspace) {
-//         // Backwards compatability from before there could be multiple workspaces.
-//         console.warn('No workspace specified in workspaceToCode call.  Guessing.');
-//         workspace = Blockly.getMainWorkspace();
-//     }
-//     var code = [];
-//     this.init(workspace);
-//     var blocks = workspace.getTopBlocks(true);
-//     for (var x = 0, block; block = blocks[x]; x++) {
-//         var line = this.blockToCode(block);
-//         if (goog.isArray(line)) {
-//             // Value blocks return tuples of code and operator order.
-//             // Top-level blocks don't care about operator order.
-//             line = line[0];
-//         } else console.log(line);
-//         if (line) {
-//             if (block.outputConnection && this.scrubNakedValue) {
-//                 // This block is a naked value.  Ask the language's code generator if
-//                 // it wants to append a semicolon, or something.
-//                 line = this.scrubNakedValue(line);
-//             }
-//             code.push(line);
-//         }
-//         // console.log("*****");
-//         // console.log(line);
-//     }
-//     // console.log(code);
-//     code = code.join('\n'); // Blank line between each section.
-//     code = this.finish(code);
-//     // Final scrubbing of whitespace.
-//     code = code.replace(/^\s+\n/, '');
-//     code = code.replace(/\n\s+$/, '\n');
-//     code = code.replace(/[ \t]+\n/g, '\n');
-//     return code;
-// };
-
-
-// Blockly.Blocks['procedures_defnoreturn'].init = function() {
-//     var nameField = new Blockly.FieldTextInput(
-//         Blockly.Msg.PROCEDURES_DEFNORETURN_PROCEDURE,
-//         Blockly.Procedures.rename);
-//     nameField.setSpellcheck(false);
-//     this.appendDummyInput()
-//         .appendField(Blockly.Msg.PROCEDURES_DEFNORETURN_TITLE)
-//         .appendField(nameField, 'NAME')
-//         .appendField('', 'PARAMS');
-//     this.setMutator(new Blockly.Mutator(['procedures_mutatorarg']));
-//     if (Blockly.Msg.PROCEDURES_DEFNORETURN_COMMENT) {
-//         this.setCommentText(Blockly.Msg.PROCEDURES_DEFNORETURN_COMMENT);
-//     }
-//     this.setColour(Blockly.Blocks.procedures.HUE);
-//     this.setTooltip(Blockly.Msg.PROCEDURES_DEFNORETURN_TOOLTIP);
-//     this.setHelpUrl(Blockly.Msg.PROCEDURES_DEFNORETURN_HELPURL);
-//     this.arguments_ = [];
-//     this.setStatements_(true);
-//     this.statementConnection_ = null;
-// }
-
-// Blockly.Blocks['procedures_defnoreturn'].setStatements_ = function(hasStatements) {
-//     if (this.hasStatements_ === hasStatements) {
-//         return;
-//     }
-//     if (hasStatements) {
-
-
-//         this.appendStatementInput('STACK')
-//             .appendField(Blockly.Msg.PROCEDURES_DEFNORETURN_DO);
-//         this.appendDummyInput('GLOBAL')
-//             .appendField("global")
-//             .appendField(new Blockly.FieldCheckbox("TRUE"), "GLOB");
-//         if (this.getInput('RETURN')) {
-//             this.moveInputBefore('STACK', 'RETURN');
-//             this.moveInputBefore('GLOBAL', 'RETURN');
-//         }
-
-
-//     } else {
-//         this.removeInput('STACK', true);
-//     }
-//     this.hasStatements_ = hasStatements;
-// }
-
-// Blockly.Blocks['procedures_defreturn'].setStatements_ = Blockly.Blocks['procedures_defnoreturn'].setStatements_;
-
-
-// Blockly.Procedures.allProcedures = function(root) {
-//   var blocks = root.getAllBlocks();
-//   var proceduresReturn = [];
-//   var proceduresNoReturn = [];
-//   for (var i = 0; i < blocks.length; i++) {
-//     if (blocks[i].getProcedureDef) {
-//       var tuple = blocks[i].getProcedureDef();
-//       if (tuple) {
-//         if (tuple[2]) {
-//           proceduresReturn.push(tuple);
-//         } else {
-//           proceduresNoReturn.push(tuple);
-//         }
-//       }
-//     }
-//   }
-//   // proceduresNoReturn.push(["blabla",["aa","bb"],false]);
-//   proceduresNoReturn.sort(Blockly.Procedures.procTupleComparator_);
-//   proceduresReturn.sort(Blockly.Procedures.procTupleComparator_);
-//   console.log(proceduresNoReturn);
-//   return [proceduresNoReturn, proceduresReturn];
-// };
-
-
 Blockly.ContextMenu.origin_show = Blockly.ContextMenu.show;
 
 
@@ -287,3 +105,126 @@ Blockly.FieldVariable.dropdownChange = function(text) {
     }
     return undefined;
 };
+
+
+
+Blockly.Flyout.prototype.show = function(xmlList) {
+  this.hide();
+  // Delete any blocks from a previous showing.
+  var blocks = this.workspace_.getTopBlocks(false);
+  for (var i = 0, block; block = blocks[i]; i++) {
+    if (block.workspace == this.workspace_) {
+      block.dispose(false, false);
+    }
+  }
+  // Delete any background buttons from a previous showing.
+  for (var i = 0, rect; rect = this.buttons_[i]; i++) {
+    goog.dom.removeNode(rect);
+  }
+  this.buttons_.length = 0;
+
+  // console.log(xmlList);
+
+  if (xmlList == Blockly.Variables.NAME_TYPE) {
+    // Special category for variables.
+    xmlList =
+        Blockly.Variables.flyoutCategory(this.workspace_.targetWorkspace);
+  } else if (xmlList == Blockly.Procedures.NAME_TYPE) {
+    // Special category for procedures.
+    xmlList =
+        Blockly.Procedures.flyoutCategory(this.workspace_.targetWorkspace);
+  } else if (xmlList == Blockly.Globals.NAME_TYPE) {
+    // Special category for procedures.
+    xmlList =
+        Blockly.Globals.flyoutCategory(this.workspace_.targetWorkspace);
+  }
+
+  var margin = this.CORNER_RADIUS;
+  this.svgGroup_.style.display = 'block';
+  // Create the blocks to be shown in this flyout.
+  var blocks = [];
+  var gaps = [];
+  this.permanentlyDisabled_.length = 0;
+  for (var i = 0, xml; xml = xmlList[i]; i++) {
+    if (xml.tagName && xml.tagName.toUpperCase() == 'BLOCK') {
+      var block = Blockly.Xml.domToBlock(this.workspace_, xml);
+      if (block.disabled) {
+        // Record blocks that were initially disabled.
+        // Do not enable these blocks as a result of capacity filtering.
+        this.permanentlyDisabled_.push(block);
+      }
+      blocks.push(block);
+      var gap = parseInt(xml.getAttribute('gap'), 10);
+      gaps.push(isNaN(gap) ? margin * 3 : gap);
+    }
+  }
+
+  // Lay out the blocks vertically.
+  var cursorY = margin;
+  for (var i = 0, block; block = blocks[i]; i++) {
+    var allBlocks = block.getDescendants();
+    for (var j = 0, child; child = allBlocks[j]; j++) {
+      // Mark blocks as being inside a flyout.  This is used to detect and
+      // prevent the closure of the flyout if the user right-clicks on such a
+      // block.
+      child.isInFlyout = true;
+    }
+    block.render();
+    var root = block.getSvgRoot();
+    var blockHW = block.getHeightWidth();
+    var x = this.RTL ? 0 : margin / this.workspace_.scale +
+        Blockly.BlockSvg.TAB_WIDTH;
+    block.moveBy(x, cursorY);
+    cursorY += blockHW.height + gaps[i];
+
+    // Create an invisible rectangle under the block to act as a button.  Just
+    // using the block as a button is poor, since blocks have holes in them.
+    var rect = Blockly.createSvgElement('rect', {'fill-opacity': 0}, null);
+    // Add the rectangles under the blocks, so that the blocks' tooltips work.
+    this.workspace_.getCanvas().insertBefore(rect, block.getSvgRoot());
+    block.flyoutRect_ = rect;
+    this.buttons_[i] = rect;
+
+    if (this.autoClose) {
+      this.listeners_.push(Blockly.bindEvent_(root, 'mousedown', null,
+          this.createBlockFunc_(block)));
+    } else {
+      this.listeners_.push(Blockly.bindEvent_(root, 'mousedown', null,
+          this.blockMouseDown_(block)));
+    }
+    this.listeners_.push(Blockly.bindEvent_(root, 'mouseover', block,
+        block.addSelect));
+    this.listeners_.push(Blockly.bindEvent_(root, 'mouseout', block,
+        block.removeSelect));
+    this.listeners_.push(Blockly.bindEvent_(rect, 'mousedown', null,
+        this.createBlockFunc_(block)));
+    this.listeners_.push(Blockly.bindEvent_(rect, 'mouseover', block,
+        block.addSelect));
+    this.listeners_.push(Blockly.bindEvent_(rect, 'mouseout', block,
+        block.removeSelect));
+  }
+
+  // IE 11 is an incompetant browser that fails to fire mouseout events.
+  // When the mouse is over the background, deselect all blocks.
+  var deselectAll = function(e) {
+    var blocks = this.workspace_.getTopBlocks(false);
+    for (var i = 0, block; block = blocks[i]; i++) {
+      block.removeSelect();
+    }
+  };
+  this.listeners_.push(Blockly.bindEvent_(this.svgBackground_, 'mouseover',
+      this, deselectAll));
+
+  this.width_ = 0;
+  this.reflow();
+
+  this.filterForCapacity_();
+
+  // Fire a resize event to update the flyout's scrollbar.
+  Blockly.fireUiEventNow(window, 'resize');
+  this.reflowWrapper_ = this.reflow.bind(this);
+  this.workspace_.addChangeListener(this.reflowWrapper_);
+};
+
+
+

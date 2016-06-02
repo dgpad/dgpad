@@ -17,13 +17,15 @@
            path1 + "perso/blocks/lists.js",
            path1 + "perso/blocks/matrices.js",
            path1 + "perso/blocks/turtle.js",
+           path1 + "perso/blocks/globals.js",
            path1 + "perso/js/core.js",
            path1 + "perso/js/aspect.js",
            path1 + "perso/js/geometry.js",
            path1 + "perso/js/expressions.js",
            path1 + "perso/js/lists.js",
            path1 + "perso/js/matrices.js",
-           path1 + "perso/js/turtle.js"
+           path1 + "perso/js/turtle.js",
+           path1 + "perso/js/globals.js"
        ];
        var source = "";
        var selected = "";
@@ -63,14 +65,64 @@
            // Blockly.Block.prototype.varname = "";
            Blockly.Block.prototype.name = function() {
                return this.getFieldValue("name");
-           }
+           };
            Blockly.getObj = function() {
                return OBJ;
-           }
+           };
            Blockly.Block.prototype.isInConstruction = function() {
                return ((this.getSurroundParent()) &&
                    (this.getSurroundParent().type === "dgpad_construction"));
-           }
+           };
+           Blockly.Globals = { NAME_TYPE: "GLOBAL", NAMES: Cn.getInterpreter().BLK_GLOB_TAB, RENAME: Cn.getInterpreter().BLK_GLOB_RENAME };
+           Blockly.Globals.flyoutCategory = function(workspace) {
+               var variableList = Blockly.Globals.NAMES();
+               variableList.sort(goog.string.caseInsensitiveCompare);
+               goog.array.remove(variableList, Blockly.Msg.VARIABLES_DEFAULT_NAME);
+               variableList.unshift(Blockly.Msg.VARIABLES_DEFAULT_NAME);
+               var xmlList = [];
+               var block = goog.dom.createDom('block');
+               block.setAttribute('type', 'dgpad_global_inc');
+               block.setAttribute('gap', 24);
+
+               // var num = goog.dom.createDom('block');
+               // num.setAttribute('type', 'math_number');
+               // var field = goog.dom.createDom('field', null, "1");
+               // field.setAttribute('name', 'NUM');
+               // num.appendChild(field);
+               // var cnx = num.outputConnection;
+               // block.getInput('NAME').connection.connect(cnx);
+// block.connect(num);
+
+
+
+
+               xmlList.push(block);
+               for (var i = 0; i < variableList.length; i++) {
+                   if (Blockly.Blocks['dgpad_global_set']) {
+                       var block = goog.dom.createDom('block');
+                       block.setAttribute('type', 'dgpad_global_set');
+                       if (Blockly.Blocks['dgpad_global_get']) {
+                           block.setAttribute('gap', 8);
+                       }
+                       var field = goog.dom.createDom('field', null, variableList[i]);
+                       field.setAttribute('name', 'VAR');
+                       block.appendChild(field);
+                       xmlList.push(block);
+                   }
+                   if (Blockly.Blocks['dgpad_global_get']) {
+                       var block = goog.dom.createDom('block');
+                       block.setAttribute('type', 'dgpad_global_get');
+                       if (Blockly.Blocks['dgpad_global_set']) {
+                           block.setAttribute('gap', 24);
+                       }
+                       var field = goog.dom.createDom('field', null, variableList[i]);
+                       field.setAttribute('name', 'VAR');
+                       block.appendChild(field);
+                       xmlList.push(block);
+                   }
+               }
+               return xmlList;
+           };
            Blockly.dgpad = new function() {
                var me = this;
                var NMS = [];
@@ -99,7 +151,7 @@
                    for (var i = 0; i < props.length; i++) {
                        // On doit absolument empécher l'autoréférence en mode Expression :
                        if ((mod !== "oncompute") || (OBJ != props[i]))
-                           tab.push([props[i].getName(), props[i].getName()]);
+                           tab.push([props[i].getName(), props[i].getVarName()]);
                    };
                    if (tab.length === 0) tab.push(["? ", null]);
                    return (new Blockly.FieldDropdown(tab));
@@ -144,7 +196,7 @@
        }
 
        var showCategory = function(name, bool) {
-           var cat = { "turtle": 7 };
+           var cat = { "turtle": 7, "texts": 8 };
            var elt = document.getElementById(":" + cat[name]);
            if (bool) {
                elt.style["visibility"] = "visible";
@@ -213,6 +265,7 @@
 
                // On cache la catégorie "Tortue" :
                showCategory("turtle", false);
+               showCategory("texts", false);
 
                showCallback();
            }, 200);
@@ -315,6 +368,7 @@
            setTimeout(function() {
                var mod = OBJ.blocks.getMode()[panel.getMode()];
                showCategory("turtle", (mod === "onlogo"));
+               showCategory("texts", (mod === "onlogo"));
            }, 300)
        };
 
@@ -331,6 +385,7 @@
                    Blockly.Xml.domToWorkspace(workspace, elt);
                }
                showCategory("turtle", (mod === "onlogo"));
+               showCategory("texts", (mod === "onlogo"));
                // Blockly.Toolbox.dispose();
                // Blockly.mainWorkspace.updateToolbox(document.getElementById('toolbox_turtle'))
            }
@@ -339,6 +394,7 @@
 
        var hideCallback = function() {
            showCategory("turtle", false);
+           showCategory("texts", false);
            changeCSS("blocklyToolboxDiv", "visibility", "hidden");
            Blockly.ContextMenu.hide();
        };

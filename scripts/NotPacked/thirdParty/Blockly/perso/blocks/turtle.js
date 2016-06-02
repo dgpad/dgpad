@@ -270,18 +270,20 @@ Blockly.Blocks['turtle_font'] = {
             [$L.blockly.turtle.fontItalic, 'italic'],
             [$L.blockly.turtle.fontBold, 'bold']
         ];
+        var ALIGN = [
+            [$L.blockly.turtle.fontcenter, 'center'],
+            [$L.blockly.turtle.fontleft, 'left'],
+            [$L.blockly.turtle.fontright, 'right']
+        ];
         this.setHelpUrl($L.blockly.turtle.fontHelpUrl);
         this.setColour(180);
         this.appendDummyInput()
-            .appendField($L.blockly.turtle.font)
-            .appendField(new Blockly.FieldDropdown(FONTLIST), 'FONT');
-        this.appendDummyInput()
-            .appendField($L.blockly.turtle.fontSize)
-            .appendField(new Blockly.FieldTextInput('18',
+            .appendField(new Blockly.FieldDropdown(FONTLIST), 'FONT')
+            .appendField(new Blockly.FieldTextInput('30',
                     Blockly.FieldTextInput.nonnegativeIntegerValidator),
-                'FONTSIZE');
-        this.appendDummyInput()
-            .appendField(new Blockly.FieldDropdown(STYLE), 'FONTSTYLE');
+                'FONTSIZE')
+            .appendField(new Blockly.FieldDropdown(STYLE), 'FONTSTYLE')
+            .appendField(new Blockly.FieldDropdown(ALIGN), 'FONTALIGN');
         this.setPreviousStatement(true);
         this.setNextStatement(true);
         this.setTooltip($L.blockly.turtle.fontTooltip);
@@ -293,9 +295,6 @@ Blockly.Blocks['turtle_turn_pt'] = {
     init: function() {
         this.appendValueInput("VALUE")
             .appendField($L.blockly.turtle.rotate_pt);
-        // this.appendDummyInput()
-        //     .appendField($L.blockly.turtle.rotate_pt)
-        //     .appendField(Blockly.dgpad.objectPopup("point"), "NAME");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setColour(180);
@@ -365,6 +364,39 @@ Blockly.Blocks['turtle_get'] = {
             .appendField($L.blockly.turtle.getpos1);
         this.appendDummyInput()
             .appendField($L.blockly.turtle.getpos2)
+            .appendField(new Blockly.FieldDropdown(drop), "NAME");
+        this.setInputsInline(true);
+        this.setOutput(true, null);
+        this.setColour(180);
+        this.setTooltip('');
+        this.setHelpUrl('');
+    },
+    getName: function(_o) {
+        var lists = Blockly.dgpad.getObjectsFromType("list");
+        for (var i = 0; i < lists.length; i++) {
+            var name = lists[i].getVarName();
+            if (name === ("blk_turtle_list_" + _o.getVarName())) {
+                this.setFieldValue(_o.getVarName(), "NAME");
+                return;
+            }
+        }
+    }
+};
+
+Blockly.Blocks['turtle_length'] = {
+    init: function() {
+        var lists = Blockly.dgpad.getObjectsFromType("list");
+        var drop = [];
+        for (var i = 0; i < lists.length; i++) {
+            var name = lists[i].getVarName();
+            if (name.startsWith("blk_turtle_list_")) {
+                var elt = name.replace(/^blk_turtle_list_/, "");
+                drop.push([elt, elt]);
+            }
+        }
+        if (drop.length === 0) drop.push(["? ", null]);
+        this.appendDummyInput()
+            .appendField($L.blockly.turtle.getlength)
             .appendField(new Blockly.FieldDropdown(drop), "NAME");
         this.setInputsInline(true);
         this.setOutput(true, null);

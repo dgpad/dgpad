@@ -381,3 +381,16 @@ $L.blockly.turtle.reset = "reset angles";
 $L.blockly.turtle.getpos1 = "Point n°";
 $L.blockly.turtle.getpos2 = "from track of";
 $L.blockly.turtle.pixel = "unit in pixels";
+$L.blockly.globales = "Globals";
+$L.blockly.turtle.fontleft = "left";
+$L.blockly.turtle.fontright = "right";
+$L.blockly.turtle.fontcenter = "center";
+$L.blockly.standardtext = "a text";
+$L.blockly.texts = "Texts";
+$L.blockly.turtle.getlength = "length of track";
+
+// Mercredi 1 juin 2016
+$L.blockly.globales_fix="set";
+$L.blockly.globales_to="to";
+$L.blockly.globales_increment="increment";
+$L.blockly.globales_by="by";

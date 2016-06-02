@@ -162,6 +162,14 @@
         <block type="dgpad_get_object_short"></block>
         <block type="dgpad_get_object"></block>
         <block type="dgpad_expression_input"></block>
+        <block type="turtle_get">
+            <value name="NUM">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="turtle_length"></block>
         <block type="dgpad_coordinate"></block>
         <block type="dgpad_distance">
             <value name="FROM">
@@ -285,13 +293,6 @@
         </block>
         <block type="turtle_position">
         </block>
-        <block type="turtle_get">
-            <value name="NUM">
-                <shadow type="math_number">
-                    <field name="NUM">1</field>
-                </shadow>
-            </value>
-        </block>
         <block type="turtle_reset_angles">
         </block>
         <block type="turtle_width">
@@ -329,6 +330,70 @@
                 </shadow>
             </value>
         </block>
+        <block type="turtle_print">
+            <value name="TEXT">
+                <shadow type="text">
+                    <field name="TEXT">$L.blockly.standardtext</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="turtle_font"></block>
+    </category>
+    <category name="$L.blockly.texts" colour="160">
+      <block type="text"></block>
+      <block type="text_join"></block>
+      <block type="text_append">
+        <value name="TEXT">
+          <shadow type="text"></shadow>
+        </value>
+      </block>
+      <block type="text_length">
+        <value name="VALUE">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_isEmpty">
+        <value name="VALUE">
+          <shadow type="text">
+            <field name="TEXT"></field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_indexOf">
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR">text</field>
+          </block>
+        </value>
+        <value name="FIND">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_charAt">
+        <value name="VALUE">
+          <block type="variables_get">
+            <field name="VAR">text</field>
+          </block>
+        </value>
+      </block>
+      <block type="text_changeCase">
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="text_trim">
+        <value name="TEXT">
+          <shadow type="text">
+            <field name="TEXT">abc</field>
+          </shadow>
+        </value>
+      </block>   
     </category>
     <category name="$L.blockly.lists" colour="260">
         <block type="dgpad_create_list"></block>
@@ -352,6 +417,8 @@
     <category name="$L.blockly.variables" custom="VARIABLE" colour="330"></category>
     <category name="$L.blockly.functions" custom="PROCEDURE" colour="290">
     </category>
+    <sep></sep>
+    <category name="$L.blockly.globales" custom="GLOBAL" colour="200"></category>
 </xml>
 <xml id="startBlocks" style="display: none">
 </xml>

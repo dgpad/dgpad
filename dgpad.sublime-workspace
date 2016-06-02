@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"getP",
+				"getParentLength"
+			],
+			[
+				"Block",
+				"Blockly"
+			],
+			[
 				"is",
 				"is3D"
 			],
@@ -351,30 +359,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "scripts/NotPacked/lang/LocalStrings_ES.js",
-			"settings":
-			{
-				"buffer_size": 12966,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
-			"settings":
-			{
-				"buffer_size": 13058,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/erichake/Desktop/aa.dgp",
-			"settings":
-			{
-				"buffer_size": 6240,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -439,50 +423,75 @@
 	[
 		"/Users/erichake/Google Drive/dgpad/scripts",
 		"/Users/erichake/Google Drive/dgpad/scripts/Blockly",
+		"/Users/erichake/Google Drive/dgpad/scripts/Export",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/Sandbox",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js"
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js",
+		"/Users/erichake/Documents/Programmes/blockly",
+		"/Users/erichake/Documents/Programmes/blockly/blocks"
 	],
 	"file_history":
 	[
-		"/Users/erichake/Desktop/aa.dgp",
-		"/Users/erichake/Desktop/exoType.dgp",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_toolbox.xml",
 		"/Users/erichake/Google Drive/dgpad/scripts/DGPad.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Blockly/BlocklyManager.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Objects/AngleObject.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Objects/FixedAngleObject.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/Sandbox/Interpreter.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Objects/ConstructionObject.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/globals.js",
+		"/Users/erichake/Documents/Programmes/blockly/blocks/math.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/expressions.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Objects/ListObject.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Construction.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/lang/LocalStrings.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Blockly/BlocklyPanel.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/lang/LocalStrings_ES.js",
+		"/Users/erichake/Desktop/aa.txt",
+		"/Users/erichake/Desktop/AleaGlobal.txt",
+		"/Users/erichake/Google Drive/dgpad/scripts/Canvas.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/turtle.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_toolbox.xml",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/turtle.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Utils.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Objects/PointObject.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Export/ExportPanel.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Expression.js",
+		"/Users/erichake/Documents/Programmes/blockly/generators/javascript.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
+		"/Users/erichake/Desktop/aa.dgp",
+		"/Users/erichake/Dropbox/Public/DGPad/blockly/lancer2desNew.dgp",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/globals.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/hacks.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/SourceWriter.js",
+		"/Users/erichake/Desktop/Icosaedre6Faces Globales.dgp",
+		"/Users/erichake/Documents/Programmes/blockly/blocks/variables.js",
+		"/Users/erichake/Documents/Programmes/blockly/core/flyout.js",
+		"/Users/erichake/Documents/Programmes/blockly/generators/javascript/variables.js",
+		"/Users/erichake/Documents/Programmes/blockly/core/field_textinput.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Calc/MainCalcPanel.js",
+		"/Users/erichake/Google Drive/dgpad/scripts/Objects/Circle3ptsObject_3D.js",
+		"/Users/erichake/Desktop/exoType.dgp",
 		"/Users/erichake/Google Drive/dgpad/scripts/Blockly/TurtleObject.js",
 		"/Users/erichake/Google Drive/dgpad/dgpad.sublime-launch-chrome.sh",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/hacks.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/expressions.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/expressions.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/turtle.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/lang/LocalStrings.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/lang/LocalStrings_FR.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/turtle.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/olds.js",
 		"/Users/erichake/Documents/Programmes/blockly/core/field_angle.js",
 		"/Users/erichake/Documents/Programmes/blockly/core/block.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/aspect.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/lang/LocalStrings_ES.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Objects/BlocklyObjects.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Objects/ListObject.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Properties/PropertiesPanel.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Objects/PointObject.js",
 		"/Users/erichake/Desktop/adrs",
 		"/Users/erichake/Google Drive/dgpad/scripts/Objects/PerpBisectorObject.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Macros/Macro.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Construction.js",
 		"/Users/erichake/Desktop/zzee.dgp",
 		"/Users/erichake/Documents/Programmes/blockly/core/blockly.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Utils.js",
 		"/Users/erichake/Documents/Programmes/blockly/blocks/colour.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Blockly/BlocklyManager.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Constructors/AnchorConstructor.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Canvas.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Objects/AngleObject.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/plug-ins.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Main.js",
 		"/Users/erichake/Desktop/repere.dgp",
@@ -503,29 +512,22 @@
 		"/Users/erichake/Google Drive/dgpad/scripts/Objects/BlocklyButtonObject.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/TrackManager.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Constructors/DGscriptNameConstructor.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Expression.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Docs/Preferences.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Objects/ConstructionObject.js",
 		"/Users/erichake/Downloads/aa.txt",
 		"/Users/erichake/Google Drive/dgpad/scripts/Constructors/SpringConstructor.js",
 		"/Users/erichake/Google Drive/dgpad/index.php",
 		"/Users/erichake/Documents/Programmes/blockly/blocks/procedures.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/core.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Blockly/BlocklyPanel.js",
 		"/Users/erichake/Documents/Programmes/blockly/core/contextmenu.js",
-		"/Users/erichake/Google Drive/dgpad/scripts/Objects/FixedAngleObject.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Objects/Circle1Object.js",
 		"/Users/erichake/Dropbox/Public/DGPad/blockly/puissancesComplexes.dgp",
 		"/Users/erichake/Google Drive/dgpad/scripts/GUI/elements/GUIElement.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Magnifier/MagnifierPanel.js",
-		"/Users/erichake/Documents/Programmes/blockly/generators/javascript.js",
 		"/Users/erichake/Documents/Programmes/blockly/core/generator.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/GUI/panels/BubblePanel.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/styles.css",
 		"/Users/erichake/Documents/Programmes/blockly/core/css.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/GUI/elements/InputText.js",
-		"/Users/erichake/Documents/Programmes/blockly/core/field_textinput.js",
-		"/Users/erichake/Documents/Programmes/blockly/blocks/math.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Magnifier/MagnifierManager.js",
 		"/Users/erichake/Documents/Programmes/blockly/core/field_variable.js",
 		"/Users/erichake/Desktop/aa.css",
@@ -536,7 +538,6 @@
 		"/Users/erichake/Google Drive/dgpad/scripts/Constructors/AreaConstructor.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Constructors/VectorConstructor.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/Constructors/PointConstructor.js",
-		"/Users/erichake/Documents/Programmes/blockly/core/flyout.js",
 		"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/js/geometry.js",
 		"/Users/erichake/Documents/Programmes/blockly/generators/javascript/math.js",
 		"/Users/erichake/Documents/Programmes/blockly/core/field_date.js",
@@ -562,19 +563,7 @@
 		"/home/erichake/Gdrive/dgpad_dev/dgpad/scripts/NotPacked/thirdParty/Blockly/core/generator.js",
 		"/home/erichake/Bureau/monlog.log",
 		"/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/index.html",
-		"/home/erichake/Téléchargements/Documentsanstitre.html",
-		"/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/conference/index2.html",
-		"/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/atelier/index2.html",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/expressions.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/Blockly_toolbox.xml",
-		"/home/erichake/Gdrive/dgpad/scripts/Objects/ListObject.js",
-		"/home/erichake/Gdrive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso/blocks/aspect.js",
-		"/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/irem/index.html",
-		"/home/erichake/Dropbox/Public/Scolarité/Formation/Tulle2016/start iMac server.sh",
-		"/home/erichake/Bureau/ListObjectCopy.js",
-		"/home/erichake/Bureau/bon.js",
-		"/home/erichake/Bureau/mauvais.js",
-		"/home/erichake/Gdrive/dgpad/scripts/Utils.js"
+		"/home/erichake/Téléchargements/Documentsanstitre.html"
 	],
 	"find":
 	{
@@ -585,6 +574,16 @@
 		"height": 93.0,
 		"where_history":
 		[
+			"/Users/erichake/Google Drive/dgpad/scripts",
+			"/Users/erichake/Google Drive/dgpad/scripts/NotPacked/thirdParty/Blockly/perso",
+			"/Users/erichake/Documents/Programmes/blockly",
+			"/Users/erichake/Google Drive/dgpad/scripts",
+			"/Users/erichake/Documents/Programmes/blockly",
+			"/Users/erichake/Google Drive/dgpad/scripts",
+			"/Users/erichake/Documents/Programmes/blockly",
+			"/Users/erichake/Google Drive/dgpad/scripts",
+			"/Users/erichake/Documents/Programmes/blockly",
+			"/Users/erichake/Google Drive/dgpad/scripts",
 			"/Users/erichake/Documents/Programmes/blockly",
 			"/Users/erichake/Google Drive/dgpad/scripts",
 			"/Users/erichake/Documents/Programmes/blockly",
@@ -642,9 +641,43 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
+			"getObjectsFromType",
+			"connect",
+			".setAttribute=",
+			".setAttribute =",
+			".setAttribute",
+			"doOrder",
+			"load64",
+			"getUnicodeSource",
+			"Blockly.JavaScript.scrub_",
+			"crire cette fonction",
+			"PROCEDURES_DEFNORETURN_COMMENT",
+			"Décrire cette fonction",
+			"str",
+			"showCategory",
+			"SET",
+			"getSource",
+			"blockly_namespace",
+			"variables_get",
+			"variables_set",
+			"$U.pr",
+			"élément",
+			"customContextMenu",
+			"'variables_set'",
+			"blockly_namespace",
+			"onload",
+			"initBlockly",
+			"blockly_namespace",
+			"Blockly.Variables.flyoutCategory",
+			"'variables_set'",
+			"Blockly.dgpad.objectPopup",
+			"Blockly.FieldTextInput.prototype.showEditor_",
+			"const",
+			"Math.sin",
+			"Math.cos",
 			"resetTurtle",
 			">\n",
 			"Blockly.FieldAngle.OFFSET",
@@ -738,41 +771,7 @@
 			"\"Turtle.(\\w*)\"",
 			":",
 			",",
-			"BlocklyGames.getMsg =",
-			"BlocklyGames.getMsg",
-			"\"Turtle.(\\w*)\"",
-			":",
-			",",
-			"BlocklyGames",
-			"Turtle_moveForward",
-			"BlocklyGames",
-			"Turtle_moveForward",
-			"trackManager",
-			"getSource",
-			"Expression",
-			"setXY",
-			"getSource",
-			"initTools",
-			"getAssociatedTools",
-			"paint",
-			"OldX",
-			"setXY",
-			"dragTo",
-			"prefs.opacity",
-			"Opacity",
-			"4",
-			"initTools",
-			"blocks.evaluate(\"ondrag\")",
-			"blocks.evaluate(\"onchange\")",
-			"onchange",
-			"_oneDX",
-			"new Expression(",
-			"new Expression",
-			"_oneDX",
-			"setValue",
-			"timestamp",
-			"loopnum",
-			"getAnimation"
+			"BlocklyGames.getMsg ="
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -822,95 +821,8 @@
 	"groups":
 	[
 		{
-			"selected": 2,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "scripts/NotPacked/lang/LocalStrings_ES.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12966,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								12966,
-								12966
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 5946.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "scripts/NotPacked/thirdParty/Blockly/perso/js/core.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 13058,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3116,
-								3116
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 568.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/Users/erichake/Desktop/aa.dgp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6240,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6240,
-								6240
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],

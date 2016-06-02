@@ -103,6 +103,10 @@ function FixedAngleObject(_construction, _name, _P1, _P2, _trigo) {
         return E1;
     };
 
+    this.isMoveable = function() {
+        return true;
+    };
+
     this.compute_dragPoints = function(_x, _y) {
         if (sel_arc) {
             var vx = _x - O.getX();
@@ -111,6 +115,13 @@ function FixedAngleObject(_construction, _name, _P1, _P2, _trigo) {
         }
     };
     this.computeDrag = function() {};
+
+    this.getArcRay = function() {
+        return R;
+    };
+    this.setArcRay = function(_r) {
+        R=_r;
+    };
 
     this.paintLength = function(ctx) {
         ctx.save();

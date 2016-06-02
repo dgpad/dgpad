@@ -40,7 +40,7 @@ function PointObject(_construction, _name, _x, _y) {
     var currentMagnet = null; // Pour gérer les changements de magnétisme : utilise pour
     // les traces d'objets.
 
-    this.blocks.setMode(["onlogo","onmousedown", "ondrag", "onmouseup"], "ondrag");
+    this.blocks.setMode(["onlogo","onmousedown", "ondrag", "onmouseup","oncompute"], "ondrag");
 
     // ****************************************
     // **** Uniquement pour les animations ****
@@ -749,7 +749,8 @@ function PointObject(_construction, _name, _x, _y) {
     var getSourceFixed = function(src) {
         if (this.execMacroSource(src))
             return;
-        src.geomWrite(true, this.getName(), "Point", EXY.getSource(), (me.is3D()) ? 1 : 0);
+        var _ex = EXY.getUnicodeSource().replace(/\n/g, "\\n");
+        src.geomWrite(true, this.getName(), "Point", _ex, (me.is3D()) ? 1 : 0);
     };
 
     this.getSource = getSourceGeom;
