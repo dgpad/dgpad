@@ -31,6 +31,25 @@ Blockly.Blocks['dgpad_distance'] = {
     }
 };
 
+Blockly.Blocks['dgpad_angle'] = {
+    init: function() {
+        this.appendValueInput("A1")
+            .appendField($L.blockly.turtle.angle)
+            .appendField(new Blockly.FieldDropdown([
+                [$L.blockly.turtle.angle180, "a180"],
+                [$L.blockly.turtle.angle360, "a360"]
+            ]), "TYPE")
+            .appendField(" ");
+        this.appendValueInput("A2");
+        this.appendValueInput("A3");
+        this.setInputsInline(true);
+        this.setOutput(true);
+        this.setColour(20);
+        this.setTooltip('');
+        this.setHelpUrl('');
+    }
+};
+
 
 Blockly.Blocks['dgpad_coordinate'] = {
     init: function() {
@@ -40,10 +59,20 @@ Blockly.Blocks['dgpad_coordinate'] = {
                 [$L.blockly.turtle.ycoord, "1"],
                 [$L.blockly.turtle.zcoord, "2"]
             ]), "type");
-        this.appendDummyInput()
-            .appendField($L.blockly.turtle.ofpoint);
+        var t1 = Blockly.dgpad.popupArray("point");
+        for (var i = 0; i < t1.length; i++) {
+            t1[i][0] = $L.blockly.turtle.ofpoint + " " + t1[i][0];
+        }
+        var t2 = Blockly.dgpad.popupArray("vector");
+        for (var i = 0; i < t2.length; i++) {
+            t2[i][0] = $L.blockly.turtle.ofvector + " " + t2[i][0];
+        }
+        var popup = new Blockly.FieldDropdown(t1.concat(t2));
+
+        // this.appendDummyInput()
+        //     .appendField($L.blockly.turtle.ofpoint);
         this.appendDummyInput('obj_name')
-            .appendField(Blockly.dgpad.objectPopup("point"), "NAME");
+            .appendField(popup, "NAME");
         this.setInputsInline(true);
         this.setOutput(true);
         this.setColour(20);
@@ -51,9 +80,8 @@ Blockly.Blocks['dgpad_coordinate'] = {
         this.setHelpUrl('');
     },
     getName: function(_o) {
-        if (o.getCode() === "point") {
-            this.getInput('obj_type').fieldRow[0].setValue(0);
-            this.getInput('obj_name').fieldRow[0].setValue(_o.getName());
+        if ((_o.getCode() === "point") || (_o.getCode() === "vector")) {
+            this.setFieldValue(_o.getVarName(), "NAME")
         }
     }
 };
@@ -165,35 +193,6 @@ Blockly.dgpad_get_short = function(_v, _col) {
 Blockly.Blocks['dgpad_get_object_short'] = Blockly.dgpad_get_short("any", 20);
 Blockly.Blocks['dgpad_get_point_short'] = Blockly.dgpad_get_short("point", 20);
 Blockly.Blocks['dgpad_get_point_short_turtle'] = Blockly.dgpad_get_short("point", 180);
-
-// Blockly.Blocks['dgpad_get_object_short'] = {
-//     init: function() {
-//         this.appendDummyInput('obj_name')
-//             .appendField(Blockly.dgpad.objectPopup("any"), "NAME")
-//         this.setOutput(true, null);
-//         this.setColour(20);
-//         this.setTooltip('');
-//         this.setHelpUrl('');
-//     },
-//     getName: function(_o) {
-//         this.setFieldValue(_o.getName(), "NAME");
-//     }
-// };
-
-// Blockly.Blocks['dgpad_get_point_short'] = {
-//     init: function() {
-//         this.appendDummyInput('obj_name')
-//             .appendField(Blockly.dgpad.objectPopup("point"), "NAME")
-//         this.setOutput(true, null);
-//         this.setColour(20);
-//         this.setTooltip('');
-//         this.setHelpUrl('');
-//     },
-//     getName: function(_o) {
-//         this.setFieldValue(_o.getName(), "NAME");
-//     }
-// };
-
 
 
 Blockly.Blocks['dgpad_get_object'] = {

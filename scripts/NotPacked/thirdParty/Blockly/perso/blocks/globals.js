@@ -69,21 +69,47 @@ Blockly.Blocks['dgpad_global_set'] = {
     }
 };
 
+// Blockly.Blocks['dgpad_global_inc'] = {
+//     init: function() {
+//         var menu = new Blockly.FieldDropdown(Blockly.getGlobalDropdown(), function(option) {
+//             Blockly.globalDropdownChange(menu, option);
+//         });
+//         this.appendValueInput("NAME")
+//             .setCheck(null)
+//             .appendField($L.blockly.globales_increment)
+//             .appendField(menu, "VAR")
+//             .appendField($L.blockly.globales_by);
+//         this.setInputsInline(false);
+//         this.setPreviousStatement(true, null);
+//         this.setNextStatement(true, null);
+//         this.setColour(200);
+//         this.setTooltip('');
+//         this.setHelpUrl('');
+//     }
+// };
+
+
 Blockly.Blocks['dgpad_global_inc'] = {
     init: function() {
-        var menu = new Blockly.FieldDropdown(Blockly.getGlobalDropdown(), function(option) {
-            Blockly.globalDropdownChange(menu, option);
+        this.jsonInit({
+            "message0": Blockly.Msg.MATH_CHANGE_TITLE,
+            "args0": [{
+                "type": "field_dropdown",
+                "name": "VAR",
+                "options": Blockly.getGlobalDropdown()
+            }, {
+                "type": "input_value",
+                "name": "NAME",
+                "check": "Number"
+            }],
+            "previousStatement": null,
+            "nextStatement": null,
+            "colour": 200,
+            "helpUrl": Blockly.Msg.MATH_CHANGE_HELPURL
         });
-        this.appendValueInput("NAME")
-            .setCheck(null)
-            .appendField($L.blockly.globales_increment)
-            .appendField(menu, "VAR")
-            .appendField($L.blockly.globales_by);
-        this.setInputsInline(false);
-        this.setPreviousStatement(true, null);
-        this.setNextStatement(true, null);
-        this.setColour(200);
-        this.setTooltip('');
-        this.setHelpUrl('');
+        var drop = this.getField('VAR');
+        drop.setValidator(function(option) {
+            Blockly.globalDropdownChange(drop, option);
+        });
     }
 };

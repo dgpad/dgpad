@@ -385,3 +385,5 @@ $L.blockly.globales_fix = "establecer";
 $L.blockly.globales_to = "a";
 $L.blockly.globales_increment = "cambiar";
 $L.blockly.globales_by = "por";
+
+

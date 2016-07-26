@@ -167,12 +167,15 @@ function CoordsSystem(_C) {
 
 
 
-    me.setCoords = function(_x, _y, _u, _md3D) {
+    me.setCoords = function(_x, _y, _u, _md3D, _w, _h) {
         x0 = _x;
         y0 = _y;
         Unit = _u;
         if (_md3D)
             Cn.set3D(true);
+        if ((window.$OS_X_APPLICATION) && (_w) && (_h)) {
+            interOp.windowSize(_w + "," + _h);
+        };
     };
 
     var paintOx = function(ctx) {
@@ -456,8 +459,7 @@ function CoordsSystem(_C) {
     };
 
     me.getSource = function() {
-        var mode3d = (Cn.is3D()) ? ",true" : "";
-        var txt = "SetCoords(" + x0 + "," + y0 + "," + Unit + mode3d + ");\n";
+        var txt = "SetCoords(" + x0 + "," + y0 + "," + Unit + "," + Cn.is3D() + "," + window.innerWidth + "," + window.innerHeight + ");\n";
         return txt;
     };
 

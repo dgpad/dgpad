@@ -59,25 +59,27 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     };
     cPT.startDrag = function(_x, _y) {};
     cPT.dragTo = function(_x, _y) {
-        if (_x < X)
-            _x = X;
-        if (_x > (X + cLength))
-            _x = X + cLength;
-        var val = min.value() + (max.value() - min.value()) * (_x - X) / cLength;
+        if (!isNaN(_x) && !isNaN(_y)) {
+            if (_x < X)
+                _x = X;
+            if (_x > (X + cLength))
+                _x = X + cLength;
+            var val = min.value() + (max.value() - min.value()) * (_x - X) / cLength;
 
-        if (cPT.increment) {
-            var inc = 1 / cPT.increment;
-            val = min.value() + Math.round((val - min.value()) * inc) / inc;
-            while (val > max.value())
-                val -= cPT.increment;
-            _x = X + cLength * (val - min.value()) / (max.value() - min.value());
-        }
-        cPT.setXY(_x, Y + cOffsetY);
-        E1.setValue(val);
-        if ((Cn.is3D())) {
-            Cn.computeAll();
-        } else {
-            this.computeChilds();
+            if (cPT.increment) {
+                var inc = 1 / cPT.increment;
+                val = min.value() + Math.round((val - min.value()) * inc) / inc;
+                while (val > max.value())
+                    val -= cPT.increment;
+                _x = X + cLength * (val - min.value()) / (max.value() - min.value());
+            }
+            cPT.setXY(_x, Y + cOffsetY);
+            E1.setValue(val);
+            if ((Cn.is3D())) {
+                Cn.computeAll();
+            } else {
+                this.computeChilds();
+            }
         }
     };
     var initCursorPos = function() {
@@ -672,6 +674,9 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     // Pour Blockly :
     parent.setExpression = this.setExpression = function(exy) {
         me.setExp(exy);
+    }
+    parent.getExpression = this.getExpression = function() {
+        return me.getExp();
     }
 
 

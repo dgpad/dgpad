@@ -190,7 +190,7 @@ function PointObject(_construction, _name, _x, _y) {
             at += ",@noanchor";
         if ((this.getEXY()) || ((this.getParentLength() === 0) && (!this.getFloat())))
             at += ",@callcalc";
-        if (this.getParentLength() < 2) at += ",@blockly";
+        at += ",@blockly";
         if (this.isMoveable()) {
             at += ",@pushpin";
             at += ",@magnet";
@@ -420,6 +420,9 @@ function PointObject(_construction, _name, _x, _y) {
             me.setExp(exy);
         }
     }
+    parent.getExpression = this.getExpression = function() {
+        return me.getExp();
+    }
 
     // exy est soit une formule (string), soit un nombre. S'il s'agit
     // d'un nombre, c'est l'abscisse et le second param
@@ -585,6 +588,7 @@ function PointObject(_construction, _name, _x, _y) {
     var computeFixed = function() {
         EXY.compute();
         var t = EXY.value();
+        // console.log(this.getParent());
         //        if (this.getName()==="A") console.log("t="+t);
         if (isArray(t)) {
             // S'il s'agit d'un point 3D :

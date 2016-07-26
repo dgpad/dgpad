@@ -60,6 +60,12 @@ function Construction(_canvas) {
         };
     };
 
+    me.getTurtleExpression = function(_startpt) {
+        var name = "blk_turtle_exp_" + _startpt;
+        var o = me.find(name);
+        return o;
+    };
+
     me.getObjectsFromType = function(_t) {
         var tab = [];
         for (var i = 0; i < V.length; i++) {
@@ -652,6 +658,28 @@ function Construction(_canvas) {
         AO[n] = _o;
         AV[n] = me.getVarName(n);
         return n;
+    };
+
+    me.fixNames = function(_old, _new) {
+        // console.log("******** fixNames ************");
+
+        if (_old != _new) {
+            // console.log("old=" + _old + "  new=" + _new);
+            var o = me.findVar(_new);
+            if ((o) && (!o.blocks.isEmpty())) {
+                var old_exp = me.find("blk_turtle_exp_" + _old);
+                var old_lst = me.find("blk_turtle_list_" + _old);
+                // console.log("old=" + _old + "  new=" + _new);
+                // console.log("old_exp=" + old_exp + "  old_lst=" + old_lst);
+                if ((old_exp) && (old_lst)) {
+                    old_exp.setNameOnly("blk_turtle_exp_" + _new);
+                    old_lst.setNameOnly("blk_turtle_list_" + _new);
+                }
+            }
+            for (var i = 0, len = V.length; i < len; i++) {
+                V[i].blocks.rename(_old, _new)
+            }
+        }
     };
 
 
@@ -1574,7 +1602,10 @@ function Construction(_canvas) {
                     an.obj.incrementAlpha(an);
                     // an.obj.blocks.evaluate("ondrag"); // blockly
                     an.obj.compute();
-                    an.obj.computeChilds();
+                        an.obj.computeChilds();
+                    if (me.is3D()) {
+                        me.computeAll()
+                    }
                 } else {
                     animations.splice(i, 1);
                     i--

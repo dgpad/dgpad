@@ -384,3 +384,10 @@ $L.blockly.globales_fix="fixer";
 $L.blockly.globales_to="à";
 $L.blockly.globales_increment="incrementer";
 $L.blockly.globales_by="de";
+
+// Vendredi 10 juin
+$L.blockly.turtle.ofvector="du vecteur";
+
+// Samedi 23 juillet
+$L.blockly.turtle.angle180 = "angle 180";
+$L.blockly.turtle.angle360 = "angle 360";

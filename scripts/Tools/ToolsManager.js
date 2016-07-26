@@ -159,6 +159,7 @@ function ToolsManager(_canvas) {
             OC.setInitialObjects(targets);
             if (OC.isInstantTool()) {
                 me.closeTools();
+                canvas.setNoMouseEvent(true);
                 canvas.clearFilters();
                 OC.createObj(canvas, ev);
                 canvas.setPointConstructor();

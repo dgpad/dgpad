@@ -181,6 +181,20 @@
                 </block>
             </value>
         </block>
+        <block type="dgpad_angle">
+            <value name="A1">
+                <block type="dgpad_get_point_short">
+                </block>
+            </value>
+            <value name="A2">
+                <block type="dgpad_get_point_short">
+                </block>
+            </value>
+            <value name="A3">
+                <block type="dgpad_get_point_short">
+                </block>
+            </value>
+        </block>
         <block type="dgpad_window_props"></block>
         <block type="dgpad_print"></block>
         <block type="dgpad_pt2d">

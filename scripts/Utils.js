@@ -938,7 +938,7 @@ $U.prompt = function(_mess, _default, _type, _proc, _w, _h, _inp_w) {
         else ok.stl("background-color", "#4BB6DB")
     };
     scrn.kd(function(ev) {
-        if (ev.keyCode === 13) valid();
+        if (ev.keyCode === 13) valid(ev);
     });
     scrn.ku(function(ev) {
         fixOkColor()
@@ -1242,11 +1242,22 @@ $U.initEvents = function(ZC, cTag) {
     // }
 }
 
+// Valeur changée par les fonctions d'ouverture des figures
+// Il s'agit d'éviter des change events pendant l'ouverture :
+$U.isloading = false
+
 // This function is called each time something happend in construction.
-// (add, remove, drag, zoom, etc...). This is usefull for python wrapped
-// webview :
+// (add, remove, drag, zoom, etc...). This is usefull for python and OS X
+// wrapped webview :
 $U.changed = function() {
-    window.status = "changed"
+    if (!$U.isloading) {
+        // Pour l'appli Linux :
+        window.status = "changed"
+            // Pour l'appli OS X :
+        if (window.$OS_X_APPLICATION) {
+            interOp.somethingChanged("");
+        };
+    }
 }
 $U.AllCanvas = [];
 

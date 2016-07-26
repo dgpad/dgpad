@@ -236,14 +236,17 @@ function MainCalcPanel(_man, _canvas) {
     func1Btn.addImage($APP_PATH + "NotPacked/images/tools/function.svg");
     bleft += bwidth + bgap;
     var validBtn = new ImageElt(me, "NotPacked/images/calc/valid.svg", me.valid, bleft, btop, bwidth, bwidth);
+    // var validBtn = new ImageElt(me, "NotPacked/images/tools/function.svg", me.valid, bleft, btop, bwidth, bwidth);
     bleft += bwidth + bgap;
     var cancelBtn = new ImageElt(me, "NotPacked/images/calc/cancel.svg", me.cancel, bleft, btop, bwidth, bwidth);
+    // var cancelBtn = new ImageElt(me, "NotPacked/images/tools/function.svg", me.cancel, bleft, btop, bwidth, bwidth);
     bleft += bwidth + bgap;
 
     var KBBtn = new GUIElement(me, "a");
     KBBtn.setStyles("position:absolute;border:3px");
     KBBtn.setBounds(bleft, btop + (bwidth - 30) / 2, 48, 30);
     var KBBtn_img = new ImageElt(KBBtn, "NotPacked/images/calc/keyboard.png", null, 0, 0, 48, 30);
+    // var KBBtn_img = new ImageElt(KBBtn, "NotPacked/images/tools/function.svg", null, 0, 0, 48, 30);
     set_href(true);
     var doc = ($APPLICATION) ? window.parent.document.body : window.document.body;
     doc.appendChild(KBBtn.getDocObject());

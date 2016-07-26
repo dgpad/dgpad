@@ -360,6 +360,7 @@ function Interpreter(_win, _canvas) {
     };
 
     var TURTLE_RESULT = function() {
+        TURTLE_VARS.NAME = null;
         return TURTLE_VARS.TAB;
     };
 
@@ -368,8 +369,18 @@ function Interpreter(_win, _canvas) {
     };
 
     var TURTLE_GET = function(_n, _i) {
-        var o = me.f("blk_turtle_list_" + _n);
-        return o.getPtNum(_i);
+        // S'il s'agit d'une auto-référence :
+        if (_n === TURTLE_VARS.NAME) {
+            var t = TURTLE_VARS.TAB;
+            var k = 0;
+            for (var i = 0; i < t.length; i++) {
+                if ((t[i].length < 4) && (!isNaN(t[i][0])) && (!isNaN(t[i][1]))) k++;
+                if (k === _i) return t[i];
+            }
+        } else {
+            var o = me.f("blk_turtle_list_" + _n);
+            return o.getPtNum(_i);
+        }
     };
 
     var TURTLE_LENGTH = function(_n, _i) {
@@ -387,8 +398,8 @@ function Interpreter(_win, _canvas) {
 
     var TURTLE_PRINT = function(_t) {
         var t = TURTLE_VARS;
-        // _t = "'" + _t + "'";
         t.TAB.push([20, 0, _t, t.U]);
+        t.TAB.push(t.LAST);
     };
 
     var TURTLE_FONT = function(_f, _s, _stl, _al) {
@@ -500,6 +511,33 @@ function Interpreter(_win, _canvas) {
             // Changement de repère :
             var pp = [p[0] * t.U[0] + p[1] * t.U[1] + p[2] * t.U[2], p[0] * t.V[0] + p[1] * t.V[1] + p[2] * t.V[2], p[0] * t.W[0] + p[1] * t.W[1] + p[2] * t.W[2]];
             var d1 = Math.sqrt(pp[0] * pp[0] + pp[1] * pp[1]);
+            var d3D = Math.sqrt(pp[0] * pp[0] + pp[1] * pp[1] + pp[2] * pp[2]);
+            // if (d1 > 1e-13) {
+            //     c = pp[0] / d1; // cosinus
+            //     s = pp[1] / d1; // sinus
+            //     var up = [c * t.U[0] + s * t.V[0], c * t.U[1] + s * t.V[1], c * t.U[2] + s * t.V[2]];
+            //     var vp = [c * t.V[0] - s * t.U[0], c * t.V[1] - s * t.U[1], c * t.V[2] - s * t.U[2]];
+            //     t.U = up;
+            //     t.V = vp;
+            // }
+            if ((d3D > 1e-13) && (d1 > 1e-13)) {
+                c = pp[0] / d1; // cosinus
+                s = pp[1] / d1; // sinus
+                var up = [c * t.U[0] + s * t.V[0], c * t.U[1] + s * t.V[1], c * t.U[2] + s * t.V[2]];
+                var vp = [c * t.V[0] - s * t.U[0], c * t.V[1] - s * t.U[1], c * t.V[2] - s * t.U[2]];
+                t.U = up;
+                t.V = vp;
+                c = d1 / d3D;
+                s = pp[2] / d3D;
+                up = [c * t.U[0] + s * t.W[0], c * t.U[1] + s * t.W[1], c * t.U[2] + s * t.W[2]];
+                var wp = [c * t.W[0] - s * t.U[0], c * t.W[1] - s * t.U[1], c * t.W[2] - s * t.U[2]];
+                t.U = up;
+                t.W = wp;
+            }
+        } else {
+            // Changement de repère :
+            var pp = [p[0] * t.U[0] + p[1] * t.U[1], p[0] * t.V[0] + p[1] * t.V[1]];
+            var d1 = Math.sqrt(pp[0] * pp[0] + pp[1] * pp[1]);
             if (d1 > 1e-13) {
                 c = pp[0] / d1; // cosinus
                 s = pp[1] / d1; // sinus
@@ -508,28 +546,12 @@ function Interpreter(_win, _canvas) {
                 t.U = up;
                 t.V = vp;
             }
-            var d3D = Math.sqrt(pp[0] * pp[0] + pp[1] * pp[1] + pp[2] * pp[2]);
-            c = d1 / d3D;
-            s = pp[2] / d3D;
-            up = [c * t.U[0] + s * t.W[0], c * t.U[1] + s * t.W[1], c * t.U[2] + s * t.W[2]];
-            var wp = [c * t.W[0] - s * t.U[0], c * t.W[1] - s * t.U[1], c * t.W[2] - s * t.U[2]];
-            t.U = up;
-            t.W = wp;
-        } else {
-            // Changement de repère :
-            var pp = [p[0] * t.U[0] + p[1] * t.U[1], p[0] * t.V[0] + p[1] * t.V[1]];
-            var d1 = Math.sqrt(pp[0] * pp[0] + pp[1] * pp[1]);
-            c = pp[0] / d1; // cosinus
-            s = pp[1] / d1; // sinus
-            var up = [c * t.U[0] + s * t.V[0], c * t.U[1] + s * t.V[1], c * t.U[2] + s * t.V[2]];
-            var vp = [c * t.V[0] - s * t.U[0], c * t.V[1] - s * t.U[1], c * t.V[2] - s * t.U[2]];
-            t.U = up;
-            t.V = vp;
         };
         me.Z.blocklyManager.changeTurtleUVW(t.NAME, t.U, t.V, t.W);
     };
 
     var TURTLE_JOIN_PT = function(_pt) {
+        console
         TURTLE_ROTATE_PT(_pt);
         TURTLE_MV(Math.distance(TURTLE_VARS.LAST, _pt), false);
     };
@@ -688,8 +710,8 @@ function Interpreter(_win, _canvas) {
         return o.getName();
     };
 
-    var SetCoords = function(_x0, _y0, _u, _md3D) {
-        me.C.coordsSystem.setCoords(_x0, _y0, _u, _md3D);
+    var SetCoords = function(_x0, _y0, _u, _md3D, _ww, _wh) {
+        me.C.coordsSystem.setCoords(_x0, _y0, _u, _md3D, _ww, _wh);
     };
 
     var Circle = function(_n, _a, _b) {
@@ -1452,7 +1474,7 @@ function Interpreter(_win, _canvas) {
 
     // parseExpression dans le contexte de cette window :
     var pe = function(_o, _n) {
-        //        console.log("name="+_o.getName()+"  n="+_n);
+        // console.log("name="+_o.getName()+"  n="+_n);
         _n = _n.replace(/\s/g, "");
 
         if ((_o.getName) && (_o.getName() === _n)) {
@@ -1466,7 +1488,7 @@ function Interpreter(_win, _canvas) {
                 return _n;
             if ((_o) && (_o.getParent) && (_o.getParent().indexOf(o) === -1)) {
                 _o.addParent(o);
-                // console.log("PE  :  "+_o.getName()+"   "+o.getName());
+                // console.log("PE  :  " + _o.getName() + "   " + o.getName());
             }
             return pushEXP(o);
         }
@@ -1567,13 +1589,36 @@ function Interpreter(_win, _canvas) {
             return txts[_d];
         });
 
+        // S'il y a une instruction TURTLE_GET dans le code de l'expression,
+        // on fait en sorte que l'objet _o dépende de la liste :
+        var dep = s2.replace(/TURTLE_GET\(\"([^\"]+)\"/g, function(m, _d) {
+            var o = me.f("blk_turtle_list_" + _d);
+            if ((o) && (_o.getVarName) && (_o.getVarName() != ("blk_turtle_exp_" + _d))) {
+                if ((_o) && (_o.getParent) && (_o.getParent().indexOf(o) === -1)) {
+                    _o.addParent(o);
+                }
+            }
+            return "";
+        });
+
+        // idem pour TURTLE_LENGTH :
+        dep = s2.replace(/TURTLE_LENGTH\(\"([^\"]+)\"/g, function(m, _d) {
+            var o = me.f("blk_turtle_list_" + _d);
+            if ((o) && (_o.getVarName) && (_o.getVarName() != ("blk_turtle_exp_" + _d))) {
+                if ((_o) && (_o.getParent) && (_o.getParent().indexOf(o) === -1)) {
+                    _o.addParent(o);
+                }
+            }
+            return "";
+        });
+
 
 
         // if ((s2 !== "") && ((isValidParenthesis(s2)))) {
         //     console.log("***user result = " + s);
         //     console.log("pseudo result = " + s3);
         //     console.log("main result = " + s2);
-        //     // console.log("name : " + _o.getName());
+        //     console.log("name : " + _o.getName());
         // }
 
 
@@ -1673,6 +1718,8 @@ function Interpreter(_win, _canvas) {
         }
         return NaN;
     };
+
+
 
     Math.gcd = function(a, b) {
         if ((!isNaN(a)) && (!isNaN(b)))
@@ -1835,6 +1882,9 @@ function Interpreter(_win, _canvas) {
         return NaN;
     };
 
+
+
+
     Math.Angle360 = function(_a, _o, _c) {
         var xOA = _a[0] - _o[0],
             yOA = _a[1] - _o[1];
@@ -1847,10 +1897,68 @@ function Interpreter(_win, _canvas) {
         return (a)
     };
 
-    Math.Angle180 = function(_a, _o, _c) {
-        var a = Math.Angle360(_a, _o, _c);
-        return ((a < Math.simplePI) ? a : Math.doublePI - a)
+    // Math.Angle180 = function(_a, _o, _c) {
+    //     console.log("Math.Angle180");
+    //     var a = Math.Angle360(_a, _o, _c);
+    //     return ((a < Math.simplePI) ? a : Math.doublePI - a)
+    // };
+
+
+    Math.Angle180 = function(_a, _b, _c) {
+        if ((isArray(_a)) && (isArray(_b)) && (isArray(_c)) && (_a.length === _b.length) && (_a.length === _c.length)) {
+            var u = Math.minus(_a, _b);
+            var v = Math.minus(_c, _b);
+            var ps = 0,
+                n1 = 0,
+                n2 = 0;
+            for (var i = 0; i < u.length; i++) {
+                ps += u[i] * v[i];
+                n1 += u[i] * u[i];
+                n2 += v[i] * v[i];
+            }
+            var a = ps / (Math.sqrt(n1) * Math.sqrt(n2));
+            if (Math.abs(a - 1) < 1e-13) return 0;
+            else if (Math.abs(a + 1) < 1e-13) return Math.simplePI;
+            return Math.acos(a);
+        }
+        return NaN;
     };
+
+    // Math.Angle360 = function(_a, _b, _c) {
+    //     if ((isArray(_a)) && (isArray(_b)) && (isArray(_c)) && (_a.length === _b.length) && (_a.length === _c.length)) {
+    //         var u = Math.minus(_a, _b);
+    //         var v = Math.minus(_c, _b);
+    //         var ps = 0,
+    //             n1 = 0,
+    //             n2 = 0;
+    //         for (var i = 0; i < u.length; i++) {
+    //             ps += u[i] * v[i];
+    //             n1 += u[i] * u[i];
+    //             n2 += v[i] * v[i];
+    //         }
+    //         var a = ps / (Math.sqrt(n1) * Math.sqrt(n2));
+
+    //         if (Math.abs(a - 1) < 1e-13) a=1;
+    //         else if (Math.abs(a + 1) < 1e-13) a=-1;
+
+    //         a=Math.acos(a);
+    //         var zpv=u[0]*v[1]-u[1]*v[0];
+    //         if (Math.abs(zpv) < 1e-11) zpv=0;
+
+    //         console.log(zpv);
+
+    //         if (zpv<0) a=Math.doublePI-a;
+
+
+    //         return a;
+    //     }
+    //     return NaN;
+    // };
+
+
+
+
+
 
     Math.deg_coeff = Math.PI / 180;
     Math.rcos = Math.cos;
@@ -1956,8 +2064,6 @@ function Interpreter(_win, _canvas) {
         return me.C.coordsSystem.getUnit();
     };
 
-
-
     var COORDS_X0 = me.C.coordsSystem.getX0;
     var COORDS_Y0 = me.C.coordsSystem.getY0;
 
@@ -1973,6 +2079,7 @@ function Interpreter(_win, _canvas) {
             me.C.coordsSystem.restrictPhi([_t[0] / 0.015 + 0.000001, _t[1] / 0.015 - 0.000001]);
         else
             me.C.coordsSystem.restrictPhi([]);
+        me.C.coordsSystem.translate(0,0); // mise en cohérence de l'origine du repère
         return _t;
     };
     EX.EX_restrictTheta = function(_t) {
@@ -1980,6 +2087,7 @@ function Interpreter(_win, _canvas) {
             me.C.coordsSystem.restrictTheta([_t[0] / 0.015 + 0.000001, _t[1] / 0.015 - 0.000001]);
         else
             me.C.coordsSystem.restrictTheta([]);
+        me.C.coordsSystem.translate(0,0); // mise en cohérence de l'origine du repère
         return _t;
     };
     EX.EX_point3D = function(_o, _v) {

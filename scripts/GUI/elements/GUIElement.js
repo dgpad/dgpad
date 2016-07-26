@@ -63,8 +63,14 @@ function GUIElement(_owner, _type) {
     me.setStyles = function(_st) {
         var t = _st.split(";");
         for (var i = 0, len = t.length; i < len; i++) {
+            // Si l'argument du style contient des ":"
+            // il ne faut pas qu'il soit tronqué par
+            // le split :
             var a = t[i].split(":");
-            me.setStyle(a[0].replace(/^\s+|\s+$/g, ''), a[1].replace(/^\s+|\s+$/g, ''));
+            var pty = a[0];
+            a.shift();
+            var arg = a.join(":");
+            me.setStyle(pty.replace(/^\s+|\s+$/g, ''), arg.replace(/^\s+|\s+$/g, ''));
         }
     }
 
@@ -87,6 +93,10 @@ function GUIElement(_owner, _type) {
 
     me.isVisible = function() {
         return (me.getStyle("visibility") === "visible");
+    };
+
+    me.isReallyVisible = function() {
+        return (me.getStyle("visibility") !== "hidden");
     };
 
     me.setLayer = function(_l) {

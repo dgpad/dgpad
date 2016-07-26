@@ -75,6 +75,7 @@ function BlocklyPanel(_owner, _canvas,  _closeCallback, _currentTabCallBack, _he
         // window.prompt(Blockly.JavaScript.workspaceToCode(Blockly.mainWorkspace))
         // Blockly.mainWorkspace.updateToolbox('<xml id="toolbox" style="display: none"><block type="dgpad_point"></block></xml>');
         _closeCallback();
+        canvas.setNoMouseEvent(true);
         // _ev.stopPropagation();
         _ev.preventDefault();
         setTimeout(function() {

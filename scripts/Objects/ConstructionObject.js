@@ -533,9 +533,14 @@ function ConstructionObject(_construction, _name) {
     this.getCn = function() {
         return Cn;
     };
-    this.setName = function(_n) {
+    this.setNameOnly = function(_n) {
         name = Cn.getUnusedName(_n, this);
-        subname = Cn.getSubName(name);
+        subname = Cn.getSubName(name)
+    };
+    this.setName = function(_n) {
+        var old = Cn.getVarName(name);
+        this.setNameOnly(_n);
+        Cn.fixNames(old, Cn.getVarName(name));
     };
     this.getName = function() {
         return name;

@@ -390,7 +390,14 @@ $L.blockly.texts = "Texts";
 $L.blockly.turtle.getlength = "length of track";
 
 // Mercredi 1 juin 2016
-$L.blockly.globales_fix="set";
-$L.blockly.globales_to="to";
-$L.blockly.globales_increment="increment";
-$L.blockly.globales_by="by";
+$L.blockly.globales_fix = "set";
+$L.blockly.globales_to = "to";
+$L.blockly.globales_increment = "increment";
+$L.blockly.globales_by = "by";
+
+// Vendredi 10 juin
+$L.blockly.turtle.ofvector = "of vector";
+
+// Samedi 23 juillet
+$L.blockly.turtle.angle180 = "angle 180";
+$L.blockly.turtle.angle360 = "angle 360";

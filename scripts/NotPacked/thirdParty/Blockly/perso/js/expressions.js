@@ -14,6 +14,17 @@ Blockly.JavaScript['dgpad_distance'] = function(block) {
     return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
+Blockly.JavaScript['dgpad_angle'] = function(block) {
+    var tpe = block.getFieldValue('TYPE');
+    var a1 = Blockly.JavaScript.valueToCode(block, 'A1', Blockly.JavaScript.ORDER_ATOMIC);
+    var a2 = Blockly.JavaScript.valueToCode(block, 'A2', Blockly.JavaScript.ORDER_ATOMIC);
+    var a3 = Blockly.JavaScript.valueToCode(block, 'A3', Blockly.JavaScript.ORDER_ATOMIC);
+    if ((a1 === "") || (a2 === "") || (a3 === "")) return "";
+    if (tpe === "a180") tpe='Math.Angle180(' + a1 + ',' + a2 + ',' + a3 + ')';
+    else tpe='Math.Angle360(' + a1 + ',' + a2 + ',' + a3 + ')';
+    return [tpe, Blockly.JavaScript.ORDER_NONE];
+};
+
 
 Blockly.JavaScript['dgpad_coordinate'] = function(block) {
     var dropdown_type = block.getFieldValue('type');

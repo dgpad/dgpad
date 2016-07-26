@@ -15,7 +15,6 @@
            path1 + "perso/blocks/geometry.js",
            path1 + "perso/blocks/expressions.js",
            path1 + "perso/blocks/lists.js",
-           path1 + "perso/blocks/matrices.js",
            path1 + "perso/blocks/turtle.js",
            path1 + "perso/blocks/globals.js",
            path1 + "perso/js/core.js",
@@ -23,9 +22,9 @@
            path1 + "perso/js/geometry.js",
            path1 + "perso/js/expressions.js",
            path1 + "perso/js/lists.js",
-           path1 + "perso/js/matrices.js",
            path1 + "perso/js/turtle.js",
-           path1 + "perso/js/globals.js"
+           path1 + "perso/js/globals.js",
+           path1 + "perso/js/text.js"
        ];
        var source = "";
        var selected = "";
@@ -91,7 +90,7 @@
                // num.appendChild(field);
                // var cnx = num.outputConnection;
                // block.getInput('NAME').connection.connect(cnx);
-// block.connect(num);
+               // block.connect(num);
 
 
 
@@ -143,7 +142,7 @@
                me.getObjectsFromType = function(_t) {
                    return me.CN.getObjectsFromType(_t);
                };
-               me.objectPopup = function(_t) {
+               me.popupArray = function(_t) {
                    // console.log("objectPopup :"+_t);
                    var props = me.CN.getObjectsFromType(_t);
                    var tab = [];
@@ -154,7 +153,10 @@
                            tab.push([props[i].getName(), props[i].getVarName()]);
                    };
                    if (tab.length === 0) tab.push(["? ", null]);
-                   return (new Blockly.FieldDropdown(tab));
+                   return (tab);
+               };
+               me.objectPopup = function(_t) {
+                   return (new Blockly.FieldDropdown(me.popupArray(_t)));
                };
                me.getName = canvas.namesManager.getName;
                me.refresh = canvas.namesManager.refresh;

@@ -27,6 +27,49 @@ function BlocklyObjects(_object, _construction) {
         return true;
     };
 
+    var renameField = function(_str, _old, _new, _block, _fname) {
+        // J'ai appris ici le litteral negative lookaround. La partie "(.(?!<block))*" signifie
+        // qu'on accepte tout sauf la chaine littérale "<block" dans le match :
+        var regex = new RegExp("(<(?:block|shadow) type=\"" + _block + "\"[^>]*>(.(?!<block))*<field name=\"" + _fname + "\">)(" + _old + ")(<\/field>)", "g")
+        return _str.replace(regex, function(m, _a, _b, _c, _d) {
+            return _a + _new + _d;
+        });
+    };
+
+    var renameCode = function(_str, _old, _new, _func) {
+        var regex = new RegExp("(" + _func + "\\\(\\\")(" + _old + ")(\\\")", "g");
+        return _str.replace(regex, function(m, _a, _b, _c) {
+            return  (_a + _new + _c)
+        });
+    };
+
+
+
+    this.rename = function(_old, _new) {
+        for (var i = 0; i < MODE.length; i++) {
+            var m = MODE[i];
+            console.log()
+            if (obj[m].getXML()) {
+                console.log(obj[m].getXML());
+                var newXML = renameField(obj[m].getXML(), _old, _new, "turtle_length", "NAME");
+                newXML = renameField(newXML, _old, _new, "turtle_get", "NAME");
+                newXML = renameField(newXML, _old, _new, "dgpad_get_point_short", "NAME");
+                newXML = renameField(newXML, _old, _new, "dgpad_get_object_short", "NAME");
+                newXML = renameField(newXML, _old, _new, "dgpad_get_point_short_turtle", "NAME");
+                newXML = renameField(newXML, _old, _new, "dgpad_coordinate", "NAME");
+                newXML = renameField(newXML, _old, _new, "dgpad_set_object", "NAME");
+                newXML = renameField(newXML, _old, _new, "dgpad_get_object", "NAME");
+                newXML = renameField(newXML, _old, _new, "dgpad_style_fix", "OBJECT");
+                obj[m].setXML(newXML);
+
+                var newCODE = renameCode(obj[m].getCode().replace(/\\\"/g,'"'), _old, _new, "TURTLE_GET");
+                newCODE = renameCode(newCODE, _old, _new, "TURTLE_LENGTH");
+                newCODE = renameCode(newCODE, _old, _new, "TURTLE_INIT");
+                obj[m].setCode(newCODE);
+            }
+        }
+    }
+
     this.getCn = function() {
         return Cn
     };
@@ -121,6 +164,7 @@ function BlocklyObjects(_object, _construction) {
 function BlocklyObject(_owner, _construction) {
     var Cn = _construction;
     var EX = null;
+    var EXP = null;
     var OWN = _owner;
     var type = null;
     var xml = null;
@@ -137,18 +181,67 @@ function BlocklyObject(_owner, _construction) {
         }
     }
 
+    this.getCode = function() {
+        if (EX) {
+            return EX.getSource()
+        } else if (EXP) {
+            return EXP.getExpression()
+        }
+        return ""
+    }
+
+    this.setCode = function(_cod) {
+        if (type === "onlogo") {
+            var startpt = OWN.getObj().getVarName();
+            EXP = Cn.getTurtleExpression(startpt);
+            EXP.setExpression(_cod);
+            setEX(null);
+            // var SNC = "";
+            _cod.replace(/var .*\nTURTLE_INIT.*\n((?:.*\n)*)return TURTLE_RESULT.*/, function(m, _a) {
+                sync = _a
+            });
+            // this.setSNC(SNC);
+        } else if (type === "oncompute") {
+            EXP = OWN.getObj();
+            EXP.setExpression(_cod);
+            setEX(null);
+            // var SNC = "";
+            _cod.replace(/var .*\n((?:.*\n)*)};\nbl_.*/, function(m, _a) {
+                sync = _a
+            });
+            // this.setSNC(SNC);
+        } else {
+            EXP = null;
+            setEX(_cod);
+            // var SNC = "";
+            _cod.replace(/var .*\n((?:.*\n)*)};\nbl_.*/, function(m, _a) {
+                sync = _a
+            });
+            // this.setSNC(SNC);
+        }
+    }
+
 
     this.getXML = function() {
         return xml;
     };
 
+    this.setXML = function(_xml) {
+        xml = _xml
+    };
+
     this.getSNC = function() {
         return sync;
-    }
+    };
+
+    this.setSNC = function(_snc) {
+        sync = _snc;
+    };
 
     this.setBehavior = function(_m, _xml, _sync, _async) {
         type = _m;
         xml = _xml;
+        // console.log("_m=" + _m + "\n_xml=" + _xml + "\n_sync=" + _sync);
         if (xml === null) {
             sync = null;
             async = null;
@@ -157,16 +250,16 @@ function BlocklyObject(_owner, _construction) {
             if (type === "onlogo") Cn.removeTurtleExpression(OWN.getObj().getVarName());
         } else {
             sync = _sync.replace(/^\s*var\s*\w+\s*;/gm, "").trim();
-            // console.log(sync);
+            // console.log("SYNC="+sync);
             async = _async;
             var cod = "";
             if (type === "onlogo") {
                 Cn.setDEG(true);
                 var startpt = OWN.getObj().getVarName();
-                var ex = Cn.createTurtleExpression(startpt);
+                EXP = Cn.createTurtleExpression(startpt);
 
                 // Entier aléatoire entre 1 et 1 000 000 000 :
-                var rand=(Math.floor(Math.random()*(Math.abs(1-1000000000)+1)+(1+1000000000-Math.abs(1-1000000000))/2));
+                var rand = (Math.floor(Math.random() * (Math.abs(1 - 1000000000) + 1) + (1 + 1000000000 - Math.abs(1 - 1000000000)) / 2));
 
                 var fname = "bl_" + $U.number2letter(rand.toString());
                 cod += "var " + fname + "=function(){\n";
@@ -177,14 +270,18 @@ function BlocklyObject(_owner, _construction) {
 
                 cod += "\n};\n" + fname + "()";
 
-                ex.setExpression(cod);
+                EXP.setExpression(cod);
+                setEX(null);
+                // console.log("CODE TORTUE = "+cod);
             } else {
                 var fname = "bl_" + $U.number2letter(Date.now().toString());
                 cod = "var " + fname + "=function(){\n";
                 cod += sync;
                 cod += "\n};\n" + fname + "()";
                 if (type === "oncompute") {
-                    OWN.getObj().setExpression(cod);
+                    EXP = OWN.getObj();
+                    EXP.setExpression(cod);
+                    // console.log("CODE="+cod);
                     setEX(null);
                 } else {
                     setEX(cod);

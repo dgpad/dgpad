@@ -1,0 +1,22 @@
+// Coordinates System :
+SetCoords(500,324.5,40,false,1000,650);
+
+
+// Geometry :
+P1=Point("P1",-3.05,0.7625);
+P2=Point("P2",-0.425,4.3375);
+P3=Point("P3",4.2,-3.0875);
+S1=Segment("S1",P1,P2);
+S2=Segment("S2",P2,P3);
+S3=Segment("S3",P3,P1);
+
+
+// Styles :
+STL(P1,"c:#0000b2;s:6;f:30");
+STL(P2,"c:#0000b2;s:6;f:30");
+STL(P3,"c:#0000b2;s:6;f:30");
+STL(S1,"c:#006633;s:1;f:24");
+STL(S2,"c:#006633;s:1;f:24");
+STL(S3,"c:#006633;s:1;f:24");
+SetCoordsStyle("isAxis:false;isGrid:true;isOx:true;isOy:true;isLockOx:false;isLockOy:false;centerZoom:false;color:#111111;fontSize:18;axisWidth:1;gridWidth:0.1");
+SetGeneralStyle("background-color:#F8F8F8;degree:true;dragmoveable:true");

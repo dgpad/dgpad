@@ -30,10 +30,18 @@ function DigitCalcPanel(_man, _canvas) {
             btns[i].setEnabled(_b);
         }
     };
+
     (function() {
         var t = me.getOwnerBounds();
         me.setBounds(0, t.height - canvas.prefs.controlpanel.size - 190  * scl, width, 190 * scl);
     })();
+
+    // var start = function() {
+    //     var t = me.getOwnerBounds();
+    //     console.log(me.getOwnerBounds());
+    //     me.setBounds(0, t.height - canvas.prefs.controlpanel.size - 190  * scl, width, 190 * scl);
+    // };
+    // start();
 
 
 

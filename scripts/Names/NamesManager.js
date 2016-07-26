@@ -10,6 +10,7 @@ function NamesManager(_canvas) {
 
     var close = function() {
         canvas.selectNameBtn(false);
+        canvas.setNoMouseEvent(true);
     }
     me.isVisible = function() {
         return panel.isVisible()
@@ -18,7 +19,7 @@ function NamesManager(_canvas) {
         panel.show()
     }
     me.hide = function() {
-        panel.hide()
+        panel.hide();
     }
     me.refresh = function() {
         panel.refreshkeyboard()

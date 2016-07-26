@@ -5,8 +5,13 @@ function HistoryPanel(_canvas, _closeProc) {
     var height = $P.localstorage.iconwidth + 110;
     $U.extend(this, new CenterPanel(canvas, width, height));
 
+    var closePanel = function() {
+        canvas.setNoMouseEvent(true);
+        _closeProc();
+    }
+
     me.show();
-    new CloseBox(me, _closeProc);
+    new CloseBox(me, closePanel);
 
     var wout = new GUIElement(me, "div");
     wout.setAbsolute();

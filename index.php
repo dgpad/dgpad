@@ -2,6 +2,7 @@
 To change this template, choose Tools | Templates
 and open the template in the editor.
 -->
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,11 +42,16 @@ and open the template in the editor.
 		echo "<script src=\"scripts/DGPad.js\" ";
 		$u=$_GET["url"];
 		if (!$u) $u=$_POST["url"];
+        $u2=$_GET["url2"];
+        if (!$u2) $u2=$_POST["url2"];
 		$f=$_POST["file_content"];
 		$t=$_GET["hide_ctrlpanel"];
 		if (!$t) $t=$_POST["hide_ctrlpanel"];
 		$l=$_GET["lang"];
 		$p=$_GET["presentation"];
+        // data-url est utilisé pour les adresses relatives, et pour certains
+        // sites acceptant le cross-domain-origin :
+        if ($u2) echo "data-url=\"$u2\";";
 		if ($u) echo "data-source=\"".base64_encode(file_get_contents("$u"))."\";";
 		if ($f) echo "data-source=\"$f\";";
 		if ($t) echo " data-hidectrlpanel=\"$t\";";

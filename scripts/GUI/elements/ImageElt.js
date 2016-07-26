@@ -10,6 +10,7 @@ function ImageElt(_owner, _src, _proc, _l, _t, _w, _h) {
 
     me.setAbsolute();
     me.setBounds(_l, _t, _w, _h);
+    // console.log("IMAGE = "+ $APP_PATH + _src);
     me.setStyles("margin:0px;padding:0px;background-size:100%;background-repeat:no-repeat;background-image:url(" + $APP_PATH + _src + ")");
     me.addDownEvent(_proc);
     _owner.addContent(me);

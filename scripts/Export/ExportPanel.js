@@ -13,6 +13,7 @@ function ExportPanel(_canvas, _closeProc) {
 
     var close = function() {
         _closeProc();
+        canvas.setNoMouseEvent(true);
     };
 
     var setText = function(_t) {

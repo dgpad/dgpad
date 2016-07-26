@@ -68,12 +68,17 @@ function Canvas(_id) {
     };
 
     me.load64 = function(_str) {
+        $U.isloading = true
         me.getConstruction().deleteAll();
         me.macrosManager.clearTools();
         me.textManager.clear();
         me.trackManager.clear();
         me.Interpret($U.base64_decode(_str));
         me.forceArrowBtn();
+        if (window.$OS_X_APPLICATION) {
+            interOp.figureLoaded("");
+        };
+        $U.isloading = false
     }
     me.saveToLocalStorage = function(is_iPad) {
         if (Cn.isEmpty())
@@ -176,11 +181,15 @@ function Canvas(_id) {
     var resizeWindow = function() {
         setFullScreen();
         me.trackManager.resize();
+        var ctrl_panel_visible = true;
+        me.trackManager.resize();
         if (mainpanel) {
+            ctrl_panel_visible = mainpanel.isReallyVisible();
             docObject.parentNode.removeChild(mainpanel.getDocObject());
             mainpanel = null;
         }
         mainpanel = new ControlPanel(me);
+        if (!ctrl_panel_visible) mainpanel.hide();
         me.setMode(1);
         if (Cn) Cn.resizeBtn();
 
@@ -936,7 +945,10 @@ function Canvas(_id) {
         me.paint(ev, actualCoords);
     };
 
-
+    var noMouseEvent = false;
+    me.setNoMouseEvent = function(_b) {
+        noMouseEvent = _b;
+    }
 
 
     me.mouseReleased = function(ev) {
@@ -948,6 +960,11 @@ function Canvas(_id) {
             releasedFilter(ev);
             return;
         }
+        if (noMouseEvent) {
+            noMouseEvent = false;
+            return
+        }
+
         mousedown = false;
         dragCoords = null;
         if (draggedObject) {
@@ -974,6 +991,7 @@ function Canvas(_id) {
             Cn.validate(ev);
             cleanInds();
             var sels = Cn.getIndicated();
+
             if (isClick(ev)) {
                 if (sels.length === 0) {
                     if (Cn.isMode(1, 5, 7, 8)) {
@@ -1280,15 +1298,24 @@ function Canvas(_id) {
             request.send();
             request.onload = function(e) {
                 interpreter.LoadPlugins(request.responseText);
-                // Si le canvas a une figure attachée (base64) :
                 if (docObject.hasAttribute("data-source")) {
+                    // Si le canvas a une figure attachée (base64) :
                     me.OpenFile("", $U.base64_decode(docObject.getAttribute("data-source")));
+                } else if (docObject.hasAttribute("data-url")) {
+                    // Si le canvas a une adresse de figure (relative au .html) :
+                    var fileurlrequest = new XMLHttpRequest();
+                    fileurlrequest.open("GET", docObject.getAttribute("data-url"), true);
+                    fileurlrequest.send();
+                    fileurlrequest.onload = function(e) {
+                        me.OpenFile("", fileurlrequest.responseText);
+                    }
                 } else {
                     // Si une figure a été postée sur index.php, on l'ouvre :
                     try {
                         me.OpenFile("", $U.base64_decode($DGPAD_FIGURE));
                     } catch (e) {}
                 }
+
             }
 
 
