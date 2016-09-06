@@ -175,6 +175,12 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
 
     var editBox = new GUIElement(_canvas, "textarea");
     editBox.setStyles("position:absolute;font-family:'Lucida Console';font-size:13px;line-height:20px");
+    var el = editBox.getDocObject();
+    el.autocorrect = el.autocomplete = el.autocapitalize = el.spellcheck = false;
+    // editBox.setAttr("autocomplete","off");
+    // editBox.setAttr("autocorrect","off");
+    // editBox.setAttr("autocapitalize","off");
+    // editBox.setAttr("spellcheck",false);
 
     var endInput = function() {
         txt = editBox.getDocObject().value;

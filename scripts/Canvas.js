@@ -78,6 +78,9 @@ function Canvas(_id) {
         if (window.$OS_X_APPLICATION) {
             interOp.figureLoaded("");
         };
+        me.getConstruction().initAll();
+        Cn.computeAll();
+        me.paint();
         $U.isloading = false
     }
     me.saveToLocalStorage = function(is_iPad) {
@@ -831,6 +834,7 @@ function Canvas(_id) {
 
     // Mouse Events :
     me.mousePressed = function(ev) {
+        // console.log("mousePressed");
         ev.preventDefault();
         if (pressedFilter) {
             pressedFilter(ev);
@@ -839,6 +843,7 @@ function Canvas(_id) {
         if (me.longpressManager.isVisible()) return;
         if (me.coincidenceManager.isVisible()) return;
         // if (me.blocklyManager.isSettingsVisible()) return;
+        me.setNoMouseEvent(false);
         draggedObject = null;
         dragCoords = null;
         actualCoords.x = me.mouseX(ev);
@@ -906,6 +911,7 @@ function Canvas(_id) {
     }
 
     me.mouseMoved = function(ev) {
+        // console.log("mouseMoved");
         ev.preventDefault();
         clearTimeout(longPressTimeout);
         actualCoords.x = me.mouseX(ev);
@@ -952,21 +958,32 @@ function Canvas(_id) {
 
 
     me.mouseReleased = function(ev) {
+        // console.log("mouseReleased");
         ev.preventDefault();
         clearTimeout(longPressTimeout);
         actualCoords.x = NaN;
         actualCoords.y = NaN;
+
         if (releasedFilter) {
             releasedFilter(ev);
             return;
         }
+
+
+
+
         if (noMouseEvent) {
+            dragCoords = null;
+            mousedown = false;
+            draggedObject = null;
             noMouseEvent = false;
             return
         }
 
-        mousedown = false;
         dragCoords = null;
+        mousedown = false;
+
+
         if (draggedObject) {
             if (isClick(ev)) {
                 // Si on a cliqué sur l'objet :
@@ -1419,11 +1436,16 @@ function Canvas(_id) {
         me.trackManager.clear();
         interpreter.Interpret(_src);
         // Mode construction si la figure est vide,
-        // mode consultation sinon :
-        me.setMode((_src === "") ? 1 : 0);
+        // mode consultation sinon (sauf si demandé par l'url) :
+        var md = (_src === "") ? 1 : 0;
+        if (docObject.hasAttribute("data-tools")) {
+            md = (docObject.getAttribute("data-tools") === "true") ? 1 : 0
+        };
+        me.setMode(md);
         me.undoManager.clear();
         Cn.clearIndicated();
         Cn.clearSelected();
+        Cn.initAll();
         Cn.computeAll();
         me.paint();
     };
@@ -1442,7 +1464,9 @@ function Canvas(_id) {
         var t = "SetGeneralStyle(\"";
         t += "background-color:" + me.getBackground();
         if (Cn.isDEG()) t += ";degree:true";
-        if (Cn.isDragOnlyMoveable()) t += ";dragmoveable:true";
+        else t += ";degree:false";
+        t += ";dragmoveable:" + Cn.isDragOnlyMoveable();
+        // if (Cn.isDragOnlyMoveable()) t += ";dragmoveable:true";
         t += "\");\n";
         return t;
     };

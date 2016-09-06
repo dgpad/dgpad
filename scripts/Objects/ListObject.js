@@ -330,7 +330,7 @@ function ListObject(_construction, _name, _EXP) {
             nb = 0;
         else if (nb > (Ptab.length - 1))
             nb = Ptab.length - 1;
-        console.log("nb="+nb);
+        console.log("nb=" + nb);
         if (segSize > 0)
             p.setXY(Ptab[nb].x + k * (Ptab[nb + 1].x - Ptab[nb].x), Ptab[nb].y + k * (Ptab[nb + 1].y - Ptab[nb].y));
         else
@@ -452,28 +452,125 @@ function ListObject(_construction, _name, _EXP) {
         ctx.fill();
         ctx.restore();
     };
-    var paintText = function(_p, ctx) {
-        var x0 = _p.x,
-            y0 = _p.y,
-            _t = _p.text[0],
-            _u = _p.text[1],
-            font = _p.fnt[0],
-            size = _p.fnt[1],
-            face = _p.fnt[2],
-            align = _p.fnt[3];
+    var preRenderTeXSlices = function(ctx, txt, size) {
+        var texTab = txt.toString().split("$$");
+        var datas = { width: 0, positions: [], boxes: [], texts: [] };
+        // var pos = 0;
+        for (var i = 0; i < texTab.length; i++) {
+            if (i % 2 === 0) {
+                // console.log(texTab[i]);
+                // ctx.fillText(texTab[i], pos, 0);
+                datas.positions.push(datas.width);
+                datas.boxes.push(null);
+                datas.texts.push(texTab[i]);
+                datas.width += ctx.measureText(texTab[i]).width;
 
-        var rot = -Math.atan2(_u[1], _u[0]);
-        ctx.save();
-        ctx.font = face + " " + size + "px " + font;
-        ctx.textAlign = align;
-        ctx.fillStyle = ctx.strokeStyle;
-        ctx.translate(x0, y0);
-        ctx.rotate(rot);
-        // ctx.beginPath();
-        // ctx.moveTo(0, 0);
-        ctx.fillText(_t, 0, 0);
-        ctx.restore();
+            } else {
+                var box = katex.canvasBox(texTab[i], ctx, {
+                    fontSize: size * 1.5
+                });
+                datas.positions.push(datas.width);
+                datas.boxes.push(box);
+                datas.texts.push(null);
+                datas.width += box.width;
+            }
+        }
+        return datas;
     };
+
+
+
+    var paintText = function(_p, ctx) {
+        if ($U.katexLoaded(Cn.getCanvas().paint,[ctx])) {
+            var x0 = _p.x,
+                y0 = _p.y,
+                _t = _p.text[0],
+                _u = _p.text[1],
+                font = _p.fnt[0],
+                size = _p.fnt[1],
+                face = _p.fnt[2],
+                align = _p.fnt[3];
+
+            var rot = -Math.atan2(_u[1], _u[0]);
+
+            ctx.save();
+            ctx.font = face + " " + size + "px " + font;
+
+            // L'alignement doit se traiter par le translate
+            // placé plus bas :
+            ctx.textAlign = "left";
+            ctx.strokeStyle = _p.rgb;
+            ctx.fillStyle = _p.rgb;
+            var datas = preRenderTeXSlices(ctx, _t, size);
+            var d = (align === "left") ? 0 : ((align === "right") ? datas.width : datas.width / 2);
+            ctx.translate(x0 - d * Math.cos(rot), y0 - d * Math.sin(rot));
+            ctx.rotate(rot);
+            for (var i = 0; i < datas.boxes.length; i++) {
+                if (datas.boxes[i]) {
+                    datas.boxes[i].renderAt(datas.positions[i], 0);
+                } else {
+                    ctx.fillText(datas.texts[i], datas.positions[i], 0);
+                }
+            }
+            ctx.restore();
+        };
+
+    };
+
+
+    // var paintText = function(_p, ctx) {
+    //     var x0 = _p.x,
+    //         y0 = _p.y,
+    //         _t = _p.text[0],
+    //         _u = _p.text[1],
+    //         font = _p.fnt[0],
+    //         size = _p.fnt[1],
+    //         face = _p.fnt[2],
+    //         align = _p.fnt[3];
+
+    //     var rot = -Math.atan2(_u[1], _u[0]);
+
+    //     ctx.save();
+    //     ctx.font = face + " " + size + "px " + font;
+
+
+    //     // console.log(align);
+    //     // ctx.textAlign = align;
+    //     ctx.textAlign = "left";
+
+
+
+    //     // ctx.fillStyle = ctx.strokeStyle;
+    //     ctx.strokeStyle = _p.rgb;
+    //     ctx.fillStyle = _p.rgb;
+    //     ctx.translate(x0, y0);
+    //     ctx.rotate(rot);
+
+
+    //     // // unicode parsing :
+    //     // _t = _t.replace(/\\u([A-F\d]{4})/g, function(m, _s) {
+    //     //     return String.fromCharCode(parseInt(_s, 16))
+    //     // });
+
+    //     var texTab = _t.split("$$");
+    //     var pos = 0;
+    //     for (var i = 0; i < texTab.length; i++) {
+    //         if (i % 2 === 0) {
+    //             // console.log(texTab[i]);
+    //             ctx.fillText(texTab[i], pos, 0);
+    //             pos += ctx.measureText(texTab[i]).width;
+    //         } else {
+    //             pos += renderTeX(ctx, texTab[i], size, pos, 0);
+    //         }
+    //     }
+    //     if (align === "center") {
+    //         console.log("TRANSLATE : " + pos);
+    //         ctx.translate(-pos / 2, 0);
+    //     }
+
+    //     // ctx.fillText(_t, 0, 0);
+    //     ctx.restore();
+    // };
 
     var paintPoint = paintCircle;
 

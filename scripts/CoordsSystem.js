@@ -9,6 +9,7 @@ function CoordsSystem(_C) {
     var y0 = Cn.getBounds().height / 2; // y origin coord, in canvas coord system
     var lockOx = false; // Dit si l'axe Ox doit être fixe (ne peut pas se déplacer verticalement) ou non
     var lockOy = false;
+    var onlypos = false; // Pour dessiner seulement les parties positives
     var centerZoom = false;
     // Curieusement, sur webkit le lineTo du context n'accepte pas de paramètre x ou y 
     // supérieur à 2147483583. La valeur ci-dessous est la moitié de ce nombre :
@@ -181,7 +182,8 @@ function CoordsSystem(_C) {
     var paintOx = function(ctx) {
         ctx.beginPath();
         if ((y0 > 0) && (y0 < Cn.getHeight())) {
-            ctx.moveTo(0, Math.round(y0));
+            var start = (onlypos) ? Math.round(x0) : 0;
+            ctx.moveTo(start, Math.round(y0));
             ctx.lineTo(Cn.getBounds().width, Math.round(y0));
             ctx.stroke();
         }
@@ -197,8 +199,9 @@ function CoordsSystem(_C) {
     var paintOy = function(ctx) {
         ctx.beginPath();
         if ((x0 > 0) && (x0 < Cn.getBounds().width)) {
+            var start = (onlypos) ? Math.round(y0) : Cn.getBounds().height;
             ctx.moveTo(Math.round(x0), 0);
-            ctx.lineTo(Math.round(x0), Cn.getBounds().height);
+            ctx.lineTo(Math.round(x0), start);
             ctx.stroke();
         }
         var dx = 16,
@@ -215,14 +218,16 @@ function CoordsSystem(_C) {
         var log = Math.floor($U.log(Unit / P.grid.limitinf));
         var inc = Math.pow(10, log);
         var inv = Math.pow(10, -log);
-        var min = (Math.round(inc * me.x(0))) * inv;
+        var start = (onlypos) ? me.x(x0) : me.x(0);
+        var min = (Math.round(inc * start)) * inv;
         var max = (Math.round(inc * me.x(Cn.getBounds().width)) + 1) * inv;
+        var limit = (onlypos) ? y0 : Cn.getHeight();
         for (var i = min; i < max; i += inv) {
             var j = (Math.round(inc * i)) * inv;
             var x = Math.round(me.px(j));
             ctx.beginPath();
             ctx.moveTo(x, 0);
-            ctx.lineTo(x, Cn.getHeight());
+            ctx.lineTo(x, limit);
             ctx.stroke();
         }
     };
@@ -231,13 +236,15 @@ function CoordsSystem(_C) {
         var log = Math.floor($U.log(Unit / P.grid.limitinf));
         var inc = Math.pow(10, log);
         var inv = Math.pow(10, -log);
+        var start = (onlypos) ? me.y(y0) : me.y(Cn.getHeight());
         var max = (Math.round(inc * me.y(0)) + 1) * inv;
-        var min = (Math.round(inc * me.y(Cn.getHeight()))) * inv;
+        var min = (Math.round(inc * start)) * inv;
+        var limit = (onlypos) ? x0 : 0;
         for (var i = min; i < max; i += inv) {
             var j = (Math.round(inc * i)) * inv;
             var y = Math.round(me.py(j));
             ctx.beginPath();
-            ctx.moveTo(0, y);
+            ctx.moveTo(limit, y);
             ctx.lineTo(Cn.getWidth(), y);
             ctx.stroke();
         }
@@ -248,7 +255,9 @@ function CoordsSystem(_C) {
         var log = Math.floor($U.log(Unit / P.grid.limitinf));
         var inc = Math.pow(10, log);
         var inv = Math.pow(10, -log);
-        var min = (Math.round(inc * me.x(0))) * inv;
+        var start = (onlypos) ? me.x(x0) : me.x(0);
+        // var min = (Math.round(inc * me.x(0))) * inv;
+        var min = (Math.round(inc * start)) * inv;
         var max = (Math.round(inc * me.x(Cn.getBounds().width)) + 1) * inv;
         var y1 = Math.round(y - P.grid.smalltick) - P.grid.axis_linewidth;
         var y2 = Math.round(y + P.grid.smalltick) + P.grid.axis_linewidth;
@@ -262,7 +271,8 @@ function CoordsSystem(_C) {
         }
         inc /= 5;
         inv *= 5;
-        min = (Math.round(inc * me.x(0))) * inv;
+        // min = (Math.round(inc * me.x(0))) * inv;
+        min = (Math.round(inc * start)) * inv;
         max = (Math.round(inc * me.x(Cn.getBounds().width)) + 1) * inv;
         y1 = Math.round(y - P.grid.longtick) - P.grid.axis_linewidth;
         y2 = Math.round(y + P.grid.longtick) + P.grid.axis_linewidth;
@@ -293,8 +303,9 @@ function CoordsSystem(_C) {
         var log = Math.floor($U.log(Unit / P.grid.limitinf));
         var inc = Math.pow(10, log);
         var inv = Math.pow(10, -log);
+        var start = (onlypos) ? me.y(y0) : me.y(Cn.getHeight());
         var max = (Math.round(inc * me.y(0)) + 1) * inv;
-        var min = (Math.round(inc * me.y(Cn.getHeight()))) * inv;
+        var min = (Math.round(inc * start)) * inv;
         var x1 = Math.round(x - P.grid.smalltick) - P.grid.axis_linewidth;
         var x2 = Math.round(x + P.grid.smalltick) + P.grid.axis_linewidth;
         for (var i = min; i < max; i += inv) {
@@ -308,7 +319,7 @@ function CoordsSystem(_C) {
         inc /= 5;
         inv *= 5;
         max = (Math.round(inc * me.y(0)) + 1) * inv;
-        min = (Math.round(inc * me.y(Cn.getHeight()))) * inv;
+        min = (Math.round(inc * start)) * inv;
         x1 = Math.round(x - P.grid.longtick) - P.grid.axis_linewidth;
         x2 = Math.round(x + P.grid.longtick) + P.grid.axis_linewidth;
         var prec = (log < 0) ? 0 : log;
@@ -457,6 +468,12 @@ function CoordsSystem(_C) {
     me.isCenterZoom = function(_b) {
         return centerZoom;
     };
+    me.setOnlyPos = function(_b) {
+        onlypos = _b;
+    };
+    me.isOnlyPos = function() {
+        return onlypos;
+    };
 
     me.getSource = function() {
         var txt = "SetCoords(" + x0 + "," + y0 + "," + Unit + "," + Cn.is3D() + "," + window.innerWidth + "," + window.innerHeight + ");\n";
@@ -474,6 +491,7 @@ function CoordsSystem(_C) {
         t += ";isLockOx:" + me.islockOx();
         t += ";isLockOy:" + me.islockOy();
         t += ";centerZoom:" + me.isCenterZoom();
+        t += ";onlyPositive:" + me.isOnlyPos();
         t += ";color:" + me.getColor();
         t += ";fontSize:" + me.getFontSize();
         t += ";axisWidth:" + me.getAxisWidth();

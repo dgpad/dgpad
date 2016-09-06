@@ -25,7 +25,7 @@ function PropertiesPanel(_canvas) {
     me.setDragOnlyMoveable = function(_val) {
         Cn.setDragOnlyMoveable(_val);
     };
-    me.isDragOnlyMoveable=function(){
+    me.isDragOnlyMoveable = function() {
         return Cn.isDragOnlyMoveable();
     };
     me.setDegree = function(_val) {
@@ -218,7 +218,7 @@ function props_messagePanel(_owner) {
     var DEGREEcallback = function(val) {
         _owner.setDegree(val);
     };
-    var DRAGALLcallback=function(_val){
+    var DRAGALLcallback = function(_val) {
         _owner.setDragOnlyMoveable(!(_val));
     };
 
@@ -346,6 +346,15 @@ function props_gridPanel(_owner) {
     cblockY.setTextColor("#252525");
     ch += 30;
 
+
+    var OnlyPoscallback = function(_s) {
+        CS.setOnlyPos(_s);
+        me.repaint();
+    };
+    var cbonlypos = new Checkbox(me.getDocObject(), 10, ch, 200, 30, CS.isOnlyPos(), $L.props_only_pos, OnlyPoscallback);
+    cbonlypos.setTextColor("#252525");
+    ch += 30;
+
     var CenterZcallback = function(_s) {
         CS.setCenterZoom(_s);
         me.repaint();
@@ -392,7 +401,7 @@ function props_namePanel(_owner) {
         show.setValue(true);
         me.obj.refreshChildsNames();
         me.repaint();
-    }; 
+    };
 
 
     this.focus = function() {

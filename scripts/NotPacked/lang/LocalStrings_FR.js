@@ -1,6 +1,9 @@
 $L.number = function(_n) {
     return _n.toString().replace(".", ",")
 };
+$L.number2 = function(_n) {
+    return _n.toString().replace(",", ".")
+};
 $L.dot = ",";
 $L.comma = ";";
 $L.object.point = "Point";
@@ -380,14 +383,35 @@ $L.blockly.texts = "Textes";
 $L.blockly.turtle.getlength = "longueur de la trace de";
 
 // Mercredi 1 juin 2016
-$L.blockly.globales_fix="fixer";
-$L.blockly.globales_to="à";
-$L.blockly.globales_increment="incrementer";
-$L.blockly.globales_by="de";
+$L.blockly.globales_fix = "fixer";
+$L.blockly.globales_to = "à";
+$L.blockly.globales_increment = "incrementer";
+$L.blockly.globales_by = "de";
 
 // Vendredi 10 juin
-$L.blockly.turtle.ofvector="du vecteur";
+$L.blockly.turtle.ofvector = "du vecteur";
 
 // Samedi 23 juillet
 $L.blockly.turtle.angle180 = "angle 180";
 $L.blockly.turtle.angle360 = "angle 360";
+
+// Lundi 8 Aout 2016
+$L.blockly.saveSVG = "Enregistrer en image SVG";
+$L.blockly.downloadSVG = "Cliquer sur ce lien pour télécharger l'image SVG";
+$L.blockly.waitfor = "entrée";
+$L.blockly.msgwait = "entrer un nombre";
+$L.blockly.inputouput = "Entrée/Sortie";
+$L.blockly.displayalert = "sortie";
+$L.blockly.displaymsg = "Bravo !";
+
+// Jeudi 25 Aout 2016
+$L.macros.segmentB1 = "Segments codés/1 barre";
+$L.macros.segmentB2 = "Segments codés/2 barres";
+$L.macros.segmentB3 = "Segments codés/3 barres";
+$L.macros.segmentB4 = "Segments codés/4 barres";
+$L.macros.segmentBZ = "Segments codés/Z";
+$L.macros.segmentBO = "Segments codés/cercle";
+
+// Mardi 30 Aout 2016
+$L.props_only_pos = "Seulement les positifs";
+$L.blockly.tabs.oninit="Initialisation";

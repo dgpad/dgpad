@@ -10,7 +10,6 @@ function NamesManager(_canvas) {
 
     var close = function() {
         canvas.selectNameBtn(false);
-        canvas.setNoMouseEvent(true);
     }
     me.isVisible = function() {
         return panel.isVisible()

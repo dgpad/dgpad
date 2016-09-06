@@ -1,6 +1,9 @@
 $L.number = function(_n) {
     return _n.toString().replace(".", ",")
 };
+$L.number2 = function(_n) {
+    return _n.toString().replace(",", ".")
+};
 $L.dot = ",";
 $L.comma = ";";
 $L.object.point = "Punto";

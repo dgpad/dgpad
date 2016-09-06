@@ -7,6 +7,84 @@ $U.halfPI = Math.PI / 2;
 $U.nullproc = function() {};
 
 
+$U.lang = function() {
+    var language_Code = navigator.language || navigator.userLanguage;
+    language_Code = language_Code.toUpperCase().split("-")[0];
+    // Trouver éventuellement un paramètre de langue dans le script du body :
+    if ($BODY_SCRIPT.hasAttribute("data-lang"))
+        language_Code = $BODY_SCRIPT.getAttribute("data-lang").toUpperCase();
+    return language_Code
+}
+
+
+$U.katexLoaded = function(_callback, _args) {
+    if (typeof katex === 'undefined') {
+        if ((_callback) && ($U.katexLoaded.callbacks.indexOf(_callback) === -1)) {
+            $U.katexLoaded.callbacks.push(_callback);
+            $U.katexLoaded.args.push(_args);
+        }
+        if (!$U.katexLoaded.loaded) {
+            var parent = document.getElementsByTagName("head")[0];
+            var lnk = document.createElement("link");
+            lnk.rel = "stylesheet";
+            lnk.href = $APP_PATH + "NotPacked/thirdParty/katex.min.css";
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = $APP_PATH + "NotPacked/thirdParty/katex.min.js";
+            script.onload = function() {
+                for (var i = 0; i < $U.katexLoaded.callbacks.length; i++) {
+                    if ($U.katexLoaded.callbacks[i]) {
+                        var proc = $U.katexLoaded.callbacks[i];
+                        var args = $U.katexLoaded.args[i];
+                        // callback will be call twice because
+                        // of dynamic font loading :
+                        proc.apply(null, args);
+                        setTimeout(function() {
+                            proc.apply(null, args);
+                        }, 500);
+                    }
+                }
+            }
+            parent.appendChild(lnk);
+            parent.appendChild(script);
+            $U.katexLoaded.loaded = true;
+        }
+        return false;
+    }
+    return true;
+}
+
+$U.katexLoaded.loaded = false;
+$U.katexLoaded.callbacks = [];
+$U.katexLoaded.args = [];
+
+
+// $U.loadKaTeX = function(_callback) {
+//     if (!$U.loadKaTeX.loaded) {
+//         var parent = document.getElementsByTagName("head")[0];
+//         var lnk = document.createElement("link");
+//         lnk.rel = "stylesheet";
+//         lnk.href = $APP_PATH + "NotPacked/thirdParty/katex.min.css";
+//         //        lnk.href = "http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.css";
+//         var script = document.createElement("script");
+//         script.type = "text/javascript";
+//         script.src = $APP_PATH + "NotPacked/thirdParty/katex.min.js";
+//         //        script.src = "http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.js";
+//         script.onload = function() {
+//             if (_callback) _callback();
+//             //            script.id = "MathJax";
+//         }
+//         parent.appendChild(lnk);
+//         parent.appendChild(script);
+//         $U.loadKaTeX.loaded = true;
+//         return false;
+//     }
+//     return true;
+// }
+
+// $U.loadKaTeX.loaded = false;
+
+
 $U.native2ascii = function(str) {
     var out = "";
     for (var i = 0; i < str.length; i++) {
@@ -880,6 +958,60 @@ $U.createDiv = function(_otherType) {
     return $U.addDomUtils(el);
 };
 
+$U.alert = function(_mess, _w, _h) {
+    var w = _w ? _w : 350;
+    var h = _h ? _h : 165;
+    var t = 40;
+    var msg_height = 50; // Message height
+    var msg_width = 300; // Message width
+    var msg_top = 0; // Distance from message to top
+    var ok_top = 120; // Ok btn top
+    var ok_width = 80; // Ok btn width
+    var ok_height = 30; // Ok btn height
+    var ok_right = 23; // Ok btn right margin
+
+    var scrn = $U.createDiv();
+    var wp = $U.createDiv();
+    var msg = $U.createDiv();
+    var ok = $U.createDiv();
+
+    scrn.stls("position:absolute;z-index:10000;overflow:hidden;background-color:rgba(50,50,50,0.7)");
+    wp.stls("position:absolute;border-radius:5px;font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight: 300;letter-spacing: 1.2px;overflow:hidden;border: 1px solid #b4b4b4;transition:transform 0.2s linear;transform:translate(0px,-200px);background-color:rgba(255,255,255,1)");
+    msg.stls("position:relative;text-align:center;display:table-cell;vertical-align:bottom;color:#797979;font-size:16px;white-space: pre-wrap;margin:0px;overflow:hidden");
+    ok.stls("position:absolute;text-align:center;vertical-align:middle;background-color:#8CD4F5;color:white;border:none;box-shadow:none;font-size:17px;font-weight:500;-webkit-border-radius:4px;border-radius:5px;cursor: pointer");
+    var winW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    var winH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    scrn.bnds(0, 0, winW, winH);
+    wp.bnds((winW - w) / 2, t, w, h);
+    msg.bnds((w - msg_width) / 2, msg_top, msg_width, msg_height);
+    msg.innerHTML = _mess;
+    ok.bnds(w - ok_width - ok_right, ok_top, ok_width, ok_height);
+    ok.innerHTML = $L.blockly.prompt_ok;
+    ok.stl("line-height", ok_height + "px");
+
+    var valid = function(ev) {
+        ev.preventDefault();
+        scrn.innerHTML = "";
+        window.document.body.removeChild(scrn);
+
+    };
+    scrn.md(function(ev) {
+        ev.stopPropagation();
+    });
+    ok.mu(valid);
+    ok.mm(function(ev) {
+        ok.stl("background-color", "#1EAAD0");
+        ev.stopPropagation();
+    });
+    wp.add(msg);
+    wp.add(ok);
+    scrn.add(wp);
+    window.document.body.appendChild(scrn);
+    setTimeout(function() {
+        wp.stls("transform:translate(0px,0px)");
+    }, 1);
+}
+
 $U.prompt = function(_mess, _default, _type, _proc, _w, _h, _inp_w) {
     var w = _w ? _w : 350;
     var h = _h ? _h : 165;
@@ -1281,6 +1413,8 @@ $U.initCanvas = function(_id) {
     if (cTag.hasAttribute("data-presentation")) {
         ZC.demoModeManager.setDemoMode(cTag.getAttribute("data-presentation").toLowerCase() === "true");
     };
+
+    // ZC.setMode(1);
 
     ZC.addTool(new PointConstructor());
     ZC.addTool(new SegmentConstructor());

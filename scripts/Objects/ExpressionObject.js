@@ -20,7 +20,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     var anchor = null; // PointObject auquel l'expression est rattachée
     var cPT = new PointObject(Cn, me.getName() + ".cursor", 0, 0);
 
-    this.blocks.setMode(["oncompute", "onchange"], "oncompute");
+    this.blocks.setMode(["oncompute", "onchange", "oninit"], "oncompute");
 
 
     // this.getMe = function() {
@@ -682,11 +682,13 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
 
     // setExp pour les widgets et pour blockly :
     me.setExp = me.setE1 = function(_t) {
+        // console.log("before: "+this.getParentLength());
         if (E1.getSource() !== _t) {
             E1 = Expression.delete(E1);
             E1 = new Expression(me, _t);
             setMethods();
         }
+        // console.log("after: "+this.getParentLength());
     };
     me.getExp = function() {
         return me.getE1().getSource();
@@ -743,6 +745,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
             min.refresh();
         if (max)
             max.refresh();
+        if (anchor !== null) me.addParent(anchor);
         // console.log("after:"+me.getParent().length);
     };
 

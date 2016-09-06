@@ -11,7 +11,7 @@ function Construction(_canvas) {
     me.mouseY = canvas.mouseY;
     me.prefs = canvas.prefs;
     var mode3D = false;
-    var ORG3D = null;
+    var ORG3D = null; 
 
 
     //    var mode3D=false;
@@ -1130,6 +1130,12 @@ function Construction(_canvas) {
     };
 
     me.computeAll = computeAll2D;
+
+    me.initAll=function(){
+        for (var i = 0, len = V.length; i < len; i++) {
+            if (V[i].blocks) V[i].blocks.evaluate("oninit");
+        }
+    }
 
     me.computeChilds = function(t) {
         for (var i = 0, leni = t.length; i < leni; i++) {

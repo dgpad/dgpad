@@ -239,6 +239,84 @@ $U.halfPI = Math.PI / 2;
 $U.nullproc = function() {};
 
 
+$U.lang = function() {
+    var language_Code = navigator.language || navigator.userLanguage;
+    language_Code = language_Code.toUpperCase().split("-")[0];
+    // Trouver éventuellement un paramètre de langue dans le script du body :
+    if ($BODY_SCRIPT.hasAttribute("data-lang"))
+        language_Code = $BODY_SCRIPT.getAttribute("data-lang").toUpperCase();
+    return language_Code
+}
+
+
+$U.katexLoaded = function(_callback, _args) {
+    if (typeof katex === 'undefined') {
+        if ((_callback) && ($U.katexLoaded.callbacks.indexOf(_callback) === -1)) {
+            $U.katexLoaded.callbacks.push(_callback);
+            $U.katexLoaded.args.push(_args);
+        }
+        if (!$U.katexLoaded.loaded) {
+            var parent = document.getElementsByTagName("head")[0];
+            var lnk = document.createElement("link");
+            lnk.rel = "stylesheet";
+            lnk.href = $APP_PATH + "NotPacked/thirdParty/katex.min.css";
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = $APP_PATH + "NotPacked/thirdParty/katex.min.js";
+            script.onload = function() {
+                for (var i = 0; i < $U.katexLoaded.callbacks.length; i++) {
+                    if ($U.katexLoaded.callbacks[i]) {
+                        var proc = $U.katexLoaded.callbacks[i];
+                        var args = $U.katexLoaded.args[i];
+                        // callback will be call twice because
+                        // of dynamic font loading :
+                        proc.apply(null, args);
+                        setTimeout(function() {
+                            proc.apply(null, args);
+                        }, 500);
+                    }
+                }
+            }
+            parent.appendChild(lnk);
+            parent.appendChild(script);
+            $U.katexLoaded.loaded = true;
+        }
+        return false;
+    }
+    return true;
+}
+
+$U.katexLoaded.loaded = false;
+$U.katexLoaded.callbacks = [];
+$U.katexLoaded.args = [];
+
+
+// $U.loadKaTeX = function(_callback) {
+//     if (!$U.loadKaTeX.loaded) {
+//         var parent = document.getElementsByTagName("head")[0];
+//         var lnk = document.createElement("link");
+//         lnk.rel = "stylesheet";
+//         lnk.href = $APP_PATH + "NotPacked/thirdParty/katex.min.css";
+//         //        lnk.href = "http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.css";
+//         var script = document.createElement("script");
+//         script.type = "text/javascript";
+//         script.src = $APP_PATH + "NotPacked/thirdParty/katex.min.js";
+//         //        script.src = "http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.js";
+//         script.onload = function() {
+//             if (_callback) _callback();
+//             //            script.id = "MathJax";
+//         }
+//         parent.appendChild(lnk);
+//         parent.appendChild(script);
+//         $U.loadKaTeX.loaded = true;
+//         return false;
+//     }
+//     return true;
+// }
+
+// $U.loadKaTeX.loaded = false;
+
+
 $U.native2ascii = function(str) {
     var out = "";
     for (var i = 0; i < str.length; i++) {
@@ -1112,6 +1190,60 @@ $U.createDiv = function(_otherType) {
     return $U.addDomUtils(el);
 };
 
+$U.alert = function(_mess, _w, _h) {
+    var w = _w ? _w : 350;
+    var h = _h ? _h : 165;
+    var t = 40;
+    var msg_height = 50; // Message height
+    var msg_width = 300; // Message width
+    var msg_top = 0; // Distance from message to top
+    var ok_top = 120; // Ok btn top
+    var ok_width = 80; // Ok btn width
+    var ok_height = 30; // Ok btn height
+    var ok_right = 23; // Ok btn right margin
+
+    var scrn = $U.createDiv();
+    var wp = $U.createDiv();
+    var msg = $U.createDiv();
+    var ok = $U.createDiv();
+
+    scrn.stls("position:absolute;z-index:10000;overflow:hidden;background-color:rgba(50,50,50,0.7)");
+    wp.stls("position:absolute;border-radius:5px;font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;font-weight: 300;letter-spacing: 1.2px;overflow:hidden;border: 1px solid #b4b4b4;transition:transform 0.2s linear;transform:translate(0px,-200px);background-color:rgba(255,255,255,1)");
+    msg.stls("position:relative;text-align:center;display:table-cell;vertical-align:bottom;color:#797979;font-size:16px;white-space: pre-wrap;margin:0px;overflow:hidden");
+    ok.stls("position:absolute;text-align:center;vertical-align:middle;background-color:#8CD4F5;color:white;border:none;box-shadow:none;font-size:17px;font-weight:500;-webkit-border-radius:4px;border-radius:5px;cursor: pointer");
+    var winW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    var winH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    scrn.bnds(0, 0, winW, winH);
+    wp.bnds((winW - w) / 2, t, w, h);
+    msg.bnds((w - msg_width) / 2, msg_top, msg_width, msg_height);
+    msg.innerHTML = _mess;
+    ok.bnds(w - ok_width - ok_right, ok_top, ok_width, ok_height);
+    ok.innerHTML = $L.blockly.prompt_ok;
+    ok.stl("line-height", ok_height + "px");
+
+    var valid = function(ev) {
+        ev.preventDefault();
+        scrn.innerHTML = "";
+        window.document.body.removeChild(scrn);
+
+    };
+    scrn.md(function(ev) {
+        ev.stopPropagation();
+    });
+    ok.mu(valid);
+    ok.mm(function(ev) {
+        ok.stl("background-color", "#1EAAD0");
+        ev.stopPropagation();
+    });
+    wp.add(msg);
+    wp.add(ok);
+    scrn.add(wp);
+    window.document.body.appendChild(scrn);
+    setTimeout(function() {
+        wp.stls("transform:translate(0px,0px)");
+    }, 1);
+}
+
 $U.prompt = function(_mess, _default, _type, _proc, _w, _h, _inp_w) {
     var w = _w ? _w : 350;
     var h = _h ? _h : 165;
@@ -1513,6 +1645,8 @@ $U.initCanvas = function(_id) {
     if (cTag.hasAttribute("data-presentation")) {
         ZC.demoModeManager.setDemoMode(cTag.getAttribute("data-presentation").toLowerCase() === "true");
     };
+
+    // ZC.setMode(1);
 
     ZC.addTool(new PointConstructor());
     ZC.addTool(new SegmentConstructor());
@@ -2141,6 +2275,7 @@ function CoordsSystem(_C) {
     var y0 = Cn.getBounds().height / 2; // y origin coord, in canvas coord system
     var lockOx = false; // Dit si l'axe Ox doit être fixe (ne peut pas se déplacer verticalement) ou non
     var lockOy = false;
+    var onlypos = false; // Pour dessiner seulement les parties positives
     var centerZoom = false;
     // Curieusement, sur webkit le lineTo du context n'accepte pas de paramètre x ou y 
     // supérieur à 2147483583. La valeur ci-dessous est la moitié de ce nombre :
@@ -2313,7 +2448,8 @@ function CoordsSystem(_C) {
     var paintOx = function(ctx) {
         ctx.beginPath();
         if ((y0 > 0) && (y0 < Cn.getHeight())) {
-            ctx.moveTo(0, Math.round(y0));
+            var start = (onlypos) ? Math.round(x0) : 0;
+            ctx.moveTo(start, Math.round(y0));
             ctx.lineTo(Cn.getBounds().width, Math.round(y0));
             ctx.stroke();
         }
@@ -2329,8 +2465,9 @@ function CoordsSystem(_C) {
     var paintOy = function(ctx) {
         ctx.beginPath();
         if ((x0 > 0) && (x0 < Cn.getBounds().width)) {
+            var start = (onlypos) ? Math.round(y0) : Cn.getBounds().height;
             ctx.moveTo(Math.round(x0), 0);
-            ctx.lineTo(Math.round(x0), Cn.getBounds().height);
+            ctx.lineTo(Math.round(x0), start);
             ctx.stroke();
         }
         var dx = 16,
@@ -2347,14 +2484,16 @@ function CoordsSystem(_C) {
         var log = Math.floor($U.log(Unit / P.grid.limitinf));
         var inc = Math.pow(10, log);
         var inv = Math.pow(10, -log);
-        var min = (Math.round(inc * me.x(0))) * inv;
+        var start = (onlypos) ? me.x(x0) : me.x(0);
+        var min = (Math.round(inc * start)) * inv;
         var max = (Math.round(inc * me.x(Cn.getBounds().width)) + 1) * inv;
+        var limit = (onlypos) ? y0 : Cn.getHeight();
         for (var i = min; i < max; i += inv) {
             var j = (Math.round(inc * i)) * inv;
             var x = Math.round(me.px(j));
             ctx.beginPath();
             ctx.moveTo(x, 0);
-            ctx.lineTo(x, Cn.getHeight());
+            ctx.lineTo(x, limit);
             ctx.stroke();
         }
     };
@@ -2363,13 +2502,15 @@ function CoordsSystem(_C) {
         var log = Math.floor($U.log(Unit / P.grid.limitinf));
         var inc = Math.pow(10, log);
         var inv = Math.pow(10, -log);
+        var start = (onlypos) ? me.y(y0) : me.y(Cn.getHeight());
         var max = (Math.round(inc * me.y(0)) + 1) * inv;
-        var min = (Math.round(inc * me.y(Cn.getHeight()))) * inv;
+        var min = (Math.round(inc * start)) * inv;
+        var limit = (onlypos) ? x0 : 0;
         for (var i = min; i < max; i += inv) {
             var j = (Math.round(inc * i)) * inv;
             var y = Math.round(me.py(j));
             ctx.beginPath();
-            ctx.moveTo(0, y);
+            ctx.moveTo(limit, y);
             ctx.lineTo(Cn.getWidth(), y);
             ctx.stroke();
         }
@@ -2380,7 +2521,9 @@ function CoordsSystem(_C) {
         var log = Math.floor($U.log(Unit / P.grid.limitinf));
         var inc = Math.pow(10, log);
         var inv = Math.pow(10, -log);
-        var min = (Math.round(inc * me.x(0))) * inv;
+        var start = (onlypos) ? me.x(x0) : me.x(0);
+        // var min = (Math.round(inc * me.x(0))) * inv;
+        var min = (Math.round(inc * start)) * inv;
         var max = (Math.round(inc * me.x(Cn.getBounds().width)) + 1) * inv;
         var y1 = Math.round(y - P.grid.smalltick) - P.grid.axis_linewidth;
         var y2 = Math.round(y + P.grid.smalltick) + P.grid.axis_linewidth;
@@ -2394,7 +2537,8 @@ function CoordsSystem(_C) {
         }
         inc /= 5;
         inv *= 5;
-        min = (Math.round(inc * me.x(0))) * inv;
+        // min = (Math.round(inc * me.x(0))) * inv;
+        min = (Math.round(inc * start)) * inv;
         max = (Math.round(inc * me.x(Cn.getBounds().width)) + 1) * inv;
         y1 = Math.round(y - P.grid.longtick) - P.grid.axis_linewidth;
         y2 = Math.round(y + P.grid.longtick) + P.grid.axis_linewidth;
@@ -2425,8 +2569,9 @@ function CoordsSystem(_C) {
         var log = Math.floor($U.log(Unit / P.grid.limitinf));
         var inc = Math.pow(10, log);
         var inv = Math.pow(10, -log);
+        var start = (onlypos) ? me.y(y0) : me.y(Cn.getHeight());
         var max = (Math.round(inc * me.y(0)) + 1) * inv;
-        var min = (Math.round(inc * me.y(Cn.getHeight()))) * inv;
+        var min = (Math.round(inc * start)) * inv;
         var x1 = Math.round(x - P.grid.smalltick) - P.grid.axis_linewidth;
         var x2 = Math.round(x + P.grid.smalltick) + P.grid.axis_linewidth;
         for (var i = min; i < max; i += inv) {
@@ -2440,7 +2585,7 @@ function CoordsSystem(_C) {
         inc /= 5;
         inv *= 5;
         max = (Math.round(inc * me.y(0)) + 1) * inv;
-        min = (Math.round(inc * me.y(Cn.getHeight()))) * inv;
+        min = (Math.round(inc * start)) * inv;
         x1 = Math.round(x - P.grid.longtick) - P.grid.axis_linewidth;
         x2 = Math.round(x + P.grid.longtick) + P.grid.axis_linewidth;
         var prec = (log < 0) ? 0 : log;
@@ -2589,6 +2734,12 @@ function CoordsSystem(_C) {
     me.isCenterZoom = function(_b) {
         return centerZoom;
     };
+    me.setOnlyPos = function(_b) {
+        onlypos = _b;
+    };
+    me.isOnlyPos = function() {
+        return onlypos;
+    };
 
     me.getSource = function() {
         var txt = "SetCoords(" + x0 + "," + y0 + "," + Unit + "," + Cn.is3D() + "," + window.innerWidth + "," + window.innerHeight + ");\n";
@@ -2606,6 +2757,7 @@ function CoordsSystem(_C) {
         t += ";isLockOx:" + me.islockOx();
         t += ";isLockOy:" + me.islockOy();
         t += ";centerZoom:" + me.isCenterZoom();
+        t += ";onlyPositive:" + me.isOnlyPos();
         t += ";color:" + me.getColor();
         t += ";fontSize:" + me.getFontSize();
         t += ";axisWidth:" + me.getAxisWidth();
@@ -3251,6 +3403,9 @@ function Canvas(_id) {
         if (window.$OS_X_APPLICATION) {
             interOp.figureLoaded("");
         };
+        me.getConstruction().initAll();
+        Cn.computeAll();
+        me.paint();
         $U.isloading = false
     }
     me.saveToLocalStorage = function(is_iPad) {
@@ -4004,6 +4159,7 @@ function Canvas(_id) {
 
     // Mouse Events :
     me.mousePressed = function(ev) {
+        // console.log("mousePressed");
         ev.preventDefault();
         if (pressedFilter) {
             pressedFilter(ev);
@@ -4012,6 +4168,7 @@ function Canvas(_id) {
         if (me.longpressManager.isVisible()) return;
         if (me.coincidenceManager.isVisible()) return;
         // if (me.blocklyManager.isSettingsVisible()) return;
+        me.setNoMouseEvent(false);
         draggedObject = null;
         dragCoords = null;
         actualCoords.x = me.mouseX(ev);
@@ -4079,6 +4236,7 @@ function Canvas(_id) {
     }
 
     me.mouseMoved = function(ev) {
+        // console.log("mouseMoved");
         ev.preventDefault();
         clearTimeout(longPressTimeout);
         actualCoords.x = me.mouseX(ev);
@@ -4125,21 +4283,32 @@ function Canvas(_id) {
 
 
     me.mouseReleased = function(ev) {
+        // console.log("mouseReleased");
         ev.preventDefault();
         clearTimeout(longPressTimeout);
         actualCoords.x = NaN;
         actualCoords.y = NaN;
+
         if (releasedFilter) {
             releasedFilter(ev);
             return;
         }
+
+
+
+
         if (noMouseEvent) {
+            dragCoords = null;
+            mousedown = false;
+            draggedObject = null;
             noMouseEvent = false;
             return
         }
 
-        mousedown = false;
         dragCoords = null;
+        mousedown = false;
+
+
         if (draggedObject) {
             if (isClick(ev)) {
                 // Si on a cliqué sur l'objet :
@@ -4592,11 +4761,16 @@ function Canvas(_id) {
         me.trackManager.clear();
         interpreter.Interpret(_src);
         // Mode construction si la figure est vide,
-        // mode consultation sinon :
-        me.setMode((_src === "") ? 1 : 0);
+        // mode consultation sinon (sauf si demandé par l'url) :
+        var md = (_src === "") ? 1 : 0;
+        if (docObject.hasAttribute("data-tools")) {
+            md = (docObject.getAttribute("data-tools") === "true") ? 1 : 0
+        };
+        me.setMode(md);
         me.undoManager.clear();
         Cn.clearIndicated();
         Cn.clearSelected();
+        Cn.initAll();
         Cn.computeAll();
         me.paint();
     };
@@ -4615,7 +4789,9 @@ function Canvas(_id) {
         var t = "SetGeneralStyle(\"";
         t += "background-color:" + me.getBackground();
         if (Cn.isDEG()) t += ";degree:true";
-        if (Cn.isDragOnlyMoveable()) t += ";dragmoveable:true";
+        else t += ";degree:false";
+        t += ";dragmoveable:" + Cn.isDragOnlyMoveable();
+        // if (Cn.isDragOnlyMoveable()) t += ";dragmoveable:true";
         t += "\");\n";
         return t;
     };
@@ -4634,7 +4810,7 @@ function Construction(_canvas) {
     me.mouseY = canvas.mouseY;
     me.prefs = canvas.prefs;
     var mode3D = false;
-    var ORG3D = null;
+    var ORG3D = null; 
 
 
     //    var mode3D=false;
@@ -5753,6 +5929,12 @@ function Construction(_canvas) {
     };
 
     me.computeAll = computeAll2D;
+
+    me.initAll=function(){
+        for (var i = 0, len = V.length; i < len; i++) {
+            if (V[i].blocks) V[i].blocks.evaluate("oninit");
+        }
+    }
 
     me.computeChilds = function(t) {
         for (var i = 0, leni = t.length; i < leni; i++) {
@@ -8342,7 +8524,7 @@ function PropertiesPanel(_canvas) {
     me.setDragOnlyMoveable = function(_val) {
         Cn.setDragOnlyMoveable(_val);
     };
-    me.isDragOnlyMoveable=function(){
+    me.isDragOnlyMoveable = function() {
         return Cn.isDragOnlyMoveable();
     };
     me.setDegree = function(_val) {
@@ -8535,7 +8717,7 @@ function props_messagePanel(_owner) {
     var DEGREEcallback = function(val) {
         _owner.setDegree(val);
     };
-    var DRAGALLcallback=function(_val){
+    var DRAGALLcallback = function(_val) {
         _owner.setDragOnlyMoveable(!(_val));
     };
 
@@ -8663,6 +8845,15 @@ function props_gridPanel(_owner) {
     cblockY.setTextColor("#252525");
     ch += 30;
 
+
+    var OnlyPoscallback = function(_s) {
+        CS.setOnlyPos(_s);
+        me.repaint();
+    };
+    var cbonlypos = new Checkbox(me.getDocObject(), 10, ch, 200, 30, CS.isOnlyPos(), $L.props_only_pos, OnlyPoscallback);
+    cbonlypos.setTextColor("#252525");
+    ch += 30;
+
     var CenterZcallback = function(_s) {
         CS.setCenterZoom(_s);
         me.repaint();
@@ -8709,7 +8900,7 @@ function props_namePanel(_owner) {
         show.setValue(true);
         me.obj.refreshChildsNames();
         me.repaint();
-    }; 
+    };
 
 
     this.focus = function() {
@@ -11475,9 +11666,9 @@ function BlocklyObjects(_object, _construction) {
     this.rename = function(_old, _new) {
         for (var i = 0; i < MODE.length; i++) {
             var m = MODE[i];
-            console.log()
+            // console.log()
             if (obj[m].getXML()) {
-                console.log(obj[m].getXML());
+                // console.log(obj[m].getXML());
                 var newXML = renameField(obj[m].getXML(), _old, _new, "turtle_length", "NAME");
                 newXML = renameField(newXML, _old, _new, "turtle_get", "NAME");
                 newXML = renameField(newXML, _old, _new, "dgpad_get_point_short", "NAME");
@@ -11731,7 +11922,7 @@ function BlocklyObject(_owner, _construction) {
     this.setChilds = function(_childs) {
         childs = {};
         for (var i = 0; i < _childs.length; i++) {
-            var o = Cn.find(_childs[i]);
+            var o = Cn.findVar(_childs[i]);
             if ((o === undefined) ||
                 (o.getVarName() === OWN.getObj().getVarName())) continue;
             childs[o.getVarName()] = o;
@@ -11749,7 +11940,7 @@ function BlocklyObject(_owner, _construction) {
     this.setParents = function(_parents) {
         parents = {};
         for (var i = 0; i < _parents.length; i++) {
-            var o = Cn.find(_parents[i]);
+            var o = Cn.findVar(_parents[i]);
             if ((o === undefined) ||
                 (o.getVarName() === OWN.getObj().getVarName())) continue;
             parents[o.getVarName()] = o;
@@ -15659,6 +15850,7 @@ function AreaObject(_construction, _name, _Ptab) {
     this.setParent();
     //    this.setOpacity(0.2);
     this.setDefaults("area");
+    this.blocks.setMode(["onmousedown", "ondrag", "onmouseup"], "ondrag");
     var valid = true;
     var X = NaN,
         Y = NaN; // Coordonnées du barycentre (utilisées pour l'aire)
@@ -15696,7 +15888,7 @@ function AreaObject(_construction, _name, _Ptab) {
         return "area";
     };
     this.getAssociatedTools = function() {
-        return "point,@callproperty,@calltrash,@callcalc,@depends";
+        return "point,@callproperty,@calltrash,@callcalc,@depends,@blockly";
     };
     this.barycenter = function() {
         var len = Ptab.length;
@@ -17067,7 +17259,7 @@ function LocusObject(_construction, _name, _O, _ON) {
 //************ ARC 3 pts OBJECT ******************
 //************************************************
 function AngleObject(_construction, _name, _P1, _P2, _P3) {
-    $U.extend(this, new ConstructionObject(_construction, _name)); // Héritage
+    var parent = $U.extend(this, new ConstructionObject(_construction, _name)); // Héritage
     $U.extend(this, new MoveableObject(_construction)); // Héritage
     var me = this;
     var A = _P1;
@@ -17143,7 +17335,7 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
         return R;
     };
     this.setArcRay = function(_r) {
-        R=_r;
+        R = _r;
     };
     this.paintLength = function(ctx) {
         if (valid && (!$U.approximatelyEqual(AOC180, $U.halfPI))) {
@@ -17225,6 +17417,20 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
 
 
     this.setDefaults("angle");
+
+    // Surcharge de getStyle pour traiter
+    // un cas particulier :
+    this.getStyle = function(src) {
+        var s = this.getStyleString();
+        if (isNaN(this.getRealPrecision())) s += ";p:-1";
+        src.styleWrite(true, this.getName(), "STL", s);
+    };
+    // this.getStyleString = function() {
+    //     var s = parent.getStyleString();
+    //     // console.log("this.getRealPrecision()="+this.getRealPrecision());
+    //     if (isNaN(this.getRealPrecision())) s += ";p:-1";
+    //     return s;
+    // };
 
 }
 //************************************************
@@ -17866,7 +18072,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     var anchor = null; // PointObject auquel l'expression est rattachée
     var cPT = new PointObject(Cn, me.getName() + ".cursor", 0, 0);
 
-    this.blocks.setMode(["oncompute", "onchange"], "oncompute");
+    this.blocks.setMode(["oncompute", "onchange", "oninit"], "oncompute");
 
 
     // this.getMe = function() {
@@ -18528,11 +18734,13 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
 
     // setExp pour les widgets et pour blockly :
     me.setExp = me.setE1 = function(_t) {
+        // console.log("before: "+this.getParentLength());
         if (E1.getSource() !== _t) {
             E1 = Expression.delete(E1);
             E1 = new Expression(me, _t);
             setMethods();
         }
+        // console.log("after: "+this.getParentLength());
     };
     me.getExp = function() {
         return me.getE1().getSource();
@@ -18589,6 +18797,7 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
             min.refresh();
         if (max)
             max.refresh();
+        if (anchor !== null) me.addParent(anchor);
         // console.log("after:"+me.getParent().length);
     };
 
@@ -19647,7 +19856,7 @@ function ListObject(_construction, _name, _EXP) {
             nb = 0;
         else if (nb > (Ptab.length - 1))
             nb = Ptab.length - 1;
-        console.log("nb="+nb);
+        console.log("nb=" + nb);
         if (segSize > 0)
             p.setXY(Ptab[nb].x + k * (Ptab[nb + 1].x - Ptab[nb].x), Ptab[nb].y + k * (Ptab[nb + 1].y - Ptab[nb].y));
         else
@@ -19769,28 +19978,125 @@ function ListObject(_construction, _name, _EXP) {
         ctx.fill();
         ctx.restore();
     };
-    var paintText = function(_p, ctx) {
-        var x0 = _p.x,
-            y0 = _p.y,
-            _t = _p.text[0],
-            _u = _p.text[1],
-            font = _p.fnt[0],
-            size = _p.fnt[1],
-            face = _p.fnt[2],
-            align = _p.fnt[3];
+    var preRenderTeXSlices = function(ctx, txt, size) {
+        var texTab = txt.toString().split("$$");
+        var datas = { width: 0, positions: [], boxes: [], texts: [] };
+        // var pos = 0;
+        for (var i = 0; i < texTab.length; i++) {
+            if (i % 2 === 0) {
+                // console.log(texTab[i]);
+                // ctx.fillText(texTab[i], pos, 0);
+                datas.positions.push(datas.width);
+                datas.boxes.push(null);
+                datas.texts.push(texTab[i]);
+                datas.width += ctx.measureText(texTab[i]).width;
 
-        var rot = -Math.atan2(_u[1], _u[0]);
-        ctx.save();
-        ctx.font = face + " " + size + "px " + font;
-        ctx.textAlign = align;
-        ctx.fillStyle = ctx.strokeStyle;
-        ctx.translate(x0, y0);
-        ctx.rotate(rot);
-        // ctx.beginPath();
-        // ctx.moveTo(0, 0);
-        ctx.fillText(_t, 0, 0);
-        ctx.restore();
+            } else {
+                var box = katex.canvasBox(texTab[i], ctx, {
+                    fontSize: size * 1.5
+                });
+                datas.positions.push(datas.width);
+                datas.boxes.push(box);
+                datas.texts.push(null);
+                datas.width += box.width;
+            }
+        }
+        return datas;
     };
+
+
+
+    var paintText = function(_p, ctx) {
+        if ($U.katexLoaded(Cn.getCanvas().paint,[ctx])) {
+            var x0 = _p.x,
+                y0 = _p.y,
+                _t = _p.text[0],
+                _u = _p.text[1],
+                font = _p.fnt[0],
+                size = _p.fnt[1],
+                face = _p.fnt[2],
+                align = _p.fnt[3];
+
+            var rot = -Math.atan2(_u[1], _u[0]);
+
+            ctx.save();
+            ctx.font = face + " " + size + "px " + font;
+
+            // L'alignement doit se traiter par le translate
+            // placé plus bas :
+            ctx.textAlign = "left";
+            ctx.strokeStyle = _p.rgb;
+            ctx.fillStyle = _p.rgb;
+            var datas = preRenderTeXSlices(ctx, _t, size);
+            var d = (align === "left") ? 0 : ((align === "right") ? datas.width : datas.width / 2);
+            ctx.translate(x0 - d * Math.cos(rot), y0 - d * Math.sin(rot));
+            ctx.rotate(rot);
+            for (var i = 0; i < datas.boxes.length; i++) {
+                if (datas.boxes[i]) {
+                    datas.boxes[i].renderAt(datas.positions[i], 0);
+                } else {
+                    ctx.fillText(datas.texts[i], datas.positions[i], 0);
+                }
+            }
+            ctx.restore();
+        };
+
+    };
+
+
+    // var paintText = function(_p, ctx) {
+    //     var x0 = _p.x,
+    //         y0 = _p.y,
+    //         _t = _p.text[0],
+    //         _u = _p.text[1],
+    //         font = _p.fnt[0],
+    //         size = _p.fnt[1],
+    //         face = _p.fnt[2],
+    //         align = _p.fnt[3];
+
+    //     var rot = -Math.atan2(_u[1], _u[0]);
+
+    //     ctx.save();
+    //     ctx.font = face + " " + size + "px " + font;
+
+
+    //     // console.log(align);
+    //     // ctx.textAlign = align;
+    //     ctx.textAlign = "left";
+
+
+
+    //     // ctx.fillStyle = ctx.strokeStyle;
+    //     ctx.strokeStyle = _p.rgb;
+    //     ctx.fillStyle = _p.rgb;
+    //     ctx.translate(x0, y0);
+    //     ctx.rotate(rot);
+
+
+    //     // // unicode parsing :
+    //     // _t = _t.replace(/\\u([A-F\d]{4})/g, function(m, _s) {
+    //     //     return String.fromCharCode(parseInt(_s, 16))
+    //     // });
+
+    //     var texTab = _t.split("$$");
+    //     var pos = 0;
+    //     for (var i = 0; i < texTab.length; i++) {
+    //         if (i % 2 === 0) {
+    //             // console.log(texTab[i]);
+    //             ctx.fillText(texTab[i], pos, 0);
+    //             pos += ctx.measureText(texTab[i]).width;
+    //         } else {
+    //             pos += renderTeX(ctx, texTab[i], size, pos, 0);
+    //         }
+    //     }
+    //     if (align === "center") {
+    //         console.log("TRANSLATE : " + pos);
+    //         ctx.translate(-pos / 2, 0);
+    //     }
+
+    //     // ctx.fillText(_t, 0, 0);
+    //     ctx.restore();
+    // };
 
     var paintPoint = paintCircle;
 
@@ -20416,7 +20722,7 @@ function BlocklyButtonObject(_construction, _name, _display_name, _x, _y) {
     var LABEL = _display_name;
 
 
-    this.blocks.setMode(["onprogram"], "onprogram");
+    this.blocks.setMode(["onprogram","oninit"], "onprogram");
 
     this.getAssociatedTools = function() {
         s = "@callproperty,@dgscriptname,@blockly";
@@ -22609,7 +22915,7 @@ function TextManager(_canvas) {
     var me = this;
     var canvas = _canvas;
     var txts = [];
-    var firstLoad = true;
+    // var firstLoad = true;
     var textPanel = null;
 
 
@@ -22647,23 +22953,23 @@ function TextManager(_canvas) {
         return txts.length;
     };
 
-    var loadKaTeX = function() {
-        var parent = document.getElementsByTagName("head")[0];
-        var lnk = document.createElement("link");
-        lnk.rel = "stylesheet";
-        lnk.href = $APP_PATH + "NotPacked/thirdParty/katex.min.css";
-        //        lnk.href = "http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.css";
-        var script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = $APP_PATH + "NotPacked/thirdParty/katex.min.js";
-        //        script.src = "http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.js";
-        script.onload = function() {
-            me.evaluateStrings();
-            //            script.id = "MathJax";
-        }
-        parent.appendChild(lnk);
-        parent.appendChild(script);
-    }
+    // var loadKaTeX = function() {
+    //     var parent = document.getElementsByTagName("head")[0];
+    //     var lnk = document.createElement("link");
+    //     lnk.rel = "stylesheet";
+    //     lnk.href = $APP_PATH + "NotPacked/thirdParty/katex.min.css";
+    //     //        lnk.href = "http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.css";
+    //     var script = document.createElement("script");
+    //     script.type = "text/javascript";
+    //     script.src = $APP_PATH + "NotPacked/thirdParty/katex.min.js";
+    //     //        script.src = "http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.js";
+    //     script.onload = function() {
+    //         me.evaluateStrings();
+    //         //            script.id = "MathJax";
+    //     }
+    //     parent.appendChild(lnk);
+    //     parent.appendChild(script);
+    // }
 
     me.edit = function(mytxt) {
         for (var k = 0; k < txts.length; k++) {
@@ -22698,10 +23004,11 @@ function TextManager(_canvas) {
     };
 
     me.addTeXElement = function(_m, _l, _t, _w, _h, _stl) {
-        if (firstLoad) {
-            loadKaTeX();
-            firstLoad = false;
-        }
+        $U.katexLoaded(me.evaluateStrings);
+        // if (firstLoad) {
+        //     loadKaTeX();
+        //     firstLoad = false;
+        // }
         var txt = new TextObject(canvas, _m, _l, _t, _w, _h);
         if (_stl !== undefined) {
             txt.setStyles(_stl);
@@ -22949,6 +23256,12 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
 
     var editBox = new GUIElement(_canvas, "textarea");
     editBox.setStyles("position:absolute;font-family:'Lucida Console';font-size:13px;line-height:20px");
+    var el = editBox.getDocObject();
+    el.autocorrect = el.autocomplete = el.autocapitalize = el.spellcheck = false;
+    // editBox.setAttr("autocomplete","off");
+    // editBox.setAttr("autocorrect","off");
+    // editBox.setAttr("autocapitalize","off");
+    // editBox.setAttr("spellcheck",false);
 
     var endInput = function() {
         txt = editBox.getDocObject().value;
@@ -25840,6 +26153,7 @@ function Expression(_obj, _s) {
         DY = null;
         DZ = null;
         DT = null;
+        if (obj.blocks) obj.blocks.evaluate("onchange");
     };
 
     // Pour Blockly :
@@ -26222,7 +26536,6 @@ function NamesManager(_canvas) {
 
     var close = function() {
         canvas.selectNameBtn(false);
-        canvas.setNoMouseEvent(true);
     }
     me.isVisible = function() {
         return panel.isVisible()
@@ -26682,6 +26995,7 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
            path1 + "perso/blocks/lists.js",
            path1 + "perso/blocks/turtle.js",
            path1 + "perso/blocks/globals.js",
+           path1 + "perso/blocks/text.js",
            path1 + "perso/js/core.js",
            path1 + "perso/js/aspect.js",
            path1 + "perso/js/geometry.js",
@@ -26722,6 +27036,33 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
        // **************** END PRINT SOURCE *********************
        // *******************************************************
 
+
+       var workspace2SVG = function() {
+           var aleph = Blockly.mainWorkspace.svgBlockCanvas_.cloneNode(true);
+           aleph.removeAttribute("width");
+           aleph.removeAttribute("height");
+           if (aleph.children[0] !== undefined) {
+               aleph.removeAttribute("transform");
+               aleph.children[0].removeAttribute("transform");
+               aleph.children[0].children[0].removeAttribute("transform");
+               var styleTXT = '.blocklyDraggable {}\n';
+               styleTXT += Blockly.Css.CONTENT.join('\n');
+               styleTXT = styleTXT.replace(/<<<PATH>>>/g, "");
+               styleTXT = styleTXT.replace(/&gt;/g, " ");
+               styleTXT = styleTXT.replace(/>/g, " ");
+               var linkElm = document.createElement('style');
+               var cssTextNode = document.createTextNode(styleTXT);
+               linkElm.appendChild(cssTextNode);
+               aleph.insertBefore(linkElm, aleph.firstChild);
+               var bbox = document.getElementsByClassName("blocklyBlockCanvas")[0].getBBox();
+               var svg = new XMLSerializer().serializeToString(aleph);
+               svg = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="' + bbox.width + '" height="' + bbox.height + '" viewBox="0 0 ' + bbox.width + ' ' + bbox.height + '">' + svg + '</svg>';
+               svg = svg.replace(/<style[^>]*>/g, "<style>");
+               svg = svg.replace(/&nbsp;/g, " ");
+               return svg;
+           }
+           return null;
+       }
 
 
        var initBlockly = function() {
@@ -26795,6 +27136,14 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
                me.ZC = canvas;
                me.CN = canvas.getConstruction();
                me.getBounds = panel.getBounds;
+               me.pushVARS = function(_n) {
+                   var o = me.CN.find(_n);
+                   if (o) me.VARS.push(o.getVarName());
+               };
+               me.pushPARS = function(_n) {
+                   var o = me.CN.find(_n);
+                   if (o) me.PARS.push(o.getVarName());
+               };
                me.getNames = function() {
                    return NMS;
                };
@@ -26835,6 +27184,29 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
                var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
                xml = Blockly.Xml.domToText(xml);
                localStorage.setItem("blockly_clipboard", xml);
+
+               // workspace2PNG();
+
+
+               // var aa = new XMLSerializer().serializeToString(Blockly.svg);
+               // prompt(aa);
+           };
+
+           Blockly.custom_menu_print = function() {
+               var svg = workspace2SVG();
+               // svg = svg.replace(/&gt;/g, "@@@@GT@@@@");
+               // svg = svg.replace(/&lt;/g, "@@@@LT@@@@");
+               var svgsrc = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">';
+               svgsrc += svg;
+
+               if (window.$OS_X_APPLICATION) {
+                   interOp.saveBlocklySVG(svgsrc)
+               } else {
+                   var lnk = ($iOS_APPLICATION) ? "data-svg:" : "data:image/svg+xml,";
+                   lnk += ($iOS_APPLICATION) ? $U.base64_encode(svgsrc) : encodeURIComponent(svgsrc);
+                   var txt = '<br><br><a href="' + lnk + '" style="-webkit-touch-callout:default;font-size:18px;font-family:Helvetica, Arial, sans-serif;color:#252525;" target="_blank" download="DgpadSvgImage.svg" ><b>' + $L.blockly.downloadSVG + '</b></a>.';
+                   $U.alert(txt);
+               }
            };
            Blockly.custom_menu_copySel = function() {
                if (Blockly.selected) {
@@ -26863,18 +27235,18 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
        }
 
        var showCategory = function(name, bool) {
-           var cat = { "turtle": 7, "texts": 8 };
+           var cat = { "turtle": 7, "texts": 8, "inputs": "b" };
            var elt = document.getElementById(":" + cat[name]);
            if (bool) {
                elt.style["visibility"] = "visible";
                elt.style["height"] = "25px";
-               turtle.show(OBJ);
+               if (name === "turtle") turtle.show(OBJ);
                // turtle = new TurtleObject(canvas, OBJ);
                canvas.paint();
            } else {
                elt.style["visibility"] = "hidden";
                elt.style["height"] = "0px";
-               turtle.hide();
+               if (name === "turtle") turtle.hide();
                // turtle = null;
                canvas.paint();
            }
@@ -26933,6 +27305,7 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
                // On cache la catégorie "Tortue" :
                showCategory("turtle", false);
                showCategory("texts", false);
+               showCategory("inputs", false);
 
                showCallback();
            }, 200);
@@ -27035,7 +27408,8 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
            setTimeout(function() {
                var mod = OBJ.blocks.getMode()[panel.getMode()];
                showCategory("turtle", (mod === "onlogo"));
-               showCategory("texts", (mod === "onlogo"));
+               showCategory("texts", (mod === "onlogo") || (mod === "onprogram"));
+               showCategory("inputs", (mod === "onprogram"));
            }, 300)
        };
 
@@ -27052,7 +27426,10 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
                    Blockly.Xml.domToWorkspace(workspace, elt);
                }
                showCategory("turtle", (mod === "onlogo"));
-               showCategory("texts", (mod === "onlogo"));
+               showCategory("texts", (mod === "onlogo") || (mod === "onprogram"));
+               showCategory("inputs", (mod === "onprogram"));
+
+
                // Blockly.Toolbox.dispose();
                // Blockly.mainWorkspace.updateToolbox(document.getElementById('toolbox_turtle'))
            }
@@ -27062,6 +27439,7 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
        var hideCallback = function() {
            showCategory("turtle", false);
            showCategory("texts", false);
+           showCategory("inputs", false);
            changeCSS("blocklyToolboxDiv", "visibility", "hidden");
            Blockly.ContextMenu.hide();
        };

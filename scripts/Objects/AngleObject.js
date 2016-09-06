@@ -2,7 +2,7 @@
 //************ ARC 3 pts OBJECT ******************
 //************************************************
 function AngleObject(_construction, _name, _P1, _P2, _P3) {
-    $U.extend(this, new ConstructionObject(_construction, _name)); // Héritage
+    var parent = $U.extend(this, new ConstructionObject(_construction, _name)); // Héritage
     $U.extend(this, new MoveableObject(_construction)); // Héritage
     var me = this;
     var A = _P1;
@@ -78,7 +78,7 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
         return R;
     };
     this.setArcRay = function(_r) {
-        R=_r;
+        R = _r;
     };
     this.paintLength = function(ctx) {
         if (valid && (!$U.approximatelyEqual(AOC180, $U.halfPI))) {
@@ -160,5 +160,19 @@ function AngleObject(_construction, _name, _P1, _P2, _P3) {
 
 
     this.setDefaults("angle");
+
+    // Surcharge de getStyle pour traiter
+    // un cas particulier :
+    this.getStyle = function(src) {
+        var s = this.getStyleString();
+        if (isNaN(this.getRealPrecision())) s += ";p:-1";
+        src.styleWrite(true, this.getName(), "STL", s);
+    };
+    // this.getStyleString = function() {
+    //     var s = parent.getStyleString();
+    //     // console.log("this.getRealPrecision()="+this.getRealPrecision());
+    //     if (isNaN(this.getRealPrecision())) s += ";p:-1";
+    //     return s;
+    // };
 
 }

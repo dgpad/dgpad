@@ -12,7 +12,7 @@ function BlocklyButtonObject(_construction, _name, _display_name, _x, _y) {
     var LABEL = _display_name;
 
 
-    this.blocks.setMode(["onprogram"], "onprogram");
+    this.blocks.setMode(["onprogram","oninit"], "onprogram");
 
     this.getAssociatedTools = function() {
         s = "@callproperty,@dgscriptname,@blockly";

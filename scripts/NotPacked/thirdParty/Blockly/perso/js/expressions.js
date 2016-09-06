@@ -20,8 +20,8 @@ Blockly.JavaScript['dgpad_angle'] = function(block) {
     var a2 = Blockly.JavaScript.valueToCode(block, 'A2', Blockly.JavaScript.ORDER_ATOMIC);
     var a3 = Blockly.JavaScript.valueToCode(block, 'A3', Blockly.JavaScript.ORDER_ATOMIC);
     if ((a1 === "") || (a2 === "") || (a3 === "")) return "";
-    if (tpe === "a180") tpe='Math.Angle180(' + a1 + ',' + a2 + ',' + a3 + ')';
-    else tpe='Math.Angle360(' + a1 + ',' + a2 + ',' + a3 + ')';
+    if (tpe === "a180") tpe = 'Math.Angle180(' + a1 + ',' + a2 + ',' + a3 + ')';
+    else tpe = 'Math.Angle360(' + a1 + ',' + a2 + ',' + a3 + ')';
     return [tpe, Blockly.JavaScript.ORDER_NONE];
 };
 
@@ -29,7 +29,8 @@ Blockly.JavaScript['dgpad_angle'] = function(block) {
 Blockly.JavaScript['dgpad_coordinate'] = function(block) {
     var dropdown_type = block.getFieldValue('type');
     var dropdown_name = block.getFieldValue('NAME');
-    var code = '(' + dropdown_name + ')[' + dropdown_type + ']';
+    var code = 'Coordinate("' + dropdown_name + '",' + dropdown_type + ')';
+    // var code = '(' + dropdown_name + ')[' + dropdown_type + ']';
     return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
@@ -41,7 +42,8 @@ Blockly.JavaScript['dgpad_return'] = function(block) {
 
 Blockly.JavaScript['dgpad_get_object_short'] = function(block) {
     var dropdown_name = block.getFieldValue('NAME');
-    Blockly.dgpad.PARS.push(dropdown_name);
+    // Blockly.dgpad.PARS.push(dropdown_name);
+    Blockly.dgpad.pushPARS(dropdown_name);
     var code = dropdown_name;
     return [code, Blockly.JavaScript.ORDER_NONE];
 };
@@ -52,7 +54,8 @@ Blockly.JavaScript['dgpad_get_point_short_turtle'] = Blockly.JavaScript['dgpad_g
 Blockly.JavaScript['dgpad_get_object'] = function(block) {
     var dropdown_type = block.getFieldValue('TYPE');
     var dropdown_name = block.getFieldValue('NAME');
-    Blockly.dgpad.PARS.push(dropdown_name);
+    // Blockly.dgpad.PARS.push(dropdown_name);
+    Blockly.dgpad.pushPARS(dropdown_name);
     var code = dropdown_name;
     return [code, Blockly.JavaScript.ORDER_NONE];
 };
@@ -61,7 +64,8 @@ Blockly.JavaScript['dgpad_set_object'] = function(block) {
     var name = block.getFieldValue('NAME');
     var arg0 = Blockly.JavaScript.valueToCode(block, 'obj_val');
     if (arg0 === "") return "";
-    Blockly.dgpad.VARS.push(name);
+    // Blockly.dgpad.VARS.push(name);
+    Blockly.dgpad.pushVARS(name);
     var loopVar = 'blockly_var_' + Blockly.JavaScript.variableDB_.getDistinctName(
         'temp_var', Blockly.Variables.NAME_TYPE);
     var code = "var " + loopVar + " = " + arg0 + " ;\n";

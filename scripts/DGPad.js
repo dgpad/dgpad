@@ -308,6 +308,10 @@ if (!$APP_PATH) {
     if ($BODY_SCRIPT.hasAttribute("data-presentation")) {
         canvas.setAttribute("data-presentation", $BODY_SCRIPT.getAttribute("data-presentation"));
     }
+    // Transfert sur le canvas de l'état du mode 1 (mode construction ou non) :
+    if ($BODY_SCRIPT.hasAttribute("data-tools")) {
+        canvas.setAttribute("data-tools", $BODY_SCRIPT.getAttribute("data-tools"));
+    }
 
     var num = document.getElementsByTagName("canvas").length;
     canvas.setAttribute("id", "DGPad" + num);

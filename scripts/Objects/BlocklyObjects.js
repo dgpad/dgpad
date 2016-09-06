@@ -48,9 +48,9 @@ function BlocklyObjects(_object, _construction) {
     this.rename = function(_old, _new) {
         for (var i = 0; i < MODE.length; i++) {
             var m = MODE[i];
-            console.log()
+            // console.log()
             if (obj[m].getXML()) {
-                console.log(obj[m].getXML());
+                // console.log(obj[m].getXML());
                 var newXML = renameField(obj[m].getXML(), _old, _new, "turtle_length", "NAME");
                 newXML = renameField(newXML, _old, _new, "turtle_get", "NAME");
                 newXML = renameField(newXML, _old, _new, "dgpad_get_point_short", "NAME");
@@ -304,7 +304,7 @@ function BlocklyObject(_owner, _construction) {
     this.setChilds = function(_childs) {
         childs = {};
         for (var i = 0; i < _childs.length; i++) {
-            var o = Cn.find(_childs[i]);
+            var o = Cn.findVar(_childs[i]);
             if ((o === undefined) ||
                 (o.getVarName() === OWN.getObj().getVarName())) continue;
             childs[o.getVarName()] = o;
@@ -322,7 +322,7 @@ function BlocklyObject(_owner, _construction) {
     this.setParents = function(_parents) {
         parents = {};
         for (var i = 0; i < _parents.length; i++) {
-            var o = Cn.find(_parents[i]);
+            var o = Cn.findVar(_parents[i]);
             if ((o === undefined) ||
                 (o.getVarName() === OWN.getObj().getVarName())) continue;
             parents[o.getVarName()] = o;

@@ -129,6 +129,7 @@ function Expression(_obj, _s) {
         DY = null;
         DZ = null;
         DT = null;
+        if (obj.blocks) obj.blocks.evaluate("onchange");
     };
 
     // Pour Blockly :

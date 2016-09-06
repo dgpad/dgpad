@@ -10,6 +10,7 @@ function Interpreter(_win, _canvas) {
 
     me.W = _win;
     me.$U = _win.$U;
+    me.$L = _win.$L;
     me.Z = _canvas;
     me.C = me.Z.getConstruction();
     me.E = document.createEvent("MouseEvent");
@@ -303,6 +304,10 @@ function Interpreter(_win, _canvas) {
 
     // Blockly part :
 
+    var ALERT = function(_msg) {
+        me.$U.alert(_msg)
+    };
+
     var GLOBAL_SET = function(_var, _val) {
         blockly_namespace[_var] = _val;
     };
@@ -401,6 +406,10 @@ function Interpreter(_win, _canvas) {
         t.TAB.push([20, 0, _t, t.U]);
         t.TAB.push(t.LAST);
     };
+
+    var TURTLE_TEXT = function(_s) {
+        return _s;
+    }
 
     var TURTLE_FONT = function(_f, _s, _stl, _al) {
         var t = TURTLE_VARS;
@@ -622,6 +631,20 @@ function Interpreter(_win, _canvas) {
         } else {
             return o.coords2D();
         };
+    };
+
+    var Coordinate = function(_n, _i) {
+        var o = me.f(_n);
+        var coord;
+        if (o.is3D()) {
+            me.C.setcompute3D_filter(o.coords3D);
+            me.C.computeAll();
+            me.C.clearcompute3D_filter();
+            coord = o.getOldcoords()[_i];
+        } else {
+            coord = o.coords2D()[_i];
+        };
+        return Math.round(coord * 1e13) / 1e13;
     };
 
     var Point = function(_n, _x, _y) {
@@ -1202,6 +1225,9 @@ function Interpreter(_win, _canvas) {
                 case "centerZoom":
                     cs.setCenterZoom(e[1] === "true");
                     break;
+                case "onlyPositive":
+                    cs.setOnlyPos(e[1] === "true");
+                    break;
                 case "color":
                     cs.setColor(e[1]);
                     break;
@@ -1418,11 +1444,22 @@ function Interpreter(_win, _canvas) {
     var functionReplace = function(_s) {
         var tabExpr = [];
         var maskExpr = "___EXPR___";
+        var tabTrtl = [];
+        var maskTrtl = "___TRTL___";
         if (!isValidParenthesis(_s))
             return _s;
+
+        // Les textes de tortue ne doivent pas être digérés par
+        // l'interpreteur : on les met de côté pour les restituer ensuite.
+        _s = _s.replace(/(TURTLE_TEXT\('[^']+'\))/g, function(m, _n) {
+            tabTrtl.push(_n);
+            return (maskTrtl + (tabTrtl.length - 1));
+        });
+
         // Remplacement des expressions sans variable : E1 -> ___EXPR___n
         // et mise du contenu en mémoire tabExpr[n]="funcValue(E1)()"
         // _s = _s.replace(/\b(\w+)\b([^\(]|$)/g, function(m, _n, _e) {
+        // console.log("before : " + _s);
         _s = _s.replace(/([àáâãäåæçèéêëìíîïñòóôõöœùúûüýÿÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÑÒÓÔÕÖŒÙÚÛÜÝŸΆΈ-ώἀ-ῼa-zA-Z0-9_]+)([^\(]|$)/g, function(m, _n, _e) {
             var o = (window[_n] === undefined) ? me.fv(window["$locvar_" + _n]) : me.fv(window[_n]);
             if (o === undefined)
@@ -1437,6 +1474,7 @@ function Interpreter(_win, _canvas) {
                 tabExpr.push("funcValue(" + _n + ")__()");
             return (maskExpr + (tabExpr.length - 1) + _e);
         });
+        // console.log("after : " + _s);
 
         // Remplacement des fonctions d'une variable : f1(<param>) -> funcValue(f1)(<param>)
         // Voir explications dans caretReplace :
@@ -1468,6 +1506,10 @@ function Interpreter(_win, _canvas) {
         // Rétablissement des expressions sans variable : ___EXPR___n -> funcValue(E1)()
         _s = _s.replace(new RegExp(maskExpr + "(\\d+)", "g"), function(m, _d) {
             return tabExpr[_d];
+        });
+        // Rétablissement des textes de tortue
+        _s = _s.replace(new RegExp(maskTrtl + "(\\d+)", "g"), function(m, _d) {
+            return tabTrtl[_d];
         });
         return _s;
     };
@@ -1537,8 +1579,13 @@ function Interpreter(_win, _canvas) {
             txts.push(t);
             return (maskTxts + (txts.length - 1));
         });
+
+
+        // console.log("avant : "+s2);
         s2 = functionReplace(s2);
+        // console.log("après : "+s2);
         s2 = EXinit("EX_funcValue")(_o, s2);
+
         s2 = EXinit("EX_getObj")(_o, s2);
         // Remplacement des fonctions personnelles x,y,etc... 
         // par une notation interne EX_x,EX_y,etc... :
@@ -1605,6 +1652,17 @@ function Interpreter(_win, _canvas) {
         dep = s2.replace(/TURTLE_LENGTH\(\"([^\"]+)\"/g, function(m, _d) {
             var o = me.f("blk_turtle_list_" + _d);
             if ((o) && (_o.getVarName) && (_o.getVarName() != ("blk_turtle_exp_" + _d))) {
+                if ((_o) && (_o.getParent) && (_o.getParent().indexOf(o) === -1)) {
+                    _o.addParent(o);
+                }
+            }
+            return "";
+        });
+
+        // idem pour Coordinate :
+        dep = s2.replace(/Coordinate\(\"([^\"]+)\"/g, function(m, _d) {
+            var o = me.f(_d);
+            if ((o) && (_o.getVarName) && (_o.getVarName() != (_d))) {
                 if ((_o) && (_o.getParent) && (_o.getParent().indexOf(o) === -1)) {
                     _o.addParent(o);
                 }
@@ -2079,7 +2137,7 @@ function Interpreter(_win, _canvas) {
             me.C.coordsSystem.restrictPhi([_t[0] / 0.015 + 0.000001, _t[1] / 0.015 - 0.000001]);
         else
             me.C.coordsSystem.restrictPhi([]);
-        me.C.coordsSystem.translate(0,0); // mise en cohérence de l'origine du repère
+        me.C.coordsSystem.translate(0, 0); // mise en cohérence de l'origine du repère
         return _t;
     };
     EX.EX_restrictTheta = function(_t) {
@@ -2087,7 +2145,7 @@ function Interpreter(_win, _canvas) {
             me.C.coordsSystem.restrictTheta([_t[0] / 0.015 + 0.000001, _t[1] / 0.015 - 0.000001]);
         else
             me.C.coordsSystem.restrictTheta([]);
-        me.C.coordsSystem.translate(0,0); // mise en cohérence de l'origine du repère
+        me.C.coordsSystem.translate(0, 0); // mise en cohérence de l'origine du repère
         return _t;
     };
     EX.EX_point3D = function(_o, _v) {

@@ -10,6 +10,7 @@ function AreaObject(_construction, _name, _Ptab) {
     this.setParent();
     //    this.setOpacity(0.2);
     this.setDefaults("area");
+    this.blocks.setMode(["onmousedown", "ondrag", "onmouseup"], "ondrag");
     var valid = true;
     var X = NaN,
         Y = NaN; // Coordonnées du barycentre (utilisées pour l'aire)
@@ -47,7 +48,7 @@ function AreaObject(_construction, _name, _Ptab) {
         return "area";
     };
     this.getAssociatedTools = function() {
-        return "point,@callproperty,@calltrash,@callcalc,@depends";
+        return "point,@callproperty,@calltrash,@callcalc,@depends,@blockly";
     };
     this.barycenter = function() {
         var len = Ptab.length;

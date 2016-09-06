@@ -538,3 +538,225 @@ $macros[$L.macros.pingpong] = {
         return [Symc2];
     }
 };
+
+
+$macros[$L.macros.segmentB1] = {
+    name: $L.macros.segmentB1,
+    parameters: ["line"],
+    exec: function(S1) {
+        A = DefinitionPoint("A", S1, 0);
+        B = DefinitionPoint("B", S1, 1);
+        P1 = Point("P1", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(B-A)*(1+i*sqrt(3))", "0");
+        P3 = Point("P3", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(A-B)*(1+i*sqrt(3))", "0");
+        S2 = Segment("S2", P1, P3);
+        var s1 = Find(S1),
+            s2 = Find(S2),
+            oldSetSize = s1.setSize,
+            oldSetColor = s1.setColor;
+        s1.setSize = function(_s) {
+            oldSetSize(_s);
+            s2.setSize(_s);
+        };
+        s1.setColor = function(_col) {
+            oldSetColor(_col);
+            s2.setColor(_col);
+        };
+        var sz = s1.getSize();
+        var col = s1.getColor().getHEX();
+        STL(S2, "c:" + col + ";s:" + sz + ";f:24");
+        return [S2];
+    }
+};
+
+$macros[$L.macros.segmentB2] = {
+    name: $L.macros.segmentB2,
+    parameters: ["line"],
+    exec: function(S1) {
+        A = DefinitionPoint("A", S1, 0);
+        B = DefinitionPoint("B", S1, 1);
+        E = Point("E", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(B-A)*(1+i*sqrt(3))+5*(B-A)/(d(A,B)*pixel())", "0");
+        P2 = Point("P2", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(A-B)*(1+i*sqrt(3))+5*(B-A)/(d(A,B)*pixel())", "0");
+        P1 = Point("P1", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(B-A)*(1+i*sqrt(3))-5*(B-A)/(d(A,B)*pixel())", "0");
+        P3 = Point("P3", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(A-B)*(1+i*sqrt(3))-5*(B-A)/(d(A,B)*pixel())", "0");
+        S2 = Segment("S2", P1, P3);
+        S3 = Segment("S3", E, P2);
+        var s1 = Find(S1),
+            s2 = Find(S2),
+            s3 = Find(S3),
+            oldSetSize = s1.setSize,
+            oldSetColor = s1.setColor;
+        s1.setSize = function(_s) {
+            oldSetSize(_s);
+            s2.setSize(_s);
+            s3.setSize(_s);
+        };
+        s1.setColor = function(_col) {
+            oldSetColor(_col);
+            s2.setColor(_col);
+            s3.setColor(_col);
+        };
+        var sz = s1.getSize();
+        var col = s1.getColor().getHEX();
+        STL(S2, "c:" + col + ";s:" + sz + ";f:24");
+        STL(S3, "c:" + col + ";s:" + sz + ";f:24");
+        return [S2, S3];
+    }
+};
+
+$macros[$L.macros.segmentB3] = {
+    name: $L.macros.segmentB3,
+    parameters: ["line"],
+    exec: function(S1) {
+        A = DefinitionPoint("A", S1, 0);
+        B = DefinitionPoint("B", S1, 1);
+        E = Point("E", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(B-A)*(1+i*sqrt(3))+10*(B-A)/(d(A,B)*pixel())", "0");
+        P2 = Point("P2", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(A-B)*(1+i*sqrt(3))+10*(B-A)/(d(A,B)*pixel())", "0");
+        P1 = Point("P1", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(B-A)*(1+i*sqrt(3))", "0");
+        P3 = Point("P3", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(A-B)*(1+i*sqrt(3))", "0");
+        P4 = Point("P4", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(B-A)*(1+i*sqrt(3))-10*(B-A)/(d(A,B)*pixel())", "0");
+        P5 = Point("P5", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(A-B)*(1+i*sqrt(3))-10*(B-A)/(d(A,B)*pixel())", "0");
+        S2 = Segment("S2", P1, P3);
+        S3 = Segment("S3", E, P2);
+        S4 = Segment("S3", P4, P5);
+        var s1 = Find(S1),
+            s2 = Find(S2),
+            s3 = Find(S3),
+            s4 = Find(S4),
+            oldSetSize = s1.setSize,
+            oldSetColor = s1.setColor;
+        s1.setSize = function(_s) {
+            oldSetSize(_s);
+            s2.setSize(_s);
+            s3.setSize(_s);
+            s4.setSize(_s);
+        };
+        s1.setColor = function(_col) {
+            oldSetColor(_col);
+            s2.setColor(_col);
+            s3.setColor(_col);
+            s4.setColor(_col);
+        };
+        var sz = s1.getSize();
+        var col = s1.getColor().getHEX();
+        STL(S2, "c:" + col + ";s:" + sz + ";f:24");
+        STL(S3, "c:" + col + ";s:" + sz + ";f:24");
+        STL(S4, "c:" + col + ";s:" + sz + ";f:24");
+        return [S2, S3, S4];
+    }
+};
+
+$macros[$L.macros.segmentB4] = {
+    name: $L.macros.segmentB4,
+    parameters: ["line"],
+    exec: function(S1) {
+        A = DefinitionPoint("A", S1, 0);
+        B = DefinitionPoint("B", S1, 1);
+        E = Point("E", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(B-A)*(1+i*sqrt(3))+5*(B-A)/(d(A,B)*pixel())", "0");
+        P2 = Point("P2", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(A-B)*(1+i*sqrt(3))+5*(B-A)/(d(A,B)*pixel())", "0");
+        P1 = Point("P1", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(B-A)*(1+i*sqrt(3))+15*(B-A)/(d(A,B)*pixel())", "0");
+        P3 = Point("P3", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(A-B)*(1+i*sqrt(3))+15*(B-A)/(d(A,B)*pixel())", "0");
+        P4 = Point("P4", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(B-A)*(1+i*sqrt(3))-5*(B-A)/(d(A,B)*pixel())", "0");
+        P5 = Point("P5", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(A-B)*(1+i*sqrt(3))-5*(B-A)/(d(A,B)*pixel())", "0");
+        P6 = Point("P6", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(B-A)*(1+i*sqrt(3))-15*(B-A)/(d(A,B)*pixel())", "0");
+        P7 = Point("P7", "(A+B)/2+(10/(2*pixel()*d(A,B)))*(A-B)*(1+i*sqrt(3))-15*(B-A)/(d(A,B)*pixel())", "0");
+        S2 = Segment("S2", P1, P3);
+        S3 = Segment("S3", E, P2);
+        S4 = Segment("S4", P4, P5);
+        S5 = Segment("S5", P6, P7);
+        var s1 = Find(S1),
+            s2 = Find(S2),
+            s3 = Find(S3),
+            s4 = Find(S4),
+            s5 = Find(S5),
+            oldSetSize = s1.setSize,
+            oldSetColor = s1.setColor;
+        s1.setSize = function(_s) {
+            oldSetSize(_s);
+            s2.setSize(_s);
+            s3.setSize(_s);
+            s4.setSize(_s);
+            s5.setSize(_s);
+        };
+        s1.setColor = function(_col) {
+            oldSetColor(_col);
+            s2.setColor(_col);
+            s3.setColor(_col);
+            s4.setColor(_col);
+            s5.setColor(_col);
+        };
+        var sz = s1.getSize();
+        var col = s1.getColor().getHEX();
+        STL(S2, "c:" + col + ";s:" + sz + ";f:24");
+        STL(S3, "c:" + col + ";s:" + sz + ";f:24");
+        STL(S4, "c:" + col + ";s:" + sz + ";f:24");
+        STL(S5, "c:" + col + ";s:" + sz + ";f:24");
+        return [S2, S3, S4, S5];
+    }
+};
+
+$macros[$L.macros.segmentBO] = {
+    name: $L.macros.segmentBO,
+    parameters: ["line"],
+    exec: function(S1) {
+        P1 = DefinitionPoint("P1", S1, 0);
+        P2 = DefinitionPoint("P2", S1, 1);
+        M1 = MidPoint("M1", P2, P1);
+        C1 = Circle1("C1", M1, "10/pixel()");
+        var s1 = Find(S1),
+            c1 = Find(C1),
+            oldSetSize = s1.setSize,
+            oldSetColor = s1.setColor;
+        s1.setSize = function(_s) {
+            oldSetSize(_s);
+            c1.setSize(_s);
+        };
+        s1.setColor = function(_col) {
+            oldSetColor(_col);
+            c1.setColor(_col);
+        };
+        var sz = s1.getSize();
+        var col = s1.getColor().getHEX();
+        STL(C1, "c:" + col + ";s:" + sz + ";f:24");
+        return [C1];
+    }
+};
+
+$macros[$L.macros.segmentBZ] = {
+    name: $L.macros.segmentBZ,
+    parameters: ["line"],
+    exec: function(S1) {
+        A = DefinitionPoint("A", S1, 0);
+        B = DefinitionPoint("B", S1, 1);
+        E = Point("E", "(A+B)/2+(12/(2*pixel()*d(A,B)))*(B-A)*(1+i*sqrt(3))+12*(B-A)/(d(A,B)*pixel())", "0");
+        P2 = Point("P2", "(A+B)/2+(12/(2*pixel()*d(A,B)))*(A-B)*(1+i*sqrt(3))+12*(B-A)/(d(A,B)*pixel())", "0");
+        P4 = Point("P4", "(A+B)/2+(12/(2*pixel()*d(A,B)))*(B-A)*(1+i*sqrt(3))-12*(B-A)/(d(A,B)*pixel())", "0");
+        P5 = Point("P5", "(A+B)/2+(12/(2*pixel()*d(A,B)))*(A-B)*(1+i*sqrt(3))-12*(B-A)/(d(A,B)*pixel())", "0");
+        S2 = Segment("S2", E, P5);
+        S3 = Segment("S3", E, P2);
+        S4 = Segment("S3", P4, P5);
+        var s1 = Find(S1),
+            s2 = Find(S2),
+            s3 = Find(S3),
+            s4 = Find(S4),
+            oldSetSize = s1.setSize,
+            oldSetColor = s1.setColor;
+        s1.setSize = function(_s) {
+            oldSetSize(_s);
+            s2.setSize(_s);
+            s3.setSize(_s);
+            s4.setSize(_s);
+        };
+        s1.setColor = function(_col) {
+            oldSetColor(_col);
+            s2.setColor(_col);
+            s3.setColor(_col);
+            s4.setColor(_col);
+        };
+        var sz = s1.getSize();
+        var col = s1.getColor().getHEX();
+        STL(S2, "c:" + col + ";s:" + sz + ";f:24");
+        STL(S3, "c:" + col + ";s:" + sz + ";f:24");
+        STL(S4, "c:" + col + ";s:" + sz + ";f:24");
+        return [S2, S3, S4];
+    }
+};

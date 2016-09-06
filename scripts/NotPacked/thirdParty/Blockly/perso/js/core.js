@@ -324,3 +324,38 @@ Blockly.JavaScript['procedures_defreturn'] = function(block) {
 // a procedure with a return value.
 Blockly.JavaScript['procedures_defnoreturn'] =
     Blockly.JavaScript['procedures_defreturn'];
+
+Blockly.JavaScript['number_prompt'] = function(block) {
+    var msg = Blockly.JavaScript.valueToCode(block, 'TEXT',
+        Blockly.JavaScript.ORDER_NONE) || '\'\'';
+    var code = 'window.prompt(' + msg + ')';
+    code = 'parseFloat($L.number2(' + code + '))';
+    return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};
+
+Blockly.JavaScript['text_alert'] = function(block) {
+    var msg = Blockly.JavaScript.valueToCode(block, 'TEXT',
+        Blockly.JavaScript.ORDER_NONE) || '\'\'';
+    var code = "ALERT('<b>'+" + msg + "+'</b>');\n";
+    // code = 'parseFloat($L.number2(' + code + '))';
+    return code;
+};
+
+
+// Blockly.JavaScript['number_prompt'] = function(block) {
+//     // Prompt function.
+//     if (block.getField('TEXT')) {
+//         // Internal message.
+//         var msg = Blockly.JavaScript.quote_(block.getFieldValue('TEXT'));
+//     } else {
+//         // External message.
+//         var msg = Blockly.JavaScript.valueToCode(block, 'TEXT',
+//             Blockly.JavaScript.ORDER_NONE) || '\'\'';
+//     }
+//     var code = 'window.prompt(' + msg + ')';
+//     var toNumber = block.getFieldValue('TYPE') == 'NUMBER';
+//     if (toNumber) {
+//         code = 'parseFloat($L.number2(' + code + '))';
+//     }
+//     return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+// };

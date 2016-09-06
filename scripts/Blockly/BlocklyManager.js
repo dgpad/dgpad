@@ -17,6 +17,7 @@
            path1 + "perso/blocks/lists.js",
            path1 + "perso/blocks/turtle.js",
            path1 + "perso/blocks/globals.js",
+           path1 + "perso/blocks/text.js",
            path1 + "perso/js/core.js",
            path1 + "perso/js/aspect.js",
            path1 + "perso/js/geometry.js",
@@ -57,6 +58,33 @@
        // **************** END PRINT SOURCE *********************
        // *******************************************************
 
+
+       var workspace2SVG = function() {
+           var aleph = Blockly.mainWorkspace.svgBlockCanvas_.cloneNode(true);
+           aleph.removeAttribute("width");
+           aleph.removeAttribute("height");
+           if (aleph.children[0] !== undefined) {
+               aleph.removeAttribute("transform");
+               aleph.children[0].removeAttribute("transform");
+               aleph.children[0].children[0].removeAttribute("transform");
+               var styleTXT = '.blocklyDraggable {}\n';
+               styleTXT += Blockly.Css.CONTENT.join('\n');
+               styleTXT = styleTXT.replace(/<<<PATH>>>/g, "");
+               styleTXT = styleTXT.replace(/&gt;/g, " ");
+               styleTXT = styleTXT.replace(/>/g, " ");
+               var linkElm = document.createElement('style');
+               var cssTextNode = document.createTextNode(styleTXT);
+               linkElm.appendChild(cssTextNode);
+               aleph.insertBefore(linkElm, aleph.firstChild);
+               var bbox = document.getElementsByClassName("blocklyBlockCanvas")[0].getBBox();
+               var svg = new XMLSerializer().serializeToString(aleph);
+               svg = '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="' + bbox.width + '" height="' + bbox.height + '" viewBox="0 0 ' + bbox.width + ' ' + bbox.height + '">' + svg + '</svg>';
+               svg = svg.replace(/<style[^>]*>/g, "<style>");
+               svg = svg.replace(/&nbsp;/g, " ");
+               return svg;
+           }
+           return null;
+       }
 
 
        var initBlockly = function() {
@@ -130,6 +158,14 @@
                me.ZC = canvas;
                me.CN = canvas.getConstruction();
                me.getBounds = panel.getBounds;
+               me.pushVARS = function(_n) {
+                   var o = me.CN.find(_n);
+                   if (o) me.VARS.push(o.getVarName());
+               };
+               me.pushPARS = function(_n) {
+                   var o = me.CN.find(_n);
+                   if (o) me.PARS.push(o.getVarName());
+               };
                me.getNames = function() {
                    return NMS;
                };
@@ -170,6 +206,29 @@
                var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
                xml = Blockly.Xml.domToText(xml);
                localStorage.setItem("blockly_clipboard", xml);
+
+               // workspace2PNG();
+
+
+               // var aa = new XMLSerializer().serializeToString(Blockly.svg);
+               // prompt(aa);
+           };
+
+           Blockly.custom_menu_print = function() {
+               var svg = workspace2SVG();
+               // svg = svg.replace(/&gt;/g, "@@@@GT@@@@");
+               // svg = svg.replace(/&lt;/g, "@@@@LT@@@@");
+               var svgsrc = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">';
+               svgsrc += svg;
+
+               if (window.$OS_X_APPLICATION) {
+                   interOp.saveBlocklySVG(svgsrc)
+               } else {
+                   var lnk = ($iOS_APPLICATION) ? "data-svg:" : "data:image/svg+xml,";
+                   lnk += ($iOS_APPLICATION) ? $U.base64_encode(svgsrc) : encodeURIComponent(svgsrc);
+                   var txt = '<br><br><a href="' + lnk + '" style="-webkit-touch-callout:default;font-size:18px;font-family:Helvetica, Arial, sans-serif;color:#252525;" target="_blank" download="DgpadSvgImage.svg" ><b>' + $L.blockly.downloadSVG + '</b></a>.';
+                   $U.alert(txt);
+               }
            };
            Blockly.custom_menu_copySel = function() {
                if (Blockly.selected) {
@@ -198,18 +257,18 @@
        }
 
        var showCategory = function(name, bool) {
-           var cat = { "turtle": 7, "texts": 8 };
+           var cat = { "turtle": 7, "texts": 8, "inputs": "b" };
            var elt = document.getElementById(":" + cat[name]);
            if (bool) {
                elt.style["visibility"] = "visible";
                elt.style["height"] = "25px";
-               turtle.show(OBJ);
+               if (name === "turtle") turtle.show(OBJ);
                // turtle = new TurtleObject(canvas, OBJ);
                canvas.paint();
            } else {
                elt.style["visibility"] = "hidden";
                elt.style["height"] = "0px";
-               turtle.hide();
+               if (name === "turtle") turtle.hide();
                // turtle = null;
                canvas.paint();
            }
@@ -268,6 +327,7 @@
                // On cache la catégorie "Tortue" :
                showCategory("turtle", false);
                showCategory("texts", false);
+               showCategory("inputs", false);
 
                showCallback();
            }, 200);
@@ -370,7 +430,8 @@
            setTimeout(function() {
                var mod = OBJ.blocks.getMode()[panel.getMode()];
                showCategory("turtle", (mod === "onlogo"));
-               showCategory("texts", (mod === "onlogo"));
+               showCategory("texts", (mod === "onlogo") || (mod === "onprogram"));
+               showCategory("inputs", (mod === "onprogram"));
            }, 300)
        };
 
@@ -387,7 +448,10 @@
                    Blockly.Xml.domToWorkspace(workspace, elt);
                }
                showCategory("turtle", (mod === "onlogo"));
-               showCategory("texts", (mod === "onlogo"));
+               showCategory("texts", (mod === "onlogo") || (mod === "onprogram"));
+               showCategory("inputs", (mod === "onprogram"));
+
+
                // Blockly.Toolbox.dispose();
                // Blockly.mainWorkspace.updateToolbox(document.getElementById('toolbox_turtle'))
            }
@@ -397,6 +461,7 @@
        var hideCallback = function() {
            showCategory("turtle", false);
            showCategory("texts", false);
+           showCategory("inputs", false);
            changeCSS("blocklyToolboxDiv", "visibility", "hidden");
            Blockly.ContextMenu.hide();
        };

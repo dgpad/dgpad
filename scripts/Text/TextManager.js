@@ -7,7 +7,7 @@ function TextManager(_canvas) {
     var me = this;
     var canvas = _canvas;
     var txts = [];
-    var firstLoad = true;
+    // var firstLoad = true;
     var textPanel = null;
 
 
@@ -45,23 +45,23 @@ function TextManager(_canvas) {
         return txts.length;
     };
 
-    var loadKaTeX = function() {
-        var parent = document.getElementsByTagName("head")[0];
-        var lnk = document.createElement("link");
-        lnk.rel = "stylesheet";
-        lnk.href = $APP_PATH + "NotPacked/thirdParty/katex.min.css";
-        //        lnk.href = "http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.css";
-        var script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = $APP_PATH + "NotPacked/thirdParty/katex.min.js";
-        //        script.src = "http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.js";
-        script.onload = function() {
-            me.evaluateStrings();
-            //            script.id = "MathJax";
-        }
-        parent.appendChild(lnk);
-        parent.appendChild(script);
-    }
+    // var loadKaTeX = function() {
+    //     var parent = document.getElementsByTagName("head")[0];
+    //     var lnk = document.createElement("link");
+    //     lnk.rel = "stylesheet";
+    //     lnk.href = $APP_PATH + "NotPacked/thirdParty/katex.min.css";
+    //     //        lnk.href = "http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.css";
+    //     var script = document.createElement("script");
+    //     script.type = "text/javascript";
+    //     script.src = $APP_PATH + "NotPacked/thirdParty/katex.min.js";
+    //     //        script.src = "http://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.1.1/katex.min.js";
+    //     script.onload = function() {
+    //         me.evaluateStrings();
+    //         //            script.id = "MathJax";
+    //     }
+    //     parent.appendChild(lnk);
+    //     parent.appendChild(script);
+    // }
 
     me.edit = function(mytxt) {
         for (var k = 0; k < txts.length; k++) {
@@ -96,10 +96,11 @@ function TextManager(_canvas) {
     };
 
     me.addTeXElement = function(_m, _l, _t, _w, _h, _stl) {
-        if (firstLoad) {
-            loadKaTeX();
-            firstLoad = false;
-        }
+        $U.katexLoaded(me.evaluateStrings);
+        // if (firstLoad) {
+        //     loadKaTeX();
+        //     firstLoad = false;
+        // }
         var txt = new TextObject(canvas, _m, _l, _t, _w, _h);
         if (_stl !== undefined) {
             txt.setStyles(_stl);

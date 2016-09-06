@@ -2,6 +2,9 @@ $L = {};
 $L.number = function(_n) {
     return _n
 };
+$L.number2 = function(_n) {
+    return _n
+};
 $L.dot = ".";
 $L.comma = ",";
 $L.macros = {};
@@ -401,3 +404,24 @@ $L.blockly.turtle.ofvector = "of vector";
 // Samedi 23 juillet
 $L.blockly.turtle.angle180 = "angle 180";
 $L.blockly.turtle.angle360 = "angle 360";
+
+// Lundi 8 Aout 2016
+$L.blockly.saveSVG = "Save as SVG image";
+$L.blockly.downloadSVG = "Clic on this link to download the SVG image";
+$L.blockly.waitfor = "input";
+$L.blockly.msgwait = "enter a number";
+$L.blockly.inputouput = "Input/Output";
+$L.blockly.displayalert = "output";
+$L.blockly.displaymsg = "Congratulations !";
+
+// Jeudi 25 Aout 2016
+$L.macros.segmentB1 = "Hatch marks/1 mark";
+$L.macros.segmentB2 = "Hatch marks/2 marks";
+$L.macros.segmentB3 = "Hatch marks/3 marks";
+$L.macros.segmentB4 = "Hatch marks/4 marks";
+$L.macros.segmentBZ = "Hatch marks/Z";
+$L.macros.segmentBO = "Hatch marks/circle";
+
+// Mardi 30 Aout 2016
+$L.props_only_pos = "Only positives";
+$L.blockly.tabs.oninit="Init";

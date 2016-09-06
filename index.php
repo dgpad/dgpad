@@ -49,6 +49,7 @@ and open the template in the editor.
 		if (!$t) $t=$_POST["hide_ctrlpanel"];
 		$l=$_GET["lang"];
 		$p=$_GET["presentation"];
+        $tls=$_GET["show_tools"];
         // data-url est utilisé pour les adresses relatives, et pour certains
         // sites acceptant le cross-domain-origin :
         if ($u2) echo "data-url=\"$u2\";";
@@ -57,6 +58,7 @@ and open the template in the editor.
 		if ($t) echo " data-hidectrlpanel=\"$t\";";
 		if ($l) echo " data-lang=\"$l\";";
 		if ($p) echo " data-presentation=\"$p\";";
+        if ($tls) echo " data-tools=\"$tls\";";
 		echo "></script>";
 		?>
 		
