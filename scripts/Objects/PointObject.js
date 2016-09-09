@@ -40,7 +40,7 @@ function PointObject(_construction, _name, _x, _y) {
     var currentMagnet = null; // Pour gérer les changements de magnétisme : utilise pour
     // les traces d'objets.
 
-    this.blocks.setMode(["onlogo","onmousedown", "ondrag", "onmouseup","oncompute"], "ondrag");
+    this.blocks.setMode(["onlogo", "onmousedown", "ondrag", "onmouseup", "oncompute"], "ondrag");
 
     // ****************************************
     // **** Uniquement pour les animations ****
@@ -469,7 +469,11 @@ function PointObject(_construction, _name, _x, _y) {
     };
 
     this.getExp = function() {
-        return this.getEXY().getSource();
+        if ((this.getEXY) && (this.getEXY()) && this.getEXY().getSource && this.getEXY().getSource()) {
+            return this.getEXY().getSource();
+        } else {
+            return "";
+        }
     };
 
     this.near = function(_x, _y) {
