@@ -3,6 +3,8 @@ function Interpreter(_win, _canvas) {
     var $macros = null;
     var $macroFinals = null;
     var $macromode = false;
+    var $const_num_precision = 100000000000000;
+    var $num_precision = $const_num_precision;
     var $caller = null; // Objet qui appelle le script par bouton
     var namespace = {};
     var blockly_namespace = {}; // Globales Blockly
@@ -110,6 +112,7 @@ function Interpreter(_win, _canvas) {
         clearNameSpace();
         var code = $initProgress(_s);
         $macros = null;
+        $num_precision = $const_num_precision;
         // Eval is evil ? :
         try {
             eval(code.header);
@@ -159,6 +162,7 @@ function Interpreter(_win, _canvas) {
     me.LoadPlugins = function(_plugins) {
         clearNameSpace();
         $macros = null;
+        $num_precision = $const_num_precision;
         // Eval is evil ? :
         try {
             eval(_plugins);
@@ -181,6 +185,7 @@ function Interpreter(_win, _canvas) {
         clearNameSpace();
         $macromode = true;
         $macroFinals = [];
+        $num_precision = $const_num_precision;
         try {
             // avant l'évaluation, on réalise une copie de tous les paramètres
             // éventuels de la fonction/macro. Cela necessite une recherche
@@ -403,6 +408,12 @@ function Interpreter(_win, _canvas) {
 
     var TURTLE_PRINT = function(_t) {
         var t = TURTLE_VARS;
+        _t = "" + _t;
+        _t = _t.replace(/([0-9]+\.[0-9]+)/g, function(_a, _m) {
+            var num = parseFloat(_m);
+            num = Math.round(num * $num_precision) / $num_precision;
+            return me.$L.number(num)
+        });
         t.TAB.push([20, 0, _t, t.U]);
         t.TAB.push(t.LAST);
     };
@@ -560,9 +571,12 @@ function Interpreter(_win, _canvas) {
     };
 
     var TURTLE_JOIN_PT = function(_pt) {
-        console
         TURTLE_ROTATE_PT(_pt);
         TURTLE_MV(Math.distance(TURTLE_VARS.LAST, _pt), false);
+    };
+
+    var SET_NUM_PRECISION = function(_n) {
+        $num_precision = Math.pow(10, _n);
     };
 
     // Methode obsolete, maintenue pour la 

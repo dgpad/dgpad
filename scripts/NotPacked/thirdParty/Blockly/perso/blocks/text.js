@@ -182,6 +182,20 @@ Blockly.Blocks['dgpad_tex_0'] = {
 };
 
 
+Blockly.Blocks['dgpad_output_precision'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField($L.blockly.number_precision)
+        .appendField(new Blockly.FieldNumber(2, 0, 14, 1), "VAL");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(Blockly.Blocks.texts.HUE);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
+
 
 
 // Blockly.Msg.TEXT_JOIN_TITLE_CREATEWITH=new Blockly.FieldImage($APP_PATH + "NotPacked/images/tex/text.png", 10, 10, "*")

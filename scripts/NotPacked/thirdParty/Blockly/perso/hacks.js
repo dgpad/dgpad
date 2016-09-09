@@ -1,6 +1,24 @@
 Blockly.ContextMenu.origin_show = Blockly.ContextMenu.show;
 
 
+Blockly.WorkspaceSvg.prototype.preloadAudio_ = function() {
+    for (var name in this.SOUNDS_) {
+        var sound = this.SOUNDS_[name];
+        sound.volume = .01;
+        sound.play();
+        // this trick to avoid an error message in google-chrome :
+        setTimeout(function() {
+            sound.pause();
+        }, 100);
+        // iOS can only process one sound at a time.  Trying to load more than one
+        // corrupts the earlier ones.  Just load one and leave the others uncached.
+        if (goog.userAgent.IPAD || goog.userAgent.IPHONE) {
+            break;
+        }
+    }
+};
+
+
 Blockly.ContextMenu.show = function(e, options, rtl) {
     options.unshift({
         text: $L.blockly.paste,
@@ -15,10 +33,10 @@ Blockly.ContextMenu.show = function(e, options, rtl) {
             callback: Blockly.custom_menu_copyAll
         });
         options.push({
-                text: $L.blockly.saveSVG,
-                enabled: true,
-                callback: Blockly.custom_menu_print
-            });
+            text: $L.blockly.saveSVG,
+            enabled: true,
+            callback: Blockly.custom_menu_print
+        });
         options.push({
             text: $L.blockly.displaySource,
             enabled: true,
@@ -91,44 +109,49 @@ Blockly.FieldTextInput.prototype.showEditor_ = function(opt_quietInput) {
 };
 
 
-Blockly.FieldVariable.dropdownChange = function(text) {
+
+Blockly.FieldVariable.prototype.classValidator = function(text) {
     var me = this;
     var renameCallback = function(_oldvar, _newvar) {
         var workspace = me.sourceBlock_.workspace;
-        Blockly.Variables.renameVariable(_oldvar, _newvar, workspace);
-        // If it's a new variable name :
+        workspace.renameVariable(oldVar, _newvar);
         if (_oldvar === '') me.setValue(_newvar);
     };
-
+    var workspace = this.sourceBlock_.workspace;
     if (text == Blockly.Msg.RENAME_VARIABLE) {
         var oldVar = this.getText();
+        Blockly.hideChaff();
         $U.prompt(Blockly.Msg.RENAME_VARIABLE_TITLE.replace('%1', oldVar), oldVar, "text", renameCallback);
         return null;
-    } else if (text == Blockly.Msg.NEW_VARIABLE) {
-        $U.prompt(Blockly.Msg.NEW_VARIABLE_TITLE, '', "text", renameCallback);
+    } else if (text == Blockly.Msg.DELETE_VARIABLE.replace('%1',
+            this.getText())) {
+        workspace.deleteVariable(this.getText());
         return null;
     }
     return undefined;
 };
 
 
+Blockly.Variables.createVariable = function(workspace) {
+    var createCallback = function(_oldvar, _newvar) {
+        if (_newvar) {
+            if (workspace.variableIndexOf(_newvar) != -1) {
+                window.alert(Blockly.Msg.VARIABLE_ALREADY_EXISTS.replace('%1',
+                    _newvar.toLowerCase()));
+            } else {
+                workspace.createVariable(_newvar);
+            }
+        }
+    };
+    $U.prompt(Blockly.Msg.NEW_VARIABLE_TITLE, "", "text", createCallback);
+};
+
+
+
 
 Blockly.Flyout.prototype.show = function(xmlList) {
     this.hide();
-    // Delete any blocks from a previous showing.
-    var blocks = this.workspace_.getTopBlocks(false);
-    for (var i = 0, block; block = blocks[i]; i++) {
-        if (block.workspace == this.workspace_) {
-            block.dispose(false, false);
-        }
-    }
-    // Delete any background buttons from a previous showing.
-    for (var i = 0, rect; rect = this.buttons_[i]; i++) {
-        goog.dom.removeNode(rect);
-    }
-    this.buttons_.length = 0;
-
-    // console.log(xmlList);
+    this.clearOldBlocks_();
 
     if (xmlList == Blockly.Variables.NAME_TYPE) {
         // Special category for variables.
@@ -144,89 +167,195 @@ Blockly.Flyout.prototype.show = function(xmlList) {
             Blockly.Globals.flyoutCategory(this.workspace_.targetWorkspace);
     }
 
-    var margin = this.CORNER_RADIUS;
     this.svgGroup_.style.display = 'block';
     // Create the blocks to be shown in this flyout.
-    var blocks = [];
+    var contents = [];
     var gaps = [];
     this.permanentlyDisabled_.length = 0;
     for (var i = 0, xml; xml = xmlList[i]; i++) {
-        if (xml.tagName && xml.tagName.toUpperCase() == 'BLOCK') {
-            var block = Blockly.Xml.domToBlock(this.workspace_, xml);
-            if (block.disabled) {
-                // Record blocks that were initially disabled.
-                // Do not enable these blocks as a result of capacity filtering.
-                this.permanentlyDisabled_.push(block);
+        if (xml.tagName) {
+            var tagName = xml.tagName.toUpperCase();
+            var default_gap = this.horizontalLayout_ ? this.GAP_X : this.GAP_Y;
+            if (tagName == 'BLOCK') {
+                var curBlock = Blockly.Xml.domToBlock(xml, this.workspace_);
+                if (curBlock.disabled) {
+                    // Record blocks that were initially disabled.
+                    // Do not enable these blocks as a result of capacity filtering.
+                    this.permanentlyDisabled_.push(curBlock);
+                }
+                contents.push({ type: 'block', block: curBlock });
+                var gap = parseInt(xml.getAttribute('gap'), 10);
+                gaps.push(isNaN(gap) ? default_gap : gap);
+            } else if (xml.tagName.toUpperCase() == 'SEP') {
+                // Change the gap between two blocks.
+                // <sep gap="36"></sep>
+                // The default gap is 24, can be set larger or smaller.
+                // This overwrites the gap attribute on the previous block.
+                // Note that a deprecated method is to add a gap to a block.
+                // <block type="math_arithmetic" gap="8"></block>
+                var newGap = parseInt(xml.getAttribute('gap'), 10);
+                // Ignore gaps before the first block.
+                if (!isNaN(newGap) && gaps.length > 0) {
+                    gaps[gaps.length - 1] = newGap;
+                } else {
+                    gaps.push(default_gap);
+                }
+            } else if (tagName == 'BUTTON') {
+                var label = xml.getAttribute('text');
+                var curButton = new Blockly.FlyoutButton(this.workspace_,
+                    this.targetWorkspace_, label);
+                contents.push({ type: 'button', button: curButton });
+                gaps.push(default_gap);
             }
-            blocks.push(block);
-            var gap = parseInt(xml.getAttribute('gap'), 10);
-            gaps.push(isNaN(gap) ? margin * 3 : gap);
         }
     }
 
-    // Lay out the blocks vertically.
-    var cursorY = margin;
-    for (var i = 0, block; block = blocks[i]; i++) {
-        var allBlocks = block.getDescendants();
-        for (var j = 0, child; child = allBlocks[j]; j++) {
-            // Mark blocks as being inside a flyout.  This is used to detect and
-            // prevent the closure of the flyout if the user right-clicks on such a
-            // block.
-            child.isInFlyout = true;
-        }
-        block.render();
-        var root = block.getSvgRoot();
-        var blockHW = block.getHeightWidth();
-        var x = this.RTL ? 0 : margin / this.workspace_.scale +
-            Blockly.BlockSvg.TAB_WIDTH;
-        block.moveBy(x, cursorY);
-        cursorY += blockHW.height + gaps[i];
+    this.layout_(contents, gaps);
 
-        // Create an invisible rectangle under the block to act as a button.  Just
-        // using the block as a button is poor, since blocks have holes in them.
-        var rect = Blockly.createSvgElement('rect', { 'fill-opacity': 0 }, null);
-        // Add the rectangles under the blocks, so that the blocks' tooltips work.
-        this.workspace_.getCanvas().insertBefore(rect, block.getSvgRoot());
-        block.flyoutRect_ = rect;
-        this.buttons_[i] = rect;
-
-        if (this.autoClose) {
-            this.listeners_.push(Blockly.bindEvent_(root, 'mousedown', null,
-                this.createBlockFunc_(block)));
-        } else {
-            this.listeners_.push(Blockly.bindEvent_(root, 'mousedown', null,
-                this.blockMouseDown_(block)));
-        }
-        this.listeners_.push(Blockly.bindEvent_(root, 'mouseover', block,
-            block.addSelect));
-        this.listeners_.push(Blockly.bindEvent_(root, 'mouseout', block,
-            block.removeSelect));
-        this.listeners_.push(Blockly.bindEvent_(rect, 'mousedown', null,
-            this.createBlockFunc_(block)));
-        this.listeners_.push(Blockly.bindEvent_(rect, 'mouseover', block,
-            block.addSelect));
-        this.listeners_.push(Blockly.bindEvent_(rect, 'mouseout', block,
-            block.removeSelect));
-    }
-
-    // IE 11 is an incompetant browser that fails to fire mouseout events.
+    // IE 11 is an incompetent browser that fails to fire mouseout events.
     // When the mouse is over the background, deselect all blocks.
-    var deselectAll = function(e) {
-        var blocks = this.workspace_.getTopBlocks(false);
-        for (var i = 0, block; block = blocks[i]; i++) {
+    var deselectAll = function() {
+        var topBlocks = this.workspace_.getTopBlocks(false);
+        for (var i = 0, block; block = topBlocks[i]; i++) {
             block.removeSelect();
         }
     };
+
     this.listeners_.push(Blockly.bindEvent_(this.svgBackground_, 'mouseover',
         this, deselectAll));
 
-    this.width_ = 0;
+    if (this.horizontalLayout_) {
+        this.height_ = 0;
+    } else {
+        this.width_ = 0;
+    }
     this.reflow();
 
     this.filterForCapacity_();
 
-    // Fire a resize event to update the flyout's scrollbar.
-    Blockly.fireUiEventNow(window, 'resize');
+    // Correctly position the flyout's scrollbar when it opens.
+    this.position();
+
     this.reflowWrapper_ = this.reflow.bind(this);
     this.workspace_.addChangeListener(this.reflowWrapper_);
 };
+
+
+
+// Blockly.Flyout.prototype.show = function(xmlList) {
+//     this.hide();
+//     // Delete any blocks from a previous showing.
+//     var blocks = this.workspace_.getTopBlocks(false);
+//     for (var i = 0, block; block = blocks[i]; i++) {
+//         if (block.workspace == this.workspace_) {
+//             block.dispose(false, false);
+//         }
+//     }
+//     // Delete any background buttons from a previous showing.
+//     for (var i = 0, rect; rect = this.buttons_[i]; i++) {
+//         goog.dom.removeNode(rect);
+//     }
+//     this.buttons_.length = 0;
+
+//     // console.log(xmlList);
+
+//     if (xmlList == Blockly.Variables.NAME_TYPE) {
+//         // Special category for variables.
+//         xmlList =
+//             Blockly.Variables.flyoutCategory(this.workspace_.targetWorkspace);
+//     } else if (xmlList == Blockly.Procedures.NAME_TYPE) {
+//         // Special category for procedures.
+//         xmlList =
+//             Blockly.Procedures.flyoutCategory(this.workspace_.targetWorkspace);
+//     } else if (xmlList == Blockly.Globals.NAME_TYPE) {
+//         // Special category for procedures.
+//         xmlList =
+//             Blockly.Globals.flyoutCategory(this.workspace_.targetWorkspace);
+//     }
+
+//     var margin = this.CORNER_RADIUS;
+//     this.svgGroup_.style.display = 'block';
+//     // Create the blocks to be shown in this flyout.
+//     var blocks = [];
+//     var gaps = [];
+//     this.permanentlyDisabled_.length = 0;
+//     for (var i = 0, xml; xml = xmlList[i]; i++) {
+//         if (xml.tagName && xml.tagName.toUpperCase() == 'BLOCK') {
+//             var block = Blockly.Xml.domToBlock(this.workspace_, xml);
+//             if (block.disabled) {
+//                 // Record blocks that were initially disabled.
+//                 // Do not enable these blocks as a result of capacity filtering.
+//                 this.permanentlyDisabled_.push(block);
+//             }
+//             blocks.push(block);
+//             var gap = parseInt(xml.getAttribute('gap'), 10);
+//             gaps.push(isNaN(gap) ? margin * 3 : gap);
+//         }
+//     }
+
+//     // Lay out the blocks vertically.
+//     var cursorY = margin;
+//     for (var i = 0, block; block = blocks[i]; i++) {
+//         var allBlocks = block.getDescendants();
+//         for (var j = 0, child; child = allBlocks[j]; j++) {
+//             // Mark blocks as being inside a flyout.  This is used to detect and
+//             // prevent the closure of the flyout if the user right-clicks on such a
+//             // block.
+//             child.isInFlyout = true;
+//         }
+//         block.render();
+//         var root = block.getSvgRoot();
+//         var blockHW = block.getHeightWidth();
+//         var x = this.RTL ? 0 : margin / this.workspace_.scale +
+//             Blockly.BlockSvg.TAB_WIDTH;
+//         block.moveBy(x, cursorY);
+//         cursorY += blockHW.height + gaps[i];
+
+//         // Create an invisible rectangle under the block to act as a button.  Just
+//         // using the block as a button is poor, since blocks have holes in them.
+//         var rect = Blockly.createSvgElement('rect', { 'fill-opacity': 0 }, null);
+//         // Add the rectangles under the blocks, so that the blocks' tooltips work.
+//         this.workspace_.getCanvas().insertBefore(rect, block.getSvgRoot());
+//         block.flyoutRect_ = rect;
+//         this.buttons_[i] = rect;
+
+//         if (this.autoClose) {
+//             this.listeners_.push(Blockly.bindEvent_(root, 'mousedown', null,
+//                 this.createBlockFunc_(block)));
+//         } else {
+//             this.listeners_.push(Blockly.bindEvent_(root, 'mousedown', null,
+//                 this.blockMouseDown_(block)));
+//         }
+//         this.listeners_.push(Blockly.bindEvent_(root, 'mouseover', block,
+//             block.addSelect));
+//         this.listeners_.push(Blockly.bindEvent_(root, 'mouseout', block,
+//             block.removeSelect));
+//         this.listeners_.push(Blockly.bindEvent_(rect, 'mousedown', null,
+//             this.createBlockFunc_(block)));
+//         this.listeners_.push(Blockly.bindEvent_(rect, 'mouseover', block,
+//             block.addSelect));
+//         this.listeners_.push(Blockly.bindEvent_(rect, 'mouseout', block,
+//             block.removeSelect));
+//     }
+
+//     // IE 11 is an incompetant browser that fails to fire mouseout events.
+//     // When the mouse is over the background, deselect all blocks.
+//     var deselectAll = function(e) {
+//         var blocks = this.workspace_.getTopBlocks(false);
+//         for (var i = 0, block; block = blocks[i]; i++) {
+//             block.removeSelect();
+//         }
+//     };
+//     this.listeners_.push(Blockly.bindEvent_(this.svgBackground_, 'mouseover',
+//         this, deselectAll));
+
+//     this.width_ = 0;
+//     this.reflow();
+
+//     this.filterForCapacity_();
+
+//     // Fire a resize event to update the flyout's scrollbar.
+//     Blockly.fireUiEventNow(window, 'resize');
+//     this.reflowWrapper_ = this.reflow.bind(this);
+//     this.workspace_.addChangeListener(this.reflowWrapper_);
+// };

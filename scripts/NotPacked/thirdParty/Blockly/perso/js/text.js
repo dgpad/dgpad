@@ -77,6 +77,13 @@ Blockly.JavaScript['dgpad_tex'] = function(block) {
     return result;
 };
 
+Blockly.JavaScript['dgpad_output_precision'] = function(block) {
+  var number_val = block.getFieldValue('VAL');
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'SET_NUM_PRECISION('+number_val+');\n';
+  return code;
+};
+
 
 // Blockly.JavaScript['text_join'] = function(block) {
 //   // Create a string made up of any number of elements of any type.

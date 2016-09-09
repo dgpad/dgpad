@@ -27223,7 +27223,7 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
                from_edit = false;
                var xml = localStorage.getItem("blockly_clipboard");
                var elt = Blockly.Xml.textToDom(xml);
-               Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, elt);
+               Blockly.Xml.domToWorkspace(elt, Blockly.mainWorkspace);
            };
        };
 
@@ -27403,7 +27403,7 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
            var xml = OBJ.blocks.getCurrentXML();
            if (xml) {
                var elt = Blockly.Xml.textToDom(xml);
-               Blockly.Xml.domToWorkspace(workspace, elt);
+               Blockly.Xml.domToWorkspace(elt, workspace);
            }
            setTimeout(function() {
                var mod = OBJ.blocks.getMode()[panel.getMode()];
@@ -27423,7 +27423,7 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
                var xml = OBJ.blocks.getXML(mod);
                if (xml) {
                    var elt = Blockly.Xml.textToDom(xml);
-                   Blockly.Xml.domToWorkspace(workspace, elt);
+                   Blockly.Xml.domToWorkspace(elt, workspace);
                }
                showCategory("turtle", (mod === "onlogo"));
                showCategory("texts", (mod === "onlogo") || (mod === "onprogram"));
@@ -27435,6 +27435,10 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
            }
            from_edit = true;
        };
+
+       me.reload_workspace = function() {
+           currentTabCallBack();
+       }
 
        var hideCallback = function() {
            showCategory("turtle", false);
@@ -27503,7 +27507,7 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
            show();
        }
    }
-function BlocklyPanel(_owner, _canvas,  _closeCallback, _currentTabCallBack, _height) {
+function BlocklyPanel(_owner, _canvas, _closeCallback, _currentTabCallBack, _height) {
     var me = this;
     var canvas = _canvas;
     var cb_src = $APP_PATH + "NotPacked/images/dialog/closebox.svg"; // Closebox image
@@ -27565,6 +27569,18 @@ function BlocklyPanel(_owner, _canvas,  _closeCallback, _currentTabCallBack, _he
             toolbox.style["height"] = (h - tl_height - tb_height - 3) + "px";
         };
         // if (typeof Blockly !== 'undefined') Blockly.fireUiEvent(window, 'resize');
+        // if (typeof Blockly !== 'undefined') Blockly.svgResize(Blockly.mainWorkspace);
+
+        if (typeof Blockly !== 'undefined') {
+            var flyout = document.getElementsByClassName("blocklyToolboxDiv");
+            if (flyout && (flyout.length > 0)) {
+                flyout[0].style["top"] = "0px";
+                flyout[0].style["left"] = "0px";
+                Blockly.svgResize(Blockly.mainWorkspace);
+            }
+        }
+
+
     }
 
     me.getBounds = function() {
@@ -27577,8 +27593,9 @@ function BlocklyPanel(_owner, _canvas,  _closeCallback, _currentTabCallBack, _he
     }
 
     me.hide = function(_ev) {
-        // window.prompt(Blockly.JavaScript.workspaceToCode(Blockly.mainWorkspace))
-        // Blockly.mainWorkspace.updateToolbox('<xml id="toolbox" style="display: none"><block type="dgpad_point"></block></xml>');
+        // Reload workspace to avoid focuses inputs to be
+        // displayed onto the dgpad canvas :
+        canvas.blocklyManager.reload_workspace();
         _closeCallback();
         canvas.setNoMouseEvent(true);
         // _ev.stopPropagation();
@@ -27647,7 +27664,8 @@ function BlocklyPanel(_owner, _canvas,  _closeCallback, _currentTabCallBack, _he
         me.setbounds(left, top, w, h);
         xx = ev.pageX;
         yy = ev.pageY;
-        if (typeof Blockly !== 'undefined') Blockly.fireUiEvent(window, 'resize');
+        // if (typeof Blockly !== 'undefined') Blockly.fireUiEvent(window, 'resize');
+        if (typeof Blockly !== 'undefined') window.dispatchEvent(new Event('resize'));
     }
 
     var resizedown = function(ev) {

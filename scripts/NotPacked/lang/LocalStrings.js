@@ -424,4 +424,7 @@ $L.macros.segmentBO = "Hatch marks/circle";
 
 // Mardi 30 Aout 2016
 $L.props_only_pos = "Only positives";
-$L.blockly.tabs.oninit="Init";
+$L.blockly.tabs.oninit = "Init";
+
+// Jeudi 8 septembre 2016
+$L.blockly.number_precision = "decimal precision :";

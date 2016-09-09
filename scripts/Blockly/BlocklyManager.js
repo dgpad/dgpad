@@ -245,7 +245,7 @@
                from_edit = false;
                var xml = localStorage.getItem("blockly_clipboard");
                var elt = Blockly.Xml.textToDom(xml);
-               Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, elt);
+               Blockly.Xml.domToWorkspace(elt, Blockly.mainWorkspace);
            };
        };
 
@@ -425,7 +425,7 @@
            var xml = OBJ.blocks.getCurrentXML();
            if (xml) {
                var elt = Blockly.Xml.textToDom(xml);
-               Blockly.Xml.domToWorkspace(workspace, elt);
+               Blockly.Xml.domToWorkspace(elt, workspace);
            }
            setTimeout(function() {
                var mod = OBJ.blocks.getMode()[panel.getMode()];
@@ -445,7 +445,7 @@
                var xml = OBJ.blocks.getXML(mod);
                if (xml) {
                    var elt = Blockly.Xml.textToDom(xml);
-                   Blockly.Xml.domToWorkspace(workspace, elt);
+                   Blockly.Xml.domToWorkspace(elt, workspace);
                }
                showCategory("turtle", (mod === "onlogo"));
                showCategory("texts", (mod === "onlogo") || (mod === "onprogram"));
@@ -457,6 +457,10 @@
            }
            from_edit = true;
        };
+
+       me.reload_workspace = function() {
+           currentTabCallBack();
+       }
 
        var hideCallback = function() {
            showCategory("turtle", false);

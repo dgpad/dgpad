@@ -279,8 +279,7 @@ Blockly.Blocks['turtle_font'] = {
         this.setColour(180);
         this.appendDummyInput()
             .appendField(new Blockly.FieldDropdown(FONTLIST), 'FONT')
-            .appendField(new Blockly.FieldTextInput('30',
-                    Blockly.FieldTextInput.nonnegativeIntegerValidator),
+            .appendField(new Blockly.FieldNumber(30, 0, Infinity, 1),
                 'FONTSIZE')
             .appendField(new Blockly.FieldDropdown(STYLE), 'FONTSTYLE')
             .appendField(new Blockly.FieldDropdown(ALIGN), 'FONTALIGN');

@@ -414,4 +414,7 @@ $L.macros.segmentBO = "Segments codés/cercle";
 
 // Mardi 30 Aout 2016
 $L.props_only_pos = "Seulement les positifs";
-$L.blockly.tabs.oninit="Initialisation";
+$L.blockly.tabs.oninit = "Initialisation";
+
+// Jeudi 8 septembre 2016
+$L.blockly.number_precision = "précision décimale :";

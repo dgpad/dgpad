@@ -354,6 +354,7 @@
         <block type="turtle_font"></block>
     </category>
     <category name="$L.blockly.texts" colour="160">
+        <block type="dgpad_output_precision"></block>
         <block type="text"></block>
         <block type="text_join"></block>
         <block type="dgpad_tex">
