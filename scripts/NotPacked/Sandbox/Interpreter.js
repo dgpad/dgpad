@@ -329,7 +329,14 @@ function Interpreter(_win, _canvas) {
     var SET_EXP = function(_e, _m) {
         var o = me.f(_e);
         o.setExpression(JSON.stringify(_m).replace(/null/g, "NaN"));
-        o.computeChilds();
+        // compute all childs except turtle exps and turtle lists :
+        var lst = o.getChildList();
+        for (var i = 0; i < lst.length; i++) {
+            var nme = lst[i].getVarName();
+            if (nme.indexOf("blk_turtle_") === -1) {
+                lst[i].compute();
+            }
+        }
     };
 
 

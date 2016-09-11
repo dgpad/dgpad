@@ -80,6 +80,7 @@ function Canvas(_id) {
         };
         me.getConstruction().initAll();
         Cn.computeAll();
+        me.textManager.refreshInputs();
         me.paint();
         $U.isloading = false
     }
@@ -620,6 +621,7 @@ function Canvas(_id) {
         };
         if ((obj.getCode() === "blockly_button") && (obj.insideButton(ev))) {
             obj.run();
+            me.textManager.refreshInputs();
             return;
         };
         if (me.namesManager.replaceName(obj)) return;
@@ -1447,6 +1449,7 @@ function Canvas(_id) {
         Cn.clearSelected();
         Cn.initAll();
         Cn.computeAll();
+        me.textManager.refreshInputs();
         me.paint();
     };
 

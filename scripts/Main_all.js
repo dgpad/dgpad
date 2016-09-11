@@ -3405,6 +3405,7 @@ function Canvas(_id) {
         };
         me.getConstruction().initAll();
         Cn.computeAll();
+        me.textManager.refreshInputs();
         me.paint();
         $U.isloading = false
     }
@@ -3945,6 +3946,7 @@ function Canvas(_id) {
         };
         if ((obj.getCode() === "blockly_button") && (obj.insideButton(ev))) {
             obj.run();
+            me.textManager.refreshInputs();
             return;
         };
         if (me.namesManager.replaceName(obj)) return;
@@ -4772,6 +4774,7 @@ function Canvas(_id) {
         Cn.clearSelected();
         Cn.initAll();
         Cn.computeAll();
+        me.textManager.refreshInputs();
         me.paint();
     };
 
@@ -12281,7 +12284,7 @@ function ConstructionObject(_construction, _name) {
     };
 
     this.logChildList = function() {
-        console.log("******************");
+        console.log("** CHILDS of " + this.getName());
         for (var i = 0; i < childList.length; i++) {
             console.log("childList[" + i + "] = " + childList[i].getName());
         }
@@ -12356,6 +12359,13 @@ function ConstructionObject(_construction, _name) {
         }
         if (parentList.length === 0 && this.getCode() === "point")
             is_3D = false;
+    };
+
+    this.logParentList = function() {
+        console.log("** PARENTS of " + this.getName());
+        for (var i = 0; i < parentList.length; i++) {
+            console.log("parentList[" + i + "] = " + parentList[i].getName());
+        }
     };
 
 
@@ -19860,7 +19870,7 @@ function ListObject(_construction, _name, _EXP) {
             nb = 0;
         else if (nb > (Ptab.length - 1))
             nb = Ptab.length - 1;
-        console.log("nb=" + nb);
+        // console.log("nb=" + nb);
         if (segSize > 0)
             p.setXY(Ptab[nb].x + k * (Ptab[nb + 1].x - Ptab[nb].x), Ptab[nb].y + k * (Ptab[nb + 1].y - Ptab[nb].y));
         else

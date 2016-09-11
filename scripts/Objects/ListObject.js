@@ -330,7 +330,7 @@ function ListObject(_construction, _name, _EXP) {
             nb = 0;
         else if (nb > (Ptab.length - 1))
             nb = Ptab.length - 1;
-        console.log("nb=" + nb);
+        // console.log("nb=" + nb);
         if (segSize > 0)
             p.setXY(Ptab[nb].x + k * (Ptab[nb + 1].x - Ptab[nb].x), Ptab[nb].y + k * (Ptab[nb + 1].y - Ptab[nb].y));
         else

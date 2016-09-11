@@ -276,7 +276,7 @@ function ConstructionObject(_construction, _name) {
     };
 
     this.logChildList = function() {
-        console.log("******************");
+        console.log("** CHILDS of " + this.getName());
         for (var i = 0; i < childList.length; i++) {
             console.log("childList[" + i + "] = " + childList[i].getName());
         }
@@ -351,6 +351,13 @@ function ConstructionObject(_construction, _name) {
         }
         if (parentList.length === 0 && this.getCode() === "point")
             is_3D = false;
+    };
+
+    this.logParentList = function() {
+        console.log("** PARENTS of " + this.getName());
+        for (var i = 0; i < parentList.length; i++) {
+            console.log("parentList[" + i + "] = " + parentList[i].getName());
+        }
     };
 
 
