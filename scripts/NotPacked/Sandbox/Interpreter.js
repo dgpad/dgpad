@@ -329,6 +329,7 @@ function Interpreter(_win, _canvas) {
     var SET_EXP = function(_e, _m) {
         var o = me.f(_e);
         o.setExpression(JSON.stringify(_m).replace(/null/g, "NaN"));
+        o.computeChilds();
     };
 
 
