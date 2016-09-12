@@ -284,7 +284,6 @@ Blockly.JavaScript['procedures_defreturn'] = function(block) {
         returnValue = '  return ' + returnValue + ';\n';
     }
     var args = [];
-    console.log
     for (var x = 0; x < block.arguments_.length; x++) {
         args.push(Blockly.JavaScript.variableDB_.getName(block.arguments_[x],
             Blockly.Variables.NAME_TYPE));
@@ -341,21 +340,22 @@ Blockly.JavaScript['text_alert'] = function(block) {
     return code;
 };
 
-
-// Blockly.JavaScript['number_prompt'] = function(block) {
-//     // Prompt function.
-//     if (block.getField('TEXT')) {
-//         // Internal message.
-//         var msg = Blockly.JavaScript.quote_(block.getFieldValue('TEXT'));
-//     } else {
-//         // External message.
-//         var msg = Blockly.JavaScript.valueToCode(block, 'TEXT',
-//             Blockly.JavaScript.ORDER_NONE) || '\'\'';
-//     }
-//     var code = 'window.prompt(' + msg + ')';
-//     var toNumber = block.getFieldValue('TYPE') == 'NUMBER';
-//     if (toNumber) {
-//         code = 'parseFloat($L.number2(' + code + '))';
-//     }
-//     return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
-// };
+Blockly.JavaScript['lists_repeat'] = function(block) {
+  // Create a list with one element repeated.
+  var functionName = Blockly.JavaScript.provideFunction_(
+      'listsRepeat',
+      ['function ' + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ +
+          '(blockly_local_value, blockly_local_n) {',
+       '  var blockly_var_array = [];',
+       '  for (var blockly_var_i = 0; blockly_var_i < blockly_local_n; blockly_var_i++) {',
+       '    blockly_var_array[blockly_var_i] = blockly_local_value;',
+       '  }',
+       '  return blockly_var_array;',
+       '}']);
+  var element = Blockly.JavaScript.valueToCode(block, 'ITEM',
+      Blockly.JavaScript.ORDER_COMMA) || 'null';
+  var repeatCount = Blockly.JavaScript.valueToCode(block, 'NUM',
+      Blockly.JavaScript.ORDER_COMMA) || '0';
+  var code = functionName + '(' + element + ', ' + repeatCount + ')';
+  return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+};

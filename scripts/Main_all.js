@@ -11870,7 +11870,10 @@ function BlocklyObject(_owner, _construction) {
             if (type === "oncompute") OWN.getObj().setExpression("NaN");
             if (type === "onlogo") Cn.removeTurtleExpression(OWN.getObj().getVarName());
         } else {
-            sync = _sync.replace(/^\s*var\s*\w+\s*;/gm, "").trim();
+            // Effacement de toutes les déclarations var que fait
+            // blockly automatiquement :
+            // sync = _sync.replace(/^\s*var\s*\w+\s*;/gm, "").trim();
+            sync = _sync.replace(/^\s*var\s*\w+(\s*,\s*\w+)*;/gm, "").trim();
             // console.log("SYNC="+sync);
             async = _async;
             var cod = "";
