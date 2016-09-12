@@ -23176,6 +23176,10 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
             inps[n].ontouchstart = inps[n].onmousedown = function(ev) {
                 ev.stopPropagation();
             };
+            if (inps[n].hasAttribute("editable")) {
+                var o = Cn.find(inps[n].getAttribute("editable"));
+                inps[n].readOnly = (o.getExp() === "0");
+            };
             if (inps[n].hasAttribute("target")) {
                 var o = inps[n].targetObject = Cn.find(inps[n].getAttribute("target"));
                 if (o) {
@@ -23183,7 +23187,9 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
                     switch (inps[n].type) {
                         case "select-one":
                             evtpe = "onchange";
-                            inps[n].value = o.getExp();
+                            var ex = o.getExp();
+                            if (ex === "NaN") ex = "";
+                            inps[n].value = ex;
                             break;
                         case "checkbox":
                             evtpe = "onchange";
@@ -23193,7 +23199,9 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
                             evtpe = "onmouseup";
                             break;
                         default:
-                            inps[n].value = o.getExp();
+                            var ex = o.getExp();
+                            if (ex === "NaN") ex = "";
+                            inps[n].value = ex;
                     }
 
 
