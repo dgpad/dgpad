@@ -27598,7 +27598,11 @@ function BlocklyPanel(_owner, _canvas, _closeCallback, _currentTabCallBack, _hei
             if (flyout && (flyout.length > 0)) {
                 flyout[0].style["top"] = "0px";
                 flyout[0].style["left"] = "0px";
-                Blockly.svgResize(Blockly.mainWorkspace);
+                setTimeout(function() {
+                    Blockly.mainWorkspace.cleanUp();
+                }, 1);
+
+                // Blockly.svgResize(Blockly.mainWorkspace);
             }
         }
 
