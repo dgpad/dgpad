@@ -27602,10 +27602,10 @@ function BlocklyPanel(_owner, _canvas, _closeCallback, _currentTabCallBack, _hei
                 flyout[0].style["top"] = "0px";
                 flyout[0].style["left"] = "0px";
                 setTimeout(function() {
-                    Blockly.mainWorkspace.cleanUp();
-                }, 1);
-
-                // Blockly.svgResize(Blockly.mainWorkspace);
+                    // Blockly.mainWorkspace.cleanUp();
+                    // Blockly.svgResize(Blockly.mainWorkspace);
+                    Blockly.mainWorkspace.resize();
+                }, 200);
             }
         }
 
