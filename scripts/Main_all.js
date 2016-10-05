@@ -1291,11 +1291,10 @@ $U.prompt = function(_mess, _default, _type, _proc, _w, _h, _inp_w) {
 
     var valid = function(ev) {
         ev.preventDefault();
-        scrn.innerHTML = "";
         if (inp.value !== "")
             _proc(_default, inp.value);
+        inp.blur();
         window.document.body.removeChild(scrn);
-
     };
     var fixOkColor = function() {
         if (inp.value === "") ok.stl("background-color", "#8CD4F5")
