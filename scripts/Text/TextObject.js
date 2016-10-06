@@ -85,6 +85,19 @@ function TextObject(_canvas, _m, _l, _t, _w, _h) {
                 var o = Cn.find(inps[n].getAttribute("editable"));
                 inps[n].readOnly = (o.getExp() === "0");
             };
+            if ((inps[n].hasAttribute("populate")) && (inps[n].type === "select-one")) {
+                var o = Cn.find(inps[n].getAttribute("populate"));
+                var tab = JSON.parse(o.getExp().replace(/'/g,"\""));
+                inps[n].innerHTML = "";
+                for (var i = 0; i < tab.length; i++) {
+                    var elt = tab[i];
+                    if (!$U.isArray(elt)) elt = [tab[i], tab[i]];
+                    var opt = document.createElement('option');
+                    opt.value = elt[0];
+                    opt.innerHTML = elt[1];
+                    inps[n].appendChild(opt);
+                }
+            };
             if (inps[n].hasAttribute("target")) {
                 var o = inps[n].targetObject = Cn.find(inps[n].getAttribute("target"));
                 if (o) {
