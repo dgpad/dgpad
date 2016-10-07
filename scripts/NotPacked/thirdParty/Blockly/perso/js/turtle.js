@@ -138,3 +138,14 @@ Blockly.JavaScript['turtle_font'] = function(block) {
     var cod = "TURTLE_FONT('" + font + "'," + size + ",'" + face + "','" + align + "');\n";
     return cod;
 };
+
+
+Blockly.JavaScript['turtle_img'] = function(block) {
+    var value_url = Blockly.JavaScript.valueToCode(block, 'url', Blockly.JavaScript.ORDER_ATOMIC);
+    var value_w = Blockly.JavaScript.valueToCode(block, 'w', Blockly.JavaScript.ORDER_ATOMIC);
+    var value_h = Blockly.JavaScript.valueToCode(block, 'h', Blockly.JavaScript.ORDER_ATOMIC);
+    var value_z = Blockly.JavaScript.valueToCode(block, 'z', Blockly.JavaScript.ORDER_ATOMIC);
+    var value_o = Blockly.JavaScript.valueToCode(block, 'o', Blockly.JavaScript.ORDER_ATOMIC);
+    var code = "TURTLE_PRINT_IMG(" + value_url + "," + value_w + "," + value_h + "," + value_z + "," + value_o + ");\n";
+    return code;
+};

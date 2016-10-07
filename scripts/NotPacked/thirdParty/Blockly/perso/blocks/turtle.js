@@ -289,6 +289,37 @@ Blockly.Blocks['turtle_font'] = {
     }
 };
 
+Blockly.Blocks['turtle_img'] = {
+    init: function() {
+        this.appendValueInput("url")
+            .setCheck(null)
+            .setAlign(Blockly.ALIGN_RIGHT)
+            .appendField($L.blockly.image_url);
+        this.appendValueInput("w")
+            .setCheck(null)
+            .setAlign(Blockly.ALIGN_RIGHT)
+            .appendField($L.blockly.image_w);
+        this.appendValueInput("h")
+            .setCheck(null)
+            .setAlign(Blockly.ALIGN_RIGHT)
+            .appendField($L.blockly.image_h);
+        this.appendValueInput("z")
+            .setCheck(null)
+            .setAlign(Blockly.ALIGN_RIGHT)
+            .appendField($L.blockly.image_z);
+        this.appendValueInput("o")
+            .setCheck(null)
+            .setAlign(Blockly.ALIGN_RIGHT)
+            .appendField($L.blockly.image_o);
+        this.setInputsInline(false);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(180);
+        this.setTooltip('');
+        this.setHelpUrl('');
+    }
+};
+
 
 Blockly.Blocks['turtle_turn_pt'] = {
     init: function() {

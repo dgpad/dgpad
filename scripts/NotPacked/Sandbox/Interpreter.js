@@ -328,7 +328,7 @@ function Interpreter(_win, _canvas) {
 
     var SET_EXP = function(_e, _m) {
         var o = me.f(_e);
-        o.setExpression(JSON.stringify(_m).replace(/null/g, "NaN").replace(/"/g,""));
+        o.setExpression(JSON.stringify(_m).replace(/null/g, "NaN").replace(/"/g, ""));
         // compute all childs except turtle exps and turtle lists :
         var lst = o.getChildList();
         for (var i = 0; i < lst.length; i++) {
@@ -423,6 +423,13 @@ function Interpreter(_win, _canvas) {
             return me.$L.number(num)
         });
         t.TAB.push([20, 0, _t, t.U]);
+        t.TAB.push(t.LAST);
+    };
+
+    var TURTLE_PRINT_IMG = function(_url, _w, _h, _z, _o) {
+        var t = TURTLE_VARS;
+        _url = "" + _url;
+        t.TAB.push([30, _url, _w, _h, _z, _o, t.U]);
         t.TAB.push(t.LAST);
     };
 

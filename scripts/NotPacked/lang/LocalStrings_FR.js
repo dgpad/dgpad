@@ -418,3 +418,10 @@ $L.blockly.tabs.oninit = "Initialisation";
 
 // Jeudi 8 septembre 2016
 $L.blockly.number_precision = "précision décimale :";
+
+// Vendredi 7 octobre 2016
+$L.blockly.image_url = "image d'url";
+$L.blockly.image_w = "largeur";
+$L.blockly.image_h = "hauteur";
+$L.blockly.image_z = "zoom";
+$L.blockly.image_o = "opacité";

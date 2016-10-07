@@ -12,7 +12,7 @@ function ListObject(_construction, _name, _EXP) {
     var Ptab = []; // Tableau de points
     var arrow = null; // Flèches en bout de segments
     var colors = ["#ffffff", "#cccccc", "#c0c0c0", "#999999", "#666666", "#333333", "#000000", "#ffcccc", "#ff6666", "#ff0000", "#cc0000", "#990000", "#660000", "#330000", "#ffcc99", "#ff9966", "#ff9900", "#ff6600", "#cc6600", "#993300", "#663300", "#ffff99", "#ffff66", "#ffcc66", "#ffcc33", "#cc9933", "#996633", "#663333", "#ffffcc", "#ffff33", "#ffff00", "#ffcc00", "#999900", "#666600", "#333300", "#99ff99", "#66ff99", "#33ff33", "#33cc00", "#009900", "#006600", "#003300", "#99ffff", "#33ffff", "#66cccc", "#00cccc", "#339999", "#336666", "#003333", "#ccffff", "#66ffff", "#33ccff", "#3366ff", "#3333ff", "#000099", "#000066", "#ccccff", "#9999ff", "#6666cc", "#6633ff", "#6600cc", "#333399", "#330099", "#ffccff", "#ff99ff", "#cc66cc", "#cc33cc", "#993399", "#663366", "#330033"];
-
+    var images = {};
     me.setArrow = function(_t) {
         arrow = (_t && (_t.length === 2) && (_t[0]) && (_t[1])) ? _t : null;
     }
@@ -21,6 +21,26 @@ function ListObject(_construction, _name, _EXP) {
     }
 
     // me.setArrow(16,5);
+
+    var pushImage = function(_url) {
+        var cod = _url.substr(_url.length - 50);
+        if (!images.hasOwnProperty(cod)) {
+            var img = new Image();
+            img.onload = function() {
+                if (!images.hasOwnProperty(cod)) {
+                    images[cod] = img;
+                    Cn.getCanvas().paint()
+                }
+            };
+            img.src = _url
+        }
+    }
+
+    var getImage = function(_url) {
+        var cod = _url.substr(_url.length - 50);
+        if (images.hasOwnProperty(cod)) return images[cod];
+        return null;
+    }
 
 
     var initPtab = function() {
@@ -108,7 +128,7 @@ function ListObject(_construction, _name, _EXP) {
                     });
                 }
 
-            } else if (lst[i].length === 4) {
+            } else if (lst[i].length >= 4) {
                 if (lst[i][0] === 0) {
                     // Un élément [0,r,g,b] signale un breakpoint de dégradé de couleur :
                     // console.log("*********** : Ptab.length=" + Ptab.length + "  oldColStop=" + oldColStop);
@@ -176,6 +196,11 @@ function ListObject(_construction, _name, _EXP) {
                     // Un élément [21,0,0,tab] signale un changement de style d'écriture. tab
                     // représente un tableau à 4 éléments [font,size,face,align] :
                     ft = lst[i][3];
+                } else if (lst[i][0] === 30) {
+                    // Un élément [30,url,w,h,U] signale l'ordre d'afficher une image
+                    // d'adresse url, de dimension (w,h), dans la direction U :
+                    Ptab[Ptab.length - 1].image = { url: lst[i][1], w: lst[i][2], h: lst[i][3], z: lst[i][4], o: lst[i][5], dir: lst[i][6] };
+                    pushImage(lst[i][1]);
                 }
             } else {
                 // Sinon il y a erreur dans l'expression:
@@ -481,7 +506,7 @@ function ListObject(_construction, _name, _EXP) {
 
 
     var paintText = function(_p, ctx) {
-        if ($U.katexLoaded(Cn.getCanvas().paint,[ctx])) {
+        if ($U.katexLoaded(Cn.getCanvas().paint, [ctx])) {
             var x0 = _p.x,
                 y0 = _p.y,
                 _t = _p.text[0],
@@ -517,60 +542,35 @@ function ListObject(_construction, _name, _EXP) {
 
     };
 
-
-    // var paintText = function(_p, ctx) {
-    //     var x0 = _p.x,
-    //         y0 = _p.y,
-    //         _t = _p.text[0],
-    //         _u = _p.text[1],
-    //         font = _p.fnt[0],
-    //         size = _p.fnt[1],
-    //         face = _p.fnt[2],
-    //         align = _p.fnt[3];
-
-    //     var rot = -Math.atan2(_u[1], _u[0]);
-
-    //     ctx.save();
-    //     ctx.font = face + " " + size + "px " + font;
-
-
-    //     // console.log(align);
-    //     // ctx.textAlign = align;
-    //     ctx.textAlign = "left";
-
-
-
-    //     // ctx.fillStyle = ctx.strokeStyle;
-    //     ctx.strokeStyle = _p.rgb;
-    //     ctx.fillStyle = _p.rgb;
-    //     ctx.translate(x0, y0);
-    //     ctx.rotate(rot);
+    var paintImage = function(_p, ctx) {
+        var x0 = _p.x,
+            y0 = _p.y,
+            _url = _p.image.url,
+            _w = _p.image.w,
+            _h = _p.image.h,
+            _z = _p.image.z,
+            _o = _p.image.o,
+            _u = _p.image.dir;
+        var img = getImage(_url);
+        if (img) {
+            var rot = -Math.atan2(_u[1], _u[0]);
+            ctx.save();
+            ctx.translate(x0, y0);
+            ctx.rotate(rot);
+            ctx.globalAlpha = _o;
+            if (_w < 0) {
+                _w = img.width;
+                _h = img.height
+            }
+            _w *= _z;
+            _h *= _z;
+            ctx.drawImage(img, -_w / 2, -_h / 2, _w, _h);
+            ctx.restore();
+        };
+    };
 
 
-    //     // // unicode parsing :
-    //     // _t = _t.replace(/\\u([A-F\d]{4})/g, function(m, _s) {
-    //     //     return String.fromCharCode(parseInt(_s, 16))
-    //     // });
 
-    //     var texTab = _t.split("$$");
-    //     var pos = 0;
-    //     for (var i = 0; i < texTab.length; i++) {
-    //         if (i % 2 === 0) {
-    //             // console.log(texTab[i]);
-    //             ctx.fillText(texTab[i], pos, 0);
-    //             pos += ctx.measureText(texTab[i]).width;
-    //         } else {
-    //             pos += renderTeX(ctx, texTab[i], size, pos, 0);
-    //         }
-    //     }
-    //     if (align === "center") {
-    //         console.log("TRANSLATE : " + pos);
-    //         ctx.translate(-pos / 2, 0);
-    //     }
-
-    //     // ctx.fillText(_t, 0, 0);
-    //     ctx.restore();
-    // };
 
     var paintPoint = paintCircle;
 
@@ -670,6 +670,7 @@ function ListObject(_construction, _name, _EXP) {
                         ctx.stroke();
                     }
                     if (Ptab[i].text) paintText(Ptab[i], ctx);
+                    if (Ptab[i].image) paintImage(Ptab[i], ctx);
                 }
             } else {
                 for (var i = 0, len = Ptab.length; i < len; i++) {
@@ -681,6 +682,7 @@ function ListObject(_construction, _name, _EXP) {
                         ctx.stroke();
                     }
                     if (Ptab[i].text) paintText(Ptab[i], ctx);
+                    if (Ptab[i].image) paintImage(Ptab[i], ctx);
                 }
             }
 
