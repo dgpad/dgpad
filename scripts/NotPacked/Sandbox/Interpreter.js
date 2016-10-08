@@ -1478,9 +1478,11 @@ function Interpreter(_win, _canvas) {
         if (!isValidParenthesis(_s))
             return _s;
 
+
         // Les textes de tortue ne doivent pas être digérés par
         // l'interpreteur : on les met de côté pour les restituer ensuite.
-        _s = _s.replace(/(TURTLE_TEXT\('[^']+'\))/g, function(m, _n) {
+        // _s = _s.replace(/(TURTLE_TEXT\('[^']+'\))/g, function(m, _n) {
+        _s = _s.replace(/(TURTLE_TEXT\('(\\'|[^'])*'\))/g, function(m, _n, _p) {
             tabTrtl.push(_n);
             return (maskTrtl + (tabTrtl.length - 1));
         });
