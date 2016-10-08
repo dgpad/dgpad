@@ -984,7 +984,7 @@ $U.alert = function(_mess, _w, _h) {
     scrn.bnds(0, 0, winW, winH);
     wp.bnds((winW - w) / 2, t, w, h);
     msg.bnds((w - msg_width) / 2, msg_top, msg_width, msg_height);
-    msg.innerHTML = _mess;
+    msg.innerHTML = _mess.replace(/\\n/g,"<br>");
     ok.bnds(w - ok_width - ok_right, ok_top, ok_width, ok_height);
     ok.innerHTML = $L.blockly.prompt_ok;
     ok.stl("line-height", ok_height + "px");
