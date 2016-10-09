@@ -261,7 +261,7 @@
            var elt = document.getElementById(":" + cat[name]);
            if (bool) {
                elt.style["visibility"] = "visible";
-               elt.style["height"] = "25px";
+               elt.style["height"] = "40px";
                if (name === "turtle") turtle.show(OBJ);
                // turtle = new TurtleObject(canvas, OBJ);
                canvas.paint();
@@ -308,8 +308,8 @@
                initBlockly();
                workspace.addChangeListener(onchanged);
                changeCSS("blocklyToolboxDiv", "z-index", "9001");
-               // changeCSS("blocklyToolboxDiv", "background", "#FEFEFE");
-               changeCSS("blocklyMainBackground", "fill", "#FEFEFE");
+               // changeCSS("blocklyToolboxDiv", "background", "#ddd");
+               // changeCSS("blocklyMainBackground", "fill", "#BBB");
                changeCSS("blocklyMainBackground", "fill-opacity", "0.0");
                changeCSS("blocklySvg", "background-color", "rgba(0,0,0,0)");
                modifyCSSRule(".blocklyText", "font-family", "Verdana, Geneva, sans-serif");
@@ -323,6 +323,11 @@
                modifyCSSRule(".blocklyWidgetDiv .goog-menuitem-hover", "padding-top", "4px");
                modifyCSSRule(".blocklyWidgetDiv .goog-menuitem-content", "padding-bottom", "4px");
                modifyCSSRule(".blocklyWidgetDiv .goog-menuitem-content", "padding-top", "4px");
+               modifyCSSRule(".blocklyHighlightedConnectionPath", "stroke", "#fc3");
+               modifyCSSRule(".blocklySelected > .blocklyPath", "stroke", "#fc3");
+               modifyCSSRule(".blocklyFlyoutBackground","fill","#777");
+               modifyCSSRule(".blocklyFlyoutBackground","fill-opacity","0.5");
+
 
                // On cache la catégorie "Tortue" :
                showCategory("turtle", false);

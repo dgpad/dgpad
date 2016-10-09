@@ -14,8 +14,9 @@ function BlocklyPanel(_owner, _canvas, _closeCallback, _currentTabCallBack, _hei
     // var mn_margin_left = 5; // Margins from left
     var rz_width = 20; // Resize box width
     var rz_margin = 3; // Resize box margin
-    var ph_margin = 10; // Panel margin from top and bottom
-    var pl_margin = 10; // Panel margin from left
+    var ph_margin = 2; // Panel margin from top and bottom
+    var pl_margin = 1; // Panel margin from left
+    var p_width = (canvas.getWidth() > 1200) ? canvas.getWidth() / 2 : 600;
     var tb_height = 30; // Bottom toolbar height
     var left = 0,
         top = 0,
@@ -253,7 +254,7 @@ function BlocklyPanel(_owner, _canvas, _closeCallback, _currentTabCallBack, _hei
     rz.md(resizedown);
     rz.mu(resizeup);
 
-    me.setbounds(pl_margin, ph_margin - 1, 600, _height - 2 * ph_margin);
+    me.setbounds(pl_margin, ph_margin - 1, p_width, _height - 2 * ph_margin);
 
     wp.add(xml);
     wp.add(tl);
