@@ -1216,7 +1216,7 @@ $U.alert = function(_mess, _w, _h) {
     scrn.bnds(0, 0, winW, winH);
     wp.bnds((winW - w) / 2, t, w, h);
     msg.bnds((w - msg_width) / 2, msg_top, msg_width, msg_height);
-    msg.innerHTML = _mess;
+    msg.innerHTML = _mess.replace(/\\n/g,"<br>");
     ok.bnds(w - ok_width - ok_right, ok_top, ok_width, ok_height);
     ok.innerHTML = $L.blockly.prompt_ok;
     ok.stl("line-height", ok_height + "px");
@@ -27278,7 +27278,7 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
            var elt = document.getElementById(":" + cat[name]);
            if (bool) {
                elt.style["visibility"] = "visible";
-               elt.style["height"] = "25px";
+               elt.style["height"] = "40px";
                if (name === "turtle") turtle.show(OBJ);
                // turtle = new TurtleObject(canvas, OBJ);
                canvas.paint();
@@ -27325,8 +27325,8 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
                initBlockly();
                workspace.addChangeListener(onchanged);
                changeCSS("blocklyToolboxDiv", "z-index", "9001");
-               // changeCSS("blocklyToolboxDiv", "background", "#FEFEFE");
-               changeCSS("blocklyMainBackground", "fill", "#FEFEFE");
+               // changeCSS("blocklyToolboxDiv", "background", "#ddd");
+               // changeCSS("blocklyMainBackground", "fill", "#BBB");
                changeCSS("blocklyMainBackground", "fill-opacity", "0.0");
                changeCSS("blocklySvg", "background-color", "rgba(0,0,0,0)");
                modifyCSSRule(".blocklyText", "font-family", "Verdana, Geneva, sans-serif");
@@ -27340,6 +27340,11 @@ function NamesPanel(_owner, _l, _t, _w, _h, _observerproc, _closeproc) {
                modifyCSSRule(".blocklyWidgetDiv .goog-menuitem-hover", "padding-top", "4px");
                modifyCSSRule(".blocklyWidgetDiv .goog-menuitem-content", "padding-bottom", "4px");
                modifyCSSRule(".blocklyWidgetDiv .goog-menuitem-content", "padding-top", "4px");
+               modifyCSSRule(".blocklyHighlightedConnectionPath", "stroke", "#fc3");
+               modifyCSSRule(".blocklySelected > .blocklyPath", "stroke", "#fc3");
+               modifyCSSRule(".blocklyFlyoutBackground","fill","#777");
+               modifyCSSRule(".blocklyFlyoutBackground","fill-opacity","0.5");
+
 
                // On cache la catégorie "Tortue" :
                showCategory("turtle", false);
@@ -27562,8 +27567,9 @@ function BlocklyPanel(_owner, _canvas, _closeCallback, _currentTabCallBack, _hei
     // var mn_margin_left = 5; // Margins from left
     var rz_width = 20; // Resize box width
     var rz_margin = 3; // Resize box margin
-    var ph_margin = 10; // Panel margin from top and bottom
-    var pl_margin = 10; // Panel margin from left
+    var ph_margin = 2; // Panel margin from top and bottom
+    var pl_margin = 1; // Panel margin from left
+    var p_width = (canvas.getWidth() > 1200) ? canvas.getWidth() / 2 : 600;
     var tb_height = 30; // Bottom toolbar height
     var left = 0,
         top = 0,
@@ -27801,7 +27807,7 @@ function BlocklyPanel(_owner, _canvas, _closeCallback, _currentTabCallBack, _hei
     rz.md(resizedown);
     rz.mu(resizeup);
 
-    me.setbounds(pl_margin, ph_margin - 1, 600, _height - 2 * ph_margin);
+    me.setbounds(pl_margin, ph_margin - 1, p_width, _height - 2 * ph_margin);
 
     wp.add(xml);
     wp.add(tl);
