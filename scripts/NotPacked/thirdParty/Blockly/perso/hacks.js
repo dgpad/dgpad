@@ -321,7 +321,5 @@ Blockly.BlockSvg.prototype.renderDraw_ = function(iconWidth, inputRows) {
   this.svgPath_.setAttribute('d', pathString);
   this.svgPath_.setAttribute('stroke', this.svgPath_.getAttribute("fill"));
   this.svgPath_.setAttribute('stroke-width', "0.6");
-  this.svgPathDark_=null;
-  this.svgPathLight_=null;
 };
 
