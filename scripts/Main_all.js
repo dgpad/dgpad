@@ -4158,6 +4158,18 @@ function Canvas(_id) {
         me.longpressManager.show(ev);
     };
 
+    var globalMouseCoords = {
+        x: NaN,
+        y: NaN
+    };
+    var setMouseCoords = function() {
+        globalMouseCoords.x = actualCoords.x;
+        globalMouseCoords.y = actualCoords.y;
+    };
+    me.getMouseCoords = function() {
+        return [Cn.coordsSystem.x(globalMouseCoords.x), Cn.coordsSystem.y(globalMouseCoords.y)]
+    };
+
     // Mouse Events :
     me.mousePressed = function(ev) {
         // console.log("mousePressed");
@@ -4174,6 +4186,7 @@ function Canvas(_id) {
         dragCoords = null;
         actualCoords.x = me.mouseX(ev);
         actualCoords.y = me.mouseY(ev);
+        setMouseCoords();
         //        $ALERT("x="+actualCoords.x+" y="+actualCoords.y);
         pressedCoords = {
             x: actualCoords.x,
@@ -4242,6 +4255,7 @@ function Canvas(_id) {
         clearTimeout(longPressTimeout);
         actualCoords.x = me.mouseX(ev);
         actualCoords.y = me.mouseY(ev);
+        setMouseCoords();
         if (dragCoords) {
             // S'il s'agit d'un click droit glissé :
             me.translate(actualCoords.x - dragCoords.x, actualCoords.y - dragCoords.y);
