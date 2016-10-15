@@ -1,6 +1,6 @@
 Blockly.ContextMenu.origin_show = Blockly.ContextMenu.show;
 
-Blockly.Field.prototype.maxDisplayLength = 20;
+Blockly.Field.prototype.maxDisplayLength = 30;
 
 
 Blockly.WorkspaceSvg.prototype.preloadAudio_ = function() {

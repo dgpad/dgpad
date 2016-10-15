@@ -161,6 +161,7 @@
         <block type="dgpad_set_object"></block>
         <block type="dgpad_get_object_short"></block>
         <block type="dgpad_get_object"></block>
+        <block type="dgpad_mouse"></block>
         <block type="dgpad_expression_input"></block>
         <block type="turtle_get">
             <value name="NUM">

@@ -435,3 +435,7 @@ $L.blockly.image_w = "width";
 $L.blockly.image_h = "height";
 $L.blockly.image_z = "zoom";
 $L.blockly.image_o = "opacity";
+
+// Samedi 15 octobre 2016
+$L.blockly.mouse_position = "mouse position";
+$L.blockly.touch_position = "finger position";

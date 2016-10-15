@@ -6,6 +6,13 @@ Blockly.JavaScript['dgpad_window_props'] = function(block) {
     return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
+Blockly.JavaScript['dgpad_mouse'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'GetMouseCoordinates()';
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
 Blockly.JavaScript['dgpad_distance'] = function(block) {
     var value_from = Blockly.JavaScript.valueToCode(block, 'FROM', Blockly.JavaScript.ORDER_ATOMIC);
     var value_to = Blockly.JavaScript.valueToCode(block, 'TO', Blockly.JavaScript.ORDER_ATOMIC);

@@ -306,6 +306,10 @@ function Interpreter(_win, _canvas) {
         return me.Z;
     };
 
+    var GetMouseCoordinates = function() {
+        return me.Z.getMouseCoords();
+    };
+
 
     // Blockly part :
 

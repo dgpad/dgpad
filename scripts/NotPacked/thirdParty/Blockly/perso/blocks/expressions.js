@@ -18,6 +18,17 @@ Blockly.Blocks['dgpad_window_props'] = {
     }
 };
 
+Blockly.Blocks['dgpad_mouse'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(Object.touchpad ? $L.blockly.touch_position : $L.blockly.mouse_position);
+    this.setOutput(true, null);
+    this.setColour(20);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
 Blockly.Blocks['dgpad_distance'] = {
     init: function() {
         this.appendValueInput("FROM")
