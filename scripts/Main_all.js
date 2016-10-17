@@ -4325,6 +4325,7 @@ function Canvas(_id) {
 
 
         if (draggedObject) {
+            draggedObject.blocks.evaluate("onmouseup"); // blockly
             if (isClick(ev)) {
                 // Si on a cliqué sur l'objet :
                 if ((!me.coincidenceManager.checkCoincidences(ev))) {
@@ -4339,9 +4340,10 @@ function Canvas(_id) {
                     me.paint(ev);
                     me.initTools(ev, draggedObject);
                 }
-            } else {
-                draggedObject.blocks.evaluate("onmouseup"); // blockly
-            }
+            };
+            //  else {
+            //     draggedObject.blocks.evaluate("onmouseup"); // blockly
+            // }
             //            me.textManager.evaluateStrings(true);
             draggedObject = null;
         } else {
