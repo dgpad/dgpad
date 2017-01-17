@@ -37,29 +37,54 @@ and open the template in the editor.
       	// 	return mb_convert_encoding($content, 'UTF-8',
       	// 	mb_detect_encoding($content, 'UTF-8', true));
 		// }
-		
-		
-		echo "<script src=\"scripts/DGPad.js\" ";
-		$u=$_GET["url"];
-		if (!$u) $u=$_POST["url"];
+
+        $u=$_GET["url"];
+        if (!$u) $u=$_POST["url"];
         $u2=$_GET["url2"];
         if (!$u2) $u2=$_POST["url2"];
-		$f=$_POST["file_content"];
-		$t=$_GET["hide_ctrlpanel"];
-		if (!$t) $t=$_POST["hide_ctrlpanel"];
-		$l=$_GET["lang"];
-		$p=$_GET["presentation"];
+        $t=$_GET["hide_ctrlpanel"];
+        if (!$t) $t=$_POST["hide_ctrlpanel"];
+        $l=$_GET["lang"];
+        if (!$l) $l=$_POST["lang"];
+        $p=$_GET["presentation"];
+        if (!$p) $p=$_POST["presentation"];
         $tls=$_GET["show_tools"];
-        // data-url est utilisé pour les adresses relatives, et pour certains
-        // sites acceptant le cross-domain-origin :
-        if ($u2) echo "data-url=\"$u2\";";
-		if ($u) echo "data-source=\"".base64_encode(file_get_contents("$u"))."\";";
-		if ($f) echo "data-source=\"$f\";";
-		if ($t) echo " data-hidectrlpanel=\"$t\";";
-		if ($l) echo " data-lang=\"$l\";";
-		if ($p) echo " data-presentation=\"$p\";";
-        if ($tls) echo " data-tools=\"$tls\";";
-		echo "></script>";
+        if (!$tls) $tls=$_POST["show_tools"];
+        $ga=$_GET["googleApps"];
+        if (!$ga) $ga=$_POST["googleApps"];
+        $gid=$_GET["googleId"];
+        if (!$gid) $gid=$_POST["googleId"];
+        $f=$_POST["file_content"];
+
+        if (($u)&&(strpos($u, 'google.com') !== false)) {       
+            $pattern="/([-\w]{25,})/";
+            preg_match($pattern, $u, $res);
+            if ((is_array($res)) && (count($res) == 1)) {
+                $args="id=".$res[0];
+                if ($t) $args=$args."&hide_ctrlpanel=".$t;
+                if ($l) $args=$args."&lang=".$l;
+                if ($p) $args=$args."&presentation=".$p;
+                if ($tls) $args=$args."&show_tools=".$tls;
+                echo "<script>location.replace('https://script.google.com/macros/s/AKfycbyEZOu-YDVlJWrrMBdDXdWzMF1HI2ONmxKTmtgYF-cFdUXyq44/exec?".$args."')</script>";
+            }
+        };
+
+        echo "<script src=\"scripts/DGPad.js\" ";
+            // data-url est utilisé pour les adresses relatives, et pour certains
+            // sites acceptant le cross-domain-origin :
+        if ($u2) echo " data-url=\"$u2\"";
+        if ($u) echo " data-source=\"".base64_encode(file_get_contents("$u"))."\"";
+        if ($f) echo " data-source=\"$f\"";
+        if ($t) echo " data-hidectrlpanel=\"$t\"";
+        if ($l) echo " data-lang=\"$l\"";
+        if ($p) echo " data-presentation=\"$p\"";
+        if ($tls) echo " data-tools=\"$tls\"";
+        if ($ga) echo " data-googleapps=\"$ga\"";
+        if ($gid) echo " data-googleid=\"$gid\"";
+        echo "></script>";
+		
+		
+		
 		?>
 		
     </body> 

@@ -235,14 +235,36 @@
                         "y": cy
                     });
                     this.util.pushToStack();
-                } else {
-                    //                    console.log("**************");
-                    //                    console.log("x=" + cx + " y=" + cy + " r=" + radius);
-                    //                    console.log(" startAngle=" + startAngle + " endAngle=" + endAngle);
-                    //                    console.log("dA>Math.PI="+(dA>Math.PI));
-                    //                    console.log(" anticlockwise=" + anticlockwise);
-                    //                    console.log("TEST="+((dA>Math.PI && !anticlockwise)||(dA<Math.PI && anticlockwise)));
-                    //  
+                } else { 
+                    var dA = endAngle - startAngle;
+                    while (dA < 0)
+                        dA += 2 * Math.PI;
+                    var start = this.polarToCartesian(cx, cy, radius, startAngle);
+                    var end = this.polarToCartesian(cx, cy, radius, endAngle);
+                    var largeArc = 1 * (((dA > Math.PI && !anticlockwise) || (dA < Math.PI && anticlockwise)));
+                    currentPath.points.push({
+                        "action": "arc",
+                        "r": radius,
+                        "x1": start.x,
+                        "y1": start.y,
+                        "x2": end.x,
+                        "y2": end.y,
+                        "acw": 1 - 1 * anticlockwise,
+                        "wa": largeArc
+                    });
+                    this.util.pushToStack();
+                }
+            },
+            arc2: function(cx, cy, radius, startAngle, endAngle, anticlockwise) {
+                if (Math.abs(Math.abs(startAngle - endAngle) - Math.PI * 2) < 1e-9) {
+                    currentPath.points.push({
+                        "action": "circle",
+                        "r": radius,
+                        "x": cx,
+                        "y": cy
+                    });
+                    this.util.pushToStack();
+                } else { 
                     var dA = endAngle - startAngle;
                     while (dA < 0)
                         dA += 2 * Math.PI;

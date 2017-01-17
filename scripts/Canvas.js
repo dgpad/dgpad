@@ -4,6 +4,8 @@ function Canvas(_id) {
     var docObject = document.getElementById(_id);
     var bounds = null;
     var iPadDidFirstEnterBackground = true;
+    var googleApps = "";
+    var googleId = "";
 
 
 
@@ -213,11 +215,53 @@ function Canvas(_id) {
         }
     };
 
+    var submitGoogle = function() {
+        window.onbeforeunload = function() {
+            
+        };
+
+        var form = document.createElement('FORM');
+        form.action = googleApps;
+        form.method = "POST";
+
+        var inp = document.createElement('INPUT');
+        inp.type = "HIDDEN";
+        inp.name = "content";
+        inp.value = $U.base64_encode(me.getSource());
+        form.appendChild(inp);
+
+        inp = document.createElement('INPUT');
+        inp.type = "HIDDEN";
+        inp.name = "html";
+        inp.value = "DGPad";
+        form.appendChild(inp);
+
+        inp = document.createElement('INPUT');
+        inp.type = "HIDDEN";
+        inp.name = "id";
+        inp.value = googleId;
+        form.appendChild(inp);
+
+        inp = document.createElement('INPUT');
+        inp.type = "SUBMIT";
+        inp.value = " ";
+        form.appendChild(inp);
+
+        window.document.body.appendChild(form);
+
+        form.submit();
+    }
+
     var initBounds = function() {
         if (docObject.hasAttribute("data-hidectrlpanel")) {
             if (docObject.getAttribute("data-hidectrlpanel") === "true") {
                 me.prefs.controlpanel.size = 0;
             }
+        }
+        if (docObject.hasAttribute("data-googleapps")) {
+            googleApps = docObject.getAttribute("data-googleapps");
+            googleId = docObject.getAttribute("data-googleid");
+            $U.button("Enregistrer votre figure...", submitGoogle);
         }
 
         if ((docObject.hasAttribute("width")) && (docObject.hasAttribute("height"))) {
@@ -1458,6 +1502,9 @@ function Canvas(_id) {
         var md = (_src === "") ? 1 : 0;
         if (docObject.hasAttribute("data-tools")) {
             md = (docObject.getAttribute("data-tools") === "true") ? 1 : 0
+        };
+        if (docObject.hasAttribute("data-googleapps")) {
+            md = 1;
         };
         me.setMode(md);
         me.undoManager.clear();

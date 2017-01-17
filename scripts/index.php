@@ -44,6 +44,8 @@ and open the template in the editor.
         if (!$t)
             $t = $_POST["hide_ctrlpanel"];
         $l = $_GET["lang"];
+        $ga = $_GET["googleApps"];
+        $gid = $_GET["googleId"];
         if ($u)
             echo "data-source=\"" . base64_encode(file_get_contents("$u")) . "\";";
         if ($f)
@@ -52,6 +54,10 @@ and open the template in the editor.
             echo " data-hidectrlpanel=\"$t\";";
         if ($l)
             echo " data-lang=\"$l\";";
+        if ($ga)
+            echo " data-googleApps=\"$ga\";";
+        if ($gid)
+            echo " data-googleId=\"$gid\";";
         echo "></script>";
         ?>
 

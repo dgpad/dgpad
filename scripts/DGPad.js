@@ -3,6 +3,49 @@
 //    $NAMESPACE[key] = key;
 //}
 
+
+CanvasRenderingContext2D.prototype.arc2 = function(x, y, r, a, b, c) {
+    // if (r < 1128406) {
+    if (r < 1000000) {
+        this.arc(x, y, r, a, b, c);
+    } else {
+        var w = this.canvas.width;
+        var h = this.canvas.height;
+        var inters = [];
+        var t = r * r - x * x;
+        if (t > 0) {
+            t = Math.sqrt(t);
+            if ((y + t >= 0) && (y + t < h)) inters.push([0, y + t]);
+            if ((y - t >= 0) && (y - t < h)) inters.push([0, y - t]);
+        }
+        t = r * r - (x - w) * (x - w);
+        if (t > 0) {
+            t = Math.sqrt(t);
+            if ((y + t >= 0) && (y + t < h)) inters.push([w, y + t]);
+            if ((y - t >= 0) && (y - t < h)) inters.push([w, y - t]);
+        }
+        t = r * r - y * y;
+        if (t > 0) {
+            t = Math.sqrt(t);
+            if ((x + t >= 0) && (x + t < w)) inters.push([x + t, 0]);
+            if ((x - t >= 0) && (x - t < w)) inters.push([x - t, 0]);
+        }
+        t = r * r - (y - h) * (y - h);
+        if (t > 0) {
+            t = Math.sqrt(t);
+            if ((x + t >= 0) && (x + t < w)) inters.push([x + t, h]);
+            if ((x - t >= 0) && (x - t < w)) inters.push([x - t, h]);
+        }
+        if (inters.length === 2) {
+            this.beginPath();
+            this.moveTo(inters[0][0], inters[0][1]);
+            this.lineTo(inters[1][0], inters[1][1]);
+            this.closePath();
+        }
+    }
+}
+
+
 var $BODY_SCRIPT = document.getElementsByTagName("script");
 $BODY_SCRIPT = $BODY_SCRIPT[$BODY_SCRIPT.length - 1];
 
@@ -104,7 +147,7 @@ if (!$APP_PATH) {
 
     var $LOADPICKER = function() {
         //        var script = $HEADSCRIPT($APP_PATH + "NotPacked/thirdParty/FilePicker.js");
-        var script = $HEADSCRIPT("http://api.filepicker.io/v1/filepicker.js");
+        var script = $HEADSCRIPT("https://api.filepicker.io/v1/filepicker.js");
         script.onload = function() {
             filepicker.setKey('A11o-dWi-S-ePxgyeWpfyz');
         };
@@ -311,6 +354,14 @@ if (!$APP_PATH) {
     // Transfert sur le canvas de l'état du mode 1 (mode construction ou non) :
     if ($BODY_SCRIPT.hasAttribute("data-tools")) {
         canvas.setAttribute("data-tools", $BODY_SCRIPT.getAttribute("data-tools"));
+    }
+    // Transfert sur le canvas de l'appli google Apps qui appelle :
+    if ($BODY_SCRIPT.hasAttribute("data-googleapps")) {
+        canvas.setAttribute("data-googleapps", $BODY_SCRIPT.getAttribute("data-googleapps"));
+    }
+    // Transfert sur le canvas de l'ID du fichier google drive cible :
+    if ($BODY_SCRIPT.hasAttribute("data-googleid")) {
+        canvas.setAttribute("data-googleid", $BODY_SCRIPT.getAttribute("data-googleid"));
     }
 
     var num = document.getElementsByTagName("canvas").length;

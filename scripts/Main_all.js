@@ -1190,6 +1190,14 @@ $U.createDiv = function(_otherType) {
     return $U.addDomUtils(el);
 };
 
+$U.button = function(_mess, _proc) {
+    var wrapper = $U.createDiv();
+    wrapper.stls("position:absolute;font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;width:250px;height:30px;line-height:30px;top:5px;left:50%;transform:translate(-50%,0);text-align:center;vertical-align:middle;background-color:#8CD4FF;color:blaxk;border:none;box-shadow:none;font-size:17px;font-weight:500;-webkit-border-radius:4px;border-radius:5px;cursor: pointer");
+    wrapper.innerText = _mess;
+    wrapper.mu(_proc);
+    window.document.body.appendChild(wrapper);
+};
+
 $U.alert = function(_mess, _w, _h) {
     var w = _w ? _w : 350;
     var h = _h ? _h : 165;
@@ -1216,7 +1224,7 @@ $U.alert = function(_mess, _w, _h) {
     scrn.bnds(0, 0, winW, winH);
     wp.bnds((winW - w) / 2, t, w, h);
     msg.bnds((w - msg_width) / 2, msg_top, msg_width, msg_height);
-    msg.innerHTML = _mess.replace(/\\n/g,"<br>");
+    msg.innerHTML = _mess.replace(/\\n/g, "<br>");
     ok.bnds(w - ok_width - ok_right, ok_top, ok_width, ok_height);
     ok.innerHTML = $L.blockly.prompt_ok;
     ok.stl("line-height", ok_height + "px");
@@ -3003,14 +3011,36 @@ function CoordsSystem(_C) {
                         "y": cy
                     });
                     this.util.pushToStack();
-                } else {
-                    //                    console.log("**************");
-                    //                    console.log("x=" + cx + " y=" + cy + " r=" + radius);
-                    //                    console.log(" startAngle=" + startAngle + " endAngle=" + endAngle);
-                    //                    console.log("dA>Math.PI="+(dA>Math.PI));
-                    //                    console.log(" anticlockwise=" + anticlockwise);
-                    //                    console.log("TEST="+((dA>Math.PI && !anticlockwise)||(dA<Math.PI && anticlockwise)));
-                    //  
+                } else { 
+                    var dA = endAngle - startAngle;
+                    while (dA < 0)
+                        dA += 2 * Math.PI;
+                    var start = this.polarToCartesian(cx, cy, radius, startAngle);
+                    var end = this.polarToCartesian(cx, cy, radius, endAngle);
+                    var largeArc = 1 * (((dA > Math.PI && !anticlockwise) || (dA < Math.PI && anticlockwise)));
+                    currentPath.points.push({
+                        "action": "arc",
+                        "r": radius,
+                        "x1": start.x,
+                        "y1": start.y,
+                        "x2": end.x,
+                        "y2": end.y,
+                        "acw": 1 - 1 * anticlockwise,
+                        "wa": largeArc
+                    });
+                    this.util.pushToStack();
+                }
+            },
+            arc2: function(cx, cy, radius, startAngle, endAngle, anticlockwise) {
+                if (Math.abs(Math.abs(startAngle - endAngle) - Math.PI * 2) < 1e-9) {
+                    currentPath.points.push({
+                        "action": "circle",
+                        "r": radius,
+                        "x": cx,
+                        "y": cy
+                    });
+                    this.util.pushToStack();
+                } else { 
                     var dA = endAngle - startAngle;
                     while (dA < 0)
                         dA += 2 * Math.PI;
@@ -3328,6 +3358,8 @@ function Canvas(_id) {
     var docObject = document.getElementById(_id);
     var bounds = null;
     var iPadDidFirstEnterBackground = true;
+    var googleApps = "";
+    var googleId = "";
 
 
 
@@ -3537,11 +3569,53 @@ function Canvas(_id) {
         }
     };
 
+    var submitGoogle = function() {
+        window.onbeforeunload = function() {
+            
+        };
+
+        var form = document.createElement('FORM');
+        form.action = googleApps;
+        form.method = "POST";
+
+        var inp = document.createElement('INPUT');
+        inp.type = "HIDDEN";
+        inp.name = "content";
+        inp.value = $U.base64_encode(me.getSource());
+        form.appendChild(inp);
+
+        inp = document.createElement('INPUT');
+        inp.type = "HIDDEN";
+        inp.name = "html";
+        inp.value = "DGPad";
+        form.appendChild(inp);
+
+        inp = document.createElement('INPUT');
+        inp.type = "HIDDEN";
+        inp.name = "id";
+        inp.value = googleId;
+        form.appendChild(inp);
+
+        inp = document.createElement('INPUT');
+        inp.type = "SUBMIT";
+        inp.value = " ";
+        form.appendChild(inp);
+
+        window.document.body.appendChild(form);
+
+        form.submit();
+    }
+
     var initBounds = function() {
         if (docObject.hasAttribute("data-hidectrlpanel")) {
             if (docObject.getAttribute("data-hidectrlpanel") === "true") {
                 me.prefs.controlpanel.size = 0;
             }
+        }
+        if (docObject.hasAttribute("data-googleapps")) {
+            googleApps = docObject.getAttribute("data-googleapps");
+            googleId = docObject.getAttribute("data-googleid");
+            $U.button("Enregistrer votre figure...", submitGoogle);
         }
 
         if ((docObject.hasAttribute("width")) && (docObject.hasAttribute("height"))) {
@@ -4782,6 +4856,9 @@ function Canvas(_id) {
         var md = (_src === "") ? 1 : 0;
         if (docObject.hasAttribute("data-tools")) {
             md = (docObject.getAttribute("data-tools") === "true") ? 1 : 0
+        };
+        if (docObject.hasAttribute("data-googleapps")) {
+            md = 1;
         };
         me.setMode(md);
         me.undoManager.clear();

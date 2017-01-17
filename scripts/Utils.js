@@ -958,6 +958,14 @@ $U.createDiv = function(_otherType) {
     return $U.addDomUtils(el);
 };
 
+$U.button = function(_mess, _proc) {
+    var wrapper = $U.createDiv();
+    wrapper.stls("position:absolute;font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;width:250px;height:30px;line-height:30px;top:5px;left:50%;transform:translate(-50%,0);text-align:center;vertical-align:middle;background-color:#8CD4FF;color:blaxk;border:none;box-shadow:none;font-size:17px;font-weight:500;-webkit-border-radius:4px;border-radius:5px;cursor: pointer");
+    wrapper.innerText = _mess;
+    wrapper.mu(_proc);
+    window.document.body.appendChild(wrapper);
+};
+
 $U.alert = function(_mess, _w, _h) {
     var w = _w ? _w : 350;
     var h = _h ? _h : 165;
@@ -984,7 +992,7 @@ $U.alert = function(_mess, _w, _h) {
     scrn.bnds(0, 0, winW, winH);
     wp.bnds((winW - w) / 2, t, w, h);
     msg.bnds((w - msg_width) / 2, msg_top, msg_width, msg_height);
-    msg.innerHTML = _mess.replace(/\\n/g,"<br>");
+    msg.innerHTML = _mess.replace(/\\n/g, "<br>");
     ok.bnds(w - ok_width - ok_right, ok_top, ok_width, ok_height);
     ok.innerHTML = $L.blockly.prompt_ok;
     ok.stl("line-height", ok_height + "px");
