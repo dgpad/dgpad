@@ -3,7 +3,9 @@ var $U = {};
 
 $U.doublePI = 2 * Math.PI;
 $U.halfPI = Math.PI / 2;
-
+$U.DE_width = (localStorage.getItem("doceval_width")) ? parseInt(localStorage.getItem("doceval_width")) : 800; // DocEval applet width
+$U.DE_height = (localStorage.getItem("doceval_height")) ? parseInt(localStorage.getItem("doceval_height")) : 600; // DocEval applet width
+$U.DE_question = (localStorage.getItem("doceval_question")) ? localStorage.getItem("doceval_question") : ""; // DocEval question
 $U.nullproc = function() {};
 
 
@@ -1457,6 +1459,7 @@ $U.initCanvas = function(_id) {
     ZC.addTool(new VectorConstructor());
     ZC.addTool(new SpringConstructor());
     ZC.addTool(new BlocklyConstructor());
+    ZC.addTool(new DocEvalConstructor());
     ZC.addTool(new DGScriptNameConstructor());
     ZC.clearBackground();
 

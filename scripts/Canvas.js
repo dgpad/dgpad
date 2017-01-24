@@ -39,7 +39,7 @@ function Canvas(_id) {
         _src = $U.base64_encode(_src);
         var d = new Date();
         var _frm = "dgpad_frame_" + d.getTime();
-        var s = '<form action="http://www.dgpad.net/index.php" target="' + _frm + '" method="post" width="' + _w + '" height="' + (_h + 40) + '">';
+        var s = '<form action="https://www.dgpad.net/index.php" target="' + _frm + '" method="post" width="' + _w + '" height="' + (_h + 40) + '">';
         s += '<input type="hidden" name="file_content" value="' + _src + '">';
         if (hide_ctrl_panel)
             s += '<input type="hidden" name="hide_ctrlpanel" value="true">';
@@ -53,6 +53,37 @@ function Canvas(_id) {
         return s;
     };
 
+    me.getHTMLDOCEVAL = function(_exp, hide_ctrl_panel, _scale) {
+        var _w = width;
+        var _h = height;
+        var stls = '';
+        var sc = 1;
+        var _src = me.getSource();
+        _src += '\n\n//DocEval:\nSetDocEvalExpression("' + _exp + '");';
+        _src = $U.base64_encode(_src);
+        var d = new Date();
+        var _frm = "dgpad_frame_" + d.getTime();
+        if (_scale) {
+            var scx = Math.round(100 * $U.DE_width / _w) / 100;
+            var scy = Math.round(100 * $U.DE_height / _h) / 100;
+            sc = Math.max(scx, scy);
+            stls = ' style="';
+            stls += 'zoom: ' + sc + ';'
+            stls += '-webkit-transform: scale(' + sc + ');';
+            stls += '-webkit-transform-origin: 0 0;';
+            stls += '"'
+        };
+
+        var s = '<form action="https://dgpad.net/index.php" target="' + _frm + '" method="post" width="' + _w + '" height="' + (_h + 40) + '">';
+        s += '<input type="hidden" name="file_content" value="' + _src + '">';
+        if (hide_ctrl_panel)
+            s += '<input type="hidden" name="hide_ctrlpanel" value="true">';
+        else s += '<input type="hidden" name="show_tools" value="true">';
+        s += '<iframe id="doceval_iframe" ' + stls + ' name="' + _frm + '" width="' + Math.round($U.DE_width / (sc * sc)) + '" height="' + Math.round($U.DE_height / (sc * sc)) + '" src="about:blank" scrolling="no" frameborder="no" oNlOAd="if (!this.parentNode.num) {this.parentNode.submit();this.parentNode.num=true}"></iframe>';
+        s += '</form>';
+        return s;
+    };
+
     me.getHTMLJS = function(hide_ctrl_panel) {
         var _w = width;
         var _h = height;
@@ -60,7 +91,7 @@ function Canvas(_id) {
         _src = $U.base64_encode(_src);
         var d = new Date();
         var _frm = "dgpad_frame_" + d.getTime();
-        var s = '<form action="http://www.dgpad.net/index.php" target="' + _frm + '" method="post" width="' + _w + '" height="' + _h + '">';
+        var s = '<form action="https://www.dgpad.net/index.php" target="' + _frm + '" method="post" width="' + _w + '" height="' + _h + '">';
         s += '<input type="hidden" name="file_content" value="' + _src + '">';
         if (hide_ctrl_panel)
             s += '<input type="hidden" name="hide_ctrlpanel" value="true">';
@@ -182,6 +213,16 @@ function Canvas(_id) {
         }
     };
 
+    me.rebuildControlPanel = function() {
+        if (mainpanel) {
+            ctrl_panel_visible = mainpanel.isReallyVisible();
+            docObject.parentNode.removeChild(mainpanel.getDocObject());
+            mainpanel = null;
+        }
+        mainpanel = new ControlPanel(me);
+        if (!ctrl_panel_visible) mainpanel.hide();
+    }
+
     // Appelée lorsqu'on change la taille de la fenêtre (ordinateur)
     // ou bien lorsqu'on change d'orientation sur une tablette :
     var resizeWindow = function() {
@@ -217,7 +258,7 @@ function Canvas(_id) {
 
     var submitGoogle = function() {
         window.onbeforeunload = function() {
-            
+
         };
 
         var form = document.createElement('FORM');

@@ -235,7 +235,9 @@ var $U = {};
 
 $U.doublePI = 2 * Math.PI;
 $U.halfPI = Math.PI / 2;
-
+$U.DE_width = (localStorage.getItem("doceval_width")) ? parseInt(localStorage.getItem("doceval_width")) : 800; // DocEval applet width
+$U.DE_height = (localStorage.getItem("doceval_height")) ? parseInt(localStorage.getItem("doceval_height")) : 600; // DocEval applet width
+$U.DE_question = (localStorage.getItem("doceval_question")) ? localStorage.getItem("doceval_question") : ""; // DocEval question
 $U.nullproc = function() {};
 
 
@@ -1689,6 +1691,7 @@ $U.initCanvas = function(_id) {
     ZC.addTool(new VectorConstructor());
     ZC.addTool(new SpringConstructor());
     ZC.addTool(new BlocklyConstructor());
+    ZC.addTool(new DocEvalConstructor());
     ZC.addTool(new DGScriptNameConstructor());
     ZC.clearBackground();
 
@@ -3393,7 +3396,7 @@ function Canvas(_id) {
         _src = $U.base64_encode(_src);
         var d = new Date();
         var _frm = "dgpad_frame_" + d.getTime();
-        var s = '<form action="http://www.dgpad.net/index.php" target="' + _frm + '" method="post" width="' + _w + '" height="' + (_h + 40) + '">';
+        var s = '<form action="https://www.dgpad.net/index.php" target="' + _frm + '" method="post" width="' + _w + '" height="' + (_h + 40) + '">';
         s += '<input type="hidden" name="file_content" value="' + _src + '">';
         if (hide_ctrl_panel)
             s += '<input type="hidden" name="hide_ctrlpanel" value="true">';
@@ -3407,6 +3410,37 @@ function Canvas(_id) {
         return s;
     };
 
+    me.getHTMLDOCEVAL = function(_exp, hide_ctrl_panel, _scale) {
+        var _w = width;
+        var _h = height;
+        var stls = '';
+        var sc = 1;
+        var _src = me.getSource();
+        _src += '\n\n//DocEval:\nSetDocEvalExpression("' + _exp + '");';
+        _src = $U.base64_encode(_src);
+        var d = new Date();
+        var _frm = "dgpad_frame_" + d.getTime();
+        if (_scale) {
+            var scx = Math.round(100 * $U.DE_width / _w) / 100;
+            var scy = Math.round(100 * $U.DE_height / _h) / 100;
+            sc = Math.max(scx, scy);
+            stls = ' style="';
+            stls += 'zoom: ' + sc + ';'
+            stls += '-webkit-transform: scale(' + sc + ');';
+            stls += '-webkit-transform-origin: 0 0;';
+            stls += '"'
+        };
+
+        var s = '<form action="https://dgpad.net/index.php" target="' + _frm + '" method="post" width="' + _w + '" height="' + (_h + 40) + '">';
+        s += '<input type="hidden" name="file_content" value="' + _src + '">';
+        if (hide_ctrl_panel)
+            s += '<input type="hidden" name="hide_ctrlpanel" value="true">';
+        else s += '<input type="hidden" name="show_tools" value="true">';
+        s += '<iframe id="doceval_iframe" ' + stls + ' name="' + _frm + '" width="' + Math.round($U.DE_width / (sc * sc)) + '" height="' + Math.round($U.DE_height / (sc * sc)) + '" src="about:blank" scrolling="no" frameborder="no" oNlOAd="if (!this.parentNode.num) {this.parentNode.submit();this.parentNode.num=true}"></iframe>';
+        s += '</form>';
+        return s;
+    };
+
     me.getHTMLJS = function(hide_ctrl_panel) {
         var _w = width;
         var _h = height;
@@ -3414,7 +3448,7 @@ function Canvas(_id) {
         _src = $U.base64_encode(_src);
         var d = new Date();
         var _frm = "dgpad_frame_" + d.getTime();
-        var s = '<form action="http://www.dgpad.net/index.php" target="' + _frm + '" method="post" width="' + _w + '" height="' + _h + '">';
+        var s = '<form action="https://www.dgpad.net/index.php" target="' + _frm + '" method="post" width="' + _w + '" height="' + _h + '">';
         s += '<input type="hidden" name="file_content" value="' + _src + '">';
         if (hide_ctrl_panel)
             s += '<input type="hidden" name="hide_ctrlpanel" value="true">';
@@ -3536,6 +3570,16 @@ function Canvas(_id) {
         }
     };
 
+    me.rebuildControlPanel = function() {
+        if (mainpanel) {
+            ctrl_panel_visible = mainpanel.isReallyVisible();
+            docObject.parentNode.removeChild(mainpanel.getDocObject());
+            mainpanel = null;
+        }
+        mainpanel = new ControlPanel(me);
+        if (!ctrl_panel_visible) mainpanel.hide();
+    }
+
     // Appelée lorsqu'on change la taille de la fenêtre (ordinateur)
     // ou bien lorsqu'on change d'orientation sur une tablette :
     var resizeWindow = function() {
@@ -3571,7 +3615,7 @@ function Canvas(_id) {
 
     var submitGoogle = function() {
         window.onbeforeunload = function() {
-            
+
         };
 
         var form = document.createElement('FORM');
@@ -4905,7 +4949,8 @@ function Construction(_canvas) {
     me.mouseY = canvas.mouseY;
     me.prefs = canvas.prefs;
     var mode3D = false;
-    var ORG3D = null; 
+    var ORG3D = null;
+    var DocEvalExpression = null; // DocEval Expression varName
 
 
     //    var mode3D=false;
@@ -4926,6 +4971,25 @@ function Construction(_canvas) {
 
     // User can drag all types of objects or only moveable objects :
     var DragOnlyMoveable = true;
+
+    // DocEval communication :
+    me.setDocEvalExpression = function(_n) {
+        DocEvalExpression = _n;
+        window.addEventListener('message', function(e) {
+            var message = e.data;
+            var ans = me.findVar(DocEvalExpression).getValue();
+            ans = JSON.stringify(ans);
+            ans = ans.replace(/(-?\d+\.?\d*)/g, function(_m, _g) {
+                var num = parseFloat(_g);
+                return ("" + Math.round(num * 1e10) / 1e10);
+            });
+            ans = JSON.parse(ans);
+            var cod = canvas.getSource();
+            cod += '\n\n//DocEval:\nSetDocEvalExpression("' + _n + '");';
+            cod = $U.base64_encode(cod);
+            if (message === "need_answer") parent.postMessage(JSON.stringify({ answer: ans, source: cod }), "*");
+        });
+    };
 
 
     me.createTurtleExpression = function(_startpt) {
@@ -6025,7 +6089,7 @@ function Construction(_canvas) {
 
     me.computeAll = computeAll2D;
 
-    me.initAll=function(){
+    me.initAll = function() {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].blocks) V[i].blocks.evaluate("oninit");
         }
@@ -6502,7 +6566,7 @@ function Construction(_canvas) {
                     an.obj.incrementAlpha(an);
                     // an.obj.blocks.evaluate("ondrag"); // blockly
                     an.obj.compute();
-                        an.obj.computeChilds();
+                    an.obj.computeChilds();
                     if (me.is3D()) {
                         me.computeAll()
                     }
@@ -6928,6 +6992,13 @@ function GUIElement(_owner, _type) {
 
     };
 
+    me.addKeyUpEvent = function(_proc, _to) {
+        if (!_proc)
+            return;
+        var obj = (arguments.length < 2) ? docObject : _to;
+        obj.addEventListener('keyup', _proc, false);
+    };
+
     me.removeDownEvent = function(_proc, _to) {
         if (!_proc)
             return;
@@ -6950,6 +7021,13 @@ function GUIElement(_owner, _type) {
         var obj = (arguments.length < 2) ? docObject : _to;
         obj.removeEventListener('touchend', _proc.TouchEvent_Function, false);
         obj.removeEventListener('mouseup', _proc.MouseEvent_Function, false);
+    };
+
+    me.removeKeyUpEvent = function(_proc, _to) {
+        if (!_proc)
+            return;
+        var obj = (arguments.length < 2) ? docObject : _to;
+        obj.removeEventListener('keyup', _proc, false);
     };
 
 
@@ -9519,20 +9597,22 @@ function ControlButton(owner, l, t, w, h, src, _isOn, _group, _proc) {
 function ControlPanel(_canvas) {
     var me = this;
     var canvas = _canvas;
-    $U.extend(this, new HorizontalBorderPanel(canvas, canvas.prefs.controlpanel.size, false));
+    var SCALE = (canvas.getDocObject().clientWidth<810)? Math.round(100*canvas.getDocObject().clientWidth/810)/100:1;
+    $U.extend(this, new HorizontalBorderPanel(canvas, canvas.prefs.controlpanel.size*SCALE, false));
 
     me.addDownEvent(function() {});
     me.setStyle("background", canvas.prefs.controlpanel.color);
     me.setStyle("border-top", "1px solid hsla(0,0%,0%,.1)");
     me.setStyle("border-radius", "0px");
     me.show();
+    
 
-    var left = 10 * $SCALE;
-    var size = 30 * $SCALE;
-    var margintop = 5 * $SCALE;
+    var left = 10 * SCALE;
+    var size = 30 * SCALE;
+    var margintop = 5 * SCALE;
     var right = me.getBounds().width - left - size;
-    var hspace = 15 * $SCALE;
-    var smallhspace = 5 * $SCALE;
+    var hspace = 15 * SCALE;
+    var smallhspace = 5 * SCALE;
     var copyDlog = null;
     var historyDlog = null;
 
@@ -10189,6 +10269,190 @@ function ExportPanel(_canvas, _closeProc) {
         typeCallback(0);
     }, 0);
 
+
+}
+function DocEvalPanel(_canvas, _object_varname, _closeProc) {
+    var me = this;
+    var canvas = _canvas;
+    var EXP = _object_varname;
+    // var expression = _object;
+    var www = 820;
+    var hhh = 830;
+    var hidectrlpanel = false;
+    var scalecontent = false;
+    var sel = -1;
+    var btns = null;
+    $U.extend(this, new CenterPanel(canvas, www, hhh));
+
+    me.show();
+
+    var close = function() {
+        _closeProc();
+        canvas.setNoMouseEvent(true);
+    };
+
+    var setCode = function(_t) {
+        var cod = _t;
+        if ($U.DE_question.trim() !== "") cod = $U.DE_question.replace(/\n/g, "<br>") + "<br>" + cod;
+        cod+="\t"+reponse.getDocObject().value+"\tdgpad";
+        textarea.setAttr("innerHTML", cod);
+
+
+        // if ($U.DE_question.trim() === "") textarea.setAttr("innerHTML", _t);
+        // else textarea.setAttr("innerHTML", $U.DE_question.replace(/\n/g, "<br>") + "<br>" + _t);
+    };
+
+    var setText = function(_t) {
+        setCode(_t);
+        preview.getDocObject().innerHTML = _t.replace(/https:\/\/dgpad\.net\//, "");
+    };
+
+    var setComment = function(_t) {
+        comment.setAttr("innerHTML", _t);
+    };
+
+    var addtoolsCBACK = function(_v) {
+        hidectrlpanel = _v;
+        setText(getHTMLJS());
+    };
+
+    var scaleCBACK = function(_v) {
+        scalecontent = _v;
+        setText(getHTMLJS());
+    };
+
+    var getHTMLJS = function() {
+        var expression = canvas.getConstruction().findVar(EXP);
+        expression.setHidden(2);
+        var html = canvas.getHTMLDOCEVAL(EXP, hidectrlpanel, scalecontent);
+        expression.setHidden(0);
+        return html;
+    };
+
+    new CloseBox(me, close);
+
+    var textarea = new GUIElement(me, "textarea");
+    textarea.setStyles("position:absolute;left:10px;top:50px;width:300px;height:60px;resize:none;overflow-y:scroll;overflow-x:hidden");
+    me.addContent(textarea);
+
+    var comment = new GUIElement(me, "div");
+    comment.setStyles("position:absolute;background-color:#FEFEFE;text-align:center;vertical-align:middle;font-size:14px;font-family:Helvetica, Arial, sans-serif;color:#252525;border: 1px solid #b4b4b4;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;padding:5px;border-radius:10px");
+    comment.setBounds(10, 10, www - 20, 30);
+    setComment($L.export_doceval);
+    me.addContent(comment);
+
+    var question = new GUIElement(me, "textarea");
+    question.setStyles("position:absolute;top:125px;width:400px;left:90px;height:40px;resize:none;overflow-y:scroll;overflow-x:hidden;font-size:14px;font-family:Helvetica, Arial, sans-serif");
+
+    question.setAttr("innerHTML", $U.DE_question);
+    question.addKeyUpEvent(function(e) {
+        $U.DE_question = e.target.value;
+        localStorage.setItem("doceval_question", $U.DE_question);
+        setCode(getHTMLJS());
+    });
+    me.addContent(question);
+
+    var reponse = new GUIElement(me, "input");
+    reponse.setStyles("position:absolute;top:133px;width:200px;right:10px;height:20px;resize:none;font-size:14px;font-family:Helvetica, Arial, sans-serif");
+    reponse.setAttr("type", "text");
+    reponse.addKeyUpEvent(function(e) {
+        setCode(getHTMLJS());
+    });
+    me.addContent(reponse);
+
+    var lbl = new GUIElement(me, "div");
+    lbl.setStyles("position:absolute;left:10px;top:137px;width:80px;height:60px;text-align:left;font-size:14px;font-family:Helvetica, Arial, sans-serif");
+    lbl.setAttr("innerHTML", $L.export_doceval_question);
+    me.addContent(lbl);
+
+    var lbl2 = new GUIElement(me, "div");
+    lbl2.setStyles("position:absolute;left:515px;top:137px;width:80px;height:60px;text-align:left;font-size:14px;font-family:Helvetica, Arial, sans-serif");
+    lbl2.setAttr("innerHTML", $L.export_doceval_answer);
+    me.addContent(lbl2);
+
+    var cbshowCS = new Checkbox(me.getDocObject(), 320, 55, 200, 30, hidectrlpanel, $L.export_istools, addtoolsCBACK);
+    cbshowCS.setTextColor("#000000");
+    cbshowCS.setTextFontSize(14);
+
+    var cbscale = new Checkbox(me.getDocObject(), 320, 85, 200, 30, scalecontent, $L.export_is_scale, scaleCBACK);
+    cbscale.setTextColor("#000000");
+    cbscale.setTextFontSize(14);
+
+    var preview_wrapper = new GUIElement(me, "div");
+    preview_wrapper.setStyles("position:absolute;left:10px;top:180px;width:800px;height:600px;resize:none;border:0px");
+
+    var preview = new GUIElement(me, "div");
+    preview.setStyles("position:absolute;border:1px solid gray;left:50%;top:50%;transform: translate(-50%, -50%);width:" + $U.DE_width + "px;height:" + $U.DE_height + "px;resize:none;overflow:hidden");
+    preview_wrapper.addContent(preview);
+    me.addContent(preview_wrapper);
+
+    var menuH_DIV = new GUIElement(me, "div");
+    menuH_DIV.setStyles("position:absolute;width:260px;height:30px;right:10px;top:55px");
+    var menuH = new GUIElement(me, "select");
+    menuH.setStyles("position:absolute;right:10px;top:50%;transform:translate(0, -50%);width:100px;height:20px;border:1px solid gray;border-radius:5px;outline:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;text-indent:10px;font-size:14px");
+    for (var i = 400; i <= 800; i = i + 50) {
+        var option = document.createElement("option");
+        option.value = i;
+        option.text = i;
+        if (i === $U.DE_width) option.selected = true;
+        menuH.getDocObject().appendChild(option);
+
+    }
+    menuH.getDocObject().onchange = function(e) {
+        $U.DE_width = parseInt(e.target.value);
+        preview.setStyle("width", $U.DE_width + "px");
+        setText(getHTMLJS());
+        localStorage.setItem("doceval_width", $U.DE_width);
+    }
+    var label_H = new GUIElement(me, "div");
+    label_H.setStyles("position:absolute;right:120px;top:50%;transform:translate(0,-50%);text-align:right;font-size:14px;font-family:Helvetica, Arial, sans-serif");
+    label_H.setAttr("innerHTML", $L.export_doceval_width);
+    menuH_DIV.addContent(label_H);
+    menuH_DIV.addContent(menuH);
+    me.addContent(menuH_DIV);
+
+    var menuV_DIV = new GUIElement(me, "div");
+    menuV_DIV.setStyles("position:absolute;width:260px;height:30px;right:10px;top:85px");
+    var menuV = new GUIElement(me, "select");
+    menuV.setStyles("position:absolute;right:10px;top:50%;transform: translate(0, -50%);width:100px;height:20px;border:1px solid gray;border-radius:5px;outline:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;text-indent:10px;font-size:14px");
+
+    for (var i = 100; i <= 600; i = i + 50) {
+        var option = document.createElement("option");
+        option.value = i;
+        option.text = i;
+        if (i === parseInt($U.DE_height)) option.selected = true;
+        menuV.getDocObject().appendChild(option);
+
+    }
+    menuV.getDocObject().onchange = function(e) {
+        $U.DE_height = parseInt(e.target.value);
+        preview.setStyle("height", $U.DE_height + "px");
+        setText(getHTMLJS());
+        localStorage.setItem("doceval_height", $U.DE_height);
+    }
+    var label_V = new GUIElement(me, "div");
+    label_V.setStyles("position:absolute;right:120px;top:50%;transform:translate(0,-50%);text-align:right;font-size:14px;font-family:Helvetica, Arial, sans-serif");
+    label_V.setAttr("innerHTML", $L.export_doceval_height);
+    menuV_DIV.addContent(label_V);
+    menuV_DIV.addContent(menuV);
+    me.addContent(menuV_DIV);
+
+    var changeBtn = new Button(me);
+    changeBtn.setStyles("font-size:14px");
+    changeBtn.setText($L.export_doceval_update);
+    changeBtn.setBounds(www - 200, hhh - 40, 190, 30);
+    changeBtn.setCallBack(function() {
+        var frm_cnv = document.getElementById("doceval_iframe").contentWindow.$CANVAS;
+        var frm_exp = frm_cnv.getConstruction().findVar(EXP);
+        frm_exp.setHidden(0);
+        var src = frm_cnv.getSource();
+        frm_exp.setHidden(2);
+        canvas.OpenFile("", src);
+        setCode(getHTMLJS());
+    });
+    me.addContent(changeBtn);
+
+    setText(getHTMLJS());
 
 }
 function HistoryPanel(_canvas, _closeProc) {
@@ -18528,9 +18792,9 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     };
 
     this.getAssociatedTools = function() {
-        var s = "@callproperty,@calltrash,@objectmover,@anchor,@callcalc";
+        var s = "@callproperty,@calltrash,@objectmover,@anchor,@callcalc,@doceval";
         if (anchor)
-            s = "@callproperty,@calltrash,@objectmover,@noanchor,@callcalc";
+            s = "@callproperty,@calltrash,@objectmover,@noanchor,@callcalc,@doceval";
         // if (me.isCursor())
         if ((E1 !== null) && (E1.isNum())) s += ",@spring";
         s += ",@blockly";
@@ -22693,6 +22957,50 @@ function DGScriptNameConstructor() {
     };
 
     this.selectCreatePoint = function(zc, ev) {};
+
+    this.preview = function(ev, zc) {};
+}
+//************************************************
+//*************** SEGMENT CONSTRUCTOR **************
+//************************************************
+function DocEvalConstructor() {
+    var panel = null;
+    $U.extend(this, new ObjectConstructor()); //Héritage
+
+    this.getCode = function() {
+        return "doceval";
+    };
+
+    // Retourne 0 pour un outil standard, 1 pour un outil de changement de propriété
+    this.getType = function() {
+        return 1;
+    };
+
+    this.isAcceptedInitial = function(o) {
+        return true;
+    };
+
+    this.isInstantTool = function() {
+        return true;
+    };
+
+    var close = function() {
+        if (panel) {
+            panel.close();
+            panel = null
+        }
+    };
+
+    this.createObj = function(zc, ev) {
+        // $ALERT("ok");
+        panel = new DocEvalPanel(zc, this.getC(0).getVarName(), close);
+        // zc.blocklyManager.edit(this.getC(0));
+        //        zc.propertiesManager.edit(this.getC(0));
+    };
+
+    this.selectCreatePoint = function(zc, ev) {
+
+    };
 
     this.preview = function(ev, zc) {};
 }

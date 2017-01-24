@@ -7,20 +7,22 @@
 function ControlPanel(_canvas) {
     var me = this;
     var canvas = _canvas;
-    $U.extend(this, new HorizontalBorderPanel(canvas, canvas.prefs.controlpanel.size, false));
+    var SCALE = (canvas.getDocObject().clientWidth<810)? Math.round(100*canvas.getDocObject().clientWidth/810)/100:1;
+    $U.extend(this, new HorizontalBorderPanel(canvas, canvas.prefs.controlpanel.size*SCALE, false));
 
     me.addDownEvent(function() {});
     me.setStyle("background", canvas.prefs.controlpanel.color);
     me.setStyle("border-top", "1px solid hsla(0,0%,0%,.1)");
     me.setStyle("border-radius", "0px");
     me.show();
+    
 
-    var left = 10 * $SCALE;
-    var size = 30 * $SCALE;
-    var margintop = 5 * $SCALE;
+    var left = 10 * SCALE;
+    var size = 30 * SCALE;
+    var margintop = 5 * SCALE;
     var right = me.getBounds().width - left - size;
-    var hspace = 15 * $SCALE;
-    var smallhspace = 5 * $SCALE;
+    var hspace = 15 * SCALE;
+    var smallhspace = 5 * SCALE;
     var copyDlog = null;
     var historyDlog = null;
 

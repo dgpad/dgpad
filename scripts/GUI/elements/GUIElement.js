@@ -272,6 +272,13 @@ function GUIElement(_owner, _type) {
 
     };
 
+    me.addKeyUpEvent = function(_proc, _to) {
+        if (!_proc)
+            return;
+        var obj = (arguments.length < 2) ? docObject : _to;
+        obj.addEventListener('keyup', _proc, false);
+    };
+
     me.removeDownEvent = function(_proc, _to) {
         if (!_proc)
             return;
@@ -294,6 +301,13 @@ function GUIElement(_owner, _type) {
         var obj = (arguments.length < 2) ? docObject : _to;
         obj.removeEventListener('touchend', _proc.TouchEvent_Function, false);
         obj.removeEventListener('mouseup', _proc.MouseEvent_Function, false);
+    };
+
+    me.removeKeyUpEvent = function(_proc, _to) {
+        if (!_proc)
+            return;
+        var obj = (arguments.length < 2) ? docObject : _to;
+        obj.removeEventListener('keyup', _proc, false);
     };
 
 

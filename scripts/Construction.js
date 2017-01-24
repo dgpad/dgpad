@@ -11,7 +11,8 @@ function Construction(_canvas) {
     me.mouseY = canvas.mouseY;
     me.prefs = canvas.prefs;
     var mode3D = false;
-    var ORG3D = null; 
+    var ORG3D = null;
+    var DocEvalExpression = null; // DocEval Expression varName
 
 
     //    var mode3D=false;
@@ -32,6 +33,25 @@ function Construction(_canvas) {
 
     // User can drag all types of objects or only moveable objects :
     var DragOnlyMoveable = true;
+
+    // DocEval communication :
+    me.setDocEvalExpression = function(_n) {
+        DocEvalExpression = _n;
+        window.addEventListener('message', function(e) {
+            var message = e.data;
+            var ans = me.findVar(DocEvalExpression).getValue();
+            ans = JSON.stringify(ans);
+            ans = ans.replace(/(-?\d+\.?\d*)/g, function(_m, _g) {
+                var num = parseFloat(_g);
+                return ("" + Math.round(num * 1e10) / 1e10);
+            });
+            ans = JSON.parse(ans);
+            var cod = canvas.getSource();
+            cod += '\n\n//DocEval:\nSetDocEvalExpression("' + _n + '");';
+            cod = $U.base64_encode(cod);
+            if (message === "need_answer") parent.postMessage(JSON.stringify({ answer: ans, source: cod }), "*");
+        });
+    };
 
 
     me.createTurtleExpression = function(_startpt) {
@@ -1131,7 +1151,7 @@ function Construction(_canvas) {
 
     me.computeAll = computeAll2D;
 
-    me.initAll=function(){
+    me.initAll = function() {
         for (var i = 0, len = V.length; i < len; i++) {
             if (V[i].blocks) V[i].blocks.evaluate("oninit");
         }
@@ -1608,7 +1628,7 @@ function Construction(_canvas) {
                     an.obj.incrementAlpha(an);
                     // an.obj.blocks.evaluate("ondrag"); // blockly
                     an.obj.compute();
-                        an.obj.computeChilds();
+                    an.obj.computeChilds();
                     if (me.is3D()) {
                         me.computeAll()
                     }

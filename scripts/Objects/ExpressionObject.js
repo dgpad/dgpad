@@ -367,9 +367,9 @@ function ExpressionObject(_construction, _name, _txt, _min, _max, _exp, _x, _y) 
     };
 
     this.getAssociatedTools = function() {
-        var s = "@callproperty,@calltrash,@objectmover,@anchor,@callcalc";
+        var s = "@callproperty,@calltrash,@objectmover,@anchor,@callcalc,@doceval";
         if (anchor)
-            s = "@callproperty,@calltrash,@objectmover,@noanchor,@callcalc";
+            s = "@callproperty,@calltrash,@objectmover,@noanchor,@callcalc,@doceval";
         // if (me.isCursor())
         if ((E1 !== null) && (E1.isNum())) s += ",@spring";
         s += ",@blockly";

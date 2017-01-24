@@ -439,3 +439,12 @@ $L.blockly.image_o = "opacity";
 // Samedi 15 octobre 2016
 $L.blockly.mouse_position = "mouse position";
 $L.blockly.touch_position = "finger position";
+
+// Mardi 17 janvier 2017
+$L.export_doceval = "Copy the code below and paste it into a <a href='https://sites.google.com/view/doctools/doceval' target='_blank'>DocEval question</a>.";
+$L.export_is_scale = "Scale the content";
+$L.export_doceval_update = "Update code";
+$L.export_doceval_width = "Applet width :";
+$L.export_doceval_height = "Applet height :";
+$L.export_doceval_question = "Question :";
+$L.export_doceval_answer = "Answer :";

@@ -598,6 +598,11 @@ function Interpreter(_win, _canvas) {
         $num_precision = Math.pow(10, _n);
     };
 
+
+    var SetDocEvalExpression = function(_n) {
+        me.C.setDocEvalExpression(_n);
+    }
+
     // Methode obsolete, maintenue pour la 
     // compatibilité des figures 3D d'avant
     // le 22 novembre 2013 :

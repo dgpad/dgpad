@@ -429,3 +429,12 @@ $L.blockly.image_o = "opacité";
 // Samedi 15 octobre 2016
 $L.blockly.mouse_position = "position de la souris";
 $L.blockly.touch_position = "position du doigt";
+
+// Mardi 17 janvier 2017
+$L.export_doceval = "Copier le code ci-dessous et coller-le dans une <a href='https://sites.google.com/view/doctools/doceval' target='_blank'>question DocEval</a>.";
+$L.export_is_scale = "Mettre à l'echelle";
+$L.export_doceval_update = "Actualiser le code";
+$L.export_doceval_width = "Largeur de l'applet :";
+$L.export_doceval_height = "Hauteur de l'applet :";
+$L.export_doceval_question = "Question :";
+$L.export_doceval_answer = "Réponse :";
