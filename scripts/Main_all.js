@@ -9597,15 +9597,15 @@ function ControlButton(owner, l, t, w, h, src, _isOn, _group, _proc) {
 function ControlPanel(_canvas) {
     var me = this;
     var canvas = _canvas;
-    var SCALE = (canvas.getDocObject().clientWidth<810)? Math.round(100*canvas.getDocObject().clientWidth/810)/100:1;
-    $U.extend(this, new HorizontalBorderPanel(canvas, canvas.prefs.controlpanel.size*SCALE, false));
+    var SCALE = (canvas.getDocObject().clientWidth < 810) ? Math.round(100 * canvas.getDocObject().clientWidth / 810) / 100 : 1;
+    $U.extend(this, new HorizontalBorderPanel(canvas, canvas.prefs.controlpanel.size * SCALE, false));
 
     me.addDownEvent(function() {});
     me.setStyle("background", canvas.prefs.controlpanel.color);
     me.setStyle("border-top", "1px solid hsla(0,0%,0%,.1)");
     me.setStyle("border-radius", "0px");
     me.show();
-    
+
 
     var left = 10 * SCALE;
     var size = 30 * SCALE;
@@ -9793,7 +9793,7 @@ function ControlPanel(_canvas) {
         }
     };
 
-    
+
     var downloadProc = function() {
         filepicker.pick({
                 extensions: ['.txt', '.dgp'],
@@ -9801,14 +9801,45 @@ function ControlPanel(_canvas) {
                 openTo: $U.getFilePickerDefaultBox()
             },
             function(FPFile) {
-                filepicker.read(FPFile, function(data) {
-                    canvas.OpenFile("", $U.utf8_decode(data));
+                FPFile.filename = FPFile.filename.replace(/ksh/, "obj");
+                var blob = {
+                    url: FPFile.url,
+                    filename: FPFile.filename,
+                    mimetype: 'text/plain',
+                    isWriteable: false,
+                    base64encode: false,
+                    size: FPFile.size
+                }
+                console.log(blob);
+                filepicker.read(blob, function(data) {
+                    // console.log(FPFile);
+                    // console.log(data);
+                    // canvas.OpenFile("", $U.utf8_decode(data));
+                    canvas.OpenFile("", $U.base64_decode($U.utf8_decode(data)));
+                    // canvas.OpenFile("", data);
+                    // console.log("yes");
                     if ($FPICKERFRAME !== null) {
                         $FPICKERFRAME.close();
                         $FPICKERFRAME = null;
                     }
                 });
             });
+        // function(FPFile) {
+        //     // FPFile.filename = FPFile.filename.replace(/ksh/,"obj");
+        //     console.log(FPFile);
+        //     filepicker.read(FPFile, function(data) {
+        //         console.log(FPFile);
+        //         // console.log(data);
+        //         // canvas.OpenFile("", $U.utf8_decode(data));
+        //         canvas.OpenFile("", $U.base64_decode($U.utf8_decode(data)));
+        //         // canvas.OpenFile("", data);
+        //         // console.log("yes");
+        //         if ($FPICKERFRAME !== null) {
+        //             $FPICKERFRAME.close();
+        //             $FPICKERFRAME = null;
+        //         }
+        //     });
+        // });
     };
 
     var uploadProc = function() {
@@ -9816,32 +9847,64 @@ function ControlPanel(_canvas) {
             return;
         var source = canvas.macrosManager.getSource() + canvas.getConstruction().getSource() + canvas.textManager.getSource();
 
-
+        var blob = {
+            url: 'http://dgpad.net/scripts/NotPacked/thirdParty/temp.dgp',
+            filename: 'temp.dgp',
+            mimetype: 'application/octet-stream',
+            isWriteable: true
+        }
 
         filepicker.exportFile(
-            "http://dgpad.net/scripts/NotPacked/thirdParty/temp.txt", {
-                suggestedFilename: "",
+            blob, {
+                // suggestedFilename: "aa.dgp",
+                // extension: ".dgp",
+                // mimetype: 'application/octet-stream',
                 extension: ".dgp",
-                services: ['DROPBOX', 'GOOGLE_DRIVE', 'BOX', 'SKYDRIVE', 'EVERNOTE', 'FTP', 'WEBDAV'],
+                services: ['GOOGLE_DRIVE', 'DROPBOX', 'BOX', 'SKYDRIVE', 'FTP', 'WEBDAV'],
                 openTo: $U.getFilePickerDefaultBox()
             },
             function(InkBlob) {
-                // console.log(InkBlob.url);
+                
+                // InkBlob.mimetype='application/octet-stream';
+                console.log(InkBlob);
                 filepicker.write(
                     InkBlob,
-                    source, {
-                        base64decode: false,
+                    // source, {
+                    //     mimetype: 'text/plain',
+                    //     // mimetype: 'application/octet-stream',
+                    //     base64decode: true
+
+
+                    //     // mimetype: 'application/octet-stream'
+                    // },
+                    $U.base64_encode(source), {
+                        base64decode: true,
                         mimetype: 'text/plain'
                     },
-                    // $U.base64_encode(source), {
-                    //     base64decode: true,
-                    //     mimetype: 'text/plain'
-                    // },
                     function(InkBlob) {
+                        console.log(InkBlob);
                         if ($FPICKERFRAME !== null) {
                             $FPICKERFRAME.close();
                             $FPICKERFRAME = null;
                         }
+                        var cdn_url = InkBlob.url;
+                        filepicker.remove(
+                            InkBlob, {
+                            },
+                            function(new_blob) {
+                                console.log("Removed");
+                                // filepicker.remove(
+                                //     cdn_url,
+                                //     function(FPError) {
+                                //         console.log(FPError.toString());
+                                //     },
+                                //     function(metadata) {
+                                //         console.log("removing file again (expected result: error 171)...");
+                                //         console.log(JSON.stringify(metadata));
+                                //     }
+                                // );
+                            }
+                        );
                     },
                     function(FPError) {
                         console.log(FPError.toString());
@@ -9878,6 +9941,30 @@ function ControlPanel(_canvas) {
         //                    console.log(FPError.toString());
         //                }
         //        );
+
+        // filepicker.store(
+        //     $U.base64_encode(source), {
+        //         base64decode: true,
+        //         mimetype: 'application/octet-stream'
+        //     },
+        //     function(InkBlob) {
+        //         filepicker.exportFile(
+        //             InkBlob, { suggestedFilename: "", extension: ".dgp", openTo: $U.getFilePickerDefaultBox() },
+        //             function(InkBlob) {
+        //                 if ($FPICKERFRAME !== null) {
+        //                     $FPICKERFRAME.close();
+        //                     $FPICKERFRAME = null;
+        //                 }
+        //             },
+        //             function(FPError) {
+        //                 console.log(FPError.toString());
+        //             }
+        //         );
+        //     },
+        //     function(FPError) {
+        //         console.log(FPError.toString());
+        //     }
+        // );
     };
 
 

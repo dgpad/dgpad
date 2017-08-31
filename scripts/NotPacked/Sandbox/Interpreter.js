@@ -2177,7 +2177,7 @@ function Interpreter(_win, _canvas) {
             me.C.coordsSystem.restrictPhi([_t[0] / 0.015 + 0.000001, _t[1] / 0.015 - 0.000001]);
         else
             me.C.coordsSystem.restrictPhi([]);
-        me.C.coordsSystem.translate(0, 0); // mise en cohérence de l'origine du repère
+        me.C.coordsSystem.translate(0, 0, true); // mise en cohérence de l'origine du repère
         return _t;
     };
     EX.EX_restrictTheta = function(_t) {
@@ -2185,7 +2185,7 @@ function Interpreter(_win, _canvas) {
             me.C.coordsSystem.restrictTheta([_t[0] / 0.015 + 0.000001, _t[1] / 0.015 - 0.000001]);
         else
             me.C.coordsSystem.restrictTheta([]);
-        me.C.coordsSystem.translate(0, 0); // mise en cohérence de l'origine du repère
+        me.C.coordsSystem.translate(0, 0, true); // mise en cohérence de l'origine du repère
         return _t;
     };
     EX.EX_point3D = function(_o, _v) {

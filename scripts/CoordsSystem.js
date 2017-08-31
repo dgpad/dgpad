@@ -76,8 +76,8 @@ function CoordsSystem(_C) {
     };
 
 
-    me.translate = function(_xt, _yt) {
-        Cn.getTrackManager().clear();
+    me.translate = function(_xt, _yt, _no_clear_track) {
+        if (!_no_clear_track) Cn.getTrackManager().clear();
         _yt = (me.islockOx()) ? 0 : _yt;
         _xt = (me.islockOy()) ? 0 : _xt;
         var V = Cn.elements();
