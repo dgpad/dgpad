@@ -19,6 +19,25 @@ Blockly.Blocks['dgpad_style_fix'] = {
     }
 };
 
+Blockly.Blocks['dgpad_object_style_fix'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField($L.blockly.turtle.fixaspect_1);
+    this.appendValueInput("OBJECT")
+        .setCheck(null);
+    this.appendDummyInput()
+        .appendField($L.blockly.turtle.fixaspect_2);
+    this.appendValueInput("NAME")
+        .setCheck(null);
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(65);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
 
 
 Blockly.Blocks['dgpad_style_color_rgb'] = {

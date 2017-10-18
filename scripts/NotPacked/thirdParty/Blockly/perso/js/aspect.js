@@ -7,6 +7,18 @@ Blockly.JavaScript['dgpad_style_fix'] = function(block) {
     return code;
 };
 
+Blockly.JavaScript['dgpad_object_style_fix'] = function(block) {
+
+    var value_object = Blockly.JavaScript.valueToCode(block, 'OBJECT', Blockly.JavaScript.ORDER_ATOMIC);
+    var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+    if (value_name === "") return "";
+    value_name = value_name.replace(/^\((.*)\)$/, "$1");
+    value_object=value_object.replace(/^\'(.*)\'$/, "\"$1\"");
+    // TODO: Assemble JavaScript into code variable.
+    var code = 'BLK_STL(' + value_object + ',' + value_name + ");\n";
+    return code;
+};
+
 
 
 Blockly.JavaScript['dgpad_style_color_rgb'] = function(block) {
@@ -37,8 +49,8 @@ Blockly.JavaScript['dgpad_style_opacity'] = Blockly.dgpad_style_block_js("setOpa
 
 
 Blockly.JavaScript['dgpad_style_arrow'] = function(block) {
-  var value_w = Blockly.JavaScript.valueToCode(block, 'w', Blockly.JavaScript.ORDER_ATOMIC);
-  var value_h = Blockly.JavaScript.valueToCode(block, 'h', Blockly.JavaScript.ORDER_ATOMIC);
-  var code = '"setArrow",[[' + value_w + ',' + value_h + ']]';
-  return [code, Blockly.JavaScript.ORDER_NONE];
+    var value_w = Blockly.JavaScript.valueToCode(block, 'w', Blockly.JavaScript.ORDER_ATOMIC);
+    var value_h = Blockly.JavaScript.valueToCode(block, 'h', Blockly.JavaScript.ORDER_ATOMIC);
+    var code = '"setArrow",[[' + value_w + ',' + value_h + ']]';
+    return [code, Blockly.JavaScript.ORDER_NONE];
 };

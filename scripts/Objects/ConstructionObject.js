@@ -55,9 +55,9 @@ function ConstructionObject(_construction, _name) {
 
 
     // Pour un essai sur l'introspection dans les expressions :
-    // this.getObject = function() {
-    //     return this;
-    // }
+    this.getObject = function() {
+        return this;
+    }
 
     // this.getMe=function(){
     //     return this;

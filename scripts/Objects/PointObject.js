@@ -593,7 +593,7 @@ function PointObject(_construction, _name, _x, _y) {
         EXY.compute();
         var t = EXY.value();
         // console.log(this.getParent());
-        //        if (this.getName()==="A") console.log("t="+t);
+               // if (this.getName()==="M") console.log("t="+t);
         if (isArray(t)) {
             // S'il s'agit d'un point 3D :
             if (t.length === 3) {

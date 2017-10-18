@@ -54,9 +54,10 @@ function LocusObject(_construction, _name, _O, _ON) {
         }
 
         Ptab = ON.getParentAt(0).initLocusArray(NB, (O.getCode() !== "point"));
+
         NB = Ptab.length;
-        //        console.log("Ptab.length="+Ptab.length+" NB="+NB);
-        //        this.compute();
+               // console.log("Ptab.length="+Ptab.length+" NB="+NB);
+               // this.compute();
     };
 
     this.setPrecision(1000);
@@ -66,6 +67,7 @@ function LocusObject(_construction, _name, _O, _ON) {
 
 
     var depsChain = _construction.findDeps(O, ON); // Chaine de dépendance entre O et ON (exclus)
+    // console.log(depsChain);
     this.setParent(O, ON);
     this.setDefaults("locus");
 
@@ -238,6 +240,7 @@ function LocusObject(_construction, _name, _O, _ON) {
         for (var k = 0, len = depsChain.length; k < len; k++) {
             depsChain[k].compute();
         }
+        // O.setXYZ(O.coords3D());
         O.compute();
     };
 
@@ -248,8 +251,10 @@ function LocusObject(_construction, _name, _O, _ON) {
             Ptab[i].x = O.getX();
             Ptab[i].y = O.getY();
         }
+        // console.log(Ptab);
         ON.compute(); // Rétablissement de la position d'origine
         computeDeps();
+        // console.log(Ptab);
     };
 
     var computeLines = function() {

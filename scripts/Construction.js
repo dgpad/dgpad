@@ -1108,6 +1108,8 @@ function Construction(_canvas) {
         compute3D_filter = function() {};
     };
 
+
+
     var computeAll3D = function() {
         var realPhiFunc = canvas.getInterpreter().getEX().EX_phi;
         var realphi = realPhiFunc();

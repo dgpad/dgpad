@@ -47,9 +47,42 @@ Blockly.Blocks['dgpad_stop_list'] = {
     }
 };
 
+Blockly.Blocks['dgpad_get_list'] = {
+    init: function() {
+        this.appendValueInput("NAME")
+            .setCheck(null);
+        this.appendDummyInput()
+            .appendField("[");
+        this.appendValueInput("INDEX")
+            .setCheck(null);
+        this.appendDummyInput()
+            .appendField("]");
+        this.setOutput(true, null);
+        this.setColour(260);
+        this.setTooltip(Blockly.Msg.LISTS_GET_INDEX_TOOLTIP_GET_FROM + '  ' + Blockly.Msg.LISTS_INDEX_FROM_START_TOOLTIP.replace('%1', '#1'));
+        this.setHelpUrl('');
+    }
+};
 
-
-
+Blockly.Blocks['dgpad_set_list'] = {
+    init: function() {
+        this.appendValueInput("NAME")
+            .setCheck(null);
+        this.appendDummyInput()
+            .appendField("[");
+        this.appendValueInput("INDEX")
+            .setCheck(null);
+        this.appendDummyInput()
+            .appendField("] = ");
+        this.appendValueInput("VALUE")
+            .setCheck(null);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(260);
+        this.setTooltip(Blockly.Msg.LISTS_SET_INDEX_TOOLTIP_SET_FROM + '  ' + Blockly.Msg.LISTS_INDEX_FROM_START_TOOLTIP.replace('%1', '#1'));
+        this.setHelpUrl('');
+    }
+};
 
 Blockly.Blocks['dgpad_push'] = {
     init: function() {

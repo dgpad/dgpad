@@ -63,6 +63,13 @@
     <sep></sep>
     <category name="$L.blockly.aspect" colour="65">
         <block type="dgpad_style_fix"></block>
+        <block type="dgpad_object_style_fix">
+            <value name="OBJECT">
+                <block type="dgpad_object_name">
+                    <field name="TEXT">P1</field>
+                </block>
+            </value>
+        </block>
         <block type="dgpad_style_color_rgb">
             <value name="R">
                 <block type="math_number">
@@ -160,6 +167,9 @@
         <block type="dgpad_return"></block>
         <block type="dgpad_set_object"></block>
         <block type="dgpad_get_object_short"></block>
+        <block type="dgpad_object_name">
+            <field name="TEXT">P1</field>
+        </block>
         <block type="dgpad_get_object"></block>
         <block type="dgpad_mouse"></block>
         <block type="dgpad_expression_input"></block>
@@ -478,6 +488,8 @@
         <block type="lists_indexOf"></block>
         <block type="lists_getIndex"></block>
         <block type="lists_setIndex"></block>
+        <block type="dgpad_get_list"></block>
+        <block type="dgpad_set_list"></block>
     </category>
     <sep></sep>
     <category name="$L.blockly.inputouput" colour="20">

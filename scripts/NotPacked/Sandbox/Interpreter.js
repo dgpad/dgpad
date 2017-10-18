@@ -346,7 +346,7 @@ function Interpreter(_win, _canvas) {
 
 
     var BLK_STL = function(_n, _cmd, _tab) {
-        var o = me.f(_n);
+        var o = me.f(_n.replace("dgpad_object_",""));
         o[_cmd].apply(o, _tab);
     };
 
@@ -2189,7 +2189,7 @@ function Interpreter(_win, _canvas) {
         return _t;
     };
     EX.EX_point3D = function(_o, _v) {
-        var fi = EX.EX_phi();
+        var fi = EX.EX_phi(); 
         var th = EX.EX_theta();
         var cfi = Math.cos(fi),
             sfi = Math.sin(fi);

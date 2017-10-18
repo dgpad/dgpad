@@ -1,3 +1,6 @@
+// Blockly.JavaScript['raw_text'] = Blockly.JavaScript['text'];
+
+
 Blockly.JavaScript['text_append'] = function(block) {
     // Append to a variable in place.
     var varName = "blockly_var_" + Blockly.JavaScript.variableDB_.getName(
@@ -7,8 +10,27 @@ Blockly.JavaScript['text_append'] = function(block) {
     return varName + ' = String(' + varName + ') + String(' + argument0 + ');\n';
 };
 
+// Blockly.JavaScript['raw_text'] = function(block) {
+//     var code = block.getFieldValue('TEXT');
+//     code = "blockly_text_" + code;
+//     return [code, Blockly.JavaScript.ORDER_ATOMIC];
+// };
+
 Blockly.JavaScript['text'] = function(block) {
     var code = Blockly.JavaScript.quote_(block.getFieldValue('TEXT'));
+
+    // unicode parsing :
+    code = code.replace(/\\\\u([A-F\d]{4})/g, function(m, _s) {
+        return String.fromCharCode(parseInt(_s, 16))
+    });
+    code = "TURTLE_TEXT(" + code + ")";
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+// Blockly.JavaScript['dgpad_object_name'] = Blockly.JavaScript['text'];
+
+Blockly.JavaScript['dgpad_object_name'] = function(block) {
+    var code = Blockly.JavaScript.quote_("dgpad_object_" + block.getFieldValue('TEXT'));
 
     // unicode parsing :
     code = code.replace(/\\\\u([A-F\d]{4})/g, function(m, _s) {
@@ -78,10 +100,10 @@ Blockly.JavaScript['dgpad_tex'] = function(block) {
 };
 
 Blockly.JavaScript['dgpad_output_precision'] = function(block) {
-  var number_val = block.getFieldValue('VAL');
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'SET_NUM_PRECISION('+number_val+');\n';
-  return code;
+    var number_val = block.getFieldValue('VAL');
+    // TODO: Assemble JavaScript into code variable.
+    var code = 'SET_NUM_PRECISION(' + number_val + ');\n';
+    return code;
 };
 
 

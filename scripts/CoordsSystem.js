@@ -76,6 +76,7 @@ function CoordsSystem(_C) {
     };
 
 
+
     me.translate = function(_xt, _yt, _no_clear_track) {
         if (!_no_clear_track) Cn.getTrackManager().clear();
         _yt = (me.islockOx()) ? 0 : _yt;

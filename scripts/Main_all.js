@@ -2352,8 +2352,9 @@ function CoordsSystem(_C) {
     };
 
 
-    me.translate = function(_xt, _yt) {
-        Cn.getTrackManager().clear();
+
+    me.translate = function(_xt, _yt, _no_clear_track) {
+        if (!_no_clear_track) Cn.getTrackManager().clear();
         _yt = (me.islockOx()) ? 0 : _yt;
         _xt = (me.islockOy()) ? 0 : _xt;
         var V = Cn.elements();
@@ -6046,6 +6047,8 @@ function Construction(_canvas) {
         compute3D_filter = function() {};
     };
 
+
+
     var computeAll3D = function() {
         var realPhiFunc = canvas.getInterpreter().getEX().EX_phi;
         var realphi = realPhiFunc();
@@ -9597,15 +9600,15 @@ function ControlButton(owner, l, t, w, h, src, _isOn, _group, _proc) {
 function ControlPanel(_canvas) {
     var me = this;
     var canvas = _canvas;
-    var SCALE = (canvas.getDocObject().clientWidth < 810) ? Math.round(100 * canvas.getDocObject().clientWidth / 810) / 100 : 1;
-    $U.extend(this, new HorizontalBorderPanel(canvas, canvas.prefs.controlpanel.size * SCALE, false));
+    var SCALE = (canvas.getDocObject().clientWidth<810)? Math.round(100*canvas.getDocObject().clientWidth/810)/100:1;
+    $U.extend(this, new HorizontalBorderPanel(canvas, canvas.prefs.controlpanel.size*SCALE, false));
 
     me.addDownEvent(function() {});
     me.setStyle("background", canvas.prefs.controlpanel.color);
     me.setStyle("border-top", "1px solid hsla(0,0%,0%,.1)");
     me.setStyle("border-radius", "0px");
     me.show();
-
+    
 
     var left = 10 * SCALE;
     var size = 30 * SCALE;
@@ -9793,7 +9796,7 @@ function ControlPanel(_canvas) {
         }
     };
 
-
+    
     var downloadProc = function() {
         filepicker.pick({
                 extensions: ['.txt', '.dgp'],
@@ -9801,45 +9804,14 @@ function ControlPanel(_canvas) {
                 openTo: $U.getFilePickerDefaultBox()
             },
             function(FPFile) {
-                FPFile.filename = FPFile.filename.replace(/ksh/, "obj");
-                var blob = {
-                    url: FPFile.url,
-                    filename: FPFile.filename,
-                    mimetype: 'text/plain',
-                    isWriteable: false,
-                    base64encode: false,
-                    size: FPFile.size
-                }
-                console.log(blob);
-                filepicker.read(blob, function(data) {
-                    // console.log(FPFile);
-                    // console.log(data);
-                    // canvas.OpenFile("", $U.utf8_decode(data));
-                    canvas.OpenFile("", $U.base64_decode($U.utf8_decode(data)));
-                    // canvas.OpenFile("", data);
-                    // console.log("yes");
+                filepicker.read(FPFile, function(data) {
+                    canvas.OpenFile("", $U.utf8_decode(data));
                     if ($FPICKERFRAME !== null) {
                         $FPICKERFRAME.close();
                         $FPICKERFRAME = null;
                     }
                 });
             });
-        // function(FPFile) {
-        //     // FPFile.filename = FPFile.filename.replace(/ksh/,"obj");
-        //     console.log(FPFile);
-        //     filepicker.read(FPFile, function(data) {
-        //         console.log(FPFile);
-        //         // console.log(data);
-        //         // canvas.OpenFile("", $U.utf8_decode(data));
-        //         canvas.OpenFile("", $U.base64_decode($U.utf8_decode(data)));
-        //         // canvas.OpenFile("", data);
-        //         // console.log("yes");
-        //         if ($FPICKERFRAME !== null) {
-        //             $FPICKERFRAME.close();
-        //             $FPICKERFRAME = null;
-        //         }
-        //     });
-        // });
     };
 
     var uploadProc = function() {
@@ -9847,64 +9819,32 @@ function ControlPanel(_canvas) {
             return;
         var source = canvas.macrosManager.getSource() + canvas.getConstruction().getSource() + canvas.textManager.getSource();
 
-        var blob = {
-            url: 'http://dgpad.net/scripts/NotPacked/thirdParty/temp.dgp',
-            filename: 'temp.dgp',
-            mimetype: 'application/octet-stream',
-            isWriteable: true
-        }
+
 
         filepicker.exportFile(
-            blob, {
-                // suggestedFilename: "aa.dgp",
-                // extension: ".dgp",
-                // mimetype: 'application/octet-stream',
+            "http://dgpad.net/scripts/NotPacked/thirdParty/temp.txt", {
+                suggestedFilename: "",
                 extension: ".dgp",
-                services: ['GOOGLE_DRIVE', 'DROPBOX', 'BOX', 'SKYDRIVE', 'FTP', 'WEBDAV'],
+                services: ['DROPBOX', 'GOOGLE_DRIVE', 'BOX', 'SKYDRIVE', 'EVERNOTE', 'FTP', 'WEBDAV'],
                 openTo: $U.getFilePickerDefaultBox()
             },
             function(InkBlob) {
-                
-                // InkBlob.mimetype='application/octet-stream';
-                console.log(InkBlob);
+                // console.log(InkBlob.url);
                 filepicker.write(
                     InkBlob,
-                    // source, {
-                    //     mimetype: 'text/plain',
-                    //     // mimetype: 'application/octet-stream',
-                    //     base64decode: true
-
-
-                    //     // mimetype: 'application/octet-stream'
-                    // },
-                    $U.base64_encode(source), {
-                        base64decode: true,
+                    source, {
+                        base64decode: false,
                         mimetype: 'text/plain'
                     },
+                    // $U.base64_encode(source), {
+                    //     base64decode: true,
+                    //     mimetype: 'text/plain'
+                    // },
                     function(InkBlob) {
-                        console.log(InkBlob);
                         if ($FPICKERFRAME !== null) {
                             $FPICKERFRAME.close();
                             $FPICKERFRAME = null;
                         }
-                        var cdn_url = InkBlob.url;
-                        filepicker.remove(
-                            InkBlob, {
-                            },
-                            function(new_blob) {
-                                console.log("Removed");
-                                // filepicker.remove(
-                                //     cdn_url,
-                                //     function(FPError) {
-                                //         console.log(FPError.toString());
-                                //     },
-                                //     function(metadata) {
-                                //         console.log("removing file again (expected result: error 171)...");
-                                //         console.log(JSON.stringify(metadata));
-                                //     }
-                                // );
-                            }
-                        );
                     },
                     function(FPError) {
                         console.log(FPError.toString());
@@ -9941,30 +9881,6 @@ function ControlPanel(_canvas) {
         //                    console.log(FPError.toString());
         //                }
         //        );
-
-        // filepicker.store(
-        //     $U.base64_encode(source), {
-        //         base64decode: true,
-        //         mimetype: 'application/octet-stream'
-        //     },
-        //     function(InkBlob) {
-        //         filepicker.exportFile(
-        //             InkBlob, { suggestedFilename: "", extension: ".dgp", openTo: $U.getFilePickerDefaultBox() },
-        //             function(InkBlob) {
-        //                 if ($FPICKERFRAME !== null) {
-        //                     $FPICKERFRAME.close();
-        //                     $FPICKERFRAME = null;
-        //                 }
-        //             },
-        //             function(FPError) {
-        //                 console.log(FPError.toString());
-        //             }
-        //         );
-        //     },
-        //     function(FPError) {
-        //         console.log(FPError.toString());
-        //     }
-        // );
     };
 
 
@@ -12509,9 +12425,9 @@ function ConstructionObject(_construction, _name) {
 
 
     // Pour un essai sur l'introspection dans les expressions :
-    // this.getObject = function() {
-    //     return this;
-    // }
+    this.getObject = function() {
+        return this;
+    }
 
     // this.getMe=function(){
     //     return this;
@@ -15429,7 +15345,7 @@ function PointObject(_construction, _name, _x, _y) {
         EXY.compute();
         var t = EXY.value();
         // console.log(this.getParent());
-        //        if (this.getName()==="A") console.log("t="+t);
+               // if (this.getName()==="M") console.log("t="+t);
         if (isArray(t)) {
             // S'il s'agit d'un point 3D :
             if (t.length === 3) {
@@ -17428,9 +17344,10 @@ function LocusObject(_construction, _name, _O, _ON) {
         }
 
         Ptab = ON.getParentAt(0).initLocusArray(NB, (O.getCode() !== "point"));
+
         NB = Ptab.length;
-        //        console.log("Ptab.length="+Ptab.length+" NB="+NB);
-        //        this.compute();
+               // console.log("Ptab.length="+Ptab.length+" NB="+NB);
+               // this.compute();
     };
 
     this.setPrecision(1000);
@@ -17440,6 +17357,7 @@ function LocusObject(_construction, _name, _O, _ON) {
 
 
     var depsChain = _construction.findDeps(O, ON); // Chaine de dépendance entre O et ON (exclus)
+    // console.log(depsChain);
     this.setParent(O, ON);
     this.setDefaults("locus");
 
@@ -17612,6 +17530,7 @@ function LocusObject(_construction, _name, _O, _ON) {
         for (var k = 0, len = depsChain.length; k < len; k++) {
             depsChain[k].compute();
         }
+        // O.setXYZ(O.coords3D());
         O.compute();
     };
 
@@ -17622,8 +17541,10 @@ function LocusObject(_construction, _name, _O, _ON) {
             Ptab[i].x = O.getX();
             Ptab[i].y = O.getY();
         }
+        // console.log(Ptab);
         ON.compute(); // Rétablissement de la position d'origine
         computeDeps();
+        // console.log(Ptab);
     };
 
     var computeLines = function() {
