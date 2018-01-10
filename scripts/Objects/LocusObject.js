@@ -56,8 +56,8 @@ function LocusObject(_construction, _name, _O, _ON) {
         Ptab = ON.getParentAt(0).initLocusArray(NB, (O.getCode() !== "point"));
 
         NB = Ptab.length;
-               // console.log("Ptab.length="+Ptab.length+" NB="+NB);
-               // this.compute();
+        // console.log("Ptab.length="+Ptab.length+" NB="+NB);
+        // this.compute();
     };
 
     this.setPrecision(1000);
@@ -128,7 +128,7 @@ function LocusObject(_construction, _name, _O, _ON) {
         var dom = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
         var cs = ps / (dop * dom);
         var aller_retour = (Math.abs(cs) < 0.707);
-        var pcent = Math.round(100 * fce[f] / fce[fce.length - 1])+"%";
+        var pcent = Math.round(100 * fce[f] / fce[fce.length - 1]) + "%";
 
         return {
             message: aller_retour ? pcent + " \u21C4" : pcent + "",
