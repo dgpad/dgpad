@@ -256,6 +256,11 @@ function Canvas(_id) {
         }
     };
 
+    me.setFullScreen = function() {
+        setFullScreen();
+        me.paint();
+    }
+
     var submitGoogle = function() {
         window.onbeforeunload = function() {
 
@@ -1530,6 +1535,7 @@ function Canvas(_id) {
         // Pour assurer la compatibilité avec les anciennes figures
         // on se met en radians (old style). Si une figure est en degrés
         // elle s'ouvrira en mode degré.
+
         if (_src === "") Cn.setDEG(true)
         else Cn.setDEG(false);
         iPadDidFirstEnterBackground = true;
@@ -1555,6 +1561,7 @@ function Canvas(_id) {
         Cn.computeAll();
         me.textManager.refreshInputs();
         me.paint();
+        parent.postMessage("figure_loaded", "*");
     };
 
     // Uniquement pour l'iApp DGPad s'executant en local

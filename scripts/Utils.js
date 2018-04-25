@@ -1360,6 +1360,29 @@ $U.initEvents = function(ZC, cTag) {
     cTag.oncontextmenu = function() {
         return false;
     };
+    window.addEventListener('message', function(e) {
+        var message = e.data;
+        switch (message) {
+            case "get_SVG":
+                parent.postMessage(window.$CANVAS.exportSVG(), "*")
+                break;
+            case "get_PNG":
+                parent.postMessage(window.$CANVAS.exportPNG(), "*")
+                break;
+            case "get_Source":
+                parent.postMessage(window.$CANVAS.getSource(), "*")
+                break;
+            case "get_Original_Dims":
+                parent.postMessage(window.$CANVAS.getConstruction().getOriginalDims(), "*")
+                break;
+            case "set_Full_Screen":
+                window.$CANVAS.setFullScreen();
+                break;
+            case "repaint":
+                window.$CANVAS.paint();
+                break;
+        }
+    });
 
     cTag.addEventListener('touchmove', ZC.touchMoved, false);
     cTag.addEventListener('touchstart', ZC.touchStart, false);
@@ -1394,7 +1417,7 @@ $U.changed = function() {
     if (!$U.isloading) {
         // Pour l'appli Linux :
         window.status = "changed"
-            // Pour l'appli OS X :
+        // Pour l'appli OS X :
         if (window.$OS_X_APPLICATION) {
             interOp.somethingChanged("");
         };

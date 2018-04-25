@@ -1592,6 +1592,29 @@ $U.initEvents = function(ZC, cTag) {
     cTag.oncontextmenu = function() {
         return false;
     };
+    window.addEventListener('message', function(e) {
+        var message = e.data;
+        switch (message) {
+            case "get_SVG":
+                parent.postMessage(window.$CANVAS.exportSVG(), "*")
+                break;
+            case "get_PNG":
+                parent.postMessage(window.$CANVAS.exportPNG(), "*")
+                break;
+            case "get_Source":
+                parent.postMessage(window.$CANVAS.getSource(), "*")
+                break;
+            case "get_Original_Dims":
+                parent.postMessage(window.$CANVAS.getConstruction().getOriginalDims(), "*")
+                break;
+            case "set_Full_Screen":
+                window.$CANVAS.setFullScreen();
+                break;
+            case "repaint":
+                window.$CANVAS.paint();
+                break;
+        }
+    });
 
     cTag.addEventListener('touchmove', ZC.touchMoved, false);
     cTag.addEventListener('touchstart', ZC.touchStart, false);
@@ -1626,7 +1649,7 @@ $U.changed = function() {
     if (!$U.isloading) {
         // Pour l'appli Linux :
         window.status = "changed"
-            // Pour l'appli OS X :
+        // Pour l'appli OS X :
         if (window.$OS_X_APPLICATION) {
             interOp.somethingChanged("");
         };
@@ -1707,8 +1730,7 @@ $U.initCanvas = function(_id) {
     //    console.log(sss);
 
 
-};
-function Ghost(_canvas) {
+};function Ghost(_canvas) {
     var me = this;
     var X;
     var Y;
@@ -2449,6 +2471,7 @@ function CoordsSystem(_C) {
         x0 = _x;
         y0 = _y;
         Unit = _u;
+        Cn.setOriginalDims(_w, _h);
         if (_md3D)
             Cn.set3D(true);
         if ((window.$OS_X_APPLICATION) && (_w) && (_h)) {
@@ -2777,8 +2800,7 @@ function CoordsSystem(_C) {
         return t;
     };
 
-}
-/*!
+}/*!
  * HTML5 Canvas SVG Alpha 2.0
  * http://specinnovations.com/
  *
@@ -3613,6 +3635,11 @@ function Canvas(_id) {
             me.paint();
         }
     };
+
+    me.setFullScreen = function() {
+        setFullScreen();
+        me.paint();
+    }
 
     var submitGoogle = function() {
         window.onbeforeunload = function() {
@@ -4888,6 +4915,7 @@ function Canvas(_id) {
         // Pour assurer la compatibilité avec les anciennes figures
         // on se met en radians (old style). Si une figure est en degrés
         // elle s'ouvrira en mode degré.
+
         if (_src === "") Cn.setDEG(true)
         else Cn.setDEG(false);
         iPadDidFirstEnterBackground = true;
@@ -4913,6 +4941,7 @@ function Canvas(_id) {
         Cn.computeAll();
         me.textManager.refreshInputs();
         me.paint();
+        parent.postMessage("figure_loaded", "*");
     };
 
     // Uniquement pour l'iApp DGPad s'executant en local
@@ -4936,8 +4965,7 @@ function Canvas(_id) {
         return t;
     };
 
-}
-//************************************************
+}//************************************************
 //************** CONSTRUCTION  *******************
 //************************************************
 
@@ -4952,6 +4980,8 @@ function Construction(_canvas) {
     var mode3D = false;
     var ORG3D = null;
     var DocEvalExpression = null; // DocEval Expression varName
+    var orgWidth = -1,
+        orgHeight = -1;
 
 
     //    var mode3D=false;
@@ -4972,6 +5002,18 @@ function Construction(_canvas) {
 
     // User can drag all types of objects or only moveable objects :
     var DragOnlyMoveable = true;
+
+
+    me.setOriginalDims = function(_w, _h) {
+        if (orgWidth === -1) {
+            orgWidth = _w;
+            orgHeight = _h;
+        }
+    }
+
+    me.getOriginalDims = function() {
+        return [orgWidth, orgHeight]
+    }
 
     // DocEval communication :
     me.setDocEvalExpression = function(_n) {
@@ -6720,8 +6762,7 @@ function Construction(_canvas) {
 
     }
 
-}
-/*
+}/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -17346,8 +17387,8 @@ function LocusObject(_construction, _name, _O, _ON) {
         Ptab = ON.getParentAt(0).initLocusArray(NB, (O.getCode() !== "point"));
 
         NB = Ptab.length;
-               // console.log("Ptab.length="+Ptab.length+" NB="+NB);
-               // this.compute();
+        // console.log("Ptab.length="+Ptab.length+" NB="+NB);
+        // this.compute();
     };
 
     this.setPrecision(1000);
@@ -17418,7 +17459,7 @@ function LocusObject(_construction, _name, _O, _ON) {
         var dom = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
         var cs = ps / (dop * dom);
         var aller_retour = (Math.abs(cs) < 0.707);
-        var pcent = Math.round(100 * fce[f] / fce[fce.length - 1])+"%";
+        var pcent = Math.round(100 * fce[f] / fce[fce.length - 1]) + "%";
 
         return {
             message: aller_retour ? pcent + " \u21C4" : pcent + "",
@@ -17635,8 +17676,7 @@ function LocusObject(_construction, _name, _O, _ON) {
         src.geomWrite(false, this.getName(), "Locus", O.getVarName(), ON.getVarName());
     };
 
-};
-//************************************************
+};//************************************************
 //************ ARC 3 pts OBJECT ******************
 //************************************************
 function AngleObject(_construction, _name, _P1, _P2, _P3) {

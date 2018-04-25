@@ -173,6 +173,7 @@ function CoordsSystem(_C) {
         x0 = _x;
         y0 = _y;
         Unit = _u;
+        Cn.setOriginalDims(_w, _h);
         if (_md3D)
             Cn.set3D(true);
         if ((window.$OS_X_APPLICATION) && (_w) && (_h)) {

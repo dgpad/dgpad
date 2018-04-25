@@ -13,6 +13,8 @@ function Construction(_canvas) {
     var mode3D = false;
     var ORG3D = null;
     var DocEvalExpression = null; // DocEval Expression varName
+    var orgWidth = -1,
+        orgHeight = -1;
 
 
     //    var mode3D=false;
@@ -33,6 +35,18 @@ function Construction(_canvas) {
 
     // User can drag all types of objects or only moveable objects :
     var DragOnlyMoveable = true;
+
+
+    me.setOriginalDims = function(_w, _h) {
+        if (orgWidth === -1) {
+            orgWidth = _w;
+            orgHeight = _h;
+        }
+    }
+
+    me.getOriginalDims = function() {
+        return [orgWidth, orgHeight]
+    }
 
     // DocEval communication :
     me.setDocEvalExpression = function(_n) {
